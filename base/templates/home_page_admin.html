@@ -1,0 +1,190 @@
+{% load static %}
+
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.rtl.min.css' %}">
+
+    <!-- Maisr CSS -->
+    <link rel="stylesheet" href="{% static 'masir.css' %}">
+
+    <style>
+      .masir-modal-close-icon{
+        background-image: url("{% static 'images/close_icon.png' %}");
+      }
+
+      #masir-map3-background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url('{% static 'images/home_page_background.jpg' %}');
+        filter: blur(10px) grayscale(30%) opacity(70%);
+      }
+
+      #masir-navbar-bg{
+        height: 1vh;
+        background-color: #364559;
+        margin: max(2.75vw, 2.75vh) 0px;
+      }
+    </style>
+
+    <title>مسیر 1401</title>
+  </head>
+  <body class="m-0" {% if MESSAGE %} onload="show_message()" {% endif %}>
+    <div id="maindiv" style="width: 100%;" dir="rtl">
+      <nav class="fixed-top">
+        <div id="masir-navbar-bg" class="position-relative">
+          <div class="position-absolute top-50 start-0 translate-middle-y d-flex ms-1 ms-lg-5" style="height: max-content;">
+            {% if user.user_detail.accessibility.judge_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="داوری فعالیت‌ها" style="background-image: url('{% static 'images/navbar_judge.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'judge_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.statistics_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="آمار" style="background-image: url('{% static 'images/navbar_statistics.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'statistics_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.club_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="باشگاه" style="background-image: url('{% static 'images/navbar_club.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'club_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.announcements_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="اعلانات" style="background-image: url('{% static 'images/navbar_announcements.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'announcements_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.reports_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="گزارش" style="background-image: url('{% static 'images/navbar_reports.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'reports_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.faq_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="پرسش‌های پرتکرار" style="background-image: url('{% static 'images/navbar_faq.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'faq_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.contact_admin_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="ارتباط با ما" style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'contact_admin_page_link' %}"></a>
+            {% endif %}
+          </div>
+          <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+          </div>
+          <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5" style="height: max-content;">
+            <a class="masir-circle-button-2 masir-jelly" title="صفحه اصلی" style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'home_page_link' %}"></a>
+            <a class="masir-circle-button-2 masir-jelly" title="خروج" style="background-image: url('{% static 'images/navbar_logout.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'logout_link' %}"></a>
+          </div>
+        </div>
+      </nav>
+
+      {% block mainblock %}
+      <div style="width: 100vw; height: 100vh; position: relative; overflow: hidden;">
+        <div id="masir-map3-background"></div>
+        <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100" style="max-height: 80vh; overflow: scroll;">
+          {% if user_is_admin %}
+            <ul class="list-group list-group-flush container mb-3">
+              {% for g in groups %}
+                <li class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold"> {{ g.title }} </div>
+                    {% for u in g.users %}
+                      {% if u != g.users.all|first %} - {% endif %} {{ u }}
+                    {% endfor %}
+                  </div>
+                  <span class="badge bg-primary masir-btn"> {{ g.light }} </span>
+                </li>
+              {% endfor %}
+            </ul>
+            <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto" onsubmit="university_show_scores_admin_form_click()">
+              {% csrf_token %}
+              <button type="submit" name="university_show_scores_admin_form" id="university_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #64b1ff;">
+              نمایش عمومی نتایج همه آزمون‌ها
+              </button>
+              <button class="btn masir-btn w-100" style="background-color: #64b1ff; display: none;" id="university_show_scores_admin_form_loading">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                در حال انجام...
+              </button>
+            </form>
+            <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2" onsubmit="club_show_scores_admin_form_click()">
+              {% csrf_token %}
+              <button type="submit" name="club_show_scores_admin_form" id="club_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #64ff64;">
+              نمایش عمومی نتایج باشگاه
+              </button>
+              <button class="btn masir-btn w-100" style="background-color: #64ff64; display: none;" id="club_show_scores_admin_form_loading">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                در حال انجام...
+              </button>
+            </form>
+            <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2" onsubmit="activities_show_scores_admin_form_click()">
+              {% csrf_token %}
+              <button type="submit" name="activities_show_scores_admin_form" id="activities_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #f264ff;">
+              نمایش عمومی نتایج فعالیت‌ها
+              </button>
+              <button class="btn masir-btn w-100" style="background-color: #f264ff; display: none;" id="activities_show_scores_admin_form_loading">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                در حال انجام...
+              </button>
+            </form>
+            <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2" onsubmit="achivements_recalculate_admin_form_click()">
+              {% csrf_token %}
+              <button type="submit" name="achivements_recalculate_admin_form" id="achivements_recalculate_admin_form" class="btn masir-btn w-100" style="background-color: #ffbc64;">
+              محاسبه مجدد نشان‌ها
+              </button>
+              <button class="btn masir-btn w-100" style="background-color: #ffbc64; display: none;" id="achivements_recalculate_admin_form_loading">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                در حال انجام...
+              </button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+      {% endblock %}
+    </div>
+    <!-- Bootstrap -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script type="text/javascript">
+      var map = ["&\#1776;","&\#1777;","&\#1778;","&\#1779;","&\#1780;","&\#1781;","&\#1782;","&\#1783;","&\#1784;","&\#1785;"]
+      document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function($0) { return map[$0]});
+    </script>
+
+    <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+      var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+      })
+    </script>
+
+    <script>
+      function clear_alarm_class(sender){
+        sender.classList.remove("alarm");
+      }
+    </script>
+
+    <script>
+      function university_show_scores_admin_form_click(){
+        document.getElementById('university_show_scores_admin_form').style.display = 'none';
+        document.getElementById('university_show_scores_admin_form_loading').style.display = 'block';
+      }
+
+      function club_show_scores_admin_form_click(){
+        document.getElementById('club_show_scores_admin_form').style.display = 'none';
+        document.getElementById('club_show_scores_admin_form_loading').style.display = 'block';
+      }
+
+      function activities_show_scores_admin_form_click(){
+        document.getElementById('activities_show_scores_admin_form').style.display = 'none';
+        document.getElementById('activities_show_scores_admin_form_loading').style.display = 'block';
+      }
+
+      function achivements_recalculate_admin_form_click(){
+        document.getElementById('achivements_recalculate_admin_form').style.display = 'none';
+        document.getElementById('achivements_recalculate_admin_form_loading').style.display = 'block';
+      }
+    </script>
+  </body>
+</html>

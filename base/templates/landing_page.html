@@ -1,0 +1,574 @@
+{% load static %}
+
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.rtl.min.css' %}">
+
+    <!-- Maisr CSS -->
+    <link rel="stylesheet" href="{% static 'masir.css' %}">
+
+    <style>
+      #AnnouncementsPanel{
+        height: 5vh;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        white-space: nowrap;
+      }
+
+      .masir-modal-close-icon{
+        background-image: url("{% static 'images/close_icon.png' %}");
+      }
+
+      #masir-map1-background{
+        position: relative;
+        height: 100vh;
+        min-width: 100%;
+        background-image: url('{% static "images/landing_page_background.jpg" %}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow: hidden;
+      }
+
+      #masir-map1-stone{
+        position: absolute;
+        bottom: 0;
+        max-width: 70vw;
+        max-height: 70vh;
+      }
+
+      #masir-navbar-bg{
+        height: max(0.5vw, 0.5vh);
+        background-color: white;
+        margin: max(2.75vw, 2.75vh) 0px;
+      }
+
+      #masir-logotype{
+        animation-name: masir-logotype-fade-in-animation;
+        animation-duration: 5s;
+        animation-iteration-count: 1;
+      }
+
+      @keyframes masir-logotype-fade-in-animation {
+        0%   {opacity: 0;}
+        30%   {opacity: 0;}
+        100% {opacity: 1;}
+      }
+    </style>
+
+    <title>
+      مسیر 1401
+    </title>
+  </head>
+  <body>
+    <div id="maindiv" style="width: 100%;" dir="rtl">
+      <nav class="fixed-top">
+        <div id="masir-navbar-bg" class="position-relative">
+          <div class="position-absolute top-50 start-0 translate-middle-y d-flex ms-5" style="height: max-content;">
+            <a class="masir-circle-button-2 masir-jelly" title="ورود یا ثبت نام فردی" style="background-image: url('{% static 'images/navbar_login.png' %}'); margin: auto max(0.15vw, 0.15vh);" data-bs-toggle="modal" href="#login_modal" role="button"></a>
+            <a class="masir-circle-button-2 masir-jelly disabled" title="ثبت نام گروهی" style="background-image: url('{% static 'images/navbar_group_register.png' %}'); margin: auto max(0.15vw, 0.15vh);"></a>
+          </div>
+          <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+            <a class="masir-circle-button-2 masir-jelly" title="داوری مردمی" style="background-image: url('{% static 'images/navbar_people_judge.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'people_judge_page_link' %}"></a>
+            <a class="masir-circle-button-3 masir-jelly" title="درباره مسیر 1401" style="background-image: url('{% static 'images/navbar_mountain.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% block about_masir_block %} #about_masir1401 {% endblock %}"></a>
+            <a class="masir-circle-button-2 masir-jelly" title="نقشه نهایی مسابقه" style="background-image: url('{% static 'images/navbar_map.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'full_map_page_link' %}"></a>
+          </div>
+          <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-5" style="height: max-content;">
+            <a class="masir-circle-button-2 masir-jelly" title="ارتباط با ما" style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);" data-bs-toggle="modal" href="#contact_us_modal" role="button"></a>
+          </div>
+        </div>
+      </nav>
+
+      <nav class="navbar fixed-bottom" style="background-color: #ffffffc0; padding-top: 0;">
+        <div class="w-100 mb-2">
+          <div id="AnnouncementsPanel" class="d-flex align-items-center container-fluid" dir="ltr">
+            <p id="Announcements" class="m-0 me-auto h5" dir="rtl"></p>
+          </div>
+        </div>
+        <div class="container-fluid justify-content-center">
+          <a class="masir-circle-button-1" style="background-image: url('{% static 'images/connection_instagram.png' %}'); margin: 0 0.25vw;" href="https://www.instagram.com/masir1401_ir/" target="_blank"></a>
+          <a class="masir-circle-button-1" style="background-image: url('{% static 'images/connection_telegram.png' %}'); margin: 0 0.25vw;" href="https://t.me/masir1401_ir" target="_blank"></a>
+          <a class="masir-circle-button-1" style="background-image: url('{% static 'images/connection_bale.png' %}'); margin: 0 0.25vw;" href="https://ble.ir/masir1401_ir" target="_blank"></a>
+          <a class="masir-circle-button-1" style="background-image: url('{% static 'images/connection_aparat.png' %}'); margin: 0 0.25vw;" href="https://www.aparat.com/masir1401" target="_blank"></a>
+        </div>
+      </nav>
+
+      <div class="modal fade" id="login_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="login_modal_Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+          <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+            <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close" role="button"></a>
+            <div class="modal-body scroll-without-scrollbar">
+              <div class="row" style="--bs-gutter-x: max(5vw,5vh);">
+                <div class="col-12 col-md-6 mb-5 mb-md-0">
+                  <div class="position-relative px-5 masir-modal-header">
+                    <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+                      <div class="masir-circle-icon-3" style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
+                        <svg viewBox="0 0 24 24" fill="currentcolor">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M15.8189 3.66834C14.963 3.68902 13.8297 3.87549 12.178 4.15077L10.5068 4.4293C9.68331 4.56655 9.15729 4.65606 8.77263 4.77058C8.41473 4.87714 8.30096 4.97233 8.23698 5.04786C8.173 5.12338 8.0978 5.25125 8.05154 5.6218C8.00182 6.02006 8 6.55364 8 7.38849V9.13191C8 9.68419 7.55228 10.1319 7 10.1319C6.44772 10.1319 6 9.68419 6 9.13191V7.38849C6 7.36875 6 7.34907 6 7.32946C5.99995 6.5708 5.99991 5.91094 6.06695 5.37402C6.13917 4.79553 6.30096 4.23907 6.71094 3.75511C7.12092 3.27114 7.64321 3.02008 8.20196 2.85373C8.72055 2.69934 9.37144 2.5909 10.1198 2.46622C10.1391 2.46299 10.1585 2.45976 10.178 2.45652L11.9253 2.16529C13.4821 1.9058 14.7561 1.69343 15.7705 1.66892C16.8294 1.64334 17.7885 1.81415 18.5855 2.48928C19.3825 3.1644 19.7086 4.08237 19.8575 5.13107C20.0001 6.13576 20 7.42732 20 9.00556V14.9944C20 16.5726 20.0001 17.8642 19.8575 18.8689C19.7086 19.9176 19.3825 20.8356 18.5855 21.5107C17.7885 22.1858 16.8294 22.3566 15.7705 22.331C14.7561 22.3065 13.4821 22.0942 11.9253 21.8347L10.1198 21.5337C9.37144 21.4091 8.72054 21.3006 8.20196 21.1462C7.64321 20.9799 7.12092 20.7288 6.71094 20.2448C6.30096 19.7609 6.13917 19.2044 6.06695 18.6259C5.99991 18.089 5.99995 17.4292 6 16.6705L6 15.0659C6 14.5137 6.44772 14.0659 7 14.0659C7.55228 14.0659 8 14.5137 8 15.0659V16.6115C8 17.4463 8.00182 17.9799 8.05154 18.3781C8.0978 18.7487 8.173 18.8766 8.23698 18.9521C8.30096 19.0276 8.41473 19.1228 8.77263 19.2294C9.15729 19.3439 9.68331 19.4334 10.5068 19.5707L12.178 19.8492C13.8297 20.1245 14.963 20.3109 15.8189 20.3316C16.6467 20.3516 17.0288 20.2082 17.2927 19.9846C17.5567 19.7611 17.7609 19.4077 17.8773 18.5878C17.9976 17.7403 18 16.5917 18 14.9172V9.08274C18 7.40827 17.9976 6.25969 17.8773 5.41212C17.7609 4.59223 17.5567 4.23889 17.2927 4.01532C17.0288 3.79175 16.6467 3.64834 15.8189 3.66834Z"/>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2929 8.29287C10.9024 8.68339 10.9024 9.31656 11.2929 9.70708L12.5858 11H4C3.44771 11 3 11.4477 3 12C3 12.5523 3.44771 13 4 13H12.5858L11.2929 14.2929C10.9024 14.6834 10.9024 15.3166 11.2929 15.7071C11.6834 16.0976 12.3166 16.0976 12.7071 15.7071L15.7071 12.7071C16.0976 12.3166 16.0976 11.6834 15.7071 11.2929L12.7071 8.29287C12.3166 7.90235 11.6834 7.90235 11.2929 8.29287Z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <form action="{% url 'landing_page_link' %}" method="post">
+                    {% csrf_token %}
+                    <div>
+                      <div class="mb-1 mt-5" style="font-weight: 700;">
+                        شماره تلفن
+                      </div>
+                      <input name="login_phone" type="text" class="form-control masir-form-control text-center" pattern="9[0-9]{9}" autocomplete="off" required dir="ltr">
+                      
+                      <div class="mb-1 mt-1" style="font-weight: 700;">
+                        رمز عبور
+                      </div>
+                      <input name="login_password" type="password" class="form-control masir-form-control text-center" required dir="ltr">
+                      
+                      <div class="mt-3"></div>
+                      <button type="submit" name="login_form" class="btn masir-btn w-100" style="background-color: #69ff64;">
+                        ورود
+                      </button>
+                      <div class="mt-3"></div>
+                      <a href="{% url 'forgot_password_page_link' %}" class="btn masir-btn w-100" style="background-color: #ff6486;">
+                        فراموشی رمز عبور
+                      </a>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="position-relative px-5 masir-modal-header">
+                    <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+                      <div class="masir-circle-icon-3" style="background-color: #bef6f8; color: #3d8385; border: 2px #3d8385 solid;">
+                        <svg viewBox="0 0 32 32" fill="none" stroke="currentcolor">
+                          <circle style="stroke-width:2;stroke-miterlimit:10;" cx="14" cy="11" r="6"/>
+                          <path style="stroke-width:2;stroke-miterlimit:10;" d="M5,26c0-4.971,4.029-9,9-9  c1.864,0,3.596,0.567,5.032,1.537"/>
+                          <circle style="stroke-width:2;stroke-miterlimit:10;" cx="24" cy="24" r="7"/>
+                          <line style="stroke-width:2;stroke-miterlimit:10;" x1="24" y1="28" x2="24" y2="20"/>
+                          <line style="stroke-width:2;stroke-miterlimit:10;" x1="20" y1="24" x2="28" y2="24"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <form action="{% url 'landing_page_link' %}" method="post">
+                    {% csrf_token %}
+                    <div>
+                      <div class="mb-1 mt-5" style="font-weight: 700;">
+                        نام
+                      </div>
+                      <input name="register_firstname" type="text" class="form-control masir-form-control text-center" autocomplete="off" required>
+
+                      <div class="mb-1 mt-1" style="font-weight: 700;">
+                        نام خانوادگی
+                      </div>
+                      <input name="register_lastname" type="text" class="form-control masir-form-control text-center" autocomplete="off" required>
+
+                      <div class="mb-1 mt-1" style="font-weight: 700;">
+                        پایه تحصیلی
+                      </div>
+                      <select name="register_level" class="form-select masir-form-control text-center">
+                        <option value="7">هفتم</option>
+                        <option value="8">هشتم</option>
+                        <option value="9">نهم</option>
+                      </select>
+                      
+                      <div class="mb-1 mt-1" style="font-weight: 700;">
+                        شهر
+                      </div>
+                      <input name="register_city" type="text" class="form-control masir-form-control text-center" autocomplete="off" required list="cities">
+                      <datalist id="cities">
+                        {% for x in cities %}
+                          <option value="{{ x.name }}">
+                        {% endfor %}
+                      </datalist>
+                      
+                      <div class="mb-1 mt-1" style="font-weight: 700;">
+                        نام مدرسه
+                      </div>
+                      <input name="register_school" type="text" class="form-control masir-form-control text-center" autocomplete="off" required list="schools">
+                      <datalist id="schools">
+                        {% for x in schools %}
+                          <option value="{{ x.name }}">
+                        {% endfor %}
+                      </datalist>
+                      
+                      <div class="mb-1 mt-1" style="font-weight: 700;">
+                        کد ملی
+                      </div>
+                      <input name="register_nationalcode" type="text" class="form-control masir-form-control text-center" pattern="[0-9]{10}" autocomplete="off" required dir="ltr">
+                      <div class="mb-1 mt-1">
+                        لطفا از صفحه کلید انگلیسی استفاده کنید.
+                      </div>
+                      
+                      <div class="mb-1 mt-1" style="font-weight: 700;">
+                        شماره تماس
+                      </div>
+                      <input name="register_phone" type="text" class="form-control masir-form-control text-center" pattern="9[0-9]{9}" autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
+                      <div class="mb-1 mt-1">
+                        لطفا از صفحه کلید انگلیسی استفاده کنید.
+                        <br>
+                        همچنین لطفا با این شماره در یکی از شبکه‌های اجتماعی مسابقه مسیر عضو شوید.
+                      </div>
+                      
+                      <div class="mb-1 mt-1" style="font-weight: 700;">
+                        رمز عبور
+                      </div>
+                      <input name="register_password" type="password" class="form-control masir-form-control text-center" required dir="ltr">
+                      
+                      <div class="mt-3"></div>
+                      <button type="submit" name="register_form" class="btn masir-btn w-100" style="background-color: #64f5ff;">
+                        ثبت نام
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal fade" id="group_register_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="group_register_modal_Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+          <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+            <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close" role="button"></a>
+            <div class="modal-body scroll-without-scrollbar">
+              <div class="position-relative px-5 masir-modal-header">
+                <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+                  <div class="masir-circle-icon-3" style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      <path d="M13 14V14C13 11.2386 15.2386 9 18 9V9C20.7614 9 23 11.2386 23 14V14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      <path d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M18 9C19.6569 9 21 7.65685 21 6C21 4.34315 19.6569 3 18 3C16.3431 3 15 4.34315 15 6C15 7.65685 16.3431 9 18 9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <form action="{% url 'landing_page_link' %}" method="post">
+                {% csrf_token %}
+                <div>
+                  <div class="mb-1 mt-5" style="font-weight: 700;">
+                    نام گروه
+                  </div>
+                  <input name="group_register_title" type="text" class="form-control masir-form-control text-center" autocomplete="off" required>
+                  
+                  <div class="mb-1 mt-5" style="font-weight: 700;">
+                    شماره تلفن نفر اول گروه
+                  </div>
+                  <input name="group_register_phone_1" type="text" class="form-control masir-form-control text-center" pattern="9[0-9]{9}" autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
+
+                  <div class="mb-1 mt-1" style="font-weight: 700;">
+                    کد نفر اول گروه
+                  </div>
+                  <input name="group_register_code_1" type="text" class="form-control masir-form-control text-center" autocomplete="off" required dir="ltr">
+                  
+                  <div class="mb-1 mt-1" style="font-weight: 700;">
+                    شماره تلفن نفر دوم گروه
+                  </div>
+                  <input name="group_register_phone_2" type="text" class="form-control masir-form-control text-center" pattern="9[0-9]{9}" autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
+                  
+                  <div class="mb-1 mt-1" style="font-weight: 700;">
+                    کد نفر دوم گروه
+                  </div>
+                  <input name="group_register_code_2" type="text" class="form-control masir-form-control text-center" autocomplete="off" required dir="ltr">
+                  
+                  <div class="mb-1 mt-1" style="font-weight: 700;">
+                    شماره تلفن نفر سوم گروه
+                  </div>
+                  <input name="group_register_phone_3" type="text" class="form-control masir-form-control text-center" pattern="9[0-9]{9}" autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
+                  
+                  <div class="mb-1 mt-1" style="font-weight: 700;">
+                    کد نفر سوم گروه
+                  </div>
+                  <input name="group_register_code_3" type="text" class="form-control masir-form-control text-center" autocomplete="off" required dir="ltr">
+                  
+                  <div class="mt-5"></div>
+                  <button type="submit" name="group_register_form" class="btn masir-btn w-100" style="background-color: #69ff64;">
+                    ثبت گروه
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="contact_us_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="contact_us_modal_Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+          <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+            <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close" role="button"></a>
+            <div class="modal-body scroll-without-scrollbar">
+              <div class="position-relative px-5 masir-modal-header">
+                <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+                  <div class="masir-circle-icon-3" style="background-color: #bedbf8; color: #3d6185; border: 2px #3d6185 solid;">
+                    <svg viewBox="0 0 512 512" fill="currentcolor">
+                      <path d="M389.565,400.696h-66.783c-9.22,0-16.696,7.475-16.696,16.696s7.475,16.696,16.696,16.696h66.783 c9.22,0,16.696-7.475,16.696-16.696S398.785,400.696,389.565,400.696z"/>
+                      <path d="M472.645,474.965c-3.899-92.646-65.593-169.236-148.063-196.743c15.753-11.455,28.545-26.742,36.996-44.483h27.987 c27.618,0,50.087-22.469,50.087-50.087C439.653,82.386,357.267,0,256.001,0S72.349,82.386,72.349,183.652 c0,27.618,22.469,50.087,50.087,50.087h27.987c8.45,17.741,21.244,33.027,36.996,44.483 C105.79,305.448,43.292,381.461,39.357,474.965c-0.532,2.391-0.398,2.187-0.398,20.34c0,9.22,7.475,16.696,16.696,16.696H456.35 c9.22,0,16.696-7.475,16.696-16.696C473.043,476.888,473.165,477.306,472.645,474.965z M406.261,183.652 c0,9.206-7.49,16.696-16.696,16.696h-17.893c1.596-11.109,1.598-22.269,0-33.391h17.893 C398.772,166.957,406.261,174.446,406.261,183.652z M140.328,200.348h-17.893c-9.206,0-16.696-7.49-16.696-16.696 c0-9.206,7.49-16.696,16.696-16.696h17.893C138.732,178.064,138.73,189.225,140.328,200.348z M150.422,133.565 c-30.531,0-30.89-0.209-36.339,0.709C134.556,75.603,190.436,33.391,256,33.391s121.444,42.212,141.916,100.883 c-5.502-0.927-5.928-0.709-36.339-0.709c-18.79-39.45-59.05-66.783-105.578-66.783S169.212,94.116,150.422,133.565z M172.522,183.652c0-46.03,37.448-83.478,83.478-83.478c46.03,0,83.478,37.448,83.478,83.478c0,5.717-0.58,11.3-1.68,16.696H256 c-9.22,0-16.696,7.475-16.696,16.696c0,9.22,7.475,16.696,16.696,16.696h66.737C307.491,254.001,283.252,267.13,256,267.13 C209.97,267.13,172.522,229.682,172.522,183.652z M239.304,478.609H72.636c1.754-57.981,31.097-109.548,75.044-142.081 l91.625,91.625V478.609z M177.087,318.713c24.003-11.64,50.797-18.192,78.913-18.192c28.116,0,54.91,6.551,78.911,18.192 L256,397.625L177.087,318.713z M272.695,478.609v-50.456l91.625-91.625c43.946,32.533,73.289,84.102,75.044,142.081H272.695z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <form action="{% url 'landing_page_link' %}" method="post">
+                {% csrf_token %}
+                <div>
+                  <div class="mb-1 mt-5" style="font-weight: 700;">
+                    نام و نام خانوادگی
+                  </div>
+                  <input name="contact_us_name" type="text" class="form-control masir-form-control" autocomplete="off" required>
+                  
+                  <div class="mb-1 mt-3" style="font-weight: 700;">
+                    شماره تلفن
+                  </div>
+                  <input name="contact_us_phone" type="text" class="form-control masir-form-control" pattern="9[0-9]{9}" autocomplete="off" required>
+                  
+                  <div class="mt-2"></div>
+                  <textarea name="contact_us_message" class="form-control masir-form-control" rows="3" required></textarea>
+                  <div class="mb-3 mt-1">
+                    مسئولین مسیر در اولین فرصت پاسخ شما را خواهند داد.
+                  </div>
+
+                  <button type="submit" name="message_form" class="btn masir-btn w-100" style="background-color: #64b1ff;">
+                    ارسال
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% block mainblock %}
+        <div id="masir-map1-background">
+          <img id="masir-logotype" class="position-absolute start-50 translate-middle-x" src="{% static 'images/logotype.png' %}" style="width: max(50vw, 50vh); margin-top: 5vh;">
+          {% if MESSAGE %}
+            <div class="position-absolute top-50 start-50 translate-middle h5 w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
+              {{ MESSAGE|safe }}
+            </div>
+          {% endif %}
+          <img id="masir-map1-stone" src="{% static 'images/stone.png' %}">
+        </div>
+
+        <div id="about_masir1401" class="bg-white sticky-top" style="height: max(6vw, 6vh);"></div>
+        <div class="container pb-5 mb-5">
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 id="H1">
+                <button class="accordion-button masir-title-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#S1" aria-expanded="false" aria-controls="S1">
+                  ماجرا چیست؟
+                </button>
+              </h2>
+              <div id="S1" class="accordion-collapse collapse" aria-labelledby="H1" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <iframe src="https://www.aparat.com/video/video/embed/videohash/pWhU5/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 100%; height: 40vh;"></iframe>
+                  <p class="masir-paragraph-1">
+                    انسان ها همیشه می‌خواهند در افسوس خاطرات و آروزی رویاهای شیرین خود زندگی کنند، اما قهرمانان کسانی هستند که شرایط را طوری که درست است تغییر می دهند. آخرین ضربه تاریکی با حیله و فریب زده شده است، دنیا درگیر یک فاجعه عظیم شده و حیاتِ روح و جسم انسان‌ها تحت شعاع قرار گرفته است. دیگر جایی برای زندگی سالم وجود ندارد. فانوس‌ها با تصمیمِ خودِ مردم کم‌سو شده و کم‌کم خاموش می‌شوند. اکنون زمان درنگ نیست. لحظه‌ای غفلت می‌تواند به قیمت تسلط تاریکیِ مطلق بر این جهان تمام شود. فانوس خود را بردارید، آذوقه‌ی لازم و توان مورد نیاز را بدست آورید. منزل‌های خطرناک و چالش‌های سخت را یکی پس از دیگری پشت سر بگذارید؛ و به مصاف اهریمن بروید. از پیر دانا کمک بگیرید و سختی راه و آزمون‌های سنگین آن را به جان بخرید تا آن چیزی که درست است محقق شود. پیروزی و جانِ سالم‌ به‌در بردن با گرفتن پاداشی درخورِ تلاش شما شیرین خواهد شد. قهرمان بودن برازنده‌ی شماست... . اکنون که خود را شایسته قهرمانی می‌دانید حتما برای آگاهی از چگونگی ورود به این ماجراجویی، توضیحات زیر را بخوانید. حواستان باشد کسی شما را تعقیب نکند. مبادا جاسوسان تاریکی شما را از گام نهادن در مسیر بر حذر دارند. به اولین مسیر قرن خوش آمدید.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 id="H2">
+                <button class="accordion-button collapsed masir-title-1" type="button" data-bs-toggle="collapse" data-bs-target="#S2" aria-expanded="false" aria-controls="S2">
+                  مسابقه چگونه است؟
+                </button>
+              </h2>
+              <div id="S2" class="accordion-collapse collapse" aria-labelledby="H2" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <p class="masir-paragraph-1">
+                    شما به عنوان دانش‌آموزان نخبه‌ی این مرز و بوم که در مقطع متوسطه اول تحصیل می‌کنید، به همراه دوستان خود تصمیم گرفته‌اید به صورت گروهی در این مسابقه‌ی شگفت‌انگیز شرکت کنید و ماموریت خطیری را که بر عهده‌‌تان قرار گرفته به انجام برسانید. به امید خدا، این ماجراجویی از هفته دوم ماه مبارک رمضان آغاز می‌شود و تا انتهای آن ادامه دارد.
+                  </p>
+                  <p class="masir-paragraph-1">
+                    البته برای حرکت در کوه باید امکانات و قوای لازم (آذوقه و توان) را داشته باشید، به همین منظور در هر منزل می‌توانید چند فعالیت انجام دهید. پس از انجام هر فعالیت، خروجی آن را برای مسئولین مسابقه ارسال می‌کنید. فعالیتها توسط تیم داوران ارزیابی و امتیازدهی شده و بر اساس امتیازی که کسب کرده‌اید، می‌توانید به حرکت خود در کوه ادامه دهید.
+                  </p>
+                  <p class="masir-paragraph-1">
+                    گروه 3 ‌نفره‌ی شما از منزل اولِ یک سرزمین اسرارآمیز حرکت خود را شروع خواهد کرد. برای انجام ماموریت باید شایستگی‌ها و مهارتهای لازم را کسب کنید و با گذر از منازل مختلف، به قله‌ی کوه نزدیک شوید. 
+                  </p>
+                  <p class="masir-paragraph-1">
+                    فعالیتهایی که در منازل کوه باید انجام دهید در قالبها و موضوعات متنوع اما مرتبط با ماه مبارک رمضان هستند که خودتان با توجه به ماموریت اصلی و آذوقه و توانِ مورد نیاز می‌توانید موضوع و قالب آن را انتخاب کنید. 
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 id="H3">
+                <button class="accordion-button collapsed masir-title-1" type="button" data-bs-toggle="collapse" data-bs-target="#S3" aria-expanded="false" aria-controls="S3">
+                  امتیازها، شایستگی‌ها و دستاوردها
+                </button>
+              </h2>
+              <div id="S3" class="accordion-collapse collapse" aria-labelledby="H3" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <p class="masir-paragraph-1">
+                    هر فعالیتی که در این مسابقه انجام می‌دهید توسط داوران ارزیابی می‌شود و امتیاز مشخصی به آن داده می‌شود و بر اساس آن، شایستگی‌ها و مهارتهای لازم را کسب می‌کنید. علاوه بر شایستگی‌ها، دستاوردهای مختلفی نیز وجود دارد که با توجه نحوه‌ی حرکت شما در کوه به گروهتان تعلق می‌گیرید. دقت کنید که امتیاز نهایی گروه شما بر اساس شایستگی‌ها، مهارتها و دستاوردهایی محاسبه می‌شود که توانسته‌اید بدست آورید. بنابراین، آذوقه و توان صرفا وسیله و نیرویی هستند برای کسب آن ویژگی‌های درونی! پس تلاش کنید به آنها دل نبندید!
+                  </p>
+                  <p class="masir-paragraph-1">
+                    خاصیت این سرزمین اسرارآمیز این‌گونه است که بیشتر بودن تعداد منازل پشت سرگذاشته شده لزوما به معنای برتری یک گروه نیست! اما حواستان باشد، هر چه جلوتر بروید امکان کسب شایستگی و دستاورد برایتان بیشتر می‌شود و به انجام ماموریت اصلی نزدیکتر می‌شوید. پس تلاش کنید عاقلانه تصمیم بگیرید و هوشمندانه انتخاب کنید!
+                  </p>
+                  <p class="masir-paragraph-1">
+                    با توجه به محدودیتهای موجود در این سرزمین، گروه شما با 5 گروه دیگر همراه است! اما شما از وضعیت دقیق آنها اطلاعی ندارید بلکه صرفا متوجه می‌شوید نسبت به آنها چه وضعیتی دارید! بنابراین، شما در یک اَبَرگروهِ 6 گروهی قرار گرفته‌اید.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 id="H4">
+                <button class="accordion-button collapsed masir-title-1" type="button" data-bs-toggle="collapse" data-bs-target="#S4" aria-expanded="false" aria-controls="S4">
+                  جوایز گروه‌های برتر و اختتامیه
+                </button>
+              </h2>
+              <div id="S4" class="accordion-collapse collapse" aria-labelledby="H4" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <p class="masir-paragraph-1">
+                    گروه‌های برتر و شایسته‌ی تقدیر در مسابقه‌ی مسیر امسال به چند طریق مشخص می‌شوند:
+                  </p>
+                  <p class="masir-paragraph-1">
+                    گروه‌های برتر کل مسابقه: در میان تمام گروه‌های شرکت‌کننده، به سه گروه برتر که توانسته باشند امتیاز بیشتر یا به تعبیر دیگر شایستگی‌ها و دستاوردهای بیشتری کسب کنند (دقت کنید که شایستگی‌ها و دستاوردها ضرایب مختلفی در امتیاز نهایی دارند) جوایزی به شرح زیر تقدیم می‌گردد:
+                  </p>
+                  <ul>
+                    <li>
+                      گروه اول:	به ارزش	 90 میلیون ریال
+                    </li>
+                    <li>
+                      گروه دوم:	به ارزش	 60 میلیون ریال
+                    </li>
+                    <li>
+                      گروه سوم:	به ارزش	 30 میلیون ریال
+                    </li>
+                  </ul>
+                  <p class="masir-paragraph-1">
+                    گروه‌ اول در هر اَبَرگروه: شما در اَبَرگروه‌های 6 گروهی قرار می‌گیرید (به صورت تصادفی) و به گروهی که در میان این 6 گروه امتیاز بیشتری کسب کرده باشد (به شرط حرکت در کوه و رد کردن منازل حداقلی) جایزه‌ای به ارزش 3 میلیون ریال تعلق می‌گیرد.
+                  </p>
+                  <p class="masir-paragraph-1">
+                    آثار برتر از نگاه مردم: لیستی از آثار برتر پس از انتخاب داوران، به نظرسنجی عمومی گذاشته خواهد شد و به سه اثر منتخب در قالبهای ویدئو، صوت و عکس جایزه‌ای به ارزش 15 میلیون ریال تعلق می‌گیرد.
+                  </p>
+                  <p class="masir-paragraph-1">
+                    نکته‌ی بسیار مهم: هر یک از گروه‌های برتر از بین لیست بلندبالایی که توسط مسئولین مسابقه ارائه می‌شود، تا سقف مبلغ برنده‌شده، کالاها یا تجاربی را انتخاب می‌کنند. این جوایز را ما خریداری می‌کنیم و به آنها تحویل می‌دهیم. حتی می‌توانند کالای دلخواه خود را که در لیست اولیه قرار ندارد با هماهنگی و تایید مسئولین مسابقه سفارش دهند.
+                  </p>
+                  <p class="masir-paragraph-1">
+                    اختتامیه: ان‌شاءالله اختتامیه‌ی مسابقه نیز در سالن همایش‌های آکادمی همراه اول‌ برگزار خواهد شد که در آن از گروه‌های برتر تقدیر خواهد شد.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 id="H5">
+                <button class="accordion-button collapsed masir-title-1" type="button" data-bs-toggle="collapse" data-bs-target="#S5" aria-expanded="false" aria-controls="S5">
+                  ثبت نام
+                </button>
+              </h2>
+              <div id="S5" class="accordion-collapse collapse" aria-labelledby="H5" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <p class="masir-paragraph-1">
+                    برای شرکت در مسابقه حتما باید در قالب یک گروه 3 نفره ثبت نام کنید. بدین منظور ابتدا هر یک از اعضای گروه به صورت مجزا ثبت نام و کد تایید ثبت نام را دریافت می‌کند. سپس یکی از اعضای گروه کدهای تمام افراد گروه خود را در بخش «ثبت گروه» به همراه «نام گروه» وارد می‌کند. 
+                  </p>
+                  <p class="masir-paragraph-1">
+                    لازم به ذکر است که ثبت‌نام در این مسابقه رایگان است. اما پیشنهاد ما به شما این است که قبل از ثبت‌نام گروهی، حداقل به مبلغ 10 هزار تومان به هر طریقی که می‌توانید صدقه بدهید و بعد وارد این مسیر پرخطر و هیجان‌انگیز شوید!
+                  </p>
+                  <ul>
+                    <li>
+                      سایت اصلی مسابقه: ثبت نام، اطلاع‌رسانی‌ها، دریافت فعالیتها، ارسال آثار و مشاهده وضعیت و نتایج (سایت بستر اصلی و رسمی مسابقه است)
+                      <div class="text-end">
+                        www.masir1401.ir
+                      </div>
+                    </li>
+                    <li>
+                      صفحه اینستاگرامی: در کنار سایت اصلی به منظور به اشتراک عموم گذاشتن آثار برتر.
+                      <div class="text-end">
+                        @masir1401_ir
+                      </div>
+                    </li>
+                    <li>
+                      کانال بله و تلگرام: در کنار سایت اصلی به منظور اطلاع‌رسانی‌ها و ارسال آثار برتر.
+                      <div class="text-end">
+                        @masir1401_ir
+                      </div>
+                    </li>
+                    <li>
+                      کانال آپارات: در کنار سایت اصلی به منظور به اشتراک گذاشتن برخی فیلمها و آثار برتر.
+                      <div class="text-end">
+                        @masir1401
+                      </div>
+                    </li>
+                  </ul>
+                  <p class="masir-paragraph-1">
+                    حتما و حتما در یکی از کانالهای اطلاع‌رسانی عضو شوید تا از پیامهای فوری مطلع شوید.
+                  </p>
+                  <p class="masir-paragraph-1">
+                    به امید خدا نکات جزئی‌تر و قوانین دقیق مسابقه تا هفته دوم ماه مبارک رمضان در سایت و کانالها قرار خواهد گرفت. 
+                  </p>
+                  <p class="masir-paragraph-1">
+                    ان‌شاءالله خداوند شما را در این مسیر هیجان‌انگیز کمک کند. با ما همراه باشید...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center masir-title-1 mb-3">
+          حامیان ما
+        </div>
+        <div class="row justify-content-center mb-5 pb-5">
+          <img src="{% static 'images/logo_Helli2.png' %}" class="col" style="width: min(50vh, 50vw); height: max(30vh, 30vw); object-fit: contain;">
+          <img src="{% static 'images/logo_MCI.png' %}" class="col" style="width: min(50vh, 50vw); height: max(30vh, 30vw); object-fit: contain;">
+        </div>
+      {% endblock %}
+    </div>
+    <!-- Bootstrap -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script type="text/javascript">
+      var map = ["&\#1776;","&\#1777;","&\#1778;","&\#1779;","&\#1780;","&\#1781;","&\#1782;","&\#1783;","&\#1784;","&\#1785;"]
+      document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function($0) { return map[$0]});
+    </script>
+
+    <script type="text/javascript">
+      var map = ["&\#1776;","&\#1777;","&\#1778;","&\#1779;","&\#1780;","&\#1781;","&\#1782;","&\#1783;","&\#1784;","&\#1785;"]
+      var i = -1;
+      var text = "";
+      {% for x in announcements %}
+        text = text + "{{ x.text }} \u058E";      
+      {% endfor %}
+      var speed = 75;
+      var pause_time = 3000;
+
+      box = document.getElementById("Announcements");
+      
+      function typeWriter() {
+        if (i < text.length - 2) {
+          i++;
+          if (text.charAt(i) == "\u058E"){
+            setTimeout(cleartext, pause_time);
+          }
+          else {
+            box.innerHTML += text.charAt(i).replace(/\d(?=[^<>]*(<|$))/g, function($0) { return map[$0]});;
+            setTimeout(typeWriter, speed);
+          }
+        }
+        else{
+          i = -1;
+          setTimeout(cleartext, pause_time);
+        }
+      }
+
+      function cleartext(){
+        box.innerHTML = "";
+        typeWriter();
+      }
+      
+      window.onload = typeWriter;
+    </script>
+
+    {% block scriptblock %} {% endblock %}
+
+  </body>
+</html>

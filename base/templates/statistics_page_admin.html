@@ -1,0 +1,453 @@
+{% load static %}
+{% load request_tag %}
+
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.rtl.min.css' %}">
+
+    <!-- Maisr CSS -->
+    <link rel="stylesheet" href="{% static 'masir.css' %}">
+
+    <style>
+      .masir-modal-close-icon{
+        background-image: url("{% static 'images/close_icon.png' %}");
+      }
+
+      #masir-map3-background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url('{% static 'images/home_page_background.jpg' %}');
+        filter: blur(10px) grayscale(30%) opacity(70%);
+      }
+
+      #masir-navbar-bg{
+        height: 1vh;
+        background-color: #364559;
+        margin: max(2.75vw, 2.75vh) 0px;
+      }
+    </style>
+
+    <title>مسیر 1401</title>
+  </head>
+  <body class="m-0" {% if MESSAGE %} onload="show_message()" {% endif %}>
+    <div id="maindiv" style="width: 100%;" dir="rtl">
+      <nav class="fixed-top">
+        <div id="masir-navbar-bg" class="position-relative">
+          <div class="position-absolute top-50 start-0 translate-middle-y d-flex ms-1 ms-lg-5" style="height: max-content;">
+            {% if user.user_detail.accessibility.judge_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="داوری فعالیت‌ها" style="background-image: url('{% static 'images/navbar_judge.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'judge_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.statistics_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="آمار" style="background-image: url('{% static 'images/navbar_statistics.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'statistics_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.club_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="باشگاه" style="background-image: url('{% static 'images/navbar_club.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'club_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.announcements_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="اعلانات" style="background-image: url('{% static 'images/navbar_announcements.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'announcements_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.reports_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="گزارش" style="background-image: url('{% static 'images/navbar_reports.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'reports_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.faq_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="پرسش‌های پرتکرار" style="background-image: url('{% static 'images/navbar_faq.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'faq_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.contact_admin_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="ارتباط با ما" style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'contact_admin_page_link' %}"></a>
+            {% endif %}
+          </div>
+          <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+          </div>
+          <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5" style="height: max-content;">
+            <a class="masir-circle-button-2 masir-jelly" title="صفحه اصلی" style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'home_page_link' %}"></a>
+            <a class="masir-circle-button-2 masir-jelly" title="خروج" style="background-image: url('{% static 'images/navbar_logout.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'logout_link' %}"></a>
+          </div>
+        </div>
+      </nav>
+
+      {% block mainblock %}
+        <div style="width: 100vw; height: 100vh; position: relative; overflow: hidden;">
+          <div id="masir-map3-background"></div>
+          <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100" style="max-height: 80vh; overflow: scroll;">
+            <div class="w-75 mt-5 mx-auto">
+              <div class="mb-2 pb-2" style="background-color: #ffcbfb;">
+                <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+                  <span>
+                    آمار کلی مسابقه
+                  </span>
+                  <span>
+                  </span>
+                </div>
+                
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 p-2" style="text-align: justify;">
+                  <div class="w-100" style="font-weight: 700;">
+                    افراد آنلاین
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+                      {% active_users in 10 minutes as user_list %}
+                      {% for user in user_list %}
+                        <div class="col">
+                          {{ user.user_detail }}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  
+                  <div class="col" style="font-weight: 700;">
+                    تعداد گروه‌ها:
+                    <ul>
+                      <li>
+                        {{ groups_all.0 }} گروه
+                      </li>
+                      <li>
+                        {{ groups_all.1 }} گروه فعال
+                      </li>
+                      <li>
+                        {{ groups_all.1 }} گروه که حداقل یک فعالیت انجام داده‌اند
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col" style="font-weight: 700;">
+                    مجموع صدقات:
+                    <ul>
+                      <li>
+                        {{ charities_all.0 }} واحد
+                      </li>
+                      <li>
+                        {{ charities_all.1 }} گروه
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col" style="font-weight: 700;">
+                    مجموع شرکت در باشگاه:
+                    <ul>
+                      <li>
+                        {{ club_files_all.0 }} مرتبه
+                      </li>
+                      <li>
+                        {{ club_files_all.1 }} نفر مختلف
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col" style="font-weight: 700;">
+                    مجموع شرکت در دانشگاه:
+                    <ul>
+                      <li>
+                        {{ exams_all.0 }} مرتبه
+                      </li>
+                      <li>
+                        {{ exams_all.1 }} گروه مختلف
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="w-100" style="font-weight: 700;">
+                    دفعات استفاده از هر قالب:
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+                      {% for x in activitiy_templates_all %}
+                        <div class="col">
+                          {{ x.template__title }}
+                          <ul>
+                            <li style="font-weight: 700;">
+                              {{ x.count }}
+                            </li>
+                          </ul>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-2 pb-2" style="background-color: #ffcbfb;">
+                <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+                  <span>
+                    آمار آرای مردمی
+                  </span>
+                  <span>
+                  </span>
+                </div>
+                
+                <div class="row p-2" style="text-align: justify;">
+                  <div class="col-md-6">
+                    <span style="font-weight: 700;">
+                      تعداد پیامک‌های ارسال شده:
+                    </span>
+                    {{ votes.all }}
+                    پیامک
+                  </div>
+                  <div class="col-md-6">
+                    <span style="font-weight: 700;">
+                      تعداد آرای معتبر ارسال شده:
+                    </span>
+                    {{ votes.all_valid }}
+                    رای
+                  </div>
+                  
+                  <div class="w-100 mt-2" style="font-weight: 700;">
+                    آرای هر اثر:
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> تصویر شماره 1 </span>
+                      <span> {{ votes.image_1.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.image_1.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.image_1.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> تصویر شماره 2 </span>
+                      <span> {{ votes.image_2.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.image_2.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.image_2.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> تصویر شماره 3 </span>
+                      <span> {{ votes.image_3.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.image_3.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.image_3.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> تصویر شماره 4 </span>
+                      <span> {{ votes.image_4.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.image_4.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.image_4.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> تصویر شماره 5 </span>
+                      <span> {{ votes.image_5.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.image_5.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.image_5.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> صوت شماره 1 </span>
+                      <span> {{ votes.music_1.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.music_1.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.music_1.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> صوت شماره 2 </span>
+                      <span> {{ votes.music_2.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.music_2.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.music_2.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> صوت شماره 3 </span>
+                      <span> {{ votes.music_3.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.music_3.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.music_3.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> صوت شماره 4 </span>
+                      <span> {{ votes.music_4.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.music_4.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.music_4.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> صوت شماره 5 </span>
+                      <span> {{ votes.music_5.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.music_5.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.music_5.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> فیلم شماره 1 </span>
+                      <span> {{ votes.video_1.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.video_1.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.video_1.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> فیلم شماره 2 </span>
+                      <span> {{ votes.video_2.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.video_2.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.video_2.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> فیلم شماره 3 </span>
+                      <span> {{ votes.video_3.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.video_3.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.video_3.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> فیلم شماره 4 </span>
+                      <span> {{ votes.video_4.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.video_4.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.video_4.1}}%;"></div>
+                    </div>
+
+                    <div class="mt-1 d-flex justify-content-between">
+                      <span> فیلم شماره 5 </span>
+                      <span> {{ votes.video_5.0 }} رای </span>
+                    </div>
+                    <div class="progress" style="height: 2px;">
+                      <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="{{votes.video_5.1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{votes.video_5.1}}%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {% for x in groups %}
+                <div class="mb-2 pb-2" style="background-color: #cbe2ff;">
+                  <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+                    <span>
+                      {{ x }}
+                    </span>
+                    <span>
+                    </span>
+                  </div>
+                  
+                  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 p-2" style="text-align: justify;">
+                    <div class="col">
+                      اعضا:
+                      <ul>
+                        {% for u in x.users.all %}
+                          <li>
+                            {{ u }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    <div class="col">
+                      امتیازها:
+                      <ul>
+                          <li>
+                            نور:
+                            {{ x.get_light }}
+                          </li>
+                          <li>
+                            آذوقه:
+                            {{ x.get_food }}
+                          </li>
+                          <li>
+                            توان:
+                            {{ x.get_power }}
+                          </li>
+                          <li>
+                            منزل فعلی:
+                            {{ x.manzel }}
+                          </li>
+                      </ul>
+                    </div>
+                    <div class="col">
+                      فعالیت‌های انجام شده:
+                      <ul>
+                        {% for a in x.activities.all %}
+                          <li {% if a.state == '4' %} style="font-weight: 700;" {% endif %}>
+                            {{ a.topic }} | {{ a.template }} | {{ a.get_score }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    <div class="col">
+                      فعالیت‌های باشگاه:
+                      <ul>
+                        {% for u in x.users.all %}
+                          {% for c in u.club_files.all %}
+                            <li {% if c.show_public %} style="font-weight: 700;" {% endif %}>
+                              {{ u }} | {{ c.level }}
+                            </li>
+                          {% endfor %}
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    <div class="col">
+                      فعالیت‌های دانشگاه:
+                      <ul>
+                        {% for u in x.exams.all %}
+                          <li {% if u.show_public %} style="font-weight: 700;" {% endif %}>
+                            {{ u.exam }} | {{ u.score }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    <div class="col">
+                      صدقات:
+                      <ul>
+                        {% for u in x.charities.all %}
+                          <li {% if u.show_public %} style="font-weight: 700;" {% endif %}>
+                            {{ u.value }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      دورریز:
+                      <ul>
+                        {% for u in x.trashes.all %}
+                          <li {% if u.show_public %} style="font-weight: 700;" {% endif %}>
+                            {{ u.food }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    <div class="col">
+                      نشان‌های کسب شده:
+                      <ul>
+                        {% for u in x.get_achivements %}
+                          <li>
+                            {{ u.achivement }} | {{ u.score }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endblock %}
+    </div>
+    <!-- Bootstrap -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script type="text/javascript">
+      var map = ["&\#1776;","&\#1777;","&\#1778;","&\#1779;","&\#1780;","&\#1781;","&\#1782;","&\#1783;","&\#1784;","&\#1785;"]
+      document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function($0) { return map[$0]});
+    </script>
+
+    <script>
+      function club_admin_form_click(){
+        document.getElementById('club_admin_form').style.display = 'none';
+        document.getElementById('club_admin_form_loading').style.display = 'block';
+      }
+    </script>
+
+  </body>
+</html>

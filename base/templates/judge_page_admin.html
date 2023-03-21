@@ -1,0 +1,258 @@
+{% load static %}
+
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.rtl.min.css' %}">
+
+    <!-- Maisr CSS -->
+    <link rel="stylesheet" href="{% static 'masir.css' %}">
+
+    <style>
+      .masir-modal-close-icon{
+        background-image: url("{% static 'images/close_icon.png' %}");
+      }
+
+      #masir-map3-background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url('{% static 'images/home_page_background.jpg' %}');
+        filter: blur(10px) grayscale(30%) opacity(70%);
+      }
+
+      #masir-navbar-bg{
+        height: 1vh;
+        background-color: #364559;
+        margin: max(2.75vw, 2.75vh) 0px;
+      }
+    </style>
+
+    <title>مسیر 1401</title>
+  </head>
+  <body class="m-0" {% if MESSAGE %} onload="show_message()" {% endif %}>
+    <div id="maindiv" style="width: 100%;" dir="rtl">
+      <nav class="fixed-top">
+        <div id="masir-navbar-bg" class="position-relative">
+          <div class="position-absolute top-50 start-0 translate-middle-y d-flex ms-1 ms-lg-5" style="height: max-content;">
+            {% if user.user_detail.accessibility.judge_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="داوری فعالیت‌ها" style="background-image: url('{% static 'images/navbar_judge.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'judge_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.statistics_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="آمار" style="background-image: url('{% static 'images/navbar_statistics.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'statistics_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.club_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="باشگاه" style="background-image: url('{% static 'images/navbar_club.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'club_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.announcements_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="اعلانات" style="background-image: url('{% static 'images/navbar_announcements.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'announcements_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.reports_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="گزارش" style="background-image: url('{% static 'images/navbar_reports.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'reports_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.faq_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="پرسش‌های پرتکرار" style="background-image: url('{% static 'images/navbar_faq.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'faq_page_link' %}"></a>
+            {% endif %}
+            {% if user.user_detail.accessibility.contact_admin_page %}
+              <a class="masir-circle-button-2 masir-jelly" title="ارتباط با ما" style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'contact_admin_page_link' %}"></a>
+            {% endif %}
+          </div>
+          <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+          </div>
+          <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5" style="height: max-content;">
+            <a class="masir-circle-button-2 masir-jelly" title="صفحه اصلی" style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'home_page_link' %}"></a>
+            <a class="masir-circle-button-2 masir-jelly" title="خروج" style="background-image: url('{% static 'images/navbar_logout.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'logout_link' %}"></a>
+          </div>
+        </div>
+      </nav>
+
+      {% block mainblock %}
+        <div style="width: 100vw; height: 100vh; position: relative; overflow: hidden;">
+          <div id="masir-map3-background"></div>
+          <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100" style="max-height: 80vh; overflow: scroll;">
+            {% if the_file %}
+              <div class="mb-2 mt-5 pb-2 w-75 mx-auto" style="background-color: #ffcbcb;">
+                <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+                  <span>
+                    {{ the_file.topic }} | {{ the_file.template }} 
+                  </span>
+                  <span>
+                    {{ the_file.group }}
+                  </span>
+                </div>
+                
+                <div class="p-2">
+                  {{ the_file.link }}
+                  <a class="btn masir-btn w-100 mt-1" href="{{ the_file.link }}" target="_blank" style="background-color: #d1d426;"> دانلود فایل ارسال شده </a>
+                  <a class="btn masir-btn w-100 mt-1" href="{{ the_file.topic.get_file }}" target="_blank" style="background-color: #26d4c5;"> دانلود فایل توضیحات فعالیت {{ the_file.topic }} </a>
+                  <a class="btn masir-btn w-100 mt-1" href="{{ the_file.topic.manzel.get_file }}" target="_blank" style="background-color: #26d4c5;"> دانلود فایل توضیحات منزل {{ the_file.topic.manzel }} </a>
+                </div>
+              </div>
+              <form action="" method="post" class="w-75 mx-auto" onsubmit="judge_admin_form_click()">
+                {% csrf_token %}
+                <div class="mb-1 mt-2" style="font-weight: 700;">
+                  محتوای مناسب، غنی و منسجم
+                </div>
+                <input name="judge_admin_score1" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score1 %} the_file.score1 {% else %} 3 {% endif %}" min="1" max="5">
+
+                <div class="mb-1 mt-2" style="font-weight: 700;">
+                  تناسب قالب و محتوای انتخابی
+                </div>
+                <input name="judge_admin_score2" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score2 %} the_file.score2 {% else %} 3 {% endif %}" min="1" max="5">
+
+                <div class="mb-1 mt-2" style="font-weight: 700;">
+                  رعایت نکات حداقلی فنی درباره ی هر قالب
+                </div>
+                <input name="judge_admin_score3" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score3 %} the_file.score3 {% else %} 3 {% endif %}" min="1" max="5">
+
+                <div class="mb-1 mt-2" style="font-weight: 700;">
+                  خلاقیت و نوآوری
+                </div>
+                <input name="judge_admin_score4" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score4 %} the_file.score4 {% else %} 3 {% endif %}" min="1" max="5">
+
+                <div class="mb-1 mt-2" style="font-weight: 700;">
+                  جذابیت برای مخاطب
+                </div>
+                <input name="judge_admin_score5" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score5 %} the_file.score5 {% else %} 3 {% endif %}" min="1" max="5">
+
+                <div class="mb-1 mt-2" style="font-weight: 700;">
+                  اشاره به کاربردی بودن مفاهیم در زندگی امروزی (به صورت مستقیم یا غیرمستقیم)
+                </div>
+                <input name="judge_admin_score6" type="number" class="form-control masir-form-control text-center mb-3" autocomplete="off" required value="{% if the_file.score6 %} the_file.score6 {% else %} 3 {% endif %}" min="1" max="5">
+                
+                <div class="mb-1 mt-2" style="font-weight: 700;">
+                  دلیل رد شدن در داوری
+                </div>
+                <textarea name="judge_admin_denied_message" class="form-control form-control masir-form-control mb-3" rows="3" placeholder="در صورت رد شدن در داوری، دلیل خود را بنویسید." oninput="judge_admin_denied_message_change(this)"></textarea>
+                
+                <div id="judge_form">
+                  <button type="submit" name="judge_admin_form" class="btn masir-btn w-100 mt-2" style="background-color: #4ed426;" id="judge_admin_form">ثبت</button>
+                  <button type="submit" name="judge_admin_deny_form" class="btn masir-btn w-100 mt-2" style="background-color: #d1d426; display: none;" id="judge_admin_deny_form">حذف از داوری</button>
+                </div>
+
+                <div id="judge_form_loading" style="display: none;">
+                  <button class="btn masir-btn w-100 mt-2" style="background-color: #4ed426;" id="judge_admin_form_loading">
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    در حال ارسال...
+                  </button>
+  
+                  <button class="btn masir-btn w-100 mt-2" style="background-color: #d1d426; display: none;" id="judge_admin_deny_form_loading">
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    در حال ارسال...
+                  </button>
+                </div>
+              </form>
+              <form action="" method="post" class="w-75 mx-auto" onsubmit="judge_admin_cancel_form_click()">
+                {% csrf_token %}
+                <button type="submit" name="judge_admin_cancel_form" class="btn masir-btn w-100 mt-2" style="background-color: #ff5151;" id="judge_admin_cancel_form">انصراف</button>
+                <button class="btn masir-btn w-100 mt-2" style="background-color: #ff5151; display: none;" id="judge_admin_cancel_form_loading">
+                  <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                  در حال انصراف...
+                </button>
+              </form>
+            {% endif %}
+            {% if activities %}
+              <div class="w-75 mt-5 mx-auto">
+                {% for x in activities %}
+                  <a class="text-decoration-none link-dark" href="{% url 'judge_detail_page_link' x.id %}">
+                    <div class="mb-2 pb-2" style="background-color: #ffcbcb;">
+                      <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+                        <span>
+                          {{ x.topic }} | {{ x.template }} 
+                        </span>
+                        <span>
+                          {{ x.group }}
+                        </span>
+                      </div>
+                      
+                      <div class="p-2" style="text-align: justify;">
+                        {{ x.link }}
+                      </div>
+                    </div>
+                  </a>
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if activities_for_admin and user_is_admin  %}
+              <div class="w-75 mt-5 mx-auto">
+                {% for x in activities_for_admin %}
+                  {% if x.state != '4' %}<a class="text-decoration-none link-dark" href="{% url 'judge_detail_page_link' x.id %}">{% endif %}
+                    <div class="mb-2 pb-2" style="background-color: {% if x.state == '1' %} #ffcbcb; {% else %} {% if x.state == '2' %} #ffffcb; {% else %} {% if x.state == '3' %} #cbffcb; {% else %} {% if x.state == '4' %} #cbcbff; {% else %} {% if x.state == '5' %} #ffcbff; {% else %} #cbcbff; {% endif %} {% endif %} {% endif %} {% endif %} {% endif %} {% if x.get_score > 4 %} border: 3px solid #ffff00 {% endif %}">
+                      {% if x.get_score > 4 %}
+                        <div class="p-2 text-center" style="background-color: #ffff00; font-weight: 700;">
+                          اثر برتر
+                        </div>
+                      {% endif %}
+                      <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+                        <span>
+                          <b style="font-weight: 700;">{{ x.get_state_display }}</b> | {{ x.topic }} | {{ x.template }} | {{ x.group }}
+                        </span>
+                        <span>
+                         {{ x.referee }} | {{ x.get_score }} 
+                        </span>
+                      </div>
+                      
+                      <div class="p-2" style="text-align: justify;">
+                        {{ x.link }}
+                      </div>
+                    </div>
+                  {% if x.state != '4' %}</a>{% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endblock %}
+    </div>
+    <!-- Bootstrap -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script type="text/javascript">
+      var map = ["&\#1776;","&\#1777;","&\#1778;","&\#1779;","&\#1780;","&\#1781;","&\#1782;","&\#1783;","&\#1784;","&\#1785;"]
+      document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function($0) { return map[$0]});
+    </script>
+
+    <script>
+      function judge_admin_denied_message_change(e){
+        if (e.value == ""){
+          document.getElementById('judge_admin_form').style.display = 'block';
+          document.getElementById('judge_admin_form_loading').style.display = 'block';
+          document.getElementById('judge_admin_deny_form').style.display = 'none';
+          document.getElementById('judge_admin_deny_form_loading').style.display = 'none';
+        }
+        else{
+          document.getElementById('judge_admin_form').style.display = 'none';
+          document.getElementById('judge_admin_form_loading').style.display = 'none';
+          document.getElementById('judge_admin_deny_form').style.display = 'block';
+          document.getElementById('judge_admin_deny_form_loading').style.display = 'block';
+        }
+      }
+
+      function judge_admin_form_click(){
+        document.getElementById('judge_form').style.display = 'none';
+        document.getElementById('judge_form_loading').style.display = 'block';
+      }
+
+      function judge_admin_cancel_form_click(){
+        document.getElementById('judge_admin_cancel_form').style.display = 'none';
+        document.getElementById('judge_admin_cancel_form_loading').style.display = 'block';
+      }
+    </script>
+
+  </body>
+</html>
