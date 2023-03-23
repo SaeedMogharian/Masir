@@ -9,185 +9,166 @@
   <div id="masir-map1-background">
     <img id="masir-logotype" class="position-absolute start-50 translate-middle-x" src="{% static 'images/logotype.png' %}" style="width: max(50vw, 50vh); margin-top: 5vh;">
     <img id="masir-map1-stone" src="{% static 'images/stone.png' %}">
-    <div class="position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
-      <form action="{% url 'people_judge_page_link' %}" method="post" class="container" onsubmit="people_judge_form_click()">
-        {% csrf_token %}
-        <a href="#activities" class="btn masir-btn w-100" style="background-color: #64c1ff;">
-          مشاهده آثار برتر
-        </a>
-
-        <div class="row justify-content-center mt-3 mb-1 mx-0">
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_image_1" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              تصویر شماره 1
-            </label>
+    {% comment %} <div class="position-relative top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
+      <div class="row justify-content-center mb-5 pb-5">
+        
+        <div class="col">
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
+            <span style="font-weight: 700;"> داستان مسیر- قسمت 1 - طغیان تاریکی </span>
+            <audio controls>
+              <source src="{% static 'manzel/داستان مسیر- قسمت 1 - طغیان تاریکی.mp3' %}" type="audio/mpeg">
+            </audio>
+            
           </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_image_2" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              تصویر شماره 2
-            </label>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
+            <span style="font-weight: 700;"> داستان مسیر- قسمت 2 - سپیده_دم </span>
+            <audio controls>
+              <source src="{% static 'manzel/داستان مسیر- قسمت 2 - سپیده_دم.mp3' %}" type="audio/mpeg">
+            </audio>
+            
           </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_image_3" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              تصویر شماره 3
-            </label>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
+            <span style="font-weight: 700;"> داستان مسیر- قسمت 3 - رویای پریشان </span>
+            <audio controls>
+              <source src="{% static 'manzel/داستان مسیر- قسمت 3 - رویای پریشان .mp3' %}" type="audio/mpeg">
+            </audio>
+            
           </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_image_4" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              تصویر شماره 4
-            </label>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
+            <span style="font-weight: 700;"> داستان مسیر- قسمت 4 - صعود </span>
+            <audio controls>
+              <source src="{% static 'manzel/داستان مسیر- قسمت 4 - صعود.mp3' %}" type="audio/mpeg">
+            </audio>
+            
           </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_image_5" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              تصویر شماره 5
-            </label>
-          </div>
+          
         </div>
-        <div class="row justify-content-center mb-1 mx-0">
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_music_1" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              صوت شماره 1
-            </label>
+        <div class="col">
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
+            <span style="font-weight: 700;"> داستان مسیر- قسمت 5 - حقیقت </span>
+            <audio controls>
+              <source src="{% static 'manzel/داستان مسیر- قسمت 5 - حقیقت.mp3' %}" type="audio/mpeg">
+            </audio>
+            
           </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_music_2" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              صوت شماره 2
-            </label>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
+            <span style="font-weight: 700;"> داستان مسیر- قسمت 6 - ستونهای سست </span>
+            <audio controls>
+              <source src="{% static 'manzel/داستان مسیر- قسمت 6 - ستونهای سست.mp3' %}" type="audio/mpeg">
+            </audio>
+            
           </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_music_3" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              صوت شماره 3
-            </label>
-          </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_music_4" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              صوت شماره 4
-            </label>
-          </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_music_5" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              صوت شماره 5
-            </label>
-          </div>
-        </div>
-        <div class="row justify-content-center mb-1 mx-0 ">
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_video_1" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              فیلم شماره 1
-            </label>
-          </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_video_2" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              فیلم شماره 2
-            </label>
-          </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_video_3" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              فیلم شماره 3
-            </label>
-          </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_video_4" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              فیلم شماره 4
-            </label>
-          </div>
-          <div class="col" style="min-width: max-content;">
-            <input disabled name="people_judge_video_5" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              فیلم شماره 5
-            </label>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
+            <span style="font-weight: 700;"> داستان مسیر- قسمت 7- ملاقات </span>
+            <audio controls>
+              <source src="{% static 'manzel/داستان مسیر- قسمت 7- ملاقات .mp3' %}" type="audio/mpeg">
+            </audio>
+            
           </div>
         </div>
         
-        <div class="mt-3 mb-1" style="font-weight: 700;">
-          شماره تلفن
-        </div>
-        <input disabled name="people_judge_phone" type="text" class="form-control masir-form-control text-center" pattern="9[0-9]{9}" placeholder="9123456789" autocomplete="off" required dir="ltr">
+      </div>
+    </div> {% endcomment %}
+    <div class="position-relative top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; margin-top:10vh; background-color: #ffffffc0;">
+      <div class="row justify-content-center mb-5 pb-5" style="margin-top:40em">
         
-        <div class="mt-3 text-start">
-          <div class="form-check mt-3 mb-2">
-            <input disabled class="form-check-input" type="checkbox" required>
-            <label class="form-check-label" for="flexCheckDefault">
-              در هر سه بخش تصویر، صوت و فیلم حداقل یک اثر را انتخاب کرده‌ام، از انتخاب‌های خود مطمئن هستم و می‌دانم با هر شماره تلفن تنها یک بار می‌توان در رای‌گیری شرکت کرد.
-            </label>
-          </div>
+        <div class="col">
+          <p class="masir-title-1">کلیپ اختتامیه مسیر ۱۴۰۱</p>
+          <iframe src="https://www.aparat.com/video/video/embed/videohash/Q06sB/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
         </div>
-        <button disabled type="submit" name="people_judge_form" class="btn masir-btn w-100" style="background-color: #69ff64;" id="people_judge_form">
-          ارسال رای
-        </button>
-        <button class="btn masir-btn w-100" style="background-color: #69ff64; display: none;" id="people_judge_form_loading">
-          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-          در حال ارسال...
-        </button>
-      </form>
+        <div class="col">
+          <p class="masir-title-1">کلیپ معرفی مسیر ۱۴۰۱</p>
+          <iframe src="https://www.aparat.com/video/video/embed/videohash/pWhU5/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
+        </div>
+        
+      </div>
     </div>
     
   </div>
 
-  <div id="activities" class="bg-white sticky-top" style="height: max(6vw, 6vh);"></div>
-  <div class="container pb-5 mb-5" style="min-height: 100vh;">
-    <a href="https://s6.uupload.ir/files/asar_bartar_1_rjd1.jpg" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
-      مشاهده تصویر اول
-    </a>
-    <a href="https://s6.uupload.ir/files/asar_bartar_2_hs6i.jpg" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
-      مشاهده تصویر دوم
-    </a>
-    <a href="https://s6.uupload.ir/files/asar_bartar_3_qg65.png" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
-      مشاهده تصویر سوم
-    </a>
-    <a href="https://s6.uupload.ir/files/asar_bartar_4_vq2g.png" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
-      مشاهده تصویر چهارم
-    </a>
-    <a href="https://s6.uupload.ir/files/asar_bartar_5_wi1x.png" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
-      مشاهده تصویر پنجم
-    </a>
-    
-    <a href="https://aparat.com/v/dZ57C" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
-      شنیدن صوت اول
-    </a>
-    <a href="https://aparat.com/v/MsqWy" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
-      شنیدن صوت دوم
-    </a>
-    <a href="https://aparat.com/v/JdK85" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
-      شنیدن صوت سوم
-    </a>
-    <a href="https://aparat.com/v/Zh3MT" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
-      شنیدن صوت چهارم
-    </a>
-    <a href="https://aparat.com/v/KiLUB" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
-      شنیدن صوت پنجم
-    </a>
+  
 
-    <a href="https://aparat.com/v/fAYV7" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
-      مشاهده فیلم اول
-    </a>
-    <a href="https://aparat.com/v/Dhc7q" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
-      مشاهده فیلم دوم
-    </a>
-    <a href="https://aparat.com/v/Mv094" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
-      مشاهده فیلم سوم
-    </a>
-    <a href="https://aparat.com/v/WLZBK" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
-      مشاهده فیلم چهارم
-    </a>
-    <a href="https://aparat.com/v/3Xui9" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
-      مشاهده فیلم پنجم
-    </a>
-  </div>
+
+    <div class="position-relative start-50 translate-middle text-center py-5" style="font-weight: 700; width: 80vw">
+      <div class="row justify-content-center mb-5 pb-5">
+        <div class="col">
+          <p class="masir-title-2">آثار برتر صوتی</p>
+          <div id="audiobest" class="carousel slide" data-bs-ride="true" style=''>
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner" style="padding-top: 10vh; height:100vh;">
+              <div class="carousel-item active">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/dZ57C/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+              <div class="carousel-item">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/MsqWy/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+              <div class="carousel-item">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/JdK85/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+              <div class="carousel-item">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/Zh3MT/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+              <div class="carousel-item">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/KiLUB/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#audiobest" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">قبلی</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#audiobest" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">بعدی</span>
+            </button>
+          </div>
+        </div>
+        <div class="col">
+          <p class="masir-title-2">آثار برتر ویدیویی</p>
+          <div id="videobest" class="carousel slide" data-bs-ride="true" style=''>
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#videobest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#videobest" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#videobest" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#videobest" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#videobest" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner" style="padding-top: 10vh; height:100vh;">
+              <div class="carousel-item active">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/fAYV7/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+              <div class="carousel-item">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/Dhc7q/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+              <div class="carousel-item">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/Mv094/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+              <div class="carousel-item">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/WLZBK/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+              <div class="carousel-item">
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/3Xui9/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#videobest" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">قبلی</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#videobest" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">بعدی</span>
+            </button>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+    
 {% endblock %}
 
 {% block scriptblock %}

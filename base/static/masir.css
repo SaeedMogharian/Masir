@@ -33,6 +33,12 @@ audio::-webkit-media-controls-panel {
   color: #3d6185;
 }
 
+.masir-title-2{
+  font-weight: 700;
+  font-size: 30px;
+  color: #3d6185;
+}
+
 .masir-paragraph-1{
   text-align: justify;
   margin: 0;

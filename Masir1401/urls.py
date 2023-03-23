@@ -26,6 +26,7 @@ urlpatterns = [
     path('', landing_page, name = 'landing_page_link'),
     path('full_map/', full_map_page, name = 'full_map_page_link'),
     path('people_judge/', people_judge_page, name = 'people_judge_page_link'),
+    path('on_masir/', on_masir, name = 'on_masir_link'),
     path('forgot_password/', forgot_password_page, name = 'forgot_password_page_link'),
     path('home/', home_page, name = 'home_page_link'),
     
