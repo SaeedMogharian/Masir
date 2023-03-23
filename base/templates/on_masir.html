@@ -1,0 +1,260 @@
+{% extends "landing_page.html" %}
+{% load static %}
+
+{% block about_masir_block %}
+  {% url 'landing_page_link' %}
+{% endblock %}
+
+{% block mainblock %}
+  <div id="masir-map1-background">
+    <img id="masir-logotype" class="position-absolute start-50 translate-middle-x" src="{% static 'images/logotype.png' %}" style="width: max(50vw, 50vh); margin-top: 5vh;">
+    <img id="masir-map1-stone" src="{% static 'images/stone.png' %}">
+    <div class="position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
+      <form action="{% url 'people_judge_page_link' %}" method="post" class="container" onsubmit="people_judge_form_click()">
+        {% csrf_token %}
+        <a href="#activities" class="btn masir-btn w-100" style="background-color: #64c1ff;">
+          مشاهده آثار برتر
+        </a>
+
+        <div class="row justify-content-center mt-3 mb-1 mx-0">
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_image_1" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              تصویر شماره 1
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_image_2" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              تصویر شماره 2
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_image_3" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              تصویر شماره 3
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_image_4" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              تصویر شماره 4
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_image_5" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              تصویر شماره 5
+            </label>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-1 mx-0">
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_music_1" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              صوت شماره 1
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_music_2" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              صوت شماره 2
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_music_3" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              صوت شماره 3
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_music_4" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              صوت شماره 4
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_music_5" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              صوت شماره 5
+            </label>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-1 mx-0 ">
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_video_1" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              فیلم شماره 1
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_video_2" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              فیلم شماره 2
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_video_3" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              فیلم شماره 3
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_video_4" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              فیلم شماره 4
+            </label>
+          </div>
+          <div class="col" style="min-width: max-content;">
+            <input disabled name="people_judge_video_5" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              فیلم شماره 5
+            </label>
+          </div>
+        </div>
+        
+        <div class="mt-3 mb-1" style="font-weight: 700;">
+          شماره تلفن
+        </div>
+        <input disabled name="people_judge_phone" type="text" class="form-control masir-form-control text-center" pattern="9[0-9]{9}" placeholder="9123456789" autocomplete="off" required dir="ltr">
+        
+        <div class="mt-3 text-start">
+          <div class="form-check mt-3 mb-2">
+            <input disabled class="form-check-input" type="checkbox" required>
+            <label class="form-check-label" for="flexCheckDefault">
+              در هر سه بخش تصویر، صوت و فیلم حداقل یک اثر را انتخاب کرده‌ام، از انتخاب‌های خود مطمئن هستم و می‌دانم با هر شماره تلفن تنها یک بار می‌توان در رای‌گیری شرکت کرد.
+            </label>
+          </div>
+        </div>
+        <button disabled type="submit" name="people_judge_form" class="btn masir-btn w-100" style="background-color: #69ff64;" id="people_judge_form">
+          ارسال رای
+        </button>
+        <button class="btn masir-btn w-100" style="background-color: #69ff64; display: none;" id="people_judge_form_loading">
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          در حال ارسال...
+        </button>
+      </form>
+    </div>
+    
+  </div>
+
+  <div id="activities" class="bg-white sticky-top" style="height: max(6vw, 6vh);"></div>
+  <div class="container pb-5 mb-5" style="min-height: 100vh;">
+    <a href="https://s6.uupload.ir/files/asar_bartar_1_rjd1.jpg" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
+      مشاهده تصویر اول
+    </a>
+    <a href="https://s6.uupload.ir/files/asar_bartar_2_hs6i.jpg" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
+      مشاهده تصویر دوم
+    </a>
+    <a href="https://s6.uupload.ir/files/asar_bartar_3_qg65.png" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
+      مشاهده تصویر سوم
+    </a>
+    <a href="https://s6.uupload.ir/files/asar_bartar_4_vq2g.png" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
+      مشاهده تصویر چهارم
+    </a>
+    <a href="https://s6.uupload.ir/files/asar_bartar_5_wi1x.png" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff8716;">
+      مشاهده تصویر پنجم
+    </a>
+    
+    <a href="https://aparat.com/v/dZ57C" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
+      شنیدن صوت اول
+    </a>
+    <a href="https://aparat.com/v/MsqWy" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
+      شنیدن صوت دوم
+    </a>
+    <a href="https://aparat.com/v/JdK85" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
+      شنیدن صوت سوم
+    </a>
+    <a href="https://aparat.com/v/Zh3MT" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
+      شنیدن صوت چهارم
+    </a>
+    <a href="https://aparat.com/v/KiLUB" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ffe816;">
+      شنیدن صوت پنجم
+    </a>
+
+    <a href="https://aparat.com/v/fAYV7" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
+      مشاهده فیلم اول
+    </a>
+    <a href="https://aparat.com/v/Dhc7q" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
+      مشاهده فیلم دوم
+    </a>
+    <a href="https://aparat.com/v/Mv094" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
+      مشاهده فیلم سوم
+    </a>
+    <a href="https://aparat.com/v/WLZBK" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
+      مشاهده فیلم چهارم
+    </a>
+    <a href="https://aparat.com/v/3Xui9" target="_blank" class="btn masir-btn w-100 my-1" style="background-color: #ff3916;">
+      مشاهده فیلم پنجم
+    </a>
+  </div>
+{% endblock %}
+
+{% block scriptblock %}
+  <script>
+    function people_judge_form_click(){
+      document.getElementById('people_judge_form').style.display = 'none';
+      document.getElementById('people_judge_form_loading').style.display = 'block';
+    }
+
+    function images_vote_check() {
+      var checkBoxes = document.getElementsByClassName('image_checkbox');
+      var isChecked = false;
+      for (var i = 0; i < checkBoxes.length; i++) {
+        if (checkBoxes[i].checked) {
+          isChecked = true;
+        }
+      }
+      if (isChecked) {
+        for (var i = 0; i < checkBoxes.length; i++){
+          checkBoxes[i].required = false;
+        }
+      }
+      else {
+        for (var i = 0; i < checkBoxes.length; i++){
+          checkBoxes[i].required = true;
+        }
+      }
+    }
+
+    function music_vote_check() {
+      var checkBoxes = document.getElementsByClassName('music_checkbox');
+      var isChecked = false;
+      for (var i = 0; i < checkBoxes.length; i++) {
+        if (checkBoxes[i].checked) {
+          isChecked = true;
+        }
+      }
+      if (isChecked) {
+        for (var i = 0; i < checkBoxes.length; i++){
+          checkBoxes[i].required = false;
+        }
+      }
+      else {
+        for (var i = 0; i < checkBoxes.length; i++){
+          checkBoxes[i].required = true;
+        }
+      }
+    }
+
+    function video_vote_check() {
+      var checkBoxes = document.getElementsByClassName('video_checkbox');
+      var isChecked = false;
+      for (var i = 0; i < checkBoxes.length; i++) {
+        if (checkBoxes[i].checked) {
+          isChecked = true;
+        }
+      }
+      if (isChecked) {
+        for (var i = 0; i < checkBoxes.length; i++){
+          checkBoxes[i].required = false;
+        }
+      }
+      else {
+        for (var i = 0; i < checkBoxes.length; i++){
+          checkBoxes[i].required = true;
+        }
+      }
+    }
+  </script>
+{% endblock %}
