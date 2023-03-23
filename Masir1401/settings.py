@@ -103,11 +103,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_ROOT = '/home/masirir/public_html/static'
+STATIC_ROOT = '/home/masirir/public_html/static/'
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = '/home/masirir/public_html/media'
-MEDIA_URL = '/media'
+MEDIA_ROOT = '/home/masirir/public_html/media/'
+MEDIA_URL = '/media/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Default primary key field type
