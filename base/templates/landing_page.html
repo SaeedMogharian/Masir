@@ -34,20 +34,48 @@
       #masir-map1-background{
         position: relative;
         height: 100vh;
-        min-width: 100%;
-        background-image: url('{% static "images/landing_page_background.jpg" %}');
+        width: 100vw;
+        background-image: url('{% static "images/landing_page_background_wc.jpg" %}');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        overflow: hidden;
+        overflow-x: hidden;
       }
 
       #masir-map1-stone{
+
         position: absolute;
-        bottom: 0;
-        max-width: 70vw;
-        max-height: 70vh;
+        left: 2vw;
+        max-width: 50vw;
+        max-height: 50vh;
+        display: none;
       }
+      @media screen and (max-width: 860px){
+        #masir-map1-stone{
+          left: -20vw;
+          max-width: 80vw;
+          max-height: 80vh;
+          display: block;
+          overflow: hidden;
+
+        }
+        #masir-map1-background{
+          background-image: url('{% static "images/landing_page_background.jpg" %}');
+        }
+      }
+      @media screen and (max-width: 500px){
+        #masir-map1-stone{
+          max-width: 100vw;
+          max-height: 100vh;
+          bottom: 0;
+          display: block;
+
+        }
+        
+
+        
+      }
+
 
       #masir-navbar-bg{
         height: max(0.5vw, 0.5vh);
@@ -76,7 +104,7 @@
     <div id="maindiv" style="width: 100%;" dir="rtl">
       <nav class="fixed-top">
         <div id="masir-navbar-bg" class="position-relative">
-          <div class="position-absolute top-50 start-0 translate-middle-y d-flex ms-5" style="height: max-content;">
+          <div class="position-absolute top-50 top-nav translate-middle-y d-flex ms-5" style="height: max-content padding-top:1em;">
             <a class="masir-circle-button-2 masir-jelly" title="ورود یا ثبت نام فردی" style="background-image: url('{% static 'images/navbar_login.png' %}'); margin: auto max(0.15vw, 0.15vh);" data-bs-toggle="modal" href="#login_modal" role="button"></a>
             <!--<a class="masir-circle-button-2 masir-jelly disabled" title="ثبت نام گروهی" style="background-image: url('{% static 'images/navbar_group_register.png' %}'); margin: auto max(0.15vw, 0.15vh);"></a>-->
           </div>
@@ -350,7 +378,7 @@
       </div>
 
       {% block mainblock %}
-        <div id="masir-map1-background">
+        <div id="masir-map1-background" class="">
           <img id="masir-logotype" class="position-absolute start-50 translate-middle-x" src="{% static 'images/logotype.png' %}" style="width: max(50vw, 50vh); margin-top: 5vh;">
           {% if MESSAGE %}
             <div class="position-absolute top-50 start-50 translate-middle h5 w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
