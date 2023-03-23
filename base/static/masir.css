@@ -66,8 +66,8 @@ audio::-webkit-media-controls-panel {
 }
 
 .masir-circle-button-1{
-  height: max(2vw, 2vh);
-  width: max(2vw, 2vh);
+  height: max(2.5vw, 2.5vh);
+  width: max(2.5vw, 2.5vh);
 }
 
 .masir-circle-button-2{
@@ -78,6 +78,22 @@ audio::-webkit-media-controls-panel {
 .masir-circle-button-3{
   height: max(4vw, 4vh);
   width: max(4vw, 4vh);
+}
+@media screen and (max-width: 1500px){
+  .masir-circle-button-1{
+    height: 2em;
+    width: 2em;
+  }
+  
+  .masir-circle-button-2{
+    height: 2.5em;
+    width: 2.5em;
+  }
+  
+  .masir-circle-button-3{
+    height: 3em;
+    width: 3em;
+  }
 }
 
 .masir-circle-button-1:not(.active):not(.disabled):hover, 
