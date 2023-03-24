@@ -7,26 +7,27 @@
 
 
 {% block mainblock %}
-  <div class="container-fluid w-100 text-center " style="overflow: hidden; background-image: url('{% static "images/home_page_background_old.jpg" %}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-    <div class="row justify-content-center mb-5 pb-5">
-      <p class="masir-title-1" style="margin-top: 10vh;">در مسیر چه گذشت؟</p>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
-          <p class="masir-title-1">کلیپ اختتامیه مسیر ۱۴۰۱</p>
-          <iframe src="https://www.aparat.com/video/video/embed/videohash/Q06sB/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
-          <p class="masir-title-1">کلیپ معرفی مسیر۱۴۰۱</p>
-          <iframe src="https://www.aparat.com/video/video/embed/videohash/pWhU5/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
-      </div>
+  <div id="masir-land1-background" class="container-fluid w-100 text-center " style="overflow: hidden; background-image: url('{% static "images/home_page_background_old.jpg" %}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    <div class="row justify-content-center mb-5 pb-5 position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="background-color font-weight: 1000; background-color: #ffffffc0;">
+      <p class="masir-title-1" >در مسیر 1401 چه گذشت؟</p>
         
+    </div>
+  </div>
+
+  <div class="container-fluid w-100 text-center " style="overflow: hidden;">
+    <div class="row justify-content-center mb-5 pb-5">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" >
+          <p class="masir-title-1">تیزر مسیر ۱۴۰۱</p>
+          <iframe src="https://www.aparat.com/video/video/embed/videohash/pWhU5/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
+      </div>        
     </div>
   </div>
     
   </div>
   <div class="container-fluid w-100 text-center " style="overflow: hidden">
     <div class="row justify-content-center mb-5 pb-5">
+      <p class="masir-title-1">داستان مسیر</p>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
-          <p class="masir-title-1">داستان مسیر</p>
           <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
             <span style="font-weight: 700;"> داستان مسیر- قسمت 1 - طغیان تاریکی </span>
             <audio controls>
@@ -55,6 +56,8 @@
             </audio>
             
           </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
           <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
             <span style="font-weight: 700;"> داستان مسیر- قسمت 5 - حقیقت </span>
             <audio controls>
@@ -82,25 +85,6 @@
               <source src="{% static 'manzel/داستان مسیر- قسمت آخر.mp3' %}" type="audio/mpeg">
             </audio>
             
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
-          <p class="masir-title-1">اولین منزل از ۷ منزل مسابقه</p>
-          <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
-            <span style="font-weight: 700;">متن منزل عزم و همت</span>
-            <a class="masir-circle-button-2" title="دانلود توضیحات " style="background-image: url('{% static 'images/pdf_icon.png' %}'); " href='{% static "manzel/متن منزل عزم و همت.pdf"}' download></a>
-            </div>
-          <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
-          <span style="font-weight: 700;">عزم و همت - چالش صبر و استقامت</span>
-          <a class="masir-circle-button-2" title="دانلود توضیحات چالش" style="background-image: url('{% static 'images/pdf_icon.png' %}'); " href='{% static "activity/عزم و همت - صبر و استقامت.pdf"}' download></a>
-          </div>
-          <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
-          <span style="font-weight: 700;">عزم و همت - چالش توکل و توسل</span>
-          <a class="masir-circle-button-2" title="دانلود توضیحات چالش" style="background-image: url('{% static 'images/pdf_icon.png' %}'); " href='{% static "activity/عزم و همت - توکل و توسل.pdf"}' download></a>
-          </div>
-          <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
-            <span style="font-weight: 700;">عزم و همت - چالش برنامه ریزی</span>
-            <a class="masir-circle-button-2" title="دانلود توضیحات چالش" style="background-image: url('{% static 'images/pdf_icon.png' %}'); " href='{% static "manzel/عزم و همت - برنامه ریزی.pdf"}' download></a>
           </div>
         </div>
       </div> 
@@ -219,6 +203,15 @@
         
       </div>
     </div>
+
+  <div class="container-fluid w-100 text-center "  style="overflow: hidden">
+    <div class="row justify-content-center mb-5 pb-5">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" >
+        <p class="masir-title-1">کلیپ اختتامیه مسیر ۱۴۰۱</p>
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/Q06sB/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
+      </div>
+    </div>
+    </div
     
   </div>
     

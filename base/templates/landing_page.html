@@ -42,6 +42,17 @@
         overflow-x: hidden;
       }
 
+      #masir-land1-background{
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('{% static "images/home_page_background_old.jpg" %}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow-x: hidden;
+      }
+
       #masir-map1-stone{
 
         position: absolute;
@@ -67,8 +78,8 @@
       }
       @media screen and (max-width: 500px){
         #masir-map1-stone{
-          max-width: 100vw;
-          max-height: 100vh;
+          max-width: 80vw;
+          max-height: 80vh;
           bottom: 0;
           display: block;
 
@@ -112,7 +123,7 @@
           <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
             <!--<a class="masir-circle-button-2 masir-jelly" title="داوری مردمی" style="background-image: url('{% static 'images/navbar_people_judge.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'people_judge_page_link' %}"></a>-->
             <a class="masir-circle-button-3 masir-jelly" title="درباره مسیر ۱۴۰۲" style="background-image: url('{% static 'images/navbar_mountain.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% block about_masir_block %} #about_masir1402 {% endblock %}"></a>
-            <!--<a class="masir-circle-button-2 masir-jelly" title="نقشه نهایی مسیر۱۴۰۱" style="background-image: url('{% static 'images/navbar_map.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'full_map_page_link' %}"></a>-->
+            <a class="masir-circle-button-1 masir-jelly" title="در مسیر چه گذشت؟" style="background-image: url('{% static 'images/navbar_map.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'on_masir_link' %}"></a>
           </div>
           <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-5" style="height: max-content;">
             <a class="masir-circle-button-2 masir-jelly" title="ارتباط با ما" style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);" data-bs-toggle="modal" href="#contact_us_modal" role="button"></a>
@@ -402,14 +413,18 @@
                 <div class="accordion-body">
                   <!--<iframe src="https://www.aparat.com/video/video/embed/videohash/pWhU5/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 100%; height: 40vh;"></iframe>-->
                   <p class="masir-paragraph-1">
-                    همانقدر که آسمان شب در کویر آرامش بخش و زیبا است، تشنگی و نبود "آب حیات" دلهره آور و نگران کننده می‌باشد. اگر آب حیاتی در کار نباشد جسم و روح چروکیده شده و کم کم از بین می‌رود! 
-                  </p>
+                    همانقدر که آسمان شب در کویر آرامش بخش و زیبا است، تشنگی و نبود 
+                    <b><b>"آب حیات"</b></b>
+                    دلهره آور و نگران کننده می‌باشد. اگر آب حیاتی در کار نباشد جسم و روح چروکیده شده و کم کم از بین می‌رود!
+                  </p><br>
                   <p class="masir-paragraph-1">
-                    تقدیر شما چنان است که زندگیِ بدون سختیِ واحهٔ "آلاء" را رها کرده و رهسپار کویری پر خطر بشوید. کویری که خطرش را به شوق نجات سرزمین از یوغ اهریمن پلید باید به جان خرید... 
-                  </p>
+                    تقدیر شما چنان است که زندگیِ بدون سختیِ واحهٔ 
+                    <b><b>"آلاء"</b></b>
+                    را رها کرده و رهسپار کویری پر خطر شوید. کویری که خطرش را به شوق نجات سرزمین از یوغ اهریمن پلید باید به جان خرید...
+                  </p><br>
                   <p class="masir-paragraph-1">
-                    خود را آماده مسیری در ظاهر هموار و در باطن پر از آزمایش های حساس کنید. حیات واحه به حیات، آذوقه و توان شما بستگی دارد. ماموریت ها و اکتشاف های زیادی در طول مسیر در انتظار شماست. در طول این راه باید بتوانید استقامت به خرج بدید و کاری کنید که همه محکم و استوار قدم در مسیر نهند. وظیفهٔ سنگینی بر دوشتان هست. یک جهان منتظر اقدام شماست. مخفیانه وارد آدرس masir1402.ir شوید تا ماموریت ها را دریافت کنید. 
-                  </p>
+                    خود را آماده مسیری در ظاهر هموار و در باطن پر از آزمایش های حساس کنید. حیات واحه به حرکت شما بستگی دارد. ماموریت ها و اکتشاف های زیادی در طول مسیر در انتظار شماست. در طول این راه باید بتوانید استقامت به خرج دهید و کاری کنید که دیگران نیز محکم و استوار قدم در مسیر نهند. وظیفهٔ سنگینی بر دوشتان است. یک جهان منتظر اقدام شماست. 
+                  </p><br>
                   <p class="masir-paragraph-1">
                     مسیر شما را می‌خواند...
                   </p>
@@ -589,7 +604,7 @@
                       </div>
                     </li>
                     <li>
-                      کانال بله و تلگرام و شاد: در کنار سایت اصلی به منظور اطلاع‌رسانی‌ها و ارسال آثار برتر.
+                      کانال بله و تلگرام: در کنار سایت اصلی به منظور اطلاع‌رسانی‌ها و ارسال آثار برتر.
                       <div class="text-end">
                         masir1402_ir@
                       </div>
