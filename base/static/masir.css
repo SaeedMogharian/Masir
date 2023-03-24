@@ -3,10 +3,12 @@
   font-family: 'IBM Plex Sans Arabic', sans-serif;
   font-weight: 300;
 }
-body{
-
-  overflow-x:hidden;
-  }
+html, body {
+  overflow-x: hidden;
+}
+body {
+  position: relative
+}
 
 audio::-webkit-media-controls-play-button,
 audio::-webkit-media-controls-panel {

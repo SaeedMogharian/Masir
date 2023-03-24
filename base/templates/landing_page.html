@@ -41,23 +41,6 @@
         background-position: center;
         overflow-x: hidden;
       }
-      #masir-background-1, #masir-background-3,#masir-background-3{
-        position: relative;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('{% static "images/home_page_background_old.jpg" %}');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        overflow-x: hidden;
-      }
-      @media screen and (max-width: md){
-        #masir-background-1, #masir-background-3,#masir-background-3{
-          height: 200vh;
-        }
-        #masir-background-1{
-        }
-      }
 
       #masir-map1-stone{
 
@@ -70,6 +53,7 @@
       @media screen and (max-width: 860px){
         #masir-map1-stone{
           left: -20vw;
+          bottom: 0;
           max-width: 80vw;
           max-height: 80vh;
           display: block;

@@ -5,31 +5,27 @@
   {% url 'landing_page_link' %}
 {% endblock %}
 
-<style>
-  
-</style>
+
 {% block mainblock %}
-  <div id="masir-background-1" style="overflow: hidden">
-    <div class="container-fluid position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
-      <div class="row justify-content-center mb-5 pb-5" style="">
-        <p class="masir-title-1" style="margin-top: 10vh;">در مسیر چه گذشت؟</p>
-        <div class="col-lg-6 col-md-6 col-sm-auto">
+  <div class="container-fluid w-100 text-center " style="overflow: hidden; background-image: url('{% static "images/home_page_background_old.jpg" %}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    <div class="row justify-content-center mb-5 pb-5">
+      <p class="masir-title-1" style="margin-top: 10vh;">در مسیر چه گذشت؟</p>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
           <p class="masir-title-1">کلیپ اختتامیه مسیر ۱۴۰۱</p>
           <iframe src="https://www.aparat.com/video/video/embed/videohash/Q06sB/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-auto">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
           <p class="masir-title-1">کلیپ معرفی مسیر۱۴۰۱</p>
           <iframe src="https://www.aparat.com/video/video/embed/videohash/pWhU5/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
-        </div>
-        
       </div>
+        
     </div>
+  </div>
     
   </div>
-  <div id="masir-background-2" style="overflow: hidden">
-    <div class="container-fluid position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
-      <div class="row justify-content-center mb-5 pb-5">
-        <div class="col-lg-6 col-md-6 col-sm-12">
+  <div class="container-fluid w-100 text-center " style="overflow: hidden">
+    <div class="row justify-content-center mb-5 pb-5">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
           <p class="masir-title-1">داستان مسیر</p>
           <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
             <span style="font-weight: 700;"> داستان مسیر- قسمت 1 - طغیان تاریکی </span>
@@ -88,7 +84,7 @@
             
           </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" >
           <p class="masir-title-1">اولین منزل از ۷ منزل مسابقه</p>
           <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
             <span style="font-weight: 700;">متن منزل عزم و همت</span>
@@ -110,13 +106,11 @@
       </div> 
     </div>
   </div>
-  <div id="masir-background-3"  style="overflow: hidden">
-    <div class="container-fluid position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
+  <div class="container-fluid w-100 text-center "  style="overflow: hidden">
       <div class="row justify-content-center mb-5 pb-5">
         <p class="masir-title-1">آثار برتر مسیر ۱۴۰۱</p>
-
-        <div class="col-lg-4 col-md-12 col-sm-12">
-          <p class="masir-title-2">آثار برتر صوتی</p>
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12" >
+          <p class="masir-title-1">آثار برتر صوتی</p>
           <div id="audiobest" class="carousel slide" data-bs-ride="true" style=''>
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#audiobest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -152,8 +146,8 @@
             </button>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <p class="masir-title-2">آثار برتر ویدیویی</p>
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12" >
+          <p class="masir-title-1">آثار برتر ویدیویی</p>
           <div id="videobest" class="carousel slide" data-bs-ride="true" style=''>
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#videobest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -190,8 +184,8 @@
           </div>
         
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <p class="masir-title-2">آثار برتر تصویری</p>
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12" >
+          <p class="masir-title-1">آثار برتر تصویری</p>
           <div id="picturebest" class="carousel slide" data-bs-ride="true" style=''>
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#picturebest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
