@@ -85,6 +85,21 @@ audio::-webkit-media-controls-panel {
   height: max(4vw, 4vh);
   width: max(4vw, 4vh);
 }
+
+.masir-circle-icon-3{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  border-radius: 50%;
+  padding: 0.75rem;
+  height: max(5vw, 5vh);
+  width: max(5vw, 5vh);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 @media screen and (max-width: 1500px){
   .masir-circle-button-1{
     height: 2em;
@@ -100,7 +115,15 @@ audio::-webkit-media-controls-panel {
     height: 3em;
     width: 3em;
   }
+  .masir-circle-icon-3{
+    height: 4em;
+    width: 4em;
+  }
 }
+
+
+
+
 
 .masir-circle-button-1:not(.active):not(.disabled):hover, 
 .masir-circle-button-2:not(.active):not(.disabled):hover,
@@ -186,20 +209,6 @@ audio::-webkit-media-controls-panel {
   margin: 5.5vh 0px;
 }
 
-.masir-circle-icon-3{
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  border-radius: 50%;
-  padding: 0.75rem;
-  height: max(5vw, 5vh);
-  width: max(5vw, 5vh);
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .masir-modal-close-icon{
   position: absolute;
