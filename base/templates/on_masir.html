@@ -5,14 +5,32 @@
   {% url 'landing_page_link' %}
 {% endblock %}
 
+<style>
+  
+</style>
 {% block mainblock %}
-  <div id="masir-map1-background">
-    <img id="masir-logotype" class="position-absolute start-50 translate-middle-x" src="{% static 'images/logotype.png' %}" style="width: max(50vw, 50vh); margin-top: 5vh;">
-    <img id="masir-map1-stone" src="{% static 'images/stone.png' %}">
-    {% comment %} <div class="position-relative top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
-      <div class="row justify-content-center mb-5 pb-5">
+  <div id="masir-background-1" style="overflow: hidden">
+    <div class="container-fluid position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
+      <div class="row justify-content-center mb-5 pb-5" style="">
+        <p class="masir-title-1" style="margin-top: 10vh;">در مسیر چه گذشت؟</p>
+        <div class="col-lg-6 col-md-6 col-sm-auto">
+          <p class="masir-title-1">کلیپ اختتامیه مسیر ۱۴۰۱</p>
+          <iframe src="https://www.aparat.com/video/video/embed/videohash/Q06sB/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-auto">
+          <p class="masir-title-1">کلیپ معرفی مسیر۱۴۰۱</p>
+          <iframe src="https://www.aparat.com/video/video/embed/videohash/pWhU5/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
+        </div>
         
-        <div class="col">
+      </div>
+    </div>
+    
+  </div>
+  <div id="masir-background-2" style="overflow: hidden">
+    <div class="container-fluid position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
+      <div class="row justify-content-center mb-5 pb-5">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <p class="masir-title-1">داستان مسیر</p>
           <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
             <span style="font-weight: 700;"> داستان مسیر- قسمت 1 - طغیان تاریکی </span>
             <audio controls>
@@ -41,9 +59,6 @@
             </audio>
             
           </div>
-          
-        </div>
-        <div class="col">
           <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
             <span style="font-weight: 700;"> داستان مسیر- قسمت 5 - حقیقت </span>
             <audio controls>
@@ -65,33 +80,42 @@
             </audio>
             
           </div>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
+            <span style="font-weight: 700;">داستان مسیر- قسمت آخر</span>
+            <audio controls>
+              <source src="{% static 'manzel/داستان مسیر- قسمت آخر.mp3' %}" type="audio/mpeg">
+            </audio>
+            
+          </div>
         </div>
-        
-      </div>
-    </div> {% endcomment %}
-    <div class="position-relative top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; margin-top:10vh; background-color: #ffffffc0;">
-      <div class="row justify-content-center mb-5 pb-5" style="margin-top:40em">
-        
-        <div class="col">
-          <p class="masir-title-1">کلیپ اختتامیه مسیر ۱۴۰۱</p>
-          <iframe src="https://www.aparat.com/video/video/embed/videohash/Q06sB/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <p class="masir-title-1">اولین منزل از ۷ منزل مسابقه</p>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
+            <span style="font-weight: 700;">متن منزل عزم و همت</span>
+            <a class="masir-circle-button-2" title="دانلود توضیحات " style="background-image: url('{% static 'images/pdf_icon.png' %}'); " href='{% static "manzel/متن منزل عزم و همت.pdf"}' download></a>
+            </div>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
+          <span style="font-weight: 700;">عزم و همت - چالش صبر و استقامت</span>
+          <a class="masir-circle-button-2" title="دانلود توضیحات چالش" style="background-image: url('{% static 'images/pdf_icon.png' %}'); " href='{% static "activity/عزم و همت - صبر و استقامت.pdf"}' download></a>
+          </div>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
+          <span style="font-weight: 700;">عزم و همت - چالش توکل و توسل</span>
+          <a class="masir-circle-button-2" title="دانلود توضیحات چالش" style="background-image: url('{% static 'images/pdf_icon.png' %}'); " href='{% static "activity/عزم و همت - توکل و توسل.pdf"}' download></a>
+          </div>
+          <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
+            <span style="font-weight: 700;">عزم و همت - چالش برنامه ریزی</span>
+            <a class="masir-circle-button-2" title="دانلود توضیحات چالش" style="background-image: url('{% static 'images/pdf_icon.png' %}'); " href='{% static "manzel/عزم و همت - برنامه ریزی.pdf"}' download></a>
+          </div>
         </div>
-        <div class="col">
-          <p class="masir-title-1">کلیپ معرفی مسیر ۱۴۰۱</p>
-          <iframe src="https://www.aparat.com/video/video/embed/videohash/pWhU5/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
-        </div>
-        
-      </div>
+      </div> 
     </div>
-    
   </div>
-
-  
-
-
-    <div class="position-relative start-50 translate-middle text-center py-5" style="font-weight: 700; width: 80vw">
+  <div id="masir-background-3"  style="overflow: hidden">
+    <div class="container-fluid position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
       <div class="row justify-content-center mb-5 pb-5">
-        <div class="col">
+        <p class="masir-title-1">آثار برتر مسیر ۱۴۰۱</p>
+
+        <div class="col-lg-4 col-md-12 col-sm-12">
           <p class="masir-title-2">آثار برتر صوتی</p>
           <div id="audiobest" class="carousel slide" data-bs-ride="true" style=''>
             <div class="carousel-indicators">
@@ -101,21 +125,21 @@
               <button type="button" data-bs-target="#audiobest" data-bs-slide-to="3" aria-label="Slide 4"></button>
               <button type="button" data-bs-target="#audiobest" data-bs-slide-to="4" aria-label="Slide 5"></button>
             </div>
-            <div class="carousel-inner" style="padding-top: 10vh; height:100vh;">
+            <div class="carousel-inner" style="">
               <div class="carousel-item active">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/dZ57C/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/dZ57C/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
               <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/MsqWy/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/MsqWy/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
               <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/JdK85/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/JdK85/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
               <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/Zh3MT/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/Zh3MT/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
               <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/KiLUB/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/KiLUB/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#audiobest" data-bs-slide="prev">
@@ -128,7 +152,7 @@
             </button>
           </div>
         </div>
-        <div class="col">
+        <div class="col-lg-4 col-md-6 col-sm-12">
           <p class="masir-title-2">آثار برتر ویدیویی</p>
           <div id="videobest" class="carousel slide" data-bs-ride="true" style=''>
             <div class="carousel-indicators">
@@ -138,21 +162,21 @@
               <button type="button" data-bs-target="#videobest" data-bs-slide-to="3" aria-label="Slide 4"></button>
               <button type="button" data-bs-target="#videobest" data-bs-slide-to="4" aria-label="Slide 5"></button>
             </div>
-            <div class="carousel-inner" style="padding-top: 10vh; height:100vh;">
+            <div class="carousel-inner" style="">
               <div class="carousel-item active">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/fAYV7/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/fAYV7/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
               <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/Dhc7q/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/Dhc7q/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
               <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/Mv094/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/Mv094/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
               <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/WLZBK/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/WLZBK/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
               <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/3Xui9/vt/frame"  class="w-100" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height: 100vh;"></iframe>
+                <iframe src="https://www.aparat.com/video/video/embed/videohash/3Xui9/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></iframe>
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#videobest" data-bs-slide="prev">
@@ -166,76 +190,43 @@
           </div>
         
         </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <p class="masir-title-2">آثار برتر تصویری</p>
+          <div id="picturebest" class="carousel slide" data-bs-ride="true" style=''>
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#picturebest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#picturebest" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#picturebest" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#picturebest" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner" style="">
+              <div class="carousel-item active">
+                <img src="https://s2.uupload.ir/files/1_plz5.jpg"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></img>
+              </div>
+              <div class="carousel-item">
+                <img src="https://s2.uupload.ir/files/4_778.jpg"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></img>              </div>
+              <div class="carousel-item">
+                <img src="https://s2.uupload.ir/files/3_ctxi.jpg"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></img>              </div>
+              <div class="carousel-item">
+                <img src="https://s2.uupload.ir/files/5_slvu.jpg"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 90%; height: 60vh;"></img>              </div>
+              <div class="carousel-item">
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#picturebest" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">قبلی</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#picturebest" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">بعدی</span>
+            </button>
+          </div>
+        
+        </div>
+        
       </div>
     </div>
     
-{% endblock %}
+  </div>
+    
+{% endblock mainblock%}
 
-{% block scriptblock %}
-  <script>
-    function people_judge_form_click(){
-      document.getElementById('people_judge_form').style.display = 'none';
-      document.getElementById('people_judge_form_loading').style.display = 'block';
-    }
-
-    function images_vote_check() {
-      var checkBoxes = document.getElementsByClassName('image_checkbox');
-      var isChecked = false;
-      for (var i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked) {
-          isChecked = true;
-        }
-      }
-      if (isChecked) {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = false;
-        }
-      }
-      else {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = true;
-        }
-      }
-    }
-
-    function music_vote_check() {
-      var checkBoxes = document.getElementsByClassName('music_checkbox');
-      var isChecked = false;
-      for (var i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked) {
-          isChecked = true;
-        }
-      }
-      if (isChecked) {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = false;
-        }
-      }
-      else {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = true;
-        }
-      }
-    }
-
-    function video_vote_check() {
-      var checkBoxes = document.getElementsByClassName('video_checkbox');
-      var isChecked = false;
-      for (var i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked) {
-          isChecked = true;
-        }
-      }
-      if (isChecked) {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = false;
-        }
-      }
-      else {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = true;
-        }
-      }
-    }
-  </script>
-{% endblock %}
