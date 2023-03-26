@@ -368,22 +368,22 @@ def landing_page(request):
     )
   )
 
-def full_map_page(request):
-  return(
-    render(
-      request,
-      'full_map_page.html',
-      {
-        'MESSAGE': 'صفحه نهایی بازی برای یک گروه فرضی!',
-        'manazel': Manzel.objects.all().order_by('right')[0:7],
-        'manzel_achievements': Achivement.objects.exclude(manzel = None).order_by('manzel__id'),
-        'none_manzel_achievements': Achivement.objects.filter(manzel = None),
-        'exam': Exam.objects.all().last(),
-        'announcements': Announcement.objects.filter(is_public = True),
-        'FAQ': FAQ.objects.filter(is_active = True)
-      }
-    )
-  )
+# def full_map_page(request):
+#   return(
+#     render(
+#       request,
+#       'full_map_page.html',
+#       {
+#         'MESSAGE': 'صفحه نهایی بازی برای یک گروه فرضی!',
+#         'manazel': Manzel.objects.all().order_by('right')[0:7],
+#         'manzel_achievements': Achivement.objects.exclude(manzel = None).order_by('manzel__id'),
+#         'none_manzel_achievements': Achivement.objects.filter(manzel = None),
+#         'exam': Exam.objects.all().last(),
+#         'announcements': Announcement.objects.filter(is_public = True),
+#         'FAQ': FAQ.objects.filter(is_active = True)
+#       }
+#     )
+#   )
 
 def people_judge_page(request):
   if request.method == 'POST':

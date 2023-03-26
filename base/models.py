@@ -366,7 +366,7 @@ class Masir_Group(models.Model):
     for x in self.users.all():
       u = u + str(x) + ' - '
     return(u[:-3])
-
+  # محاسبه آذوقه
   def get_food(self):
     f = 0
     for x in self.exams.filter(show_public = True):
@@ -381,7 +381,8 @@ class Masir_Group(models.Model):
       f = f - x.food_for_next_manzel
     
     return(int(f * 100)/100)
-    
+  
+  # محاسبه توان
   def get_power(self):
     p = 100
     for x in self.users.all():
@@ -785,7 +786,7 @@ class Masir_Group(models.Model):
       l = l + (2 * x.value)
     
     return(int(l * 100)/100)
-  
+  # محاسبه نور
   def get_xp(self):
     return([
       int(((self.get_light() % 70) / 70) * 100),

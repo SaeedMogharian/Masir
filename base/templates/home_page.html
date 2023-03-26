@@ -83,6 +83,7 @@
   </head>
   <body class="m-0" {% if MESSAGE %} onload="show_message()" {% endif %}>
     <div id="maindiv" style="width: 100%;" dir="rtl">
+      {% comment %} نوار بالا {% endcomment %}
       <nav class="fixed-top">
         <div id="masir-navbar-bg" class="position-relative">
           <div id="masir-navbar-right-part" class="position-absolute top-50 start-0 translate-middle-y d-flex ms-1 ms-lg-5" style="height: max-content;">
@@ -122,11 +123,13 @@
       </nav>
 
       {% block mainblock %}
-        <div class="h-100 w-100 scroll-without-scrollbar" style="overflow-x: scroll;">
+      {% comment %} پس زمینه و منازل {% endcomment %}
+        <div class="h-100 w-100 scroll-without-scrollbar" style="overflow-x: scroll; background-color: white"> 
           <div id="masir-map2-background">
             <img src="{% static 'images/home_page_background.jpg' %}" style="height: 100%; min-width: 100vw;">
             {% for x in manazel %}
               <div class="masir-map-icon-1 position-absolute translate-middle-y" style="top: {{ x.top }}%; right: {{ x.right }}%;">
+                {% comment %} آیکون لوکیشن {% endcomment %}
                 <a class="masir-map-icon-pin-icon" href="#">
                   <svg viewBox="0 0 502 502">
                     <path style="fill: {{ x.color }};" d="M251,10C166.429,10,97.87,78.559,97.87,163.13S251,492,251,492s153.13-244.299,153.13-328.87    S335.571,10,251,10z M251,239.181c-42.002,0-76.051-34.049-76.051-76.051S208.998,87.079,251,87.079s76.051,34.049,76.051,76.051    S293.002,239.181,251,239.181z"/>
@@ -135,6 +138,7 @@
                     <path d="M302.994,68.238c-1.494,0-3.012-0.336-4.44-1.046C283.708,59.818,267.709,56.079,251,56.079c-5.522,0-10-4.477-10-10    s4.478-10,10-10c19.823,0,38.815,4.441,56.45,13.2c4.946,2.457,6.965,8.458,4.508,13.404    C310.211,66.201,306.672,68.238,302.994,68.238z"/>
                   </svg>
                 </a>
+                {% comment %} عنوان منزل {% endcomment %}
                 <div class="masir-map-icon-title" style="color: {{ x.color }};">
                   <div class="masir-map-icon-title-number">
                     {{ x.number }}
@@ -143,6 +147,7 @@
                     {{ x.title }}
                   </div>
                 </div>
+                {% comment %} هاور روی هر منزل {% endcomment %}
                 <div class="masir-map-icon-popup" style="border-color: {{ x.color }};">
                   {% if x == user.user_detail.groups.all.first.get_manzel %}
                     {% if x.food_for_next_manzel and x.power_for_next_manzel %}
@@ -182,7 +187,7 @@
                       {% endfor %}
                     </div>
                   {% endif %}
-                  
+                  {% comment %} حرکت به منزل بعد {% endcomment %}
                   <a class="btn masir-btn w-100 mt-1" style="background-color: {{ x.color }}; color: white;" data-bs-toggle="offcanvas" href="#level_{{x.id}}_offcanvas" role="button" aria-controls="level_{{x.id}}_offcanvas">مشاهده وضعیت منزل</a>
                   {% if x == user.user_detail.groups.all.first.get_manzel and x.food_for_next_manzel and x.power_for_next_manzel %}
                     <form action="{% url 'home_page_link' %}" method="post" onsubmit="next_level_form_click()">
@@ -208,7 +213,8 @@
             {% endfor %}
           </div>
         </div>
-
+        
+        {% comment %} پروفایل گروه {% endcomment %}
         <div class="modal fade" id="profile_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="profile_modal_Label" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
@@ -315,7 +321,7 @@
             </div>
           </div>
         </div>
-
+        
         <div class="modal fade" id="charity_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="charity_modal_Label" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
@@ -349,7 +355,7 @@
                     </div>
                     شما هم سهیم باشید!
                     <br>
-تمام صدقات داده شده در مسابقه مسیر با حمایت آکادمی همراه اول با نسبت مشخصی تبدیل به مبلغ واقعی شده و نهایتا به چندین دانش‌آموز نیازمند، دستگاه تبلت اهدا خواهد شد.
+                    تمام صدقات داده شده در مسابقه مسیر با حمایت آکادمی همراه اول با نسبت مشخصی تبدیل به مبلغ واقعی شده و نهایتا به چندین دانش‌آموز نیازمند، دستگاه تبلت اهدا خواهد شد.
                   </div>
                   <div class="form-check mt-3 mb-2">
                     <input class="form-check-input" type="checkbox" required disabled>
@@ -641,7 +647,7 @@
           </div>
         </div>
 
-        
+        {% comment %} نوار کناری هر منزل {% endcomment %}
         {% for m in manazel %}
           <div class="offcanvas offcanvas-start masir-offcanvas" tabindex="-1" id="level_{{m.id}}_offcanvas" aria-labelledby="level_{{m.id}}_offcanvasLabel">
             <a class="masir-offcanvas-close-icon masir-circle-button-2" data-bs-dismiss="offcanvas" aria-label="Close" role="button"></a>
@@ -818,6 +824,8 @@
         {% endif %}
       {% endblock %}
     </div>
+
+    {% block scriptblock %}
     <!-- Bootstrap -->
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
@@ -889,6 +897,6 @@
       }
     </script>
     {% endif %}
-
+    {% endblock%}
   </body>
 </html>
