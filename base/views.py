@@ -675,7 +675,9 @@ def home_page(request):
       )
     )
   
+  
   if request.method == 'POST':
+    # ثبت باشگاه
     if 'club_form' in request.POST:
       c = 0
       for u in user.groups.all().first().users.all():
@@ -717,7 +719,7 @@ def home_page(request):
         except:
           pass
       return(redirect('home_page_link'))
-      
+    #ثبت صدقه  
     if 'charity_form' in request.POST:
       if int(request.POST['charity_value']) > user.groups.all().first().get_food():
         return(
@@ -833,6 +835,7 @@ def home_page(request):
 
       return(redirect('home_page_link'))
 
+    #ثبت دانشگاه
     if 'university_form' in request.POST:
       exam = Exam.objects.filter(active = True).first()
       if Masir_Group_And_Exams_Rel.objects.filter(group = user.groups.all().first(), exam = exam).first():
@@ -875,6 +878,7 @@ def home_page(request):
 
       return(redirect('home_page_link'))
 
+    #رفتن به منزل بعد
     if 'next_level_form' in request.POST:
       if user.groups.all().first().get_manzel().food_for_next_manzel and user.groups.all().first().get_manzel().power_for_next_manzel and user.groups.all().first().get_food() >= user.groups.all().first().get_manzel().food_for_next_manzel or user.groups.all().first().get_power() >= user.groups.all().first().get_manzel().power_for_next_manzel:
         trash = user.groups.all().first().get_food() - user.groups.all().first().get_manzel().food_for_next_manzel - user.groups.all().first().get_manzel().max_export_food
@@ -915,6 +919,7 @@ def home_page(request):
 
         return(redirect('home_page_link'))
 
+    #ثبت فعالیت
     for x in user.groups.all().first().get_manzel().activity_topics.all():
       if 'activity_' + str(x.id) + '_form' in request.POST:
         if (Activity.objects.filter(topic = x, group = user.groups.all().first()).exclude(state = '6').first()):
@@ -933,8 +938,7 @@ def home_page(request):
                 'MESSAGE': 'گروه شما قبلا یکبار این فعالیت را انجام داده است.'
               }
             )
-          )
-        
+          )     
         Activity.objects.create(
           topic = x,
           template = Activity_Template.objects.filter(id = int(request.POST['activity_' + str(x.id) + '_template'])).first(),
