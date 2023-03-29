@@ -201,7 +201,7 @@
                         </div>
                       {% endif %}
                       
-                      <button type="submit" name="next_level_form" id="next_level_form" class="btn masir-btn w-100 mt-1  {%if user.user_detail.groups.all.first.get_food < x.food_for_next_manzel or user.user_detail.groups.all.first.get_power < x.power_for_next_manzel%} disabled {% endif %}" style="background-color: {{ x.color }}; color: white;"  {%if user.user_detail.groups.all.first.get_food >= x.food_for_next_manzel or user.user_detail.groups.all.first.get_power >= x.power_for_next_manzel%} href="#" {% endif %} disabled>حرکت به منزل بعدی</button>
+                      <button type="submit" name="next_level_form" id="next_level_form" class="btn masir-btn w-100 mt-1  {%if user.user_detail.groups.all.first.get_food < x.food_for_next_manzel or user.user_detail.groups.all.first.get_power < x.power_for_next_manzel%} disabled {% endif %}" style="background-color: {{ x.color }}; color: white;"  {%if user.user_detail.groups.all.first.get_food >= x.food_for_next_manzel or user.user_detail.groups.all.first.get_power >= x.power_for_next_manzel%} href="#" {% endif %} >حرکت به منزل بعدی</button>
                       <button class="btn masir-btn w-100" style="background-color: {{ x.color }}; color: white; display: none;" id="next_level_form_loading">
                         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                         در حال حرکت...
@@ -322,6 +322,7 @@
           </div>
         </div>
         
+        {% comment %} صدقه {% endcomment %}
         <div class="modal fade" id="charity_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="charity_modal_Label" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
@@ -341,7 +342,7 @@
                 <form action="{% url 'home_page_link' %}" method="post" onsubmit="charity_form_click()">
                   {% csrf_token %}
                   <div class="mb-1 mt-5" style="font-weight: 700;">ما تمایل داریم این مقدار از آذوقه گروه خود کسر کنیم و به نیازمندان صدقه دهیم:</div>
-                  <input name="charity_value" type="number" class="form-control masir-form-control text-center" autocomplete="off" min="1" required disabled>
+                  <input name="charity_value" type="number" class="form-control masir-form-control text-center" autocomplete="off" min="1" required >
                   
                   <div class="mt-5 mb-2 text-center" style="color: #800228; font-weight: 700;">
                     <div style="width: max(10vh, 10vw); height: max(10vh, 10vw); margin: 0 auto;">
@@ -358,12 +359,12 @@
                     تمام صدقات داده شده در مسابقه مسیر با حمایت آکادمی همراه اول با نسبت مشخصی تبدیل به مبلغ واقعی شده و نهایتا به چندین دانش‌آموز نیازمند، دستگاه تبلت اهدا خواهد شد.
                   </div>
                   <div class="form-check mt-3 mb-2">
-                    <input class="form-check-input" type="checkbox" required disabled>
+                    <input class="form-check-input" type="checkbox" required >
                     <label class="form-check-label" for="flexCheckDefault">
                       از میزان صدقه مطمئن هستیم.
                     </label>
                   </div>
-                  <button type="submit" name="charity_form" id="charity_form" class="btn masir-btn w-100" style="background-color: #800228; color: white;" disabled>ثبت صدقه</button>
+                  <button type="submit" name="charity_form" id="charity_form" class="btn masir-btn w-100" style="background-color: #800228; color: white;" >ثبت صدقه</button>
                   <button class="btn masir-btn w-100" style="background-color: #800228; color: white; display: none;" id="charity_form_loading">
                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     در حال ثبت...
@@ -402,7 +403,7 @@
                       </div>
                       <div class="mb-1 mt-1" style="font-weight: 700;">لینک فایل صوتی قرائت</div>
                       <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس فایل بارگذاری شده را در اینجا وارد کنید.</div>
-                      <input name="club_file_{{u.id}}" type="url" class="form-control masir-form-control text-center" autocomplete="off" disabled>
+                      <input name="club_file_{{u.id}}" type="url" class="form-control masir-form-control text-center" autocomplete="off">
                     {% else %}
                       <div class="mt-5 mb-2 text-center" style="color: #3d6185; font-weight: 700;">
                         فایل قرائت ارسال شده از طرف
@@ -416,12 +417,12 @@
                     هر فرد می‌تواند به صورت جداگانه به باشگاه بیاید؛ اما توان کسب‌شده از این قرائت به کل تیم تعلق می‌گیرد.
                   </div>
                   <div class="form-check mt-3 mb-2">
-                    <input class="form-check-input" type="checkbox" required disabled>
+                    <input class="form-check-input" type="checkbox" required>
                     <label class="form-check-label" for="flexCheckDefault">
                       از فایل ارسالی و محدوده آیات مطمئن هستم.
                     </label>
                   </div>
-                  <button type="submit" name="club_form" id="club_form" class="btn masir-btn w-100" style="background-color: #3d6185;" disabled>ثبت قرائت</button>
+                  <button type="submit" name="club_form" id="club_form" class="btn masir-btn w-100" style="background-color: #3d6185;">ثبت قرائت</button>
                   <button class="btn masir-btn w-100" style="background-color: #3d6185; display: none;" id="club_form_loading">
                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     در حال ثبت...
@@ -461,25 +462,25 @@
                           </div>
 
                           <div class="form-check">
-                            <input class="form-check-input" type="radio" name="Q{{q.id}}" value="1" required disabled>
+                            <input class="form-check-input" type="radio" name="Q{{q.id}}" value="1" required >
                             <label class="form-check-label">
                               {{ q.O1 }}
                             </label>
                           </div>
                           <div class="form-check">
-                            <input class="form-check-input" type="radio" name="Q{{q.id}}" value="2" required disabled>
+                            <input class="form-check-input" type="radio" name="Q{{q.id}}" value="2" required >
                             <label class="form-check-label">
                               {{ q.O2 }}
                             </label>
                           </div>
                           <div class="form-check">
-                            <input class="form-check-input" type="radio" name="Q{{q.id}}" value="3" required disabled>
+                            <input class="form-check-input" type="radio" name="Q{{q.id}}" value="3" required >
                             <label class="form-check-label">
                               {{ q.O3 }}
                             </label>
                           </div>
                           <div class="form-check">
-                            <input class="form-check-input" type="radio" name="Q{{q.id}}" value="4" required disabled>
+                            <input class="form-check-input" type="radio" name="Q{{q.id}}" value="4" required >
                             <label class="form-check-label">
                               {{ q.O4 }}
                             </label>
@@ -487,12 +488,12 @@
                         </div>
                       {% endfor %}
                       <div class="form-check mt-5 mb-3">
-                        <input class="form-check-input" type="checkbox" required disabled>
+                        <input class="form-check-input" type="checkbox" required >
                         <label class="form-check-label" for="flexCheckDefault">
                           از پاسخ‌های خود مطمئن هستیم.
                         </label>
                       </div>
-                      <button type="submit" name="university_form" id="university_form" class="btn masir-btn w-100" style="background-color: #69ff64;" disabled>ثبت نهایی پاسخ‌ها</button>
+                      <button type="submit" name="university_form" id="university_form" class="btn masir-btn w-100" style="background-color: #69ff64;" >ثبت نهایی پاسخ‌ها</button>
                       <button class="btn masir-btn w-100" style="background-color: #69ff64; display: none;" id="university_form_loading">
                         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                         در حال ثبت...
@@ -694,7 +695,7 @@
                     <form action="{% url 'home_page_link' %}" method="post" onsubmit="activity_{{x.id}}_form_click()">
                       {% csrf_token %}
                       <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب قالب </div>
-                      <select name="activity_{{x.id}}_template" class="form-select masir-form-control text-center" onchange="activity_{{x.id}}_template_change(this)" {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% else %} required {% endif %} disabled>
+                      <select name="activity_{{x.id}}_template" class="form-select masir-form-control text-center" onchange="activity_{{x.id}}_template_change(this)" {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% else %} required {% endif %} >
                         {% for t in user.user_detail.groups.all.first.get_activity_templates %}
                           <option value="{{ t.id }}"> {{ t.title }}</option>
                         {% endfor %}
@@ -719,15 +720,15 @@
                       
                       <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
                       <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس فایل بارگذاری شده را در اینجا وارد کنید.</div>
-                      <input name="activity_{{x.id}}_file" type="url" class="form-control masir-form-control text-center" autocomplete="off" required {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %} disabled>
+                      <input name="activity_{{x.id}}_file" type="url" class="form-control masir-form-control text-center" autocomplete="off" required {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %} >
                       
                       <div class="form-check mt-3 mb-2">
-                        <input class="form-check-input" type="checkbox" required disabled>
+                        <input class="form-check-input" type="checkbox" required >
                         <label class="form-check-label" for="flexCheckDefault">
                           از انتخاب قالب و فایل ارسالی مطمئن هستیم.
                         </label>
                       </div>
-                      <button type="submit" name="activity_{{x.id}}_form" id="activity_{{x.id}}_form" class="btn masir-btn w-100 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}" style="background-color: #69ff64;" {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}  disabled>بارگذاری نهایی</button>
+                      <button type="submit" name="activity_{{x.id}}_form" id="activity_{{x.id}}_form" class="btn masir-btn w-100 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}" style="background-color: #69ff64;" {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}  >بارگذاری نهایی</button>
                       <button class="btn masir-btn w-100" style="background-color: #69ff64; display: none;" id="activity_{{x.id}}_form_loading">
                         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                         در حال بارگذاری...
@@ -753,7 +754,7 @@
                     <form>
                       {% csrf_token %}
                       <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب قالب </div>
-                      <select name="activity_{{x.id}}_template" class="form-select masir-form-control text-center" disabled>
+                      <select name="activity_{{x.id}}_template" class="form-select masir-form-control text-center" >
                         <option> {{ x.template.title }} </option>
                       </select>
 
