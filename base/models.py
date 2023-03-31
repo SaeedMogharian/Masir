@@ -924,7 +924,7 @@ class Report(models.Model):
 
 
 class Activity_Topic(models.Model):
-    manzel = models.ForeignKey(Manzel, related_name='activity_topics', on_delete=models.CASCADE, verbose_name='منزل')
+    manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE, verbose_name='منزل')
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فعالیت')
     file = models.FileField(null=True, blank=True, upload_to='base/static/activity/',
                             verbose_name='فایل توضیحات فعالیت')
