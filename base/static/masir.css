@@ -41,14 +41,20 @@ audio::-webkit-media-controls-panel {
   text-indent: 1rem;
 }
 
-.masir-icon-pack{
-  background-color: white;
-  font-weight: 700;
-  border: 2px solid;
+.masir-icon-pack {
+  background-color: #3a0b01;
+  border: 2px solid #f0aa4b;
   border-radius: 50rem;
   padding-left: 0.25rem;
-  margin: 0 0.15rem;
+  margin: 0.15vh 0.15vh 0;
 }
+.masir-icon-pack span{
+  font-weight: 1000;
+  /*font-size: larger;*/
+  padding: min(0.5vh,0.5vw) min(0.5vh,0.5vw) min(0.5vh,0.5vw) min(0.5vh,0.5vw);
+}
+
+
 
 .masir-circle-button-1,
 .masir-circle-button-2,
