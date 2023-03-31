@@ -683,7 +683,7 @@
               </div> {% endcomment %}
 
               {% comment %} قابل انجام ها {% endcomment %}
-              <div class="h4" style="font-weight: 700;"> چالش‌ها </div>
+              <div class="h4" style="font-weight: 700;"> ماموریت اصلی </div>
               {% for x in m.activity_topics.all %}
                 {% if x not in user.user_detail.groups.all.first.get_activity_topics %}
                   <div class="mb-3 p-2" style="background-color: #eeeeee;">
