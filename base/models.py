@@ -580,8 +580,8 @@ class Masir_Group(models.Model):
 
         if len(Club_File.objects.filter(show_public=True, user__in=self.users.all()).values('level').annotate(
                 count=Count('id', distinct=True))) >= 19 or len(
-                Club_File.objects.filter(show_public=True, user__in=self.users.all()).values('date__day').annotate(
-                        count=Count('id', distinct=True))) >= 19:
+            Club_File.objects.filter(show_public=True, user__in=self.users.all()).values('date__day').annotate(
+                count=Count('id', distinct=True))) >= 19:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Vrz_0'),
                 30
@@ -924,15 +924,19 @@ class Report(models.Model):
 
 
 class Activity_Topic(models.Model):
-    manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE, verbose_name='منزل')
+    manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE,
+                               verbose_name='منزل')
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فعالیت')
     file = models.FileField(null=True, blank=True, upload_to='base/static/activity/',
                             verbose_name='فایل توضیحات فعالیت')
-    #برای اصلی و مخفی
+    # برای اصلی و مخفی
     main = models.BooleanField(default=False, verbose_name='فعالیت اصلی؟')
 
     def get_file(self):
         return (str(self.file)[4:])
+
+    def get_long_term(self):
+        return [x.topic for x in self.objects.all().filter(manzel__isnull=True)][0]
 
     def __str__(self):
         return (self.title)
