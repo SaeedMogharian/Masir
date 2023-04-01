@@ -705,6 +705,7 @@ def home_page(request):
                                         'FAQ': FAQ.objects.filter(is_active=True),
                                         'achivements': Achivement.objects.filter(manzel=None),
                                         'templates': Activity_Template.objects.all(),
+                                        'topics': Activity_Topic.objects.all(),
                                         'exam': Exam.objects.filter(active=True).first(),
                                         'MESSAGE': 'شما قبلا یک فایل در باشگاه ارسال کرده‌اید.'
                                     }
@@ -744,6 +745,7 @@ def home_page(request):
                             'FAQ': FAQ.objects.filter(is_active=True),
                             'achivements': Achivement.objects.filter(manzel=None),
                             'templates': Activity_Template.objects.all(),
+                            'topics': Activity_Topic.objects.all(),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان صدقه از میزان آذوقه گروه بیشتر است.'
                         }
@@ -861,6 +863,7 @@ def home_page(request):
                             'FAQ': FAQ.objects.filter(is_active=True),
                             'achivements': Achivement.objects.filter(manzel=None),
                             'templates': Activity_Template.objects.all(),
+                            'topics': Activity_Topic.objects.all(),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'گروه شما قبلا یکبار در این آزمون شرکت کرده است.'
                         }
@@ -947,6 +950,7 @@ def home_page(request):
                                 'FAQ': FAQ.objects.filter(is_active=True),
                                 'achivements': Achivement.objects.filter(manzel=None),
                                 'templates': Activity_Template.objects.all(),
+                                'topics': Activity_Topic.objects.all(),
                                 'exam': Exam.objects.filter(active=True).first(),
                                 'MESSAGE': 'گروه شما قبلا یکبار این فعالیت را انجام داده است.'
                             }

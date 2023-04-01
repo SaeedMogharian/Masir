@@ -935,9 +935,8 @@ class Activity_Topic(models.Model):
     def get_file(self):
         return (str(self.file)[4:])
 
-    def get_long_term(self):
-        return [x.topic for x in self.objects.all().filter(manzel__isnull=True)][0]
-
+    def get_long(self):
+        return self.objects.all().filter(manzel=None).first().title
     def __str__(self):
         return (self.title)
 
