@@ -14,13 +14,13 @@
                        style="background-image: url('{% static 'images/navbar_faq.png' %}');" href="#faq" role="button"></a>
                     <span class="ms-1"> سوالات پر تکرار </span>
                 </div>
-                <a class="masir-circle-button-3 masir-jelly" title="صفحه اصلی" style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'home_page_link' %}"></a>
                 <div class="d-flex align-items-center masir-icon-pack top-50"
                      style="color: white; height: 100%; margin-top: auto; margin-bottom: auto">
                     <a class="masir-circle-button-2 masir-jelly mx-0" title="پشتیبانی"
                        style="background-image: url('{% static 'images/navbar_contact_us.png' %}');" href="#contact" role="button"></a>
                     <span class="ms-1"> پشتیبانی </span>
                 </div>
+                <a class="masir-circle-button-3 masir-jelly" title="صفحه اصلی" style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'home_page_link' %}"></a>
                 <div class="d-flex align-items-center masir-icon-pack top-50"
                  style="color: white; height: 100%; margin-top: auto; margin-bottom: auto">
                 <a class="masir-circle-button-2 masir-jelly mx-0" title="رهنمای مسیر"
@@ -28,11 +28,6 @@
                 <span class="ms-1"> رهنمای مسیر </span>
             </div>
             </div>
-        </div>
-        <div id="masir-navbar-left-part"
-             class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5"
-             style="height: max-content;">
-
         </div>
     </nav>
 {% endblock %}
@@ -77,7 +72,7 @@
                     </div>
                     </div>
                     <div class="mt-2"></div>
-                    <textarea name="contact_us_message" class="form-control masir-form-control col-lg-8 col-md-12 col-sm-12" rows="3"
+                    <textarea name="contact_us_message" class="form-control masir-form-control col-lg-8 col-md-12 col-sm-12" rows="8"
                               required></textarea>
                     <div class="mb-3 mt-1">
                         مسئولین مسیر در اولین فرصت پاسخ شما را خواهند داد.

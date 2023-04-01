@@ -137,12 +137,13 @@
             padding-left: 0.25rem;
             margin-top: max(2vh,2vw);
             color: white;
-            max-width: 45vw;
+            max-width: 32vw;
             overflow: hidden;
+            font-size: small;
         }
         @media screen and (max-width: 500px){
             .masir-profile{
-                font-size: smaller;
+                font-size: x-small;
             }
         }
 
@@ -165,12 +166,12 @@
                        style="background-image: url('{% static 'images/life_icon.png' %}');"></a>
                     <span class="ms-1"> {{ user.user_detail.groups.all.first.get_light }} </span>
                 </div>
-                <div class="d-flex align-items-center masir-icon-pack" style="border-color: #efaa4b; color: #75dd2e;">
+                <div class="d-flex align-items-center masir-icon-pack" style="color: #75dd2e;">
                     <a class="masir-circle-button-2 masir-jelly mx-0" title="آذوقه"
                        style="background-image: url('{% static 'images/navbar_food.png' %}');"></a>
                     <span class="ms-1"> {{ user.user_detail.groups.all.first.get_food }} </span>
                 </div>
-                <div class="d-flex align-items-center masir-icon-pack" style="border-color: #efaa4b; color: #f3ad1a;">
+                <div class="d-flex align-items-center masir-icon-pack" style="color: #f3ad1a;">
                     <a class="masir-circle-button-2 masir-jelly mx-0" title="توان"
                        style="background-image: url('{% static 'images/navbar_power.png' %}');"></a>
                     <span class="ms-1"> {{ user.user_detail.groups.all.first.get_power }} </span>
@@ -180,7 +181,7 @@
                  style="height: max-content;">
                 <div class="d-flex align-items-center masir-profile">
                     <a class="masir-circle-button-2 masir-jelly mx-lg-5 mx-1" title="پروفایل گروه"
-                       style="background-image: url('{% static 'images/navbar_profile.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                       style="background-image: url('{% static 'images/navbar_profile.png' %}'); min-width: 2em; margin: auto max(0.15vw, 0.15vh);"
                     data-bs-toggle="modal" href="#profile_modal" role="button"></a>
                     <div class="flex position-relative">
                         <span class="ms-1" style="color: #f0aa4b"> {{ user.user_detail.groups.all.first }} </span><br>
@@ -189,12 +190,18 @@
                 </div>
             </div>
             <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+                <a class="masir-circle-button-2 masir-jelly" title="اکتشاف"
+                   style="background-image: url('{% static 'images/navbar_discover.png' %}'); margin: auto"
+                   data-bs-toggle="modal" href="#" role="button"></a>
                 <a class="masir-circle-button-3 masir-jelly" title="صفحه اصلی"
-                   style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: 0vh max(0.15vw, 0.15vh) auto;
+                   style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto;
                            "
                    data-bs-toggle="offcanvas"
                    href="#level_{{ user.user_detail.groups.all.first.get_manzel.id }}_offcanvas" role="button"
                    aria-controls="level_offcanvas"></a>
+                <a class="masir-circle-button-2 masir-jelly" title="افق های دور"
+                   style="background-image: url('{% static 'images/navbar_longterm.png' %}'); margin: auto ;"
+                   data-bs-toggle="modal" href="#" role="button"></a>
             </div>
             <div id="masir-navbar-left-part"
                  class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5"
@@ -244,6 +251,9 @@
                     </div>
                 </div>
             </div>
+            </div>
+
+
         </div>
         <nav class="leftnav">
         <div id="masir-leftbar-bg" class="position-relative">
