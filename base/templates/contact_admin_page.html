@@ -1,168 +1,170 @@
+{% extends "home_page.html" %}
 {% load static %}
 
-<!doctype html>
-<html lang="fa" dir="rtl">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;700&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.rtl.min.css' %}">
-
-    <!-- Maisr CSS -->
-    <link rel="stylesheet" href="{% static 'masir.css' %}">
-    <link rel="shortcut icon" type="image/png"href="{% static 'favicon.png' %}">
-
-
-    <style>
-      .masir-modal-close-icon{
-        background-image: url("{% static 'images/close_icon.png' %}");
-      }
-
-      #masir-map3-background{
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url('{% static 'images/home_page_background.jpg' %}');
-        filter: blur(10px) grayscale(30%) opacity(70%);
-      }
-
-      #masir-navbar-bg{
-        height: 1vh;
-        background-color: #364559;
-        margin: max(2.75vw, 2.75vh) 0px;
-      }
-    </style>
-
-    <title>مسابقه مسیر</title>
-  </head>
-  <body class="m-0" {% if MESSAGE %} onload="show_message()" {% endif %}>
-    <div id="maindiv" style="width: 100%;" dir="rtl">
-      <nav class="fixed-top">
+{% block static_masir %}
+  {% url 'home_page_link' %}
+{% endblock %}
+{% block navblock %}
+    <nav class="fixed-top">
         <div id="masir-navbar-bg" class="position-relative">
-          <div class="position-absolute top-50 start-0 translate-middle-y d-flex ms-1 ms-md-5" style="height: max-content;">
-          </div>
-          <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
-            <a class="masir-circle-button-3 masir-jelly" title="صفحه اصلی" style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'home_page_link' %}"></a>
-          </div>
-          <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-md-5" style="height: max-content;">
-            <a class="masir-circle-button-2 masir-jelly" title="راهنما" style="background-image: url('{% static 'images/navbar_help.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'help_page_link' %}"></a>
-          </div>
+            <div class="position-absolute top-50 start-50 translate-middle d-flex">
+                <div class="d-flex align-items-center masir-icon-pack top-50"
+                     style="color: white; height: 100%; margin-top: auto; margin-bottom: auto">
+                    <a class="masir-circle-button-2 masir-jelly mx-0" title="سوالات پرتکرار"
+                       style="background-image: url('{% static 'images/navbar_faq.png' %}');" href="#faq" role="button"></a>
+                    <span class="ms-1"> سوالات پر تکرار </span>
+                </div>
+                <div class="d-flex align-items-center masir-icon-pack top-50"
+                     style="color: white; height: 100%; margin-top: auto; margin-bottom: auto">
+                    <a class="masir-circle-button-2 masir-jelly mx-0" title="پشتیبانی"
+                       style="background-image: url('{% static 'images/navbar_contact_us.png' %}');" href="#contact" role="button"></a>
+                    <span class="ms-1"> پشتیبانی </span>
+                </div>
+                <a class="masir-circle-button-3 masir-jelly" title="صفحه اصلی" style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'home_page_link' %}"></a>
+                <div class="d-flex align-items-center masir-icon-pack top-50"
+                 style="color: white; height: 100%; margin-top: auto; margin-bottom: auto">
+                <a class="masir-circle-button-2 masir-jelly mx-0" title="رهنمای مسیر"
+                   style="background-image: url('{% static 'images/navbar_help.png' %}');" href="{% url 'help_page_link' %}"></a>
+                <span class="ms-1"> رهنمای مسیر </span>
+            </div>
+            </div>
         </div>
-      </nav>
-
-      {% block mainblock %}
+    </nav>
+{% endblock %}
+{% block mainblock %}
         <div style="width: 100vw; height: 100vh; position: relative; overflow: hidden;">
-          <div id="masir-map3-background"></div>
-          <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100" style="max-height: 80vh; overflow: scroll;">
-            <form action="{% url 'contact_admin_page_link' %}" method="post" class="w-75 mx-auto" onsubmit="message_form_click()">
-              {% csrf_token %}
-              <div class="mb-1 mt-5" style="font-weight: 700;">
-                نام و نام خانوادگی
-              </div>
-              <input name="contact_us_name" type="text" class="form-control masir-form-control" autocomplete="off" required readonly value="{{ user.user_detail }}">
-              
-              <div class="mb-1 mt-3" style="font-weight: 700;">
-                شماره تلفن
-              </div>
-              <input name="contact_us_phone" type="text" class="form-control masir-form-control" pattern="9[0-9]{9}" autocomplete="off" required readonly value="{{ user }}">
-              
-              <div class="mt-2"></div>
-              <textarea name="contact_us_message" class="form-control masir-form-control" rows="3" required></textarea>
-              <div class="mb-3 mt-1">
-                مسئولین مسیر در اولین فرصت پاسخ شما را خواهند داد.
-              </div>
+            <div id="masir-map2-background" style="filter: blur(10px) grayscale(30%) opacity(70%);"></div>
+            <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100"
+                 style="max-height: 80vh; overflow: scroll;">
 
-              <button type="submit" name="message_form" class="btn masir-btn w-100" style="background-color: #64b1ff;" id="message_form">ارسال</button>
-              <button class="btn masir-btn w-100" style="background-color: #64b1ff; display: none;" id="message_form_loading">
-                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                در حال ارسال...
-              </button>
-            </form>
-            
-
-            {% if messages %}
-              <div class="w-75 mt-5 mx-auto">
-                {% for x in messages %}
-                  <div class="p-2 mb-2" style="background-color: {% if x.answer %} #cbffcb {% else %} #ffcbcb {% endif %};">
-                    <div style="text-align: justify;">
-                      {{ x.get_message|safe }}
+                <div id="faq" class="modal-body">
+                    <div class="mb-1 mt-3 position-relative top-50 start-50 translate-middle translate-middle-x flex col-lg-8 col-md-12 col-sm-12 masir-title-1" style="font-size: x-large; text-align: center">سوالات پر تکرار</div>
+                        {% for x in FAQ %}
+                            <div class="position-relative top-50 start-50 translate-middle translate-middle-x flex col-lg-8 col-md-12 col-sm-12" style="justify-content: center">
+                                <div class="p-2" style="background-color: #c5c5c5; font-weight: 700;">
+                                    {{ x.question }}
+                                </div>
+                                <div class="p-2" style="background-color: #eeeeee;">
+                                    {{ x.answer }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                </div>
+                <div id="contact"></div>
+                <form action="{% url 'contact_admin_page_link' %}" method="post" class="col-xl-10 col-lg-10 col-md-12 col-sm-12 mx-auto modal-body"
+                      onsubmit="message_form_click()">
+                    {% csrf_token %}
+                    <div class="mb-1 mt-3 masir-title-1" style="font-size: x-large">پرسیدن سوال از پشتیبانی</div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 ">
+                            <div class="mb-1 mt-3" style="font-weight: 700;">
+                                نام و نام خانوادگی
+                            </div>
+                            <input name="contact_us_name" type="text" class="form-control masir-form-control" autocomplete="off"
+                                   required readonly value="{{ user.user_detail }}">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 ">
+                        <div class="mb-1 mt-3" style="font-weight: 700;">
+                            شماره تلفن
+                        </div>
+                        <input name="contact_us_phone" type="text" class="form-control masir-form-control"
+                               pattern="9[0-9]{9}" autocomplete="off" required readonly value="{{ user }}">
                     </div>
-                    {% if x.answer %}
-                      <div class="mx-2 my-1 p-2" style="background-color: #eeeeee;">
-                        {{ x.get_answer|safe }}
-                      </div>
-                    {% endif %}
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
+                    </div>
+                    <div class="mt-2"></div>
+                    <textarea name="contact_us_message" class="form-control masir-form-control col-lg-8 col-md-12 col-sm-12" rows="8"
+                              required></textarea>
+                    <div class="mb-3 mt-1">
+                        مسئولین مسیر در اولین فرصت پاسخ شما را خواهند داد.
+                    </div>
+
+                    <button type="submit" name="message_form" class="btn masir-btn w-100"
+                            style="background-color: #64b1ff;" id="message_form">ارسال
+                    </button>
+                    <button class="btn masir-btn w-100" style="background-color: #64b1ff; display: none;"
+                            id="message_form_loading">
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        در حال ارسال...
+                    </button>
+                </form>
+
+
+                {% if messages %}
+                    <div class="w-75 mt-5 mx-auto">
+                        {% for x in messages %}
+                            <div class="p-2 mb-2"
+                                 style="background-color: {% if x.answer %} #cbffcb {% else %} #ffcbcb {% endif %};">
+                                <div style="text-align: justify;">
+                                    {{ x.get_message|safe }}
+                                </div>
+                                {% if x.answer %}
+                                    <div class="mx-2 my-1 p-2" style="background-color: #eeeeee;">
+                                        {{ x.get_answer|safe }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
         </div>
         {% if MESSAGE %}
-          <div class="modal fade" id="message_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="message_modal_Label" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-              <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
-                <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close" role="button"></a>
-                <div class="modal-body scroll-without-scrollbar">
-                  <div class="position-relative px-5 masir-modal-header">
-                    <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
-                      <div class="masir-circle-icon-3" style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
-                        <svg viewBox="0 0 458 458" fill="currentcolor">
-                          <path d="M428,41.533H30c-16.568,0-30,13.432-30,30v252c0,16.568,13.432,30,30,30h132.1l43.942,52.243     c5.7,6.777,14.103,10.69,22.959,10.69c8.856,0,17.259-3.912,22.959-10.689l43.942-52.243H428c16.569,0,30-13.432,30-30v-252     C458,54.965,444.569,41.533,428,41.533z M428,323.533H281.933L229,386.465l-52.932-62.932H30v-252h398V323.533z"/>
-                          <path d="M85.402,156.999h137c8.284,0,15-6.716,15-15s-6.716-15-15-15h-137c-8.284,0-15,6.716-15,15     S77.118,156.999,85.402,156.999z"/>
-                          <path d="M71,233.999c0,8.284,6.716,15,15,15h286c8.284,0,15-6.716,15-15s-6.716-15-15-15H86     C77.716,218.999,71,225.715,71,233.999z"/>
-                        </svg>
-                      </div>
+            <div class="modal fade" id="message_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="message_modal_Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                    <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                        <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal"
+                           aria-label="Close" role="button"></a>
+                        <div class="modal-body scroll-without-scrollbar">
+                            <div class="position-relative px-5 masir-modal-header">
+                                <div class="position-absolute top-50 start-50 translate-middle d-flex"
+                                     style="height: max-content;">
+                                    <div class="masir-circle-icon-3"
+                                         style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
+                                        <svg viewBox="0 0 458 458" fill="currentcolor">
+                                            <path d="M428,41.533H30c-16.568,0-30,13.432-30,30v252c0,16.568,13.432,30,30,30h132.1l43.942,52.243     c5.7,6.777,14.103,10.69,22.959,10.69c8.856,0,17.259-3.912,22.959-10.689l43.942-52.243H428c16.569,0,30-13.432,30-30v-252     C458,54.965,444.569,41.533,428,41.533z M428,323.533H281.933L229,386.465l-52.932-62.932H30v-252h398V323.533z"/>
+                                            <path d="M85.402,156.999h137c8.284,0,15-6.716,15-15s-6.716-15-15-15h-137c-8.284,0-15,6.716-15,15     S77.118,156.999,85.402,156.999z"/>
+                                            <path d="M71,233.999c0,8.284,6.716,15,15,15h286c8.284,0,15-6.716,15-15s-6.716-15-15-15H86     C77.716,218.999,71,225.715,71,233.999z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="h5 text-center py-5" style="font-weight: 700;">
+                                {{ MESSAGE|safe }}
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  
-                  <div class="h5 text-center py-5" style="font-weight: 700;">
-                    {{ MESSAGE|safe }}
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
         {% endif %}
-      {% endblock %}
-    </div>
-    <!-- Bootstrap -->
-    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    {% endblock %}
+{% block scriptblock %}
+<!-- Bootstrap -->
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-    <script type="text/javascript">
-      var map = ["&\#1776;","&\#1777;","&\#1778;","&\#1779;","&\#1780;","&\#1781;","&\#1782;","&\#1783;","&\#1784;","&\#1785;"]
-      document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function($0) { return map[$0]});
-    </script>
+<script type="text/javascript">
+    var map = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"]
+    document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function ($0) {
+        return map[$0]
+    });
+</script>
 
-    {% if MESSAGE %}
-      <script>
-        function show_message(){
-          var message_modal = new bootstrap.Modal(document.getElementById('message_modal'), {
-            keyboard: false
-          });
-          message_modal.show()
-        }
-      </script>
-    {% endif %}
-
+{% if MESSAGE %}
     <script>
-      function message_form_click(){
+        function show_message() {
+            var message_modal = new bootstrap.Modal(document.getElementById('message_modal'), {
+                keyboard: false
+            });
+            message_modal.show()
+        }
+    </script>
+{% endif %}
+
+<script>
+    function message_form_click() {
         document.getElementById('message_form').style.display = 'none';
         document.getElementById('message_form_loading').style.display = 'block';
-      }
-    </script>
-
-  </body>
-</html>
+    }
+</script>
+{% endblock %}
