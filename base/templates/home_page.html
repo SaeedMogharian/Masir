@@ -723,7 +723,7 @@
                                                             onchange="activity_{{ x.id }}_template_change(this)"
                                                             {% if m != user.user_detail.groups.all.first.get_manzel %}
                                                             disabled {% else %} required {% endif %} >
-                                                        {% for t in user.user_detail.groups.all.first.get_activity_templates %}
+                                                        {% for t in x.template.all %}
                                                             <option value="{{ t.id }}"> {{ t.title }}</option>
                                                         {% endfor %}
                                                     </select>

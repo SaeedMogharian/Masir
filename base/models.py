@@ -580,8 +580,8 @@ class Masir_Group(models.Model):
 
         if len(Club_File.objects.filter(show_public=True, user__in=self.users.all()).values('level').annotate(
                 count=Count('id', distinct=True))) >= 19 or len(
-                Club_File.objects.filter(show_public=True, user__in=self.users.all()).values('date__day').annotate(
-                        count=Count('id', distinct=True))) >= 19:
+            Club_File.objects.filter(show_public=True, user__in=self.users.all()).values('date__day').annotate(
+                count=Count('id', distinct=True))) >= 19:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Vrz_0'),
                 30
@@ -814,22 +814,6 @@ class Masir_Group(models.Model):
     def get_manzel(self):
         return (Manzel.objects.filter(id=self.manzel).first())
 
-    def get_activity_templates(self):
-        T = []
-        for x in Activity_Template.objects.all():
-            # if x.chance > len(self.activities.exclude(state='6').filter(template=x)):
-                T.append(
-                    {
-                        'id': x.id,
-                        'title': x.title,
-                        'type': x.get_type_display(),
-                        'max_power': x.max_power,
-                        'max_food': x.max_food,
-                    }
-                )
-
-        return (T)
-
     def get_activity_topics(self):
         return ([x.topic for x in self.activities.exclude(state='6')])
 
@@ -922,25 +906,6 @@ class Report(models.Model):
         verbose_name_plural = 'گزارش‌ها'
 
 
-class Activity_Topic(models.Model):
-    manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE, verbose_name='منزل')
-    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فعالیت')
-    file = models.FileField(null=True, blank=True, upload_to='base/static/activity/',
-                            verbose_name='فایل توضیحات فعالیت')
-    #برای اصلی و مخفی
-    main = models.BooleanField(default=False, verbose_name='فعالیت اصلی؟')
-
-    def get_file(self):
-        return (str(self.file)[4:])
-
-    def __str__(self):
-        return (self.title)
-
-    class Meta:
-        verbose_name = 'موضوع فعالیت'
-        verbose_name_plural = 'موضوعات فعالیت‌ها'
-
-
 class Activity_Template(models.Model):
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان قالب')
     type = models.CharField(default='1', max_length=1, choices=ACTIVITY_TEMPLATE_TYPE_CHOICES, verbose_name='نوع قالب')
@@ -953,6 +918,43 @@ class Activity_Template(models.Model):
     class Meta:
         verbose_name = 'قالب فعالیت'
         verbose_name_plural = 'قالب‌های فعالیت‌ها'
+
+
+class Activity_Topic(models.Model):
+    manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE,
+                               verbose_name='منزل')
+    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فعالیت')
+    file = models.FileField(null=True, blank=True, upload_to='base/static/activity/',
+                            verbose_name='فایل توضیحات فعالیت')
+    template = models.ManyToManyField(Activity_Template, related_name='templates', blank=True, verbose_name='قالب ها')
+
+    # برای اصلی و مخفی
+    main = models.BooleanField(default=False, verbose_name='فعالیت اصلی؟')
+
+    def get_file(self):
+        return (str(self.file)[4:])
+
+    def get_activity_templates(self):
+        T = []
+        for x in self.template:
+            T.append(
+                {
+                    'id': x.id,
+                    'title': x.title,
+                    'type': x.get_type_display(),
+                    'max_power': x.max_power,
+                    'max_food': x.max_food,
+                }
+            )
+
+        return (T)
+
+    def __str__(self):
+        return (self.title)
+
+    class Meta:
+        verbose_name = 'موضوع فعالیت'
+        verbose_name_plural = 'موضوعات فعالیت‌ها'
 
 
 class Activity(models.Model):
