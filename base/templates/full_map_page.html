@@ -722,11 +722,7 @@
                       <span> حداکثر آذوقه قابل کسب: </span>
                       <span id="activity_{{x.id}}_template_max_food">{{ user.user_detail.groups.all.first.get_activity_templates.0.max_food }}</span>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <span> فرصت استفاده: </span>
-                      <span id="activity_{{x.id}}_template_chance">{{ user.user_detail.groups.all.first.get_activity_templates.0.chance }}</span>
-                    </div>
-                    
+
                     <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
                     <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس فایل بارگذاری شده را در اینجا وارد کنید.</div>
                     <input name="activity_{{x.id}}_file" type="url" class="form-control masir-form-control text-center" autocomplete="off" required disabled>
@@ -835,7 +831,6 @@
               document.getElementById("activity_{{x.id}}_template_type").innerHTML = "{{t.type}}";
               document.getElementById("activity_{{x.id}}_template_max_power").innerHTML = "{{t.max_power}}";
               document.getElementById("activity_{{x.id}}_template_max_food").innerHTML = "{{t.max_food}}";
-              document.getElementById("activity_{{x.id}}_template_chance").innerHTML = "{{t.chance}}";
             }
           {% endfor %}
         }

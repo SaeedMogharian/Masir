@@ -817,7 +817,7 @@ class Masir_Group(models.Model):
     def get_activity_templates(self):
         T = []
         for x in Activity_Template.objects.all():
-            if x.chance > len(self.activities.exclude(state='6').filter(template=x)):
+            # if x.chance > len(self.activities.exclude(state='6').filter(template=x)):
                 T.append(
                     {
                         'id': x.id,
@@ -825,7 +825,6 @@ class Masir_Group(models.Model):
                         'type': x.get_type_display(),
                         'max_power': x.max_power,
                         'max_food': x.max_food,
-                        'chance': x.chance - len(self.activities.filter(template=x))
                     }
                 )
 
@@ -947,7 +946,6 @@ class Activity_Template(models.Model):
     type = models.CharField(default='1', max_length=1, choices=ACTIVITY_TEMPLATE_TYPE_CHOICES, verbose_name='نوع قالب')
     max_power = models.IntegerField(default=0, verbose_name='حداکثر توان قابل کسب')
     max_food = models.IntegerField(default=0, verbose_name='حداکثر آذوقه قابل کسب')
-    chance = models.IntegerField(default=0, verbose_name='فرصت استفاده')
 
     def __str__(self):
         return (self.title)
