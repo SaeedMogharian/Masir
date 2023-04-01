@@ -42,7 +42,7 @@
         }
 
         .leftnav {
-            height: max(25vh, 25vw);
+            height: max(20vh, 20vw);
             min-height: 5em;
             width: 5vw;
             position: fixed;
@@ -127,7 +127,7 @@
         }
 
         #masir-rightbar {
-            margin-top: max(15vh, 15vw);
+            margin-top: max(12vh, 12vw);
             right: max(6vh, 6vw);
             margin-right: max(4.5vw, 4.5vh);
 
@@ -142,13 +142,6 @@
         }
         @media screen and (max-width: 500px){
             .masir-profile{
-                margin-top: max(5vh, 5vw);
-                font-size: smaller;
-            }
-        }
-        @media screen and (max-width: 320px){
-            .masir-profile{
-                margin-top: max(5vh, 5vw);
                 font-size: smaller;
             }
         }
@@ -161,6 +154,7 @@
 <body class="m-0" {% if MESSAGE %} onload="show_message()" {% endif %}>
 <div id="maindiv" style="width: 100%;" dir="rtl">
     {% comment %} نوار بالا {% endcomment %}
+    {% block navblock %}
     <nav class="fixed-top">
         <div id="masir-navbar-bg" class="position-relative">
             <div class="masir-navbar-right-part position-absolute top-50 start-0 translate-middle-y d-flex ms-1 ms-lg-5"
@@ -262,23 +256,20 @@
                    style="background-image: url('{% static 'images/navbar_reports.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                    data-bs-toggle="offcanvas" href="#reports_offcanvas" role="button" aria-controls="reports_offcanvas"
                    onclick="clear_alarm_class(this)"></a>
-                <a class="masir-circle-button-2 masir-jelly" title="رهنمای مسیر"
-                   style="background-image: url('{% static 'images/navbar_help.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                   href="{% url 'help_page_link' %}"></a>
-                <a class="masir-circle-button-2 masir-jelly" title="آمار"
+{#                <a class="masir-circle-button-2 masir-jelly" title="رهنمای مسیر"#}
+{#                   style="background-image: url('{% static 'images/navbar_help.png' %}'); margin: auto max(0.15vw, 0.15vh);"#}
+{#                   href="{% url 'help_page_link' %}"></a>#}
+                <a class="masir-circle-button-2 masir-jelly" title="شایستگی ها"
                    style="background-image: url('{% static 'images/navbar_statistics.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                    data-bs-toggle="modal" href="#achivements_modal" role="button"></a>
-                <a class="masir-circle-button-2 masir-jelly" title="پرسش‌های پرتکرار"
+                <a class="masir-circle-button-2 masir-jelly" title="سوالات و قوانین"
                    style="background-image: url('{% static 'images/navbar_faq.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                   data-bs-toggle="modal" href="#faq_modal" role="button"></a>
-                <a class="masir-circle-button-2 masir-jelly" title="ارتباط با ما"
-                   style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                    href="{% url 'contact_admin_page_link' %}"></a>
             </div>
         </div>
         </nav >
     </nav>
-
+    {% endblock %}
 
 
     {% block mainblock %}
@@ -763,7 +754,7 @@
                 </div>
             </div>
         </div>
-
+        {% comment %}
         <div class="modal fade" id="faq_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="faq_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
@@ -798,7 +789,7 @@
                 </div>
             </div>
         </div>
-
+        {% endcomment %}
         <div class="modal fade" id="achivements_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="achivements_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">

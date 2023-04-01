@@ -1390,6 +1390,7 @@ def contact_admin_page(request):
                 request,
                 'contact_admin_page_admin.html',
                 {
+                    'FAQ': FAQ.objects.filter(is_active=True),
                     'messages': Message.objects.all().order_by('-id')
                 }
             )
@@ -1436,6 +1437,7 @@ def contact_admin_page(request):
             request,
             'contact_admin_page.html',
             {
+                'FAQ': FAQ.objects.filter(is_active=True),
                 'messages': Message.objects.filter(phone=user.user.username).order_by('-id')
             }
         )
