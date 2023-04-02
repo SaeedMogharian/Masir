@@ -384,9 +384,17 @@ class Activity_Topic(models.Model):
                             verbose_name='فایل توضیحات فعالیت')
     template = models.ManyToManyField(Activity_Template, related_name='templates', blank=True, verbose_name='قالب ها')
 
-    # برای اصلی و مخفی
     main = models.BooleanField(default=False, verbose_name='فعالیت اصلی؟')
     code = models.CharField(null=True, blank=True, default='', max_length=8, verbose_name='کد اکتشاف')
+
+    level1 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 1')
+    level2 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 2')
+    level3 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 3')
+
+
+
+
+
 
     def get_file(self):
         return (str(self.file)[4:])
