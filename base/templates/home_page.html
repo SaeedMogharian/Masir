@@ -162,7 +162,6 @@
 </head>
 <body class="m-0" {% if MESSAGE %} onload="show_message()" {% endif %}>
 <div id="maindiv" style="width: 100%;" dir="rtl">
-    {% comment %} نوار بالا {% endcomment %}
     {% block navblock %}
         <nav class="fixed-top">
             <div id="masir-navbar-bg" class="position-relative">
@@ -396,7 +395,6 @@
             </div>
         </div>
 
-        {% comment %} پروفایل گروه {% endcomment %}
         <div class="modal fade" id="profile_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="profile_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
@@ -534,7 +532,6 @@
             </div>
         </div>
 
-        {% comment %} صدقه {% endcomment %}
         <div class="modal fade" id="charity_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="charity_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
@@ -677,6 +674,7 @@
                 </div>
             </div>
         </div>
+
         <div class="modal fade" id="discover_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="discover_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
@@ -700,11 +698,27 @@
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar">
+                            <form action="{% url 'home_page_link' %}" method="post" onsu bmit="discover_form_click">
+                                {% csrf_token %}
+                                <div class="mb-1 mt-2" style="font-weight: 700;"> اکتشاف</div>
+                                <input name="discover_code" type="text"
+                                       class="form-control masir-form-control text-center" autocomplete="off" required>
+                                <button type="submit" name="discover_form" id="discover_form"
+                                        class="btn masir-btn mt-2" style="display: block; margin-right: auto; background-color: #0A958E;">   بررسی کد
+                                </button>
+                                <button class="btn masir-btn mt-2"
+                                        style="margin-right: auto; background-color: #0A958E; display: none;"
+                                        id="discover_form_loading">
+                                        <span class="spinner-grow spinner-grow-sm" role="status"
+                                              aria-hidden="true"></span>
+                                    در حال بررسی...
+                                </button>
+                            </form>
                             {% for m in manazel %}
                                 <div class="h4" style="font-weight: 700;"> ماموریت مخفی</div>
                                 {% if m == user.user_detail.groups.all.first.get_manzel %}
                                     {% for x in m.activity_topics.all %}
-                                        {% if x not in user.user_detail.groups.all.first.get_activity_topics and not x.main %}
+                                        {% if x not in user.user_detail.groups.all.first.get_activity_topics and not x.main and x in user.user_detail.groups.all.first.discovered.all %}
                                             <div class="mb-3 p-2" style="background-color: #eeeeee;">
                                                 <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
                                                     <span style="font-weight: 700; color: {{ m.color }};"> {{ x.title }} </span>
@@ -728,17 +742,17 @@
                                                     </select>
 
                                                     <div class="d-flex justify-content-between align-items-center">
-                                        <span> نوع قالب: </span>
-                                        <span id="activity_{{ x.id }}_template_type">{{ x.template.all.0.get_type_display }}</span>
-                                    </div>
+                                                        <span> نوع قالب: </span>
+                                                        <span id="activity_{{ x.id }}_template_type">{{ x.template.all.0.get_type_display }}</span>
+                                                    </div>
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <span> حداکثر توان قابل کسب: </span>
                                                         <span id="activity_{{ x.id }}_template_max_power">{{ x.template.all.0.max_power }}</span>
                                                     </div>
                                                     <div class="d-flex justify-content-between align-items-center">
-                                        <span> حداکثر آذوقه قابل کسب: </span>
-                                        <span id="activity_{{ x.id }}_template_max_food">{{ x.template.all.0.max_food }}</span>
-                                    </div>
+                                                        <span> حداکثر آذوقه قابل کسب: </span>
+                                                        <span id="activity_{{ x.id }}_template_max_food">{{ x.template.all.0.max_food }}</span>
+                                                    </div>
 
                                                     <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
                                                     <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و

@@ -246,7 +246,8 @@ class Manzel(models.Model):
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان منزل')
     co_title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان معرفتی')
     story = models.FileField(null=True, blank=True, upload_to='base/static/manzel/', verbose_name='فایل داستان')
-    file = models.FileField(null=True, blank=True, upload_to='base/static/manzel/', verbose_name='فایل توضیحات منزل')
+    back_image = models.FileField(null=True, blank=True, upload_to='base/static/manzel/',
+                                  verbose_name='تصویر پس زمینه منزل')
     color = ColorField(default='FFFFFF', verbose_name='رنگ پس‌زمینه نَوبار')
     top = models.FloatField(default=0, verbose_name='درصد فاصله از بالای نقشه')
     right = models.FloatField(default=0, verbose_name='درصد فاصله از سمت راست نقشه')
@@ -361,11 +362,78 @@ class Exam(models.Model):
         verbose_name_plural = 'آزمون‌های دانشگاه'
 
 
+class Activity_Template(models.Model):
+    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان قالب')
+    type = models.CharField(default='1', max_length=1, choices=ACTIVITY_TEMPLATE_TYPE_CHOICES, verbose_name='نوع قالب')
+    max_power = models.IntegerField(default=0, verbose_name='حداکثر توان قابل کسب')
+    max_food = models.IntegerField(default=0, verbose_name='حداکثر آذوقه قابل کسب')
+
+    def __str__(self):
+        return (self.title)
+
+    class Meta:
+        verbose_name = 'قالب فعالیت'
+        verbose_name_plural = 'قالب‌های فعالیت‌ها'
+
+
+class Activity_Topic(models.Model):
+    manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE,
+                               verbose_name='منزل')
+    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فعالیت')
+    file = models.FileField(null=True, blank=True, upload_to='base/static/activity/',
+                            verbose_name='فایل توضیحات فعالیت')
+    template = models.ManyToManyField(Activity_Template, related_name='templates', blank=True, verbose_name='قالب ها')
+
+    # برای اصلی و مخفی
+    main = models.BooleanField(default=False, verbose_name='فعالیت اصلی؟')
+    code = models.CharField(null=True, blank=True, default='', max_length=8, verbose_name='کد اکتشاف')
+
+    def get_file(self):
+        return (str(self.file)[4:])
+
+    def get_long(self):
+        return self.objects.all().filter(manzel=None).first().title
+
+    def get_activity_templates(self):
+        T = []
+        for x in self.template:
+            T.append(
+                {
+                    'id': x.id,
+                    'title': x.title,
+                    'type': x.get_type_display(),
+                    'max_power': x.max_power,
+                    'max_food': x.max_food,
+                }
+            )
+
+        return (T)
+
+    def __str__(self):
+        return (self.title)
+
+    class Meta:
+        verbose_name = 'موضوع فعالیت'
+        verbose_name_plural = 'موضوعات فعالیت‌ها'
+
+
 class Masir_Group(models.Model):
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='نام گروه')
     users = models.ManyToManyField(User_Detail, related_name='groups', blank=True, verbose_name='اعضای گروه')
     supergroup = models.IntegerField(default=0, verbose_name='ابرگروه')
     manzel = models.IntegerField(default=1, verbose_name='منزل')
+
+    discovered = models.ManyToManyField(Activity_Topic, related_name='discoverd', blank=True,
+                                        verbose_name='فعالیت های اکتشاف شده')
+
+    def add_mains(self):
+        for x in Activity_Topic.objects.all():
+            if x.main:
+                self.discovered.add(x)
+
+    def add_mains_to_all(self):
+        for g in Masir_Group.objects.all():
+            g.add_mains()
 
     def get_all_charities(self):
         c = 0.0
@@ -904,59 +972,6 @@ class Report(models.Model):
     class Meta:
         verbose_name = 'گزارش'
         verbose_name_plural = 'گزارش‌ها'
-
-
-class Activity_Template(models.Model):
-    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان قالب')
-    type = models.CharField(default='1', max_length=1, choices=ACTIVITY_TEMPLATE_TYPE_CHOICES, verbose_name='نوع قالب')
-    max_power = models.IntegerField(default=0, verbose_name='حداکثر توان قابل کسب')
-    max_food = models.IntegerField(default=0, verbose_name='حداکثر آذوقه قابل کسب')
-
-    def __str__(self):
-        return (self.title)
-
-    class Meta:
-        verbose_name = 'قالب فعالیت'
-        verbose_name_plural = 'قالب‌های فعالیت‌ها'
-
-
-class Activity_Topic(models.Model):
-    manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE,
-                               verbose_name='منزل')
-    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فعالیت')
-    file = models.FileField(null=True, blank=True, upload_to='base/static/activity/',
-                            verbose_name='فایل توضیحات فعالیت')
-    template = models.ManyToManyField(Activity_Template, related_name='templates', blank=True, verbose_name='قالب ها')
-
-    # برای اصلی و مخفی
-    main = models.BooleanField(default=False, verbose_name='فعالیت اصلی؟')
-
-    def get_file(self):
-        return (str(self.file)[4:])
-
-    def get_long(self):
-        return self.objects.all().filter(manzel=None).first().title
-    def get_activity_templates(self):
-        T = []
-        for x in self.template:
-            T.append(
-                {
-                    'id': x.id,
-                    'title': x.title,
-                    'type': x.get_type_display(),
-                    'max_power': x.max_power,
-                    'max_food': x.max_food,
-                }
-            )
-
-        return (T)
-
-    def __str__(self):
-        return (self.title)
-
-    class Meta:
-        verbose_name = 'موضوع فعالیت'
-        verbose_name_plural = 'موضوعات فعالیت‌ها'
 
 
 class Activity(models.Model):
