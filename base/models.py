@@ -934,6 +934,8 @@ class Activity_Topic(models.Model):
     def get_file(self):
         return (str(self.file)[4:])
 
+    def get_long(self):
+        return self.objects.all().filter(manzel=None).first().title
     def get_activity_templates(self):
         T = []
         for x in self.template:

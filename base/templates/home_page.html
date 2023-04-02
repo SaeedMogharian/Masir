@@ -164,71 +164,69 @@
 <div id="maindiv" style="width: 100%;" dir="rtl">
     {% comment %} نوار بالا {% endcomment %}
     {% block navblock %}
-        <nav class="fixed-top">
-            <div id="masir-navbar-bg" class="position-relative">
-                <div class="masir-navbar-right-part position-absolute top-50 start-0 translate-middle-y d-flex ms-1 ms-lg-5"
-                     style="height: max-content;">
+    <nav class="fixed-top">
+        <div id="masir-navbar-bg" class="position-relative">
+            <div class="masir-navbar-right-part position-absolute top-50 start-0 translate-middle-y d-flex ms-1 ms-lg-5"
+                 style="height: max-content;">
+                <div class="d-flex align-items-center masir-icon-pack"
+                     style="border: 3.5px solid #f0aa4b; color: #3eb4fe;">
+                    <a class="masir-circle-button-2 masir-jelly mx-0" title="حیات"
+                       style="background-image: url('{% static 'images/life_icon.png' %}');"></a>
+                    <span class="ms-1"> {{ user.user_detail.groups.all.first.get_light }} </span>
+                </div>
+                <div class="d-flex align-items-center masir-icon-pack" style="color: #75dd2e;">
+                    <a class="masir-circle-button-2 masir-jelly mx-0" title="آذوقه"
+                       style="background-image: url('{% static 'images/navbar_food.png' %}');"></a>
+                    <span class="ms-1"> {{ user.user_detail.groups.all.first.get_food }} </span>
+                </div>
+                <div class="d-flex align-items-center masir-icon-pack" style="color: #f3ad1a;">
+                    <a class="masir-circle-button-2 masir-jelly mx-0" title="توان"
+                       style="background-image: url('{% static 'images/navbar_power.png' %}');"></a>
+                    <span class="ms-1"> {{ user.user_detail.groups.all.first.get_power }} </span>
+                </div>
+            </div>
+            <div class="masir-navbar-right position-absolute top-50 start-0 translate-middle-y d-flex ms-0 ms-lg-5"
+                 style="height: max-content;">
+                <div class="d-flex align-items-center masir-profile">
+                    <a class="masir-circle-button-2 masir-jelly mx-lg-5 mx-1" title="پروفایل گروه"
+                       style="background-image: url('{% static 'images/navbar_profile.png' %}'); min-width: 2em; margin: auto max(0.15vw, 0.15vh);"
+                    data-bs-toggle="modal" href="#profile_modal" role="button"></a>
+                    <div class="flex position-relative">
+                        <span class="ms-1" style="color: #f0aa4b"> {{ user.user_detail.groups.all.first }} </span><br>
+                        <span class="ms-1" > {{ user.first_name }} {{ user.last_name }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+                <a class="masir-circle-button-2 masir-jelly" title="اکتشاف"
+                   style="background-image: url('{% static 'images/navbar_discover.png' %}'); margin: auto"
+                   data-bs-toggle="modal" href="#discover_modal" role="button"></a>
+                <a class="masir-circle-button-3 masir-jelly" title="صفحه اصلی"
+                   style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto;
+                           "
+                   data-bs-toggle="offcanvas"
+                   href="#level_{{ user.user_detail.groups.all.first.get_manzel.id }}_offcanvas" role="button"
+                   aria-controls="level_offcanvas"></a>
+                <a class="masir-circle-button-2 masir-jelly" title="افق های دور"
+                   style="background-image: url('{% static 'images/navbar_longterm.png' %}'); margin: auto ;"
+                   data-bs-toggle="modal" href="#longterm_activity_modal" role="button"></a>
+            </div>
+            <div id="masir-navbar-left-part"
+                 class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5"
+                 style="height: max-content;">
+                <a class="masir-circle-button-2 masir-jelly" title="باشگاه"
+                   style="background-image: url('{% static 'images/navbar_club.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   data-bs-toggle="modal" href="#club_modal" role="button"></a>
+                <a class="masir-circle-button-2 masir-jelly" title="دانشگاه"
+                   style="background-image: url('{% static 'images/navbar_university.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   data-bs-toggle="modal" href="#university_modal" role="button"></a>
+                <a class="masir-circle-button-2 masir-jelly" title="صدقه"
+                   style="background-image: url('{% static 'images/navbar_charity.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   data-bs-toggle="modal" href="#charity_modal" role="button"></a>
+            </div>
+            <nav class="rightnav mx-1 mx-lg-5">
+                <div id="masir-rightbar" class="position-absolute translate-middle-x flex ms-1 ms-lg-5" style="height: max-content;">
                     <div class="d-flex align-items-center masir-icon-pack"
-                         style="border: 3.5px solid #f0aa4b; color: #3eb4fe;">
-                        <a class="masir-circle-button-2 masir-jelly mx-0" title="حیات"
-                           style="background-image: url('{% static 'images/life_icon.png' %}');"></a>
-                        <span class="ms-1"> {{ user.user_detail.groups.all.first.get_light }} </span>
-                    </div>
-                    <div class="d-flex align-items-center masir-icon-pack" style="color: #75dd2e;">
-                        <a class="masir-circle-button-2 masir-jelly mx-0" title="آذوقه"
-                           style="background-image: url('{% static 'images/navbar_food.png' %}');"></a>
-                        <span class="ms-1"> {{ user.user_detail.groups.all.first.get_food }} </span>
-                    </div>
-                    <div class="d-flex align-items-center masir-icon-pack" style="color: #f3ad1a;">
-                        <a class="masir-circle-button-2 masir-jelly mx-0" title="توان"
-                           style="background-image: url('{% static 'images/navbar_power.png' %}');"></a>
-                        <span class="ms-1"> {{ user.user_detail.groups.all.first.get_power }} </span>
-                    </div>
-                </div>
-                <div class="masir-navbar-right position-absolute top-50 start-0 translate-middle-y d-flex ms-0 ms-lg-5"
-                     style="height: max-content;">
-                    <div class="d-flex align-items-center masir-profile">
-                        <a class="masir-circle-button-2 masir-jelly mx-lg-5 mx-1" title="پروفایل گروه"
-                           style="background-image: url('{% static 'images/navbar_profile.png' %}'); min-width: 2em; margin: auto max(0.15vw, 0.15vh);"
-                           data-bs-toggle="modal" href="#profile_modal" role="button"></a>
-                        <div class="flex position-relative">
-                            <span class="ms-1"
-                                  style="color: #f0aa4b"> {{ user.user_detail.groups.all.first }} </span><br>
-                            <span class="ms-1"> {{ user.first_name }} {{ user.last_name }} </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
-                    <a class="masir-circle-button-2 masir-jelly" title="اکتشاف"
-                       style="background-image: url('{% static 'images/navbar_discover.png' %}'); margin: auto"
-                       data-bs-toggle="modal" href="#discover_modal" role="button"></a>
-                    <a class="masir-circle-button-3 masir-jelly" title="صفحه اصلی"
-                       style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto;
-                               "
-                       data-bs-toggle="offcanvas"
-                       href="#level_{{ user.user_detail.groups.all.first.get_manzel.id }}_offcanvas" role="button"
-                       aria-controls="level_offcanvas"></a>
-                    <a class="masir-circle-button-2 masir-jelly" title="افق های دور"
-                       style="background-image: url('{% static 'images/navbar_longterm.png' %}'); margin: auto ;"
-                       data-bs-toggle="modal" href="#" role="button"></a>
-                </div>
-                <div id="masir-navbar-left-part"
-                     class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5"
-                     style="height: max-content;">
-                    <a class="masir-circle-button-2 masir-jelly" title="باشگاه"
-                       style="background-image: url('{% static 'images/navbar_club.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                       data-bs-toggle="modal" href="#club_modal" role="button"></a>
-                    <a class="masir-circle-button-2 masir-jelly" title="دانشگاه"
-                       style="background-image: url('{% static 'images/navbar_university.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                       data-bs-toggle="modal" href="#university_modal" role="button"></a>
-                    <a class="masir-circle-button-2 masir-jelly" title="صدقه"
-                       style="background-image: url('{% static 'images/navbar_charity.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                       data-bs-toggle="modal" href="#charity_modal" role="button"></a>
-                </div>
-                <nav class="rightnav mx-1 mx-lg-5">
-                    <div id="masir-rightbar" class="position-absolute translate-middle-x flex ms-1 ms-lg-5"
-                         style="height: max-content;">
-                        <div class="d-flex align-items-center masir-icon-pack"
                              style="border: 3.5px solid #f0aa4b; color: #3eb4fe;">
                             <a class="masir-circle-button-2 masir-jelly mx-0" title="حیات"
                                style="background-image: url('{% static 'images/life_icon.png' %}');"></a>
@@ -290,7 +288,6 @@
             </nav>
         </nav>
     {% endblock %}
-
 
     {% block mainblock %}
         {% comment %} پس زمینه و منازل {% endcomment %}
@@ -843,6 +840,47 @@
             </div>
         </div>
 
+        <div class="modal fade" id="longterm_activity_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="longterm_activity_modal_Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                    <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
+                       role="button"></a>
+                    <div class="modal-body scroll-without-scrollbar">
+                        <div class="position-relative px-5 masir-modal-header">
+                            <div class="position-absolute top-50 start-50 translate-middle d-flex"
+                                 style="height: max-content;">
+                                <div class="masir-circle-icon-3"
+                                     style="background-color: #c5e2ff; color: #3d6185; border: 2px #3d6185 solid;">
+                                    <svg viewBox="0 0 502 502">
+                                        <path style="fill: currentColor;"
+                                              d="M251,10C166.429,10,97.87,78.559,97.87,163.13S251,492,251,492s153.13-244.299,153.13-328.87    S335.571,10,251,10z M251,239.181c-42.002,0-76.051-34.049-76.051-76.051S208.998,87.079,251,87.079s76.051,34.049,76.051,76.051    S293.002,239.181,251,239.181z"/>
+                                        <path d="M251,502c-3.443,0-6.645-1.771-8.473-4.689C236.212,487.236,87.87,249.582,87.87,163.13C87.87,73.18,161.05,0,251,0    s163.13,73.18,163.13,163.13c0,86.452-148.342,324.106-154.657,334.181C257.645,500.229,254.443,502,251,502z M251,20    c-78.922,0-143.13,64.208-143.13,143.13c0,32.929,26.05,99.093,75.333,191.34c27.067,50.662,54.401,96.442,67.797,118.444    c13.396-22.001,40.729-67.782,67.797-118.444c49.283-92.247,75.333-158.412,75.333-191.34C394.13,84.208,329.922,20,251,20z     M251,249.181c-47.448,0-86.051-38.603-86.051-86.051S203.552,77.079,251,77.079s86.051,38.602,86.051,86.051    S298.448,249.181,251,249.181z M251,97.079c-36.421,0-66.051,29.63-66.051,66.051s29.63,66.051,66.051,66.051    s66.051-29.63,66.051-66.051S287.421,97.079,251,97.079z"/>
+                                        <path d="M133.949,173.13c-5.522,0-10-4.477-10-10c0-24.107,6.783-47.57,19.617-67.852c12.482-19.727,30.113-35.633,50.985-46    c4.945-2.458,10.947-0.438,13.404,4.508s0.438,10.948-4.508,13.404c-36.7,18.229-59.499,54.991-59.499,95.939    C143.949,168.653,139.472,173.13,133.949,173.13z"/>
+                                        <path d="M302.994,68.238c-1.494,0-3.012-0.336-4.44-1.046C283.708,59.818,267.709,56.079,251,56.079c-5.522,0-10-4.477-10-10    s4.478-10,10-10c19.823,0,38.815,4.441,56.45,13.2c4.946,2.457,6.965,8.458,4.508,13.404    C310.211,66.201,306.672,68.238,302.994,68.238z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body scroll-without-scrollbar">
+                            {% for m in topics %}
+                                <div class="mb-3 p-2" style="background-color: #eeeeee;">
+                                    <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
+                                        <span style="font-weight: 700;"> {{ m.title }} </span>
+                                        <a class="masir-circle-button-2" title="عنوان فعالیت"
+                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                                           href="{{ x.topic.get_file }}" download></a>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="university_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="university_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
@@ -1121,11 +1159,6 @@
                         </audio>
 
                     </div>
-
-                    {% comment %} <div class="mb-2 p-2 d-flex justify-content-between align-items-center" style="background-color: #eeeeee;">
-                <span style="font-weight: 700; color: {{ m.color }};">توضیحات منزل {{ m.co_title }} </span>
-                <a class="masir-circle-button-2" title="راهنما" style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{{ m.get_file }}" download></a>
-              </div> {% endcomment %}
 
                     {% comment %} قابل انجام ها {% endcomment %}
                     <div class="h4" style="font-weight: 700;"> ماموریت اصلی</div>
