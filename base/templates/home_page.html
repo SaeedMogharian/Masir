@@ -1144,14 +1144,14 @@
                                     {% csrf_token %}
                                     <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب قالب</div>
                                     <select name="activity_{{ x.id }}_template"
-                                            class="form-select masir-form-control text-center"
-                                            onchange="activity_{{ x.id }}_template_change(this)"
-                                            {% if m != user.user_detail.groups.all.first.get_manzel %}
-                                            disabled {% else %} required {% endif %} >
-                                        {% for t in user.user_detail.groups.all.first.get_activity_templates %}
-                                            <option value="{{ t.id }}"> {{ t.title }}</option>
-                                        {% endfor %}
-                                    </select>
+                                                            class="form-select masir-form-control text-center"
+                                                            onchange="activity_{{ x.id }}_template_change(this)"
+                                                            {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                            disabled {% else %} required {% endif %} >
+                                                        {% for t in x.template.all %}
+                                                            <option value="{{ t.id }}"> {{ t.title }}</option>
+                                                        {% endfor %}
+                                                    </select>
 
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span> نوع قالب: </span>
