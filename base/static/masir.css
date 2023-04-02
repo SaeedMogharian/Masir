@@ -289,6 +289,14 @@ audio::-webkit-media-controls-panel {
         font-size: medium;
     }
 }
+@media screen and (max-width: 425px){
+    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number{
+        font-size: xx-small;
+    }
+    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name{
+        font-size: smaller;
+    }
+}
 
 .masir-modal {
     border-radius: 25px;
