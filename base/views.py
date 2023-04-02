@@ -276,6 +276,7 @@ def landing_page(request):
                     g.users.add(user2)
                     g.users.add(user3)
                     g.save()
+                    g.add_mains()
 
                     Report.objects.create(
                         group=g,
@@ -705,6 +706,7 @@ def home_page(request):
                                         'FAQ': FAQ.objects.filter(is_active=True),
                                         'achivements': Achivement.objects.filter(manzel=None),
                                         'templates': Activity_Template.objects.all(),
+
                                         'exam': Exam.objects.filter(active=True).first(),
                                         'MESSAGE': 'شما قبلا یک فایل در باشگاه ارسال کرده‌اید.'
                                     }
@@ -744,6 +746,7 @@ def home_page(request):
                             'FAQ': FAQ.objects.filter(is_active=True),
                             'achivements': Achivement.objects.filter(manzel=None),
                             'templates': Activity_Template.objects.all(),
+
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان صدقه از میزان آذوقه گروه بیشتر است.'
                         }
@@ -861,6 +864,7 @@ def home_page(request):
                             'FAQ': FAQ.objects.filter(is_active=True),
                             'achivements': Achivement.objects.filter(manzel=None),
                             'templates': Activity_Template.objects.all(),
+
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'گروه شما قبلا یکبار در این آزمون شرکت کرده است.'
                         }
@@ -931,6 +935,65 @@ def home_page(request):
 
                 return (redirect('home_page_link'))
 
+        # اکتشاف
+        if 'discover_form' in request.POST:
+            for x in user.groups.all().first().get_manzel().activity_topics.all():
+                if request.POST['discover_code'] == x.code and not x.main:
+                    if x not in user.groups.all().first().discovered.all():
+                        user.groups.all().first().discovered.add(x)
+                        return (
+                            render(
+                                request,
+                                'home_page.html',
+                                {
+                                    'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
+                                        'right'),
+                                    'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
+                                    'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
+                                    'FAQ': FAQ.objects.filter(is_active=True),
+                                    'achivements': Achivement.objects.filter(manzel=None),
+                                    'templates': Activity_Template.objects.all(),
+                                    'exam': Exam.objects.filter(active=True).first(),
+                                    'MESSAGE': 'آفرین! اکتشاف شما موفق بود! <br> ماموریت مخفی «' + x.title + '» به گروه شما اضافه شد'
+                                }
+                            )
+                        )
+                    else:
+                        return (
+                            render(
+                                request,
+                                'home_page.html',
+                                {
+                                    'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
+                                        'right'),
+                                    'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
+                                    'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
+                                    'FAQ': FAQ.objects.filter(is_active=True),
+                                    'achivements': Achivement.objects.filter(manzel=None),
+                                    'templates': Activity_Template.objects.all(),
+                                    'exam': Exam.objects.filter(active=True).first(),
+                                    'MESSAGE': 'این ماموریت مخفی را قبلا پیدا کرده اید. دوباره تلاش کنید! '
+                                }
+                            )
+                        )
+            return (
+                render(
+                    request,
+                    'home_page.html',
+                    {
+                        'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
+                            'right'),
+                        'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
+                        'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
+                        'FAQ': FAQ.objects.filter(is_active=True),
+                        'achivements': Achivement.objects.filter(manzel=None),
+                        'templates': Activity_Template.objects.all(),
+                        'exam': Exam.objects.filter(active=True).first(),
+                        'MESSAGE': 'متاسفانه اکتشاف موفق نبود!<br> بیشتر تلاش کنید '
+                    }
+                )
+            )
+
         # ثبت فعالیت
         for x in user.groups.all().first().get_manzel().activity_topics.all():
             if 'activity_' + str(x.id) + '_form' in request.POST:
@@ -947,6 +1010,7 @@ def home_page(request):
                                 'FAQ': FAQ.objects.filter(is_active=True),
                                 'achivements': Achivement.objects.filter(manzel=None),
                                 'templates': Activity_Template.objects.all(),
+
                                 'exam': Exam.objects.filter(active=True).first(),
                                 'MESSAGE': 'گروه شما قبلا یکبار این فعالیت را انجام داده است.'
                             }
@@ -1195,10 +1259,10 @@ def home_page(request):
                     )
                 if len(Club_File.objects.filter(show_public=True,
                                                 user__in=x.user.groups.all().first().users.all()).values(
-                        'level').annotate(count=Count('id', distinct=True))) >= 19 or len(
-                        Club_File.objects.filter(show_public=True,
-                                                 user__in=x.user.groups.all().first().users.all()).values(
-                                'date__day').annotate(count=Count('id', distinct=True))) >= 19:
+                    'level').annotate(count=Count('id', distinct=True))) >= 19 or len(
+                    Club_File.objects.filter(show_public=True,
+                                             user__in=x.user.groups.all().first().users.all()).values(
+                        'date__day').annotate(count=Count('id', distinct=True))) >= 19:
                     set_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
                         Achivement.objects.get(code='Vrz_0'),

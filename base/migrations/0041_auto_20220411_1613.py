@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('type', models.CharField(choices=[('1', 'طلایی'), ('2', 'برنزی'), ('3', 'چوبی')], default='1', max_length=1, verbose_name='نوع قالب')),
                 ('max_power', models.IntegerField(default=0, verbose_name='حداکثر توان قابل کسب')),
                 ('max_food', models.IntegerField(default=0, verbose_name='حداکثر آذوقه قابل کسب')),
-                ('chance', models.IntegerField(default=0, verbose_name='فرصت استفاده')),
+
             ],
             options={
                 'verbose_name': 'قالب فعالیت',
