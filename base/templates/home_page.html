@@ -42,7 +42,7 @@
         }
 
         .leftnav {
-            height: max(20vh, 20vw);
+            height: 40vh;
             min-height: 5em;
             width: 5vw;
             position: fixed;
@@ -63,13 +63,12 @@
         .masir-navbar-right-part{
             display: block;
         }
-         .masir-navbar-right{
+        .masir-navbar-right{
              display: none !important;
          }
         @media screen and (max-width: 768px){
             .rightnav{
                 display: block;
-                height: 10em;
             }
             .masir-navbar-right{
                 display: block !important;
@@ -78,7 +77,7 @@
                 display: none !important;
             }
             .leftnav{
-                height: 15em;
+                height: 28vh;
             }
         }
 
@@ -127,8 +126,6 @@
         #masir-rightbar {
             margin-top: max(12vh, 12vw);
             right: max(6vh, 6vw);
-            margin-right: max(4.5vw, 4.5vh);
-
         }
         .masir-profile {
             background-image: linear-gradient(to right, transparent , black);
@@ -214,7 +211,7 @@
                    style="background-image: url('{% static 'images/navbar_charity.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                    data-bs-toggle="modal" href="#charity_modal" role="button"></a>
             </div>
-            <nav class="rightnav mx-1 mx-lg-5">
+            <nav class="rightnav mx-0 mx-lg-5">
                 <div id="masir-rightbar" class="position-absolute translate-middle-x flex ms-1 ms-lg-5" style="height: max-content;">
                     <div class="d-flex align-items-center masir-icon-pack"
                              style="border: 3.5px solid #f0aa4b; color: #3eb4fe;">
