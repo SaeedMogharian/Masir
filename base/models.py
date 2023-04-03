@@ -394,8 +394,10 @@ class Activity_Topic(models.Model):
     def get_file(self):
         return (str(self.file)[4:])
 
-    def get_long(self):
-        return self.objects.all().filter(manzel=None).first().title
+    def if_long(self):
+        if not self.manzel:
+            return True
+        return False
 
     def get_activity_templates(self):
         T = []
@@ -875,7 +877,7 @@ class Masir_Group(models.Model):
 
         return (int(l * 100) / 100)
 
-    # محاسبه نور
+    # محاسبه حیات
     def get_xp(self):
         return ([
             int(((self.get_light() % 70) / 70) * 100),
@@ -979,7 +981,7 @@ class Report(models.Model):
 
 class Activity(models.Model):
     topic = models.ForeignKey(Activity_Topic, related_name='activities', on_delete=models.CASCADE, verbose_name='موضوع')
-    template = models.ForeignKey(Activity_Template, related_name='activities', on_delete=models.CASCADE,
+    template = models.ForeignKey(Activity_Template, null=True, blank=True, related_name='activities', on_delete=models.CASCADE,
                                  verbose_name='قالب')
     group = models.ForeignKey(Masir_Group, related_name='activities', on_delete=models.CASCADE, verbose_name='گروه')
     referee = models.ForeignKey(User_Detail, null=True, blank=True, related_name='judges', on_delete=models.SET_NULL,

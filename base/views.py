@@ -275,8 +275,8 @@ def landing_page(request):
                     g.users.add(user1)
                     g.users.add(user2)
                     g.users.add(user3)
-                    g.save()
                     g.add_mains()
+                    g.save()
 
                     Report.objects.create(
                         group=g,
@@ -685,7 +685,6 @@ def home_page(request):
             )
         )
 
-
     if request.method == 'POST':
         # ثبت باشگاه
         if 'club_form' in request.POST:
@@ -757,7 +756,7 @@ def home_page(request):
             tmp = 0
             for x in user.groups.all().first().charities.all():
                 tmp = tmp + x.value
-            if tmp >= 40:
+            if tmp >= 80:
                 delete_masir_group_and_achivement_rel(
                     user.groups.all().first(),
                     [
@@ -773,7 +772,7 @@ def home_page(request):
                     Achivement.objects.get(code='Sdq_5'),
                     0
                 )
-            elif tmp >= 30:
+            elif tmp >= 60:
                 delete_masir_group_and_achivement_rel(
                     user.groups.all().first(),
                     [
@@ -789,7 +788,7 @@ def home_page(request):
                     Achivement.objects.get(code='Sdq_4'),
                     0
                 )
-            elif tmp >= 20:
+            elif tmp >= 40:
                 delete_masir_group_and_achivement_rel(
                     user.groups.all().first(),
                     [
@@ -805,7 +804,7 @@ def home_page(request):
                     Achivement.objects.get(code='Sdq_3'),
                     0
                 )
-            elif tmp >= 10:
+            elif tmp >= 20:
                 delete_masir_group_and_achivement_rel(
                     user.groups.all().first(),
                     [
@@ -899,20 +898,20 @@ def home_page(request):
                         group=user.groups.all().first(),
                         food=trash
                     )
-                    text = text + '؛ ' + str((trash * 100) / 100) + ' واحد آذوقه اضافه را در مسیر حرکت از دست دادید'
+                    text = text + '؛ ' + str(float(round((trash * 100) / 100))) + ' واحد آذوقه اضافه را در مسیر حرکت از دست دادید'
 
                 g = user.groups.all().first()
 
                 tmp = 0
                 for x in g.activities.filter(topic__manzel=g.get_manzel()):
                     tmp = tmp + (x.get_score() * (4 - int(x.template.type)))
-                if tmp > 25:
+                if tmp > 35:
                     set_masir_group_and_achivement_rel(
                         g,
                         Achivement.objects.get(code='Mnz_' + str(g.manzel)),
                         10
                     )
-                if g.manzel == 7:
+                if g.manzel == 4:
                     set_masir_group_and_achivement_rel(
                         g,
                         Achivement.objects.get(code='Lst_0'),
@@ -939,7 +938,7 @@ def home_page(request):
                         user.groups.all().first().discovered.add(x)
                         Report.objects.create(
                             group=user.groups.all().first(),
-                            text='شما در یک اکتشاف موفقیت آمیز ماموریت مخفی «' + str(x) +'» را پیدا کردید'
+                            text='شما در یک اکتشاف موفقیت آمیز ماموریت مخفی «' + str(x) + '» را پیدا کردید'
                         )
                         return (
                             render(
@@ -969,7 +968,7 @@ def home_page(request):
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
                                     'achivements': Achivement.objects.filter(manzel=None),
-                                    
+
                                     'exam': Exam.objects.filter(active=True).first(),
                                     'MESSAGE': 'این ماموریت مخفی را قبلا پیدا کرده اید. دوباره تلاش کنید! '
                                 }
@@ -993,7 +992,7 @@ def home_page(request):
             )
 
         # ثبت فعالیت
-        for x in user.groups.all().first().get_manzel().activity_topics.all():
+        for x in Activity_Topic.objects.all():
             if 'activity_' + str(x.id) + '_form' in request.POST:
                 if (Activity.objects.filter(topic=x, group=user.groups.all().first()).exclude(state='6').first()):
                     return (
@@ -1012,19 +1011,32 @@ def home_page(request):
                             }
                         )
                     )
-                Activity.objects.create(
-                    topic=x,
-                    template=Activity_Template.objects.filter(
-                        id=int(request.POST['activity_' + str(x.id) + '_template'])).first(),
-                    group=user.groups.all().first(),
-                    link=request.POST['activity_' + str(x.id) + '_file'],
-                    state='1'
-                )
-                Report.objects.create(
-                    group=user.groups.all().first(),
-                    text='ماموریت شما در بخش «' + str(x) + '» و با قالب «' + str(Activity_Template.objects.filter(
-                        id=int(request.POST['activity_' + str(x.id) + '_template'])).first()) + '» با موفقیت ثبت شد.'
-                )
+                if 'activity_' + str(x.id) + '_template' in request.POST:
+                    Activity.objects.create(
+                        topic=x,
+                        template=Activity_Template.objects.filter(
+                            id=int(request.POST['activity_' + str(x.id) + '_template'])).first(),
+                        group=user.groups.all().first(),
+                        link=request.POST['activity_' + str(x.id) + '_file'],
+                        state='1'
+                    )
+                    Report.objects.create(
+                        group=user.groups.all().first(),
+                        text='ماموریت شما در بخش «' + str(x) + '» و با قالب «' + str(Activity_Template.objects.filter(
+                            id=int(
+                                request.POST['activity_' + str(x.id) + '_template'])).first()) + '» با موفقیت ثبت شد.'
+                    )
+                else:
+                    Activity.objects.create(
+                        topic=x,
+                        group=user.groups.all().first(),
+                        link=request.POST['activity_' + str(x.id) + '_file'],
+                        state='1'
+                    )
+                    Report.objects.create(
+                        group=user.groups.all().first(),
+                        text='ماموریت بلند مدت شما با موفقیت ثبت شد'
+                    )
                 return (redirect('home_page_link'))
 
         if 'university_show_scores_admin_form' in request.POST:
@@ -1035,7 +1047,7 @@ def home_page(request):
                 tmp = 0
                 for e in x.group.exams.filter(show_public=True):
                     tmp = tmp + e.score
-                if tmp >= 160:
+                if tmp >= 120:
                     delete_masir_group_and_achivement_rel(
                         x.group,
                         [
@@ -1051,7 +1063,7 @@ def home_page(request):
                         Achivement.objects.get(code='Mqz_5'),
                         0
                     )
-                elif tmp >= 120:
+                elif tmp >= 90:
                     delete_masir_group_and_achivement_rel(
                         x.group,
                         [
@@ -1067,7 +1079,7 @@ def home_page(request):
                         Achivement.objects.get(code='Mqz_4'),
                         0
                     )
-                elif tmp >= 80:
+                elif tmp >= 60:
                     delete_masir_group_and_achivement_rel(
                         x.group,
                         [
@@ -1083,7 +1095,7 @@ def home_page(request):
                         Achivement.objects.get(code='Mqz_3'),
                         0
                     )
-                elif tmp >= 40:
+                elif tmp >= 30:
                     delete_masir_group_and_achivement_rel(
                         x.group,
                         [
@@ -1119,38 +1131,32 @@ def home_page(request):
                 if len(x.group.exams.filter(show_public=True)) >= 1:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Uni_1'),
+                        Achivement.objects.get(code='Uni_5'),
                         5
                     )
                 if len(x.group.exams.filter(show_public=True)) >= 5:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Uni_5'),
+                        Achivement.objects.get(code='Uni_10'),
                         10
                     )
                 if len(x.group.exams.filter(show_public=True)) >= 10:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Uni_10'),
+                        Achivement.objects.get(code='Uni_15'),
                         15
                     )
                 if len(x.group.exams.filter(show_public=True)) >= 15:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Uni_15'),
-                        20
-                    )
-                if len(x.group.exams.filter(show_public=True)) >= 19:
-                    set_masir_group_and_achivement_rel(
-                        x.group,
                         Achivement.objects.get(code='Uni_20'),
-                        25
+                        20
                     )
 
                 tmp = 0
                 for e in x.group.exams.filter(show_public=True):
                     tmp = tmp + e.score
-                if tmp >= 200:
+                if tmp >= 150:
                     set_masir_group_and_achivement_rel(
                         x.group,
                         Achivement.objects.get(code='Kml_0'),
@@ -1173,7 +1179,7 @@ def home_page(request):
                 tmp = 0
                 for u in x.user.groups.all().first().users.all():
                     tmp = tmp + len(u.club_files.filter(show_public=True))
-                if tmp >= 24:
+                if tmp >= 18:
                     delete_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
                         [
@@ -1189,7 +1195,7 @@ def home_page(request):
                         Achivement.objects.get(code='Qra_5'),
                         0
                     )
-                elif tmp >= 18:
+                elif tmp >= 14:
                     delete_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
                         [
@@ -1205,7 +1211,7 @@ def home_page(request):
                         Achivement.objects.get(code='Qra_4'),
                         0
                     )
-                elif tmp >= 12:
+                elif tmp >= 9:
                     delete_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
                         [
@@ -1221,7 +1227,7 @@ def home_page(request):
                         Achivement.objects.get(code='Qra_3'),
                         0
                     )
-                elif tmp >= 6:
+                elif tmp >= 5:
                     delete_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
                         [
@@ -1273,7 +1279,7 @@ def home_page(request):
             return (redirect('home_page_link'))
 
         if 'activities_show_scores_admin_form' in request.POST:
-            for x in Activity.objects.filter(state='3'):
+            for x in Activity.objects.filter(state='3').exclude(topic__manzel=None):
                 x.state = '4'
                 x.save()
 
@@ -1287,67 +1293,32 @@ def home_page(request):
                 if len(x.group.activities.filter(state='4')) >= 1:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Flg_1'),
-                        5
-                    )
-                if len(x.group.activities.filter(state='4')) >= 5:
-                    set_masir_group_and_achivement_rel(
-                        x.group,
                         Achivement.objects.get(code='Flg_5'),
                         15
                     )
-                if len(x.group.activities.filter(state='4')) >= 10:
+                if len(x.group.activities.filter(state='4')) >= 5:
                     set_masir_group_and_achivement_rel(
                         x.group,
                         Achivement.objects.get(code='Flg_10'),
                         20
                     )
-                if len(x.group.activities.filter(state='4')) >= 15:
+                if len(x.group.activities.filter(state='4')) >= 10:
                     set_masir_group_and_achivement_rel(
                         x.group,
                         Achivement.objects.get(code='Flg_15'),
                         25
                     )
-                if len(x.group.activities.filter(state='4')) >= 20:
+                if len(x.group.activities.filter(state='4')) >= 15:
                     set_masir_group_and_achivement_rel(
                         x.group,
                         Achivement.objects.get(code='Flg_20'),
                         30
                     )
-                if len(x.group.activities.filter(state='4')) >= 21:
+                if len(x.group.activities.filter(state='4')) >= 16:
                     set_masir_group_and_achivement_rel(
                         x.group,
                         Achivement.objects.get(code='Sun_0'),
                         70
-                    )
-
-                if len(x.group.activities.filter(state='4').values('template').annotate(
-                        count=Count('id', distinct=True))) >= 20:
-                    set_masir_group_and_achivement_rel(
-                        x.group,
-                        Achivement.objects.get(code='Tla_20'),
-                        20
-                    )
-                elif len(x.group.activities.filter(state='4').values('template').annotate(
-                        count=Count('id', distinct=True))) >= 15:
-                    set_masir_group_and_achivement_rel(
-                        x.group,
-                        Achivement.objects.get(code='Tla_15'),
-                        15
-                    )
-                elif len(x.group.activities.filter(state='4').values('template').annotate(
-                        count=Count('id', distinct=True))) >= 10:
-                    set_masir_group_and_achivement_rel(
-                        x.group,
-                        Achivement.objects.get(code='Tla_10'),
-                        10
-                    )
-                elif len(x.group.activities.filter(state='4').values('template').annotate(
-                        count=Count('id', distinct=True))) >= 5:
-                    set_masir_group_and_achivement_rel(
-                        x.group,
-                        Achivement.objects.get(code='Tla_5'),
-                        5
                     )
 
                 tmp = 0
