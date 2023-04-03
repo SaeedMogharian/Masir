@@ -2,7 +2,7 @@ from django.test.testcases import TestCase
 from django.test import TestCase
 from base.models import Activity_Topic
 from base.models import Masir_Group
-
+from base.models import Manzel
 
 # Create your tests here.
 
@@ -23,10 +23,12 @@ from base.models import Masir_Group
 
 class testDiscoverd(TestCase):
     def __init__(self):
-        self.a = Masir_Group.objects.all()[0]
+        self.a = Manzel.objects.all()
 
     def getDiscovered(self):
-        c = list(self.a.discovered.all())
+        c=[]
+        for x in self.a:
+            c.append(str(x.back_image)[4:])
         return c
 
     def __str__(self):

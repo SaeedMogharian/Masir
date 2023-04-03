@@ -685,6 +685,7 @@ def home_page(request):
             )
         )
 
+
     if request.method == 'POST':
         # ثبت باشگاه
         if 'club_form' in request.POST:
@@ -705,8 +706,6 @@ def home_page(request):
                                             '-id'),
                                         'FAQ': FAQ.objects.filter(is_active=True),
                                         'achivements': Achivement.objects.filter(manzel=None),
-                                        'templates': Activity_Template.objects.all(),
-
                                         'exam': Exam.objects.filter(active=True).first(),
                                         'MESSAGE': 'شما قبلا یک فایل در باشگاه ارسال کرده‌اید.'
                                     }
@@ -745,8 +744,6 @@ def home_page(request):
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
                             'achivements': Achivement.objects.filter(manzel=None),
-                            'templates': Activity_Template.objects.all(),
-
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان صدقه از میزان آذوقه گروه بیشتر است.'
                         }
@@ -863,8 +860,6 @@ def home_page(request):
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
                             'achivements': Achivement.objects.filter(manzel=None),
-                            'templates': Activity_Template.objects.all(),
-
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'گروه شما قبلا یکبار در این آزمون شرکت کرده است.'
                         }
@@ -919,6 +914,7 @@ def home_page(request):
                     )
                 if g.manzel == 7:
                     set_masir_group_and_achivement_rel(
+                        g,
                         Achivement.objects.get(code='Lst_0'),
                         40
                     )
@@ -941,6 +937,10 @@ def home_page(request):
                 if request.POST['discover_code'] == x.code and not x.main:
                     if x not in user.groups.all().first().discovered.all():
                         user.groups.all().first().discovered.add(x)
+                        Report.objects.create(
+                            group=user.groups.all().first(),
+                            text='شما در یک اکتشاف موفقیت آمیز ماموریت مخفی «' + str(x) +'» را پیدا کردید'
+                        )
                         return (
                             render(
                                 request,
@@ -952,7 +952,6 @@ def home_page(request):
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
                                     'achivements': Achivement.objects.filter(manzel=None),
-                                    'templates': Activity_Template.objects.all(),
                                     'exam': Exam.objects.filter(active=True).first(),
                                     'MESSAGE': 'آفرین! اکتشاف شما موفق بود! <br> ماموریت مخفی «' + x.title + '» به گروه شما اضافه شد'
                                 }
@@ -970,7 +969,7 @@ def home_page(request):
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
                                     'achivements': Achivement.objects.filter(manzel=None),
-                                    'templates': Activity_Template.objects.all(),
+                                    
                                     'exam': Exam.objects.filter(active=True).first(),
                                     'MESSAGE': 'این ماموریت مخفی را قبلا پیدا کرده اید. دوباره تلاش کنید! '
                                 }
@@ -987,7 +986,6 @@ def home_page(request):
                         'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                         'FAQ': FAQ.objects.filter(is_active=True),
                         'achivements': Achivement.objects.filter(manzel=None),
-                        'templates': Activity_Template.objects.all(),
                         'exam': Exam.objects.filter(active=True).first(),
                         'MESSAGE': 'متاسفانه اکتشاف موفق نبود!<br> بیشتر تلاش کنید '
                     }
@@ -1009,10 +1007,8 @@ def home_page(request):
                                 'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                 'FAQ': FAQ.objects.filter(is_active=True),
                                 'achivements': Achivement.objects.filter(manzel=None),
-                                'templates': Activity_Template.objects.all(),
-
                                 'exam': Exam.objects.filter(active=True).first(),
-                                'MESSAGE': 'گروه شما قبلا یکبار این فعالیت را انجام داده است.'
+                                'MESSAGE': 'گروه شما قبلا یکبار این ماموریت را انجام داده است.'
                             }
                         )
                     )
@@ -1026,7 +1022,7 @@ def home_page(request):
                 )
                 Report.objects.create(
                     group=user.groups.all().first(),
-                    text='فعالیت شما در بخش «' + str(x) + '» و با قالب «' + str(Activity_Template.objects.filter(
+                    text='ماموریت شما در بخش «' + str(x) + '» و با قالب «' + str(Activity_Template.objects.filter(
                         id=int(request.POST['activity_' + str(x.id) + '_template'])).first()) + '» با موفقیت ثبت شد.'
                 )
                 return (redirect('home_page_link'))
@@ -1385,7 +1381,7 @@ def home_page(request):
 
                 Report.objects.create(
                     group=x.group,
-                    text='فعالیت ' + str(x.topic) + ' داوری شد.'
+                    text='ماموریت ' + str(x.topic) + ' داوری شد.'
                 )
 
             for x in Activity.objects.filter(state='5'):
@@ -1394,7 +1390,7 @@ def home_page(request):
 
                 Report.objects.create(
                     group=x.group,
-                    text='فعالیت ' + str(x.topic) + ' در داوری رد شد.'
+                    text='ماموریت ' + str(x.topic) + ' در داوری رد شد.'
                 )
 
             return (redirect('home_page_link'))
@@ -1434,7 +1430,6 @@ def home_page(request):
                 'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                 'FAQ': FAQ.objects.filter(is_active=True),
                 'achivements': Achivement.objects.filter(manzel=None),
-                'templates': Activity_Template.objects.all(),
                 'exam': Exam.objects.filter(active=True).first()
             }
         )

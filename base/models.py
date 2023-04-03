@@ -258,8 +258,8 @@ class Manzel(models.Model):
     def get_story(self):
         return (str(self.story)[4:])
 
-    def get_file(self):
-        return (str(self.file)[4:])
+    def get_image(self):
+        return (str(self.back_image)[4:])
 
     def __str__(self):
         return (self.number + ' | ' + self.title)
@@ -390,11 +390,6 @@ class Activity_Topic(models.Model):
     level1 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 1')
     level2 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 2')
     level3 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 3')
-
-
-
-
-
 
     def get_file(self):
         return (str(self.file)[4:])
