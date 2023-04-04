@@ -57,7 +57,6 @@ ACTIVITIES = {
 }
 
 
-
 class Accessibility(models.Model):
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان')
 
@@ -110,34 +109,6 @@ class School(models.Model):
     class Meta:
         verbose_name = 'مدرسه'
         verbose_name_plural = 'مدارس'
-
-
-class Message(models.Model):
-    name = models.CharField(default='نام پیش‌فرض', max_length=100, verbose_name='نام')
-    phone = models.CharField(default='9xxxxxxxxx', max_length=10, verbose_name='شماره تلفن')
-    message = models.TextField(default='متن پیام پیش‌فرض', max_length=5000, verbose_name='متن پیام')
-    answer = models.TextField(null=True, blank=True, max_length=5000, verbose_name='متن پاسخ')
-
-    def get_group(self):
-        user = User.objects.filter(username=self.phone).first()
-        if user:
-            if user.user_detail.groups.all().first():
-                return (user.user_detail.groups.all().first())
-            return ('بدون گروه')
-        return (None)
-
-    def get_message(self):
-        return (str(self.message).replace('\n', '<br>'))
-
-    def get_answer(self):
-        return (str(self.answer).replace('\n', '<br>'))
-
-    def __str__(self):
-        return (self.phone)
-
-    class Meta:
-        verbose_name = 'پیام‌'
-        verbose_name_plural = 'پیام‌های کاربران'
 
 
 class Vote(models.Model):
@@ -211,6 +182,37 @@ class User_Detail(models.Model):
         verbose_name_plural = 'اطلاعات کاربران'
 
 
+class Message(models.Model):
+    name = models.CharField(default='نام پیش‌فرض', max_length=100, verbose_name='نام')
+    phone = models.CharField(default='9xxxxxxxxx', max_length=10, verbose_name='شماره تلفن')
+    message = models.TextField(default='متن پیام پیش‌فرض', max_length=5000, verbose_name='متن پیام')
+    answer = models.TextField(null=True, blank=True, max_length=5000, verbose_name='متن پاسخ')
+    support = models.ForeignKey(User_Detail, null=True, blank=True, related_name='support', on_delete=models.SET_NULL,
+                              verbose_name='پشتیبان')
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
+
+    def get_group(self):
+        user = User.objects.filter(username=self.phone).first()
+        if user:
+            if user.user_detail.groups.all().first():
+                return (user.user_detail.groups.all().first())
+            return ('بدون گروه')
+        return (None)
+
+    def get_message(self):
+        return (str(self.message).replace('\n', '<br>'))
+
+    def get_answer(self):
+        return (str(self.answer).replace('\n', '<br>'))
+
+    def __str__(self):
+        return (self.phone)
+
+    class Meta:
+        verbose_name = 'پیام‌'
+        verbose_name_plural = 'پیام‌های کاربران'
+
+
 class Announcement(models.Model):
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان اعلان')
     text = models.CharField(default='متن پیش‌فرض', max_length=1000, verbose_name='متن اعلان')
@@ -245,6 +247,11 @@ class Manzel(models.Model):
     max_export_food = models.IntegerField(default=0, verbose_name='حداکثر آذوقه قابل حمل در ورودی منزل')
     food_for_next_manzel = models.IntegerField(default=0, verbose_name='آذوقه مورد نیاز برای رسیدن به منزل بعدی')
     power_for_next_manzel = models.IntegerField(default=0, verbose_name='توان مورد نیاز برای رسیدن به منزل بعدی')
+
+    def is_first(self):
+        if self.id == 1:
+            return True
+        return False
 
     def get_story(self):
         return (str(self.story)[4:])
@@ -289,7 +296,7 @@ class Club_File(models.Model):
     link = models.CharField(default='#', max_length=1000, verbose_name='لینک فایل')
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فایل')
     level = models.IntegerField(default=0, verbose_name='مرحله')
-    date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
     verified = models.BooleanField(default=False, verbose_name='تایید شده')
     show_public = models.BooleanField(default=False, verbose_name='نمایش عمومی')
 
@@ -371,7 +378,8 @@ class Activity_Topic(models.Model):
     manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE,
                                verbose_name='منزل')
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فعالیت')
-    co_title = models.CharField(default='عنوان پیش‌فرض',null=True, blank=True, max_length=100, verbose_name='عنوان معرفتی')
+    co_title = models.CharField(default='عنوان پیش‌فرض', null=True, blank=True, max_length=100,
+                                verbose_name='عنوان معرفتی')
     file = models.FileField(null=True, blank=True, upload_to='base/static/activity/',
                             verbose_name='فایل توضیحات فعالیت')
     template = models.ManyToManyField(Activity_Template, related_name='templates', blank=True, verbose_name='قالب ها')
@@ -393,7 +401,7 @@ class Activity_Topic(models.Model):
 
     def get_activity_templates(self):
         T = []
-        for x in self.template:
+        for x in self.template.all():
             T.append(
                 {
                     'id': x.id,
@@ -422,6 +430,17 @@ class Masir_Group(models.Model):
 
     discovered = models.ManyToManyField(Activity_Topic, related_name='discoverd', blank=True,
                                         verbose_name='فعالیت های اکتشاف شده')
+    introduced = models.BooleanField(default=False, verbose_name='گذراندن آموزش اولیه')
+
+    def is_first(self):
+        if self.manzel == 1 and not self.introduced:
+            return True
+        return False
+
+    def has_next_manzel(self):
+        if Manzel.objects.filter(id=self.manzel + 1):
+            return True
+        return False
 
     def add_mains(self):
         for x in Activity_Topic.objects.all():
@@ -447,6 +466,8 @@ class Masir_Group(models.Model):
     # محاسبه آذوقه
     def get_food(self):
         f = 0
+        if self.introduced:
+            f += 10
         for x in self.exams.filter(show_public=True):
             f = f + x.score
         x: Activity
@@ -456,7 +477,7 @@ class Masir_Group(models.Model):
             f = f - x.value
         for x in self.trashes.all():
             f = f - x.food
-        for x in Manzel.objects.all()[:self.manzel - 1]:
+        for x in Manzel.objects.all()[:max(0, self.manzel - 1)]:
             f = f - x.food_for_next_manzel
 
         return int(f * 100) / 100
@@ -943,16 +964,15 @@ class Activity(models.Model):
     comment = models.TextField(null=True, blank=True, max_length=5000, verbose_name='توضیحات داور')
 
     score1 = models.IntegerField(default=0, verbose_name='امتیاز محتوای مناسب، غنی و منسجم')
-    score2 = models.IntegerField(default=0, verbose_name='امتیاز تناسب قالب و محتوای انتخابی')
-    score3 = models.IntegerField(default=0, verbose_name='امتیاز رعایت نکات حداقلی فنی درباره‌ی هر قالب')
-    score4 = models.IntegerField(default=0, verbose_name='امیتیاز خلاقیت و نوآوری')
-    score5 = models.IntegerField(default=0, verbose_name='امتیاز جذابیت برای مخاطب')
-    score6 = models.IntegerField(default=0,
+    score2 = models.IntegerField(default=0, verbose_name='امتیاز رعایت نکات حداقلی فنی درباره‌ی هر قالب')
+    score3 = models.IntegerField(default=0, verbose_name='امیتیاز خلاقیت و نوآوری')
+    score4 = models.IntegerField(default=0, verbose_name='امتیاز جذابیت برای مخاطب')
+    score5 = models.IntegerField(default=0,
                                  verbose_name='امتیاز اشاره به کاربردی بودن مفاهیم در زندگی امروزی، به صورت مستقیم یا غیرمستقیم')
 
     def get_score(self):
         return (float(
-            "{:.2f}".format((self.score1 + self.score2 + self.score3 + self.score4 + self.score5 + self.score6) / 6)))
+            "{:.2f}".format((self.score1 + self.score2 + self.score3 + self.score4 + self.score5) / 5)))
 
     def __str__(self):
         return (str(self.topic) + ' | ' + str(self.template) + ' | ' + str(self.group))

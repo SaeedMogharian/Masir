@@ -316,7 +316,7 @@
                         {% comment %} هاور روی هر منزل {% endcomment %}
                         <div class="masir-map-icon-popup" style="border-color: {{ x.color }};">
                             {% if x == user.user_detail.groups.all.first.get_manzel %}
-                                {% if x.food_for_next_manzel and x.power_for_next_manzel %}
+                                {% if user.user_detail.groups.all.first.has_next_manzel %}
                                     <div style="font-weight: 700; color: #72974b;">
                                         <svg height="5vh" viewBox="0 0 480 480" fill="currentcolor">
                                             <path d="M298.311,88.81H174.058v63.229h124.254V88.81z M278.311,132.038h-84.254V108.81h84.254V132.038z"/>
@@ -358,7 +358,7 @@
                             <a class="btn masir-btn w-100 mt-1" style="background-color: {{ x.color }}; color: white;"
                                data-bs-toggle="offcanvas" href="#level_{{ x.id }}_offcanvas" role="button"
                                aria-controls="level_{{ x.id }}_offcanvas">مشاهده وضعیت منزل</a>
-                            {% if x == user.user_detail.groups.all.first.get_manzel and x.food_for_next_manzel and x.power_for_next_manzel %}
+                            {% if x == user.user_detail.groups.all.first.get_manzel and user.user_detail.groups.all.first.has_next_manzel %}
                                 <form action="{% url 'home_page_link' %}" method="post"
                                       onsubmit="next_level_form_click()">
                                     {% csrf_token %}
@@ -367,6 +367,14 @@
                                             <input class="form-check-input" type="checkbox" required>
                                             <label class="form-check-label" for="flexCheckDefault">
                                                 به حداکثر آذوقه قابل حمل توجه کرده‌ایم.
+                                            </label><br>
+                                            <input class="form-check-input" type="checkbox" required>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                کارمون با ماموریت های این منزل تموم شده
+                                            </label><br>
+                                            <input class="form-check-input" type="checkbox" required>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                حواسمون هست که دیگه نمیتونیم برگردیم
                                             </label>
                                         </div>
                                     {% endif %}
@@ -701,7 +709,7 @@
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar">
-                            <form action="{% url 'home_page_link' %}" method="post" onsu bmit="discover_form_click">
+                            <form action="{% url 'home_page_link' %}" method="post" onsubmit="discover_form_click()">
                                 {% csrf_token %}
                                 <div class="mb-1 mt-2" style="font-weight: 700;"> اکتشاف</div>
                                 <input name="discover_code" type="text"
@@ -1239,146 +1247,199 @@
                 </div>
 
                 <div class="offcanvas-body scroll-without-scrollbar">
-                    {% comment %} ماجرا {% endcomment %}
-                    <div class="mb-2 p-2 d-flex justify-content-between align-items-center"
-                         style="background-color: #eeeeee;">
-                        <span style="font-weight: 700; color: {{ m.color }};"> ماجرا </span>
-                        <audio controls>
-                            <source src="{{ m.get_story }}" type="audio/mpeg">
-                        </audio>
+                    {% if m.is_first %}
+                        <div class="h4" style="font-weight: 700;">شروع مسیر</div>
+                        <iframe src="https://www.aparat.com/video/video/embed/videohash/lEFR2/vt/frame"
+                                allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
+                                style="width: 100%; height: 50vh; margin: a"></iframe>
+                        {% if m.is_first %}
+                            <form action="{% url 'home_page_link' %}" method="post"
+                                  onsubmit="introduction_form_click()" style="{% if not user.user_detail.groups.all.first.is_first %} pointer-events: none; opacity: 0.4; {% endif %}"
+                                    {% if not user.user_detail.groups.all.first.is_first %} disabled {% endif %}>
+                                {% csrf_token %}
 
-                    </div>
-
-                    {% comment %} قابل انجام ها {% endcomment %}
-                    <div class="h4" style="font-weight: 700;"> ماموریت اصلی</div>
-                    {% for x in m.activity_topics.all %}
-                        {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main %}
-                            <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
-                                    <span style="font-weight: 700; color: {{ m.color }};"> {{ x.title }} </span>
-                                    <a class="masir-circle-button-2" title="دانلود توضیحات چالش"
-                                       style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                                       href="{{ x.get_file }}" download></a>
+                                <div class="form-check mt-3 mb-2">
+                                    <input class="form-check-input" type="checkbox" required>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        رهنمای مسیر رو خوندیم!
+                                    </label><br>
+                                </div>
+                                <div class="form-check mt-3 mb-2">
+                                    <input class="form-check-input" type="checkbox" required>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        رهنمای مسیر رو خوندیم!
+                                    </label><br>
                                 </div>
 
-                                <form action="{% url 'home_page_link' %}" method="post"
-                                      onsubmit="activity_{{ x.id }}_form_click()">
-                                    {% csrf_token %}
-                                    <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب قالب</div>
-                                    <select name="activity_{{ x.id }}_template"
-                                            class="form-select masir-form-control text-center"
-                                            onchange="activity_{{ x.id }}_template_change(this)"
-                                            {% if m != user.user_detail.groups.all.first.get_manzel %}
-                                            disabled {% else %} required {% endif %} >
-                                        {% for t in x.template.all %}
-                                            <option value="{{ t.id }}"> {{ t.title }}</option>
-                                        {% endfor %}
-                                    </select>
-
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span> نوع قالب: </span>
-                                        <span id="activity_{{ x.id }}_template_type">{{ x.template.all.0.get_type_display }}</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span> حداکثر توان قابل کسب: </span>
-                                        <span id="activity_{{ x.id }}_template_max_power">{{ x.template.all.0.max_power }}</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span> حداکثر آذوقه قابل کسب: </span>
-                                        <span id="activity_{{ x.id }}_template_max_food">{{ x.template.all.0.max_food }}</span>
-                                    </div>
-
-                                    <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
-                                    <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس فایل
-                                        بارگذاری شده را در اینجا وارد کنید.
-                                    </div>
-                                    <input name="activity_{{ x.id }}_file" type="url"
-                                           class="form-control masir-form-control text-center" autocomplete="off"
-                                           required {% if m != user.user_detail.groups.all.first.get_manzel %}
-                                           disabled {% endif %} >
-
-                                    <div class="form-check mt-3 mb-2">
-                                        <input class="form-check-input" type="checkbox" required>
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            از انتخاب قالب و فایل ارسالی مطمئن هستیم.
-                                        </label>
-                                    </div>
-                                    <button type="submit" name="activity_{{ x.id }}_form" id="activity_{{ x.id }}_form"
-                                            class="btn masir-btn w-100 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}"
-                                            style="background-color: #69ff64;"
-                                            {% if m != user.user_detail.groups.all.first.get_manzel %}
-                                            disabled {% endif %}  >بارگذاری نهایی
-                                    </button>
-                                    <button class="btn masir-btn w-100"
-                                            style="background-color: #69ff64; display: none;"
-                                            id="activity_{{ x.id }}_form_loading">
+                                <button type="submit" name="introduction_form"
+                                        id="introduction_form"
+                                        class="btn masir-btn w-100 mt-2"
+                                        style="background-color: #69ff64;">
+                                    ثبت نهایی
+                                </button>
+                                <button class="btn masir-btn w-100"
+                                        style="background-color: #69ff64; display: none;"
+                                        id="introduction_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
                                               aria-hidden="true"></span>
-                                        در حال بارگذاری...
-                                    </button>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span> وضعیت: </span>
-                                        <span> ارسال نشده </span>
-                                    </div>
-                                </form>
-                            </div>
+                                    در حال بررسی...
+                                </button>
+                            </form>
                         {% endif %}
-                    {% endfor %}
+                    {% elif not user.user_detail.groups.all.first.has_next_manzel %}
+                        {% comment %} ماجرا {% endcomment %}
+                        <div class="mb-2 p-2 d-flex justify-content-between align-items-center"
+                             style="background-color: #eeeeee;">
+                            <span style="font-weight: 700; color: {{ m.color }};"> ماجرا </span>
+                            <audio controls>
+                                <source src="{{ m.get_story }}" type="audio/mpeg">
+                            </audio>
 
-                    {% comment %} داوری شده ها {% endcomment %}
-                    {% for x in user.user_detail.groups.all.first.activities.all %}
-                        {% if x.topic in m.activity_topics.all and x.topic.main %}
-                            <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
-                                    <span style="font-weight: 700; color: {{ m.color }};"> {{ x.topic.title }} </span>
-                                    <a class="masir-circle-button-2" title="عنوان فعالیت"
-                                       style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                                       href="{{ x.topic.get_file }}" download></a>
+                        </div>
+                    {% else %}
+                        {% comment %} ماجرا {% endcomment %}
+                        <div class="mb-2 p-2 d-flex justify-content-between align-items-center"
+                             style="background-color: #eeeeee;">
+                            <span style="font-weight: 700; color: {{ m.color }};"> ماجرا </span>
+                            <audio controls>
+                                <source src="{{ m.get_story }}" type="audio/mpeg">
+                            </audio>
+
+                        </div>
+                        {% comment %} قابل انجام ها {% endcomment %}
+                        <div class="h4" style="font-weight: 700;"> ماموریت اصلی</div>
+                        {% for x in m.activity_topics.all %}
+                            {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main %}
+                                <div class="mb-3 p-2" style="background-color: #eeeeee;">
+                                    <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
+                                        <span style="font-weight: 700; color: {{ m.color }};"> {{ x.title }} </span>
+                                        <a class="masir-circle-button-2" title="دانلود توضیحات چالش"
+                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                                           href="{{ x.get_file }}" download></a>
+                                    </div>
+
+                                    <form action="{% url 'home_page_link' %}" method="post"
+                                          onsubmit="activity_{{ x.id }}_form_click()">
+                                        {% csrf_token %}
+                                        <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب قالب</div>
+                                        <select name="activity_{{ x.id }}_template"
+                                                class="form-select masir-form-control text-center"
+                                                onchange="activity_{{ x.id }}_template_change(this)"
+                                                {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                disabled {% else %} required {% endif %} >
+                                            {% for t in x.template.all %}
+                                                <option value="{{ t.id }}"> {{ t.title }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span> نوع قالب: </span>
+                                            <span id="activity_{{ x.id }}_template_type">{{ x.template.all.0.get_type_display }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span> حداکثر توان قابل کسب: </span>
+                                            <span id="activity_{{ x.id }}_template_max_power">{{ x.template.all.0.max_power }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span> حداکثر آذوقه قابل کسب: </span>
+                                            <span id="activity_{{ x.id }}_template_max_food">{{ x.template.all.0.max_food }}</span>
+                                        </div>
+
+                                        <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
+                                        <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس
+                                            فایل
+                                            بارگذاری شده را در اینجا وارد کنید.
+                                        </div>
+                                        <input name="activity_{{ x.id }}_file" type="url"
+                                               class="form-control masir-form-control text-center" autocomplete="off"
+                                               required {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                               disabled {% endif %} >
+
+                                        <div class="form-check mt-3 mb-2">
+                                            <input class="form-check-input" type="checkbox" required>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                از انتخاب قالب و فایل ارسالی مطمئن هستیم.
+                                            </label>
+                                        </div>
+                                        <button type="submit" name="activity_{{ x.id }}_form"
+                                                id="activity_{{ x.id }}_form"
+                                                class="btn masir-btn w-100 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}"
+                                                style="background-color: #69ff64;"
+                                                {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                disabled {% endif %}  >بارگذاری نهایی
+                                        </button>
+                                        <button class="btn masir-btn w-100"
+                                                style="background-color: #69ff64; display: none;"
+                                                id="activity_{{ x.id }}_form_loading">
+                                        <span class="spinner-grow spinner-grow-sm" role="status"
+                                              aria-hidden="true"></span>
+                                            در حال بارگذاری...
+                                        </button>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span> وضعیت: </span>
+                                            <span> ارسال نشده </span>
+                                        </div>
+                                    </form>
                                 </div>
+                            {% endif %}
+                        {% endfor %}
 
-                                <form>
-                                    {% csrf_token %}
-                                    <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب قالب</div>
-                                    <select name="activity_{{ x.id }}_template"
-                                            class="form-select masir-form-control text-center" disabled>
-                                        <option> {{ x.template.title }} </option>
-                                    </select>
-
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span> نوع قالب: </span>
-                                        <span id="activity_{{ x.id }}_template_type">{{ x.template.get_type_display }}</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span> حداکثر توان قابل کسب: </span>
-                                        <span id="activity_{{ x.id }}_template_max_power">{{ x.template.max_power }}</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span> حداکثر آذوقه قابل کسب: </span>
-                                        <span id="activity_{{ x.id }}_template_max_food">{{ x.template.max_food }}</span>
+                        {% comment %} داوری شده ها {% endcomment %}
+                        {% for x in user.user_detail.groups.all.first.activities.all %}
+                            {% if x.topic in m.activity_topics.all and x.topic.main %}
+                                <div class="mb-3 p-2" style="background-color: #eeeeee;">
+                                    <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
+                                        <span style="font-weight: 700; color: {{ m.color }};"> {{ x.topic.title }} </span>
+                                        <a class="masir-circle-button-2" title="عنوان فعالیت"
+                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                                           href="{{ x.topic.get_file }}" download></a>
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span> وضعیت: </span>
-                                        <span>
+                                    <form>
+                                        {% csrf_token %}
+                                        <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب قالب</div>
+                                        <select name="activity_{{ x.id }}_template"
+                                                class="form-select masir-form-control text-center" disabled>
+                                            <option> {{ x.template.title }} </option>
+                                        </select>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span> نوع قالب: </span>
+                                            <span id="activity_{{ x.id }}_template_type">{{ x.template.get_type_display }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span> حداکثر توان قابل کسب: </span>
+                                            <span id="activity_{{ x.id }}_template_max_power">{{ x.template.max_power }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span> حداکثر آذوقه قابل کسب: </span>
+                                            <span id="activity_{{ x.id }}_template_max_food">{{ x.template.max_food }}</span>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span> وضعیت: </span>
+                                            <span>
                           {% if x.state == '4' or x.state == '6' %}
                               {{ x.get_state_display }}
                           {% else %}
                               در حال داوری
                           {% endif %}
                         </span>
-                                    </div>
+                                        </div>
 
-                                    {% if x.comment %}
-                                        {% if x.state == '4' or x.state == '6' %}
-                                            <div style="text-align: justify; color: #800228; font-weight: 700;">
-                                                {{ x.comment }}
-                                            </div>
+                                        {% if x.comment %}
+                                            {% if x.state == '4' or x.state == '6' %}
+                                                <div style="text-align: justify; color: #800228; font-weight: 700;">
+                                                    {{ x.comment }}
+                                                </div>
+                                            {% endif %}
                                         {% endif %}
-                                    {% endif %}
-                                </form>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                                    </form>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                    {% endif %}
 
 
                 </div>
@@ -1451,6 +1512,14 @@
         function charity_form_click() {
             document.getElementById('charity_form').style.display = 'none';
             document.getElementById('charity_form_loading').style.display = 'block';
+        }
+        function discover_form_click() {
+            document.getElementById('discover_form').style.display = 'none';
+            document.getElementById('discover_form_loading').style.display = 'block';
+        }
+        function introduction_form_click() {
+            document.getElementById('introduction_form').style.display = 'none';
+            document.getElementById('introduction_form_loading').style.display = 'block';
         }
 
         function club_form_click() {

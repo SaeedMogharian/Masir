@@ -898,7 +898,8 @@ def home_page(request):
                         group=user.groups.all().first(),
                         food=trash
                     )
-                    text = text + '؛ ' + str(float(round((trash * 100) / 100))) + ' واحد آذوقه اضافه را در مسیر حرکت از دست دادید'
+                    text = text + '؛ ' + str(
+                        float(round((trash * 100) / 100))) + ' واحد آذوقه اضافه را در مسیر حرکت از دست دادید'
 
                 g = user.groups.all().first()
 
@@ -937,7 +938,7 @@ def home_page(request):
                     if x not in user.groups.all().first().discovered.all():
                         user.groups.all().first().discovered.add(x)
                         user.save()
-                        if len(user.groups.all().first().discovered.all())>=16:
+                        if len(user.groups.all().first().discovered.all()) >= 16:
                             set_masir_group_and_achivement_rel(
                                 user.groups.all().first(),
                                 Achivement.objects.get(code='Mng'),
@@ -998,6 +999,33 @@ def home_page(request):
                     }
                 )
             )
+
+        if 'introduction_form' in request.POST:
+            if user.groups.all().first().introduced:
+                return (
+                    render(
+                        request,
+                        'home_page.html',
+                        {
+                            'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
+                                'right'),
+                            'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
+                            'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
+                            'FAQ': FAQ.objects.filter(is_active=True),
+                            'achivements': Achivement.objects.filter(manzel=None),
+                            'exam': Exam.objects.filter(active=True).first(),
+                            'MESSAGE': 'شما قبلا این مرحله را گذرانده اید'
+                        }
+                    )
+                )
+            g = user.groups.all().first()
+            g.introduced = True
+            g.save()
+            Report.objects.create(
+                group=user.groups.all().first(),
+                text='شما با موفقیت منزل بانگ رحیل را پشت سر گذاشتید'
+            )
+            return redirect('home_page_link')
 
         # ثبت فعالیت
         for x in Activity_Topic.objects.all():
@@ -1267,9 +1295,10 @@ def home_page(request):
                         Achivement.objects.get(code='Qra_1'),
                         0
                     )
-                if len(Club_File.objects.filter(show_public=True, user__in=x.user.groups.all().first().users.all()).values(
-                    'level').annotate(count=Count('id', distinct=True))) >= 14 or len(
-                    Club_File.objects.filter(show_public=True,user__in=x.user.groups.all().first().users.all()).values(
+                if len(Club_File.objects.filter(show_public=True,
+                                                user__in=x.user.groups.all().first().users.all()).values(
+                        'level').annotate(count=Count('id', distinct=True))) >= 14 or len(
+                    Club_File.objects.filter(show_public=True, user__in=x.user.groups.all().first().users.all()).values(
                         'date__day').annotate(count=Count('id', distinct=True))) >= 14:
                     set_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
@@ -1496,6 +1525,7 @@ def contact_admin_detail_page(request, id):
     if request.method == 'POST':
         if 'message_admin_form' in request.POST:
             the_message.answer = request.POST['message_admin_answer']
+            the_message.support = user
             the_message.save()
 
             return (redirect('contact_admin_page_link'))
@@ -1619,7 +1649,6 @@ def judge_detail_page(request, id):
             the_file.score3 = int(request.POST['judge_admin_score3'])
             the_file.score4 = int(request.POST['judge_admin_score4'])
             the_file.score5 = int(request.POST['judge_admin_score5'])
-            the_file.score6 = int(request.POST['judge_admin_score6'])
 
             the_file.state = '3'
             the_file.save()

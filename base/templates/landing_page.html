@@ -32,27 +32,27 @@
             background-image: url("{% static 'images/close_icon.png' %}");
         }
 
-      #masir-map1-background {
-        position: relative;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('{% static "images/landing_page_background_wc.jpg" %}');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        overflow-x: hidden;
-      }
+        #masir-map1-background {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            background-image: url('{% static "images/landing_page_background_wc.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow-x: hidden;
+        }
 
-      #masir-land1-background {
-        position: relative;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('{% static "images/home_page_background_old.jpg" %}');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        overflow-x: hidden;
-      }
+        #masir-land1-background {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            background-image: url('{% static "images/home_page_background_old.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow-x: hidden;
+        }
 
         #masir-map1-stone {
 
@@ -93,11 +93,11 @@
         }
 
 
-      #masir-navbar-bg {
-        height: max(0.5vw, 0.5vh);
-        background-color: #5a0200;
-        margin: max(2.75vw, 2.75vh) 0px;
-      }
+        #masir-navbar-bg {
+            height: max(0.5vw, 0.5vh);
+            background-color: #5a0200;
+            margin: max(2.75vw, 2.75vh) 0px;
+        }
 
         #masir-logotype {
             animation-name: masir-logotype-fade-in-animation;
@@ -125,17 +125,28 @@
 <div id="maindiv" style="width: 100%;" dir="rtl">
     <nav class="fixed-top">
         <div id="masir-navbar-bg" class="position-relative">
-          <div class="position-absolute top-50 top-nav translate-middle-y d-flex ms-5" style="height: max-content padding-top:1em;">
-            <a class="masir-circle-button-2 masir-jelly" title="ورود یا ثبت نام فردی" style="background-image: url('{% static 'images/navbar_login.png' %}'); margin: auto max(0.15vw, 0.15vh);" data-bs-toggle="modal" href="#login_modal" role="button"></a>
-            <a class="masir-circle-button-2 masir-jelly" title="ثبت نام گروهی" style="background-image: url('{% static 'images/navbar_group_register.png' %}'); margin: auto max(0.15vw, 0.15vh);" data-bs-toggle="modal" role="button" href="#group_register_modal"></a>
-          </div>
-          <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
-            <a class="masir-circle-button-3 masir-jelly" title="درباره مسیر ۱۴۰۲" style="background-image: url('{% static 'images/navbar_mountain.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% block about_masir_block %} #about_masir1402 {% endblock %}"></a>
-            <a class="masir-circle-button-1 masir-jelly" title="در مسیر چه گذشت؟" style="background-image: url('{% static 'images/navbar_map.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'on_masir_link' %}"></a>
-          </div>
-          <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-5" style="height: max-content;">
-            <a class="masir-circle-button-2 masir-jelly" title="ارتباط با ما" style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);" data-bs-toggle="modal" href="#contact_us_modal" role="button"></a>
-          </div>
+            <div class="position-absolute top-50 top-nav translate-middle-y d-flex ms-5"
+                 style="height: max-content padding-top:1em;">
+                <a class="masir-circle-button-2 masir-jelly" title="ورود یا ثبت نام فردی"
+                   style="background-image: url('{% static 'images/navbar_login.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   data-bs-toggle="modal" href="#login_modal" role="button"></a>
+                <a class="masir-circle-button-2 masir-jelly" title="ثبت نام گروهی"
+                   style="background-image: url('{% static 'images/navbar_group_register.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   data-bs-toggle="modal" role="button" href="#group_register_modal"></a>
+            </div>
+            <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
+                <a class="masir-circle-button-3 masir-jelly" title="درباره مسیر ۱۴۰۲"
+                   style="background-image: url('{% static 'images/navbar_mountain.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   href="{% block about_masir_block %} #about_masir1402 {% endblock %}"></a>
+                <a class="masir-circle-button-1 masir-jelly" title="در مسیر چه گذشت؟"
+                   style="background-image: url('{% static 'images/navbar_map.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   href="{% url 'on_masir_link' %}"></a>
+            </div>
+            <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-5" style="height: max-content;">
+                <a class="masir-circle-button-2 masir-jelly" title="ارتباط با ما"
+                   style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   data-bs-toggle="modal" href="#contact_us_modal" role="button"></a>
+            </div>
         </div>
     </nav>
 
@@ -526,7 +537,9 @@
                     <div id="S1" class="accordion-collapse collapse" aria-labelledby="H1"
                          data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            <iframe src="https://www.aparat.com/video/video/embed/videohash/lEFR2/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="width: 100%; height: 40vh; margin: a"></iframe>
+                            <iframe src="https://www.aparat.com/video/video/embed/videohash/lEFR2/vt/frame"
+                                    allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
+                                    style="width: 100%; height: 40vh; margin: a"></iframe>
                             <p class="masir-paragraph-1">
                                 همانقدر که آسمان شب در کویر آرامش بخش و زیبا است، تشنگی و نبود
                                 <b><b>"آب حیات"</b></b>
@@ -755,7 +768,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    کانال بله و تلگرام و شاد: در کنار سایت اصلی به منظور اطلاع‌رسانی‌ها و ارسال آثار برتر.
+                                    کانال بله و تلگرام و شاد: در کنار سایت اصلی به منظور اطلاع‌رسانی‌ها و ارسال آثار
+                                    برتر.
                                     <div class="text-end">
                                         masir1402_ir@
                                     </div>
