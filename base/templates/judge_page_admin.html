@@ -2,181 +2,258 @@
 {% load static %}
 
 {% block static_masir %}
-  {% url 'home_page_link' %}
+    {% url 'home_page_link' %}
 {% endblock %}
 {% block mainblock %}
-        <div style="width: 100vw; height: 100vh; position: relative; overflow: hidden;">
-          <div id="masir-map3-background"></div>
-          <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100" style="max-height: 80vh; overflow: scroll;">
+    <div style="width: 100vw; height: 100vh; position: relative; overflow: hidden;">
+        <div id="masir-map3-background"></div>
+        <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100"
+             style="max-height: 80vh; overflow: scroll;">
             {% if the_file %}
-              <div class="mb-2 mt-5 pb-2 w-75 mx-auto" style="background-color: #ffcbcb;">
-                <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+                <div class="mb-2 mt-5 pb-2 w-75 mx-auto" style="background-color: #ffcbcb;">
+                    <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
                   <span>
                     {{ the_file.topic }} | {{ the_file.template }}
                   </span>
-                  <span>
+                        <span>
                     {{ the_file.group }}
                   </span>
-                </div>
+                    </div>
 
-                <div class="p-2">
-                  {{ the_file.link }}
-                  <a class="btn masir-btn w-100 mt-1" href="{{ the_file.link }}" target="_blank" style="background-color: #d1d426;"> دانلود فایل ارسال شده </a>
-                  <a class="btn masir-btn w-100 mt-1" href="{{ the_file.topic.get_file }}" target="_blank" style="background-color: #26d4c5;"> دانلود فایل توضیحات فعالیت {{ the_file.topic }} </a>
-                  <a class="btn masir-btn w-100 mt-1" href="{{ the_file.topic.manzel.get_file }}" target="_blank" style="background-color: #26d4c5;"> دانلود فایل توضیحات منزل {{ the_file.topic.manzel }} </a>
-                </div>
-              </div>
-              <form action="" method="post" class="w-75 mx-auto" onsubmit="judge_admin_form_click()">
-                {% csrf_token %}
-                <div class="mb-1 mt-2" style="font-weight: 700;">
-                  محتوای مناسب، غنی و منسجم
-                </div>
-                <input name="judge_admin_score1" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score1 %} the_file.score1 {% else %} 3 {% endif %}" min="1" max="5">
+                    <div class="p-2">
+                        {{ the_file.link }}
+                        <a class="btn masir-btn w-100 mt-1" href="{{ the_file.link }}" target="_blank"
+                           style="background-color: #d1d426;"> دانلود فایل ارسال شده </a>
+                        <a class="btn masir-btn w-100 mt-1" href="{{ the_file.topic.get_file }}" target="_blank"
+                           style="background-color: #26d4c5;"> دانلود فایل توضیحات فعالیت {{ the_file.topic }} </a>
+                        {% if not the_file.topic.main %}
+                            <div class="accordion-item col-12" style="background-color: #ffcbcb">
+                                <h3 id="H1">
+                                    <button class="accordion-button collapsed masir-btn" type="button"
+                                            data-bs-toggle="collapse" style="background-color: #20c997"
+                                            data-bs-target="#S1" aria-expanded="false" aria-controls="S1">
+                                        شرح ماموریت دشوار
+                                    </button>
+                                </h3>
+                                <div id="S1" class="accordion-collapse collapse" aria-labelledby="H1"
+                                     data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p class="masir-paragraph-1">
+                                            {{ the_file.topic.level3 }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item col-12" style="background-color: #ffcbcb">
+                                <h3 id="H2">
+                                    <button class="accordion-button collapsed masir-btn" type="button"
+                                            data-bs-toggle="collapse" style="background-color: #20c997"
+                                            data-bs-target="#S2" aria-expanded="false" aria-controls="S2">
+                                        شرح ماموریت معمولی
+                                    </button>
+                                </h3>
+                                <div id="S2" class="accordion-collapse collapse" aria-labelledby="H2"
+                                     data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p class="masir-paragraph-1">
+                                            {{ the_file.topic.level2 }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item col-12" style="background-color: #ffcbcb">
+                                <h3 id="H3">
+                                    <button class="accordion-button collapsed masir-btn" type="button"
+                                            data-bs-toggle="collapse" style="background-color: #20c997"
+                                            data-bs-target="#S3" aria-expanded="false" aria-controls="S3">
+                                        شرح ماموریت آسان
+                                    </button>
+                                </h3>
+                                <div id="S3" class="accordion-collapse collapse" aria-labelledby="H3"
+                                     data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p class="masir-paragraph-1">
+                                            {{ the_file.topic.level1 }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="mb-1 mt-2" style="font-weight: 700;">
-                  تناسب قالب و محتوای انتخابی
+                        {% endif %}
+                    </div>
                 </div>
-                <input name="judge_admin_score2" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score2 %} the_file.score2 {% else %} 3 {% endif %}" min="1" max="5">
+                <form action="" method="post" class="w-75 mx-auto" onsubmit="judge_admin_form_click()">
+                    {% csrf_token %}
+                    <div class="mb-1 mt-2" style="font-weight: 700;">
+                        محتوای مناسب، غنی و منسجم
+                    </div>
+                    <input name="judge_admin_score1" type="number" class="form-control masir-form-control text-center"
+                           autocomplete="off" required
+                           value="{% if the_file.score1 %} the_file.score1 {% else %} 3 {% endif %}" min="1" max="5">
 
-                <div class="mb-1 mt-2" style="font-weight: 700;">
-                  رعایت نکات حداقلی فنی درباره ی هر قالب
-                </div>
-                <input name="judge_admin_score3" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score3 %} the_file.score3 {% else %} 3 {% endif %}" min="1" max="5">
+                    <div class="mb-1 mt-2" style="font-weight: 700;">
+                        رعایت نکات حداقلی فنی درباره ی هر قالب
+                    </div>
+                    <input name="judge_admin_score3" type="number" class="form-control masir-form-control text-center"
+                           autocomplete="off" required
+                           value="{% if the_file.score3 %} the_file.score3 {% else %} 3 {% endif %}" min="1" max="5">
 
-                <div class="mb-1 mt-2" style="font-weight: 700;">
-                  خلاقیت و نوآوری
-                </div>
-                <input name="judge_admin_score4" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score4 %} the_file.score4 {% else %} 3 {% endif %}" min="1" max="5">
+                    <div class="mb-1 mt-2" style="font-weight: 700;">
+                        خلاقیت و نوآوری
+                    </div>
+                    <input name="judge_admin_score4" type="number" class="form-control masir-form-control text-center"
+                           autocomplete="off" required
+                           value="{% if the_file.score4 %} the_file.score4 {% else %} 3 {% endif %}" min="1" max="5">
 
-                <div class="mb-1 mt-2" style="font-weight: 700;">
-                  جذابیت برای مخاطب
-                </div>
-                <input name="judge_admin_score5" type="number" class="form-control masir-form-control text-center" autocomplete="off" required value="{% if the_file.score5 %} the_file.score5 {% else %} 3 {% endif %}" min="1" max="5">
+                    <div class="mb-1 mt-2" style="font-weight: 700;">
+                        جذابیت برای مخاطب
+                    </div>
+                    <input name="judge_admin_score5" type="number" class="form-control masir-form-control text-center"
+                           autocomplete="off" required
+                           value="{% if the_file.score5 %} the_file.score5 {% else %} 3 {% endif %}" min="1" max="5">
 
-                <div class="mb-1 mt-2" style="font-weight: 700;">
-                  اشاره به کاربردی بودن مفاهیم در زندگی امروزی (به صورت مستقیم یا غیرمستقیم)
-                </div>
-                <input name="judge_admin_score6" type="number" class="form-control masir-form-control text-center mb-3" autocomplete="off" required value="{% if the_file.score6 %} the_file.score6 {% else %} 3 {% endif %}" min="1" max="5">
+                    <div class="mb-1 mt-2" style="font-weight: 700;">
+                        اشاره به کاربردی بودن مفاهیم در زندگی امروزی (به صورت مستقیم یا غیرمستقیم)
+                    </div>
+                    <input name="judge_admin_score6" type="number"
+                           class="form-control masir-form-control text-center mb-3" autocomplete="off" required
+                           value="{% if the_file.score6 %} the_file.score6 {% else %} 3 {% endif %}" min="1" max="5">
 
-                <div class="mb-1 mt-2" style="font-weight: 700;">
-                  دلیل رد شدن در داوری
-                </div>
-                <textarea name="judge_admin_denied_message" class="form-control form-control masir-form-control mb-3" rows="3" placeholder="در صورت رد شدن در داوری، دلیل خود را بنویسید." oninput="judge_admin_denied_message_change(this)"></textarea>
+                    <div class="mb-1 mt-2" style="font-weight: 700;">
+                        دلیل رد شدن در داوری
+                    </div>
+                    <textarea name="judge_admin_denied_message"
+                              class="form-control form-control masir-form-control mb-3" rows="3"
+                              placeholder="در صورت رد شدن در داوری، دلیل خود را بنویسید."
+                              oninput="judge_admin_denied_message_change(this)"></textarea>
 
-                <div id="judge_form">
-                  <button type="submit" name="judge_admin_form" class="btn masir-btn w-100 mt-2" style="background-color: #4ed426;" id="judge_admin_form">ثبت</button>
-                  <button type="submit" name="judge_admin_deny_form" class="btn masir-btn w-100 mt-2" style="background-color: #d1d426; display: none;" id="judge_admin_deny_form">حذف از داوری</button>
-                </div>
+                    <div id="judge_form">
+                        <button type="submit" name="judge_admin_form" class="btn masir-btn w-100 mt-2"
+                                style="background-color: #4ed426;" id="judge_admin_form">ثبت
+                        </button>
+                        <button type="submit" name="judge_admin_deny_form" class="btn masir-btn w-100 mt-2"
+                                style="background-color: #d1d426; display: none;" id="judge_admin_deny_form">حذف از
+                            داوری
+                        </button>
+                    </div>
 
-                <div id="judge_form_loading" style="display: none;">
-                  <button class="btn masir-btn w-100 mt-2" style="background-color: #4ed426;" id="judge_admin_form_loading">
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                    در حال ارسال...
-                  </button>
+                    <div id="judge_form_loading" style="display: none;">
+                        <button class="btn masir-btn w-100 mt-2" style="background-color: #4ed426;"
+                                id="judge_admin_form_loading">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            در حال ارسال...
+                        </button>
 
-                  <button class="btn masir-btn w-100 mt-2" style="background-color: #d1d426; display: none;" id="judge_admin_deny_form_loading">
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                    در حال ارسال...
-                  </button>
-                </div>
-              </form>
-              <form action="" method="post" class="w-75 mx-auto" onsubmit="judge_admin_cancel_form_click()">
-                {% csrf_token %}
-                <button type="submit" name="judge_admin_cancel_form" class="btn masir-btn w-100 mt-2" style="background-color: #ff5151;" id="judge_admin_cancel_form">انصراف</button>
-                <button class="btn masir-btn w-100 mt-2" style="background-color: #ff5151; display: none;" id="judge_admin_cancel_form_loading">
-                  <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                  در حال انصراف...
-                </button>
-              </form>
+                        <button class="btn masir-btn w-100 mt-2" style="background-color: #d1d426; display: none;"
+                                id="judge_admin_deny_form_loading">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            در حال ارسال...
+                        </button>
+                    </div>
+                </form>
+                <form action="" method="post" class="w-75 mx-auto" onsubmit="judge_admin_cancel_form_click()">
+                    {% csrf_token %}
+                    <button type="submit" name="judge_admin_cancel_form" class="btn masir-btn w-100 mt-2"
+                            style="background-color: #ff5151;" id="judge_admin_cancel_form">انصراف
+                    </button>
+                    <button class="btn masir-btn w-100 mt-2" style="background-color: #ff5151; display: none;"
+                            id="judge_admin_cancel_form_loading">
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        در حال انصراف...
+                    </button>
+                </form>
             {% endif %}
             {% if activities %}
-              <div class="w-75 mt-5 mx-auto">
-                {% for x in activities %}
-                    {% if not x.topic.if_long %}
-                        <a class="text-decoration-none link-dark" href="{% url 'judge_detail_page_link' x.id %}">
-                    <div class="mb-2 pb-2" style="background-color: #ffcbcb;">
-                      <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+                <div class="w-75 mt-5 mx-auto">
+                    {% for x in activities %}
+                        {% if not x.topic.if_long %}
+                            <a class="text-decoration-none link-dark" href="{% url 'judge_detail_page_link' x.id %}">
+                                <div class="mb-2 pb-2" style="background-color: #ffcbcb;">
+                                    <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
                         <span>
                           {{ x.topic }} | {{ x.template }}
                         </span>
-                        <span>
+                                        <span>
                           {{ x.group }}
                         </span>
-                      </div>
+                                    </div>
 
-                      <div class="p-2" style="text-align: justify;">
-                        {{ x.link }}
-                      </div>
-                    </div>
-                  </a>
-                    {% endif %}
-                {% endfor %}
-              </div>
+                                    <div class="p-2" style="text-align: justify;">
+                                        {{ x.link }}
+                                    </div>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             {% endif %}
-            {% if activities_for_admin and user_is_admin  %}
-              <div class="w-75 mt-5 mx-auto">
-                {% for x in activities_for_admin %}
-                  {% if x.state != '4' %}<a class="text-decoration-none link-dark" href="{% url 'judge_detail_page_link' x.id %}">{% endif %}
-                    <div class="mb-2 pb-2" style="background-color: {% if x.state == '1' %} #ffcbcb; {% else %} {% if x.state == '2' %} #ffffcb; {% else %} {% if x.state == '3' %} #cbffcb; {% else %} {% if x.state == '4' %} #cbcbff; {% else %} {% if x.state == '5' %} #ffcbff; {% else %} #cbcbff; {% endif %} {% endif %} {% endif %} {% endif %} {% endif %} {% if x.get_score > 4 %} border: 3px solid #ffff00 {% endif %}">
-                      {% if x.get_score > 4 %}
-                        <div class="p-2 text-center" style="background-color: #ffff00; font-weight: 700;">
-                          اثر برتر
-                        </div>
-                      {% endif %}
-                      <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
+            {% if activities_for_admin and user_is_admin %}
+                <div class="w-75 mt-5 mx-auto">
+                    {% for x in activities_for_admin %}
+                        {% if x.state != '4' %}<a class="text-decoration-none link-dark"
+                                                  href="{% url 'judge_detail_page_link' x.id %}">{% endif %}
+                    <div class="mb-2 pb-2"
+                         style="background-color: {% if x.state == '1' %} #ffcbcb; {% else %} {% if x.state == '2' %} #ffffcb; {% else %} {% if x.state == '3' %} #cbffcb; {% else %} {% if x.state == '4' %} #cbcbff; {% else %} {% if x.state == '5' %} #ffcbff; {% else %} #cbcbff; {% endif %} {% endif %} {% endif %} {% endif %} {% endif %} {% if x.get_score > 4 %} border: 3px solid #ffff00 {% endif %}">
+                        {% if x.get_score > 4 %}
+                            <div class="p-2 text-center" style="background-color: #ffff00; font-weight: 700;">
+                                اثر برتر
+                            </div>
+                        {% endif %}
+                        <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
                         <span>
                           <b style="font-weight: 700;">{{ x.get_state_display }}</b> | {{ x.topic }} | {{ x.template }} | {{ x.group }}
                         </span>
-                        <span>
+                            <span>
                          {{ x.referee }} | {{ x.get_score }}
                         </span>
-                      </div>
+                        </div>
 
-                      <div class="p-2" style="text-align: justify;">
-                        {{ x.link }}
-                      </div>
+                        <div class="p-2" style="text-align: justify;">
+                            {{ x.link }}
+                        </div>
                     </div>
-                  {% if x.state != '4' %}</a>{% endif %}
-                {% endfor %}
-              </div>
+                    {% if x.state != '4' %}</a>{% endif %}
+                    {% endfor %}
+                </div>
             {% endif %}
-          </div>
         </div>
-      {% endblock %}
+    </div>
+{% endblock %}
 
 {% block scriptblock %}
     <!-- Bootstrap -->
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
     <script type="text/javascript">
-      var map = ["&\#1776;","&\#1777;","&\#1778;","&\#1779;","&\#1780;","&\#1781;","&\#1782;","&\#1783;","&\#1784;","&\#1785;"]
-      document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function($0) { return map[$0]});
+        var map = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"]
+        document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function ($0) {
+            return map[$0]
+        });
     </script>
 
     <script>
-      function judge_admin_denied_message_change(e){
-        if (e.value == ""){
-          document.getElementById('judge_admin_form').style.display = 'block';
-          document.getElementById('judge_admin_form_loading').style.display = 'block';
-          document.getElementById('judge_admin_deny_form').style.display = 'none';
-          document.getElementById('judge_admin_deny_form_loading').style.display = 'none';
+        function judge_admin_denied_message_change(e) {
+            if (e.value == "") {
+                document.getElementById('judge_admin_form').style.display = 'block';
+                document.getElementById('judge_admin_form_loading').style.display = 'block';
+                document.getElementById('judge_admin_deny_form').style.display = 'none';
+                document.getElementById('judge_admin_deny_form_loading').style.display = 'none';
+            } else {
+                document.getElementById('judge_admin_form').style.display = 'none';
+                document.getElementById('judge_admin_form_loading').style.display = 'none';
+                document.getElementById('judge_admin_deny_form').style.display = 'block';
+                document.getElementById('judge_admin_deny_form_loading').style.display = 'block';
+            }
         }
-        else{
-          document.getElementById('judge_admin_form').style.display = 'none';
-          document.getElementById('judge_admin_form_loading').style.display = 'none';
-          document.getElementById('judge_admin_deny_form').style.display = 'block';
-          document.getElementById('judge_admin_deny_form_loading').style.display = 'block';
+
+        function judge_admin_form_click() {
+            document.getElementById('judge_form').style.display = 'none';
+            document.getElementById('judge_form_loading').style.display = 'block';
         }
-      }
 
-      function judge_admin_form_click(){
-        document.getElementById('judge_form').style.display = 'none';
-        document.getElementById('judge_form_loading').style.display = 'block';
-      }
-
-      function judge_admin_cancel_form_click(){
-        document.getElementById('judge_admin_cancel_form').style.display = 'none';
-        document.getElementById('judge_admin_cancel_form_loading').style.display = 'block';
-      }
+        function judge_admin_cancel_form_click() {
+            document.getElementById('judge_admin_cancel_form').style.display = 'none';
+            document.getElementById('judge_admin_cancel_form_loading').style.display = 'block';
+        }
     </script>
 {% endblock %}
