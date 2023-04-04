@@ -936,6 +936,14 @@ def home_page(request):
                 if request.POST['discover_code'] == x.code and not x.main:
                     if x not in user.groups.all().first().discovered.all():
                         user.groups.all().first().discovered.add(x)
+                        user.save()
+                        if len(user.groups.all().first().discovered.all())>=16:
+                            set_masir_group_and_achivement_rel(
+                                user.groups.all().first(),
+                                Achivement.objects.get(code='Mng'),
+                                40
+                            )
+
                         Report.objects.create(
                             group=user.groups.all().first(),
                             text='شما در یک اکتشاف موفقیت آمیز ماموریت مخفی «' + str(x) + '» را پیدا کردید'
@@ -968,7 +976,6 @@ def home_page(request):
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
                                     'achivements': Achivement.objects.filter(manzel=None),
-
                                     'exam': Exam.objects.filter(active=True).first(),
                                     'MESSAGE': 'این ماموریت مخفی را قبلا پیدا کرده اید. دوباره تلاش کنید! '
                                 }
@@ -1284,7 +1291,7 @@ def home_page(request):
                 set_masir_group_and_achivement_rel(
                     x.group,
                     Achivement.objects.get(
-                        code=ACTIVITIES[x.topic.title] + '_' + str(int(x.template.type)) + str(round(x.get_score()))),
+                        code=ACTIVITIES[x.topic.co_title] + '_' + str(int(x.template.type)) + str(round(x.get_score()))),
                     (4 - int(x.template.type)) * x.get_score()
                 )
 
