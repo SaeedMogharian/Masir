@@ -1259,12 +1259,10 @@ def home_page(request):
                         Achivement.objects.get(code='Qra_1'),
                         0
                     )
-                if len(Club_File.objects.filter(show_public=True,
-                                                user__in=x.user.groups.all().first().users.all()).values(
-                    'level').annotate(count=Count('id', distinct=True))) >= 19 or len(
-                    Club_File.objects.filter(show_public=True,
-                                             user__in=x.user.groups.all().first().users.all()).values(
-                        'date__day').annotate(count=Count('id', distinct=True))) >= 19:
+                if len(Club_File.objects.filter(show_public=True, user__in=x.user.groups.all().first().users.all()).values(
+                    'level').annotate(count=Count('id', distinct=True))) >= 14 or len(
+                    Club_File.objects.filter(show_public=True,user__in=x.user.groups.all().first().users.all()).values(
+                        'date__day').annotate(count=Count('id', distinct=True))) >= 14:
                     set_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
                         Achivement.objects.get(code='Vrz_0'),
