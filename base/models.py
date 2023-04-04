@@ -43,28 +43,24 @@ ACTIVITY_STATE_CHOICES = (
 )
 
 ACTIVITIES = {
-    'احیا': '301',
-    'کنترل خشم': '001',
-    'مسئولیت پذیری': '016',
-    'عفو': '031',
-    'دوستی': '046',
-    'کار و تلاش': '061',
-    'کنترل جوارح و زبان': '076',
-    'پدر و مادر': '091',
-    'روزه': '106',
-    'انفاق': '121',
-    'تعاون': '136',
-    'نماز': '151',
-    'صبر و استقامت': '166',
-    'هدفمندی': '181',
-    'الگو': '196',
-    'توکل و توسل': '211',
-    'دعا و مناجات': '226',
-    'ایثار': '241',
-    'تاثیرگذاری': '256',
-    'خودباوری': '271',
-    'برنامه ریزی': '286',
+    'قیام و حرکت': '010',
+    'مشورت و عظم': '011',
+    'حرکت جمعی': '012',
+    'امر به معروف و نهی از منکر': '013',
+    'شناخت و بینش': '020',
+    'فرقان': '021',
+    'دشمن شناسی': '022',
+    'هدف و مسیر': '023',
+    'صبر و استفامت': '030',
+    'امید به یاری خداوند': '031',
+    'آزمایش': '032',
+    'استعانت': '033',
+    'جهاد': '040',
+    'روشنگری': '041',
+    'اتحاد و تعاون': '042',
+    'انقطاع': '043',
 }
+
 
 
 class Accessibility(models.Model):
@@ -380,6 +376,7 @@ class Activity_Topic(models.Model):
     manzel = models.ForeignKey(Manzel, null=True, blank=True, related_name='activity_topics', on_delete=models.CASCADE,
                                verbose_name='منزل')
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فعالیت')
+    co_title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان معرفتی')
     file = models.FileField(null=True, blank=True, upload_to='base/static/activity/',
                             verbose_name='فایل توضیحات فعالیت')
     template = models.ManyToManyField(Activity_Template, related_name='templates', blank=True, verbose_name='قالب ها')
