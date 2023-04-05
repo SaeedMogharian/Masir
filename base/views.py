@@ -276,6 +276,7 @@ def landing_page(request):
                     g.users.add(user2)
                     g.users.add(user3)
                     g.add_mains()
+                    g.goto_supergroup()
                     g.save()
 
                     Report.objects.create(

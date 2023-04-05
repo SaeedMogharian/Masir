@@ -188,7 +188,7 @@ class Message(models.Model):
     message = models.TextField(default='متن پیام پیش‌فرض', max_length=5000, verbose_name='متن پیام')
     answer = models.TextField(null=True, blank=True, max_length=5000, verbose_name='متن پاسخ')
     support = models.ForeignKey(User_Detail, null=True, blank=True, related_name='support', on_delete=models.SET_NULL,
-                              verbose_name='پشتیبان')
+                                verbose_name='پشتیبان')
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
 
     def get_group(self):
@@ -431,6 +431,14 @@ class Masir_Group(models.Model):
     discovered = models.ManyToManyField(Activity_Topic, related_name='discoverd', blank=True,
                                         verbose_name='فعالیت های اکتشاف شده')
     introduced = models.BooleanField(default=False, verbose_name='گذراندن آموزش اولیه')
+
+    def goto_supergroup(self):
+        a = list(Masir_Group.objects.all().order_by(id()))[-1]
+        if len(a.get_supergroupmates()) < 6:
+            self.supergroup = a.supergroup
+        else:
+            self.supergroup = a.supergroup + 1
+        self.save()
 
     def is_first(self):
         if self.manzel == 1 and not self.introduced:
