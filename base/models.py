@@ -845,7 +845,7 @@ class Masir_Group(models.Model):
         return (self.achivements.all().order_by('achivement__id'))
 
     def get_light(self):
-        l = 64
+        l = 14
         for x in self.get_achivements():
             l = l + x.score
         for x in self.exams.filter(show_public=True):
@@ -857,7 +857,6 @@ class Masir_Group(models.Model):
 
         return int(l * 100) / 100
 
-    # محاسبه حیات
     def get_xp(self):
         return ([
             int(((self.get_light() % 70) / 70) * 100),

@@ -237,12 +237,12 @@ audio::-webkit-media-controls-panel {
 
 .masir-map-icon-1 .masir-map-icon-popup {
     position: absolute;
-    right: 0;
+    bottom: 0;
     transform: translateX(100%);
     background-color: #ffffffc0;
     border: 2px solid;
     border-radius: 25px;
-    padding: 0.5rem;
+    padding: 0.5em;
     width: max-content;
     visibility: hidden;
     opacity: 0;
@@ -253,7 +253,28 @@ audio::-webkit-media-controls-panel {
     opacity: 1;
     filter: brightness(66%);
 }
+.masir-map-icon-1 .masir-map-icon-popup div {
+    font-weight: 700;
+}
+.masir-map-icon-1 .masir-map-icon-popup div svg {
+    width: 5vh;
+}
+.masir-map-icon-1 .masir-map-icon-popup form label {
+    font-size: x-small;
+}
 
+@media screen and (max-width: 1024px) {
+    .masir-map-icon-1 .masir-map-icon-popup div{
+        font-size: xx-small;
+    }
+    .masir-map-icon-1 .masir-map-icon-popup div svg {
+    width: 3vh;
+}
+    .masir-map-icon-1 .masir-map-icon-popup form label {
+    font-size: x-small;
+}
+    
+}
 
 
 .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number {
@@ -283,10 +304,10 @@ audio::-webkit-media-controls-panel {
 }
 @media screen and (max-width: 930px){
     .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number{
-        font-size: smaller;
+        font-size: x-small;
     }
     .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name{
-        font-size: medium;
+        font-size: small;
     }
 }
 @media screen and (max-width: 425px){
@@ -294,9 +315,10 @@ audio::-webkit-media-controls-panel {
         font-size: xx-small;
     }
     .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name{
-        font-size: smaller;
+        font-size: x-small;
     }
 }
+
 
 .masir-modal {
     border-radius: 25px;
@@ -368,6 +390,17 @@ audio::-webkit-media-controls-panel {
     border-radius: 0 !important;
     font-weight: 700;
 }
+@media screen and (max-width: 769px) {
+    .masir-btn{
+        font-size: small;
+    }
+}
+@media screen and (max-width: 426px) {
+    .masir-btn{
+        font-size: xx-small;
+    }
+
+}
 
 .masir-btn:not(.disabled):hover {
     filter: brightness(150%);
@@ -380,4 +413,10 @@ audio::-webkit-media-controls-panel {
 .masir-achievement {
     object-fit: cover;
     width: 100%;
+}
+
+.masir-header-icon{
+    border-radius: 20%;
+    width: 20vh;
+    height: 10vh;
 }
