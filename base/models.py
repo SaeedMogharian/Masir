@@ -408,6 +408,7 @@ class Activity_Topic(models.Model):
                     'type': x.get_type_display(),
                     'max_power': x.max_power,
                     'max_food': x.max_food,
+                    'info': x.info,
                 }
             )
 

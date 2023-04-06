@@ -922,18 +922,41 @@
                                                                     {% endfor %}
                                                                 </select>
 
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <span> نوع قالب: </span>
-                                                                    <span id="activity_{{ x.id }}_template_type">{{ x.get_activity_templates.0.type }}</span>
+                                                                <div class="row">
+                                                                    <div class="flex col-6">
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <span> نوع قالب: </span>
+                                                                            <span id="activity_{{ x.id }}_template_type">{{ x.get_activity_templates.0.type }}</span>
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <span> حداکثر توان قابل کسب: </span>
+                                                                            <span id="activity_{{ x.id }}_template_max_power">{{ x.get_activity_templates.0.max_power }}</span>
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <span> حداکثر آذوقه قابل کسب: </span>
+                                                                            <span id="activity_{{ x.id }}_template_max_food">{{ x.get_activity_templates.0.max_food }}</span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="flex col-6">
+                                                                        {% for t in x.get_activity_templates %}
+                                                                            <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                                <span class="col-lg-6 col-12 btn btn-primary d-inline-block"
+                                                                                      tabindex="0"
+                                                                                      data-bs-toggle="popover"
+                                                                                      data-bs-placement="top"
+                                                                                      style="margin-top:1vh; margin-right: auto; margin-left: auto"
+                                                                                      data-bs-content="{{ t.info }}">
+                                                                                    {{ t.title }}
+                                                                                </span>
+                                                                            </div>
+
+                                                                        {% endfor %}
+
+                                                                    </div>
+
                                                                 </div>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <span> حداکثر توان قابل کسب: </span>
-                                                                    <span id="activity_{{ x.id }}_template_max_power">{{ x.get_activity_templates.0.max_power }}</span>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <span> حداکثر آذوقه قابل کسب: </span>
-                                                                    <span id="activity_{{ x.id }}_template_max_food">{{ x.get_activity_templates.0.max_food }}</span>
-                                                                </div>
+
 
                                                                 <div class="mb-1 mt-2" style="font-weight: 700;">لینک
                                                                     فایل
@@ -1017,7 +1040,8 @@
                                                                 قالب
                                                             </div>
                                                             <select name="activity_{{ x.id }}_template"
-                                                                    class="form-select masir-form-control text-center" disabled>
+                                                                    class="form-select masir-form-control text-center"
+                                                                    disabled>
                                                                 <option> {{ x.template.title }} </option>
                                                             </select>
 
