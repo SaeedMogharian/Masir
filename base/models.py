@@ -280,6 +280,8 @@ class Achivement(models.Model):
     code = models.CharField(default='XXX_X', max_length=100, verbose_name='کد دستاورد')
     image = models.FileField(upload_to='base/static/images/achivement/', verbose_name='تصویر')
 
+    report = models.TextField(null=True, blank=True, default='', verbose_name='گزارش')
+
     def get_manzel(self):
         if self.manzel:
             return (self.manzel.title + ' | ' + self.manzel.co_title)
