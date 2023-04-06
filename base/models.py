@@ -442,6 +442,9 @@ class Masir_Group(models.Model):
             self.supergroup = a.supergroup + 1
         self.save()
 
+    def get_side_activities(self):
+        return [x for x in self.discovered.exclude(main=True)]
+
     def is_first(self):
         if self.manzel == 1 and not self.introduced:
             return True
