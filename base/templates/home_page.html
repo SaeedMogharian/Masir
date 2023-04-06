@@ -768,21 +768,54 @@
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
-                        <form action="{% url 'home_page_link' %}" method="post" onsubmit="charity_form_click()">
-                            {% csrf_token %}
-                            <div class="mb-1 mt-5" style="font-weight: 700;">ما تمایل داریم این مقدار از آذوقه گروه خود
-                                کسر کنیم و به نیازمندان صدقه دهیم:
-                            </div>
+                        <div class="position-relative px-5 masir-modal-header">
+                            <div class="position-absolute top-50 start-50 translate-middle d-flex"
+                                 style="height: max-content;">
+                                <div class="masir-circle-icon-3"
+                                     style="background-color: #FDF9DC; color: #FFD700; border: 2px #B2993E solid;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="50" height="50" viewBox="0 0 50 50" fill="currentColor">
+                                        <image width="50" height="50"
+                                               xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAEZklEQVRogd2Za4iVVRSGH2d0TFF0rCZpvBZN9WugtARNBgUxExvHgYgwzR9mFygTKijmT8EoQfhDvIFXCIKIshLUESHs5o1QcSI1KtLpglmZWjaXE0veD5bb78ycc2a+M+fzhWGf2Wtf1nv2Wnuvtc4Aio+BQB3QAEwCqoHbgIvAGeAo0AJ8CPzZD/r1iDJgMfATkMnh7xKwERhXSiQmAoed8seAJmAKcDtQAYwBpgLLgQNu7D/A68Cg/iZhyv0mpU4DjUAuJn0PsMMR+hS4uQj6xmI6cFmKmFLDClhjFvCj1jgJ1BRB72swATgvBTbIR+IwHngImAzcmmXMaGdu54C7i0XCTGe/Nm7RTeVh/y8DWmOc/iDwTIxPDHGm9h1QVQwiT2jDs0BlILNv9yun+M+yfyPwl+tvlX+FZL6Q/DOgPGkiR7XZ80G/Oesp5/iPBCY3GFgAnNCYK8CiYA0zvx8kfyFJEvdpkzYp5rFHMjuRUd2sYWa1SmO79P54zJHsAjA2KSKvaZOtWTY/m4d9P6s5/wHTAtl7kq3uI72vQ7TBkkDwkfqfznO9Zs37JjjhWvX/AQztYw5X8bk2mOn6Bihu6izgUTMzO641lwWyyPEXZrvbe4ObNLcrUGYE8Dfwe55rtwNv6HN4mu+rnZoEkQtqvRkYqQ5dnxUFrPmBgsja4EQPqZ2UBJFTamtdX4dsvEKhe75ol3mZid7r5raqrUmCyBG1DwT9u9QuLXDdTrXeZDNqhxS4Zreo1maXAzO4UyfTobgqH5S5uK3azatS3/kkiBj2aoMVQf/b6v82z9urQfNOBP116v+6D3SOxRwXR410A4a5q/TLHMncAnyvOU8Fsib1b0yKiGGfNlkX9I/X6x7lF/d3s0aVCzD3B1F0mTJNkz2aEIerWK5NzEnnBbJxLrA0n9msSDcK3St1KbS5ADMMax6T7EySafACxUdRSH4x5todLp9pd+M6FAH4/KRF5uUxQuRM/lwxSKwEtuvzL1luqxqNswsgImWP306gPmZ8uWQZXfVh0tYnaHAkmrWgHfvHTsHGbjYq17edDQOVNmd0cncVi0QEI7PN5RdreshH4lCpRzWjN6qu2CQiNAe2f04ZXk+EBikviUpKbQU8qDlhfh4k2nWbtThCNvcT4CX51xSVgOzN2CLC0dg9KuT1OwnvH7PltJ05lE8P65FNBPW9IOFhsdOTep13qpqyW6nyCsVoicG+nX+l5FtZNnnTvQ2PJ6lMoUgNibkqTx6R83nMU62pt+aUOF4JnKxL5UvSROJVp3yTI2X/r08LiZedTfuY/8XghEqaRL375sOiWqPIlTwJlNxkZE4ejS7ELnkSqORoysxwfakjgap4GVUBp6WVBMp9N7lMLpUkIpQFEWkqSRgevhFip1r3E3JqTwKV5k3JtVnkqSCBqx2FJRfSRAL98JKJqUikioThXVeSrFFFb13aSBjuAH6NyZOvpIlEBKvFvqPfGewGs2rFg6WhWg4A/gciU7ApkJQLcQAAAABJRU5ErkJggg=="></image>
+                                    </svg>
 
-                            <button type="submit" name="unlock_form" id="unlock_form" class="btn masir-btn w-100"
-                                    style="background-color: #161F6F; color: white;">ثبت صدقه
-                            </button>
-                            <button class="btn masir-btn w-100"
-                                    style="background-color: #161F6F; color: white; display: none;"
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'home_page_link' %}" method="post" onsubmit="unlock_form_click()">
+                            {% csrf_token %}
+                            <div class="mb-1 mt-5" style="font-weight: 700;" id="first_unlock_text"> تایید اول
+                            </div>
+                            <div class="mb-1 mt-1" style="font-weight: 700;" id="second_unlock_text"> تایید دوم
+                            </div>
+                            <input name="unlock_value" id="unlock_value" type="text" style="display: none"
+                                   class="form-control masir-form-control text-center"
+                                   autocomplete="off" value="value" >
+                            <div class="form-check mt-3 mb-2">
+                                <input class="form-check-input" type="checkbox"
+                                       required>
+                                <label class="form-check-label"
+                                       for="flexCheckDefault">
+                                    با هم گروهی هایم مشورت کردم و از انتخابم مطمئنم.
+                                </label>
+                            </div>
+                            <div class="row">
+                                <button type="submit" name="unlock_form" id="unlock_form"
+                                        class="btn masir-btn col-6"
+                                        style="background-color: #FFD700; color: black">تایید. باز میکنیم
+                                </button>
+                                <button class="btn masir-btn col-6"
+                                    style="background-color: #FFD700; color: black; display: none;"
                                     id="unlock_form_loading">
                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                                 در حال ثبت...
                             </button>
+                                <button type="submit" name="unlock_form_deny" id="unlock_form_deny"
+                                        class="btn masir-btn col-6"
+                                        style="background-color: red; color: black" aria-label="close">انصراف
+                                </button>
+                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -997,11 +1030,13 @@
                                                                                         {{ t.title }}
                                                                                     </span>
                                                                                     <a class="col-2 masir-jelly"
+                                                                                       onclick="unlock_{{ x.id }}_{{ t.id }}_passValueToModal()"
+                                                                                       title="باز کردن شرح ماموریت"
                                                                                        data-bs-toggle="modal"
                                                                                        href="#unlock_modal"
                                                                                        role="button"
                                                                                        style="margin-top:1vh; display: block"
-                                                                                       data="{{ t.id }}">
+                                                                                       id="unlock_button_{{ t.id }}">
                                                                                         <svg viewBox="0 0 30 30"
                                                                                              width="30px" fill="red"
                                                                                              height="30px">
@@ -1098,8 +1133,7 @@
 
                                                         <form>
                                                             {% csrf_token %}
-                                                            <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب
-                                                                قالب
+                                                            <div class="mb-1 mt-2" style="font-weight: 700;">                                                             سطح انتخاب شده
                                                             </div>
                                                             <select name="activity_{{ x.id }}_template"
                                                                     class="form-select masir-form-control text-center"
@@ -1107,17 +1141,70 @@
                                                                 <option> {{ x.template.title }} </option>
                                                             </select>
 
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <span> نوع قالب: </span>
-                                                                <span id="activity_{{ x.id }}_template_type">{{ x.template.get_type_display }}</span>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <span> حداکثر توان قابل کسب: </span>
-                                                                <span id="activity_{{ x.id }}_template_max_power">{{ x.template.max_power }}</span>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <span> حداکثر آذوقه قابل کسب: </span>
-                                                                <span id="activity_{{ x.id }}_template_max_food">{{ x.template.max_food }}</span>
+
+                                                            <div class="row">
+                                                                <div class="flex col-6">
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <span> نوع قالب: </span>
+                                                                        <span id="activity_{{ x.id }}_template_type">{{ x.template.get_type_display }}</span>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <span> حداکثر توان قابل کسب: </span>
+                                                                        <span id="activity_{{ x.id }}_template_max_power">{{ x.template.max_power }}</span>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <span> حداکثر آذوقه قابل کسب: </span>
+                                                                        <span id="activity_{{ x.id }}_template_max_food">{{ x.template.max_food }}</span>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="flex col-6">
+                                                                        {% for t in x.topic.template.all %}
+                                                                            {% if t in user.user_detail.groups.all.first.unlocked.all %}
+                                                                                <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                                    <span class="col-lg-6 col-10 btn btn-success d-inline-block"
+                                                                                          tabindex="0"
+                                                                                          data-bs-toggle="popover"
+                                                                                          data-bs-placement="top"
+                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto"
+                                                                                          data-bs-content="{{ t.info }}">
+                                                                                        {{ t.title }}
+                                                                                    </span>
+                                                                                    <div class="col-2">
+                                                                                        <svg viewBox="0 0 24 24"
+                                                                                             width="30px"
+                                                                                             height="30px">
+                                                                                            <path d="M 12 0 C 8.699219 0 6 2.699219 6 6 L 6 8 L 8 8 L 8 6 C 8 3.78125 9.78125 2 12 2 C 14.21875 2 16 3.78125 16 6 L 16 11 L 3 11 L 3 24 L 21 24 L 21 11 L 18 11 L 18 6 C 18 2.699219 15.300781 0 12 0 Z"/>
+                                                                                        </svg>
+                                                                                    </div>
+                                                                                </div>
+                                                                            {% else %}
+                                                                                <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                                    <span class="col-lg-6 col-10 btn btn-danger d-inline-block disabled"
+                                                                                          tabindex="0"
+                                                                                          data-bs-toggle="popover"
+                                                                                          data-bs-placement="top"
+                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto"
+                                                                                          data-bs-content="{{ t.info }}">
+                                                                                        {{ t.title }}
+                                                                                    </span>
+                                                                                    <div class="col-2">
+                                                                                        <svg viewBox="0 0 30 30"
+                                                                                             width="30px" fill="red"
+                                                                                             height="30px">
+                                                                                            <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
+                                                                                        </svg>
+                                                                                    </div>
+                                                                                </div>
+
+
+
+                                                                            {% endif %}
+
+                                                                        {% endfor %}
+
+                                                                    </div>
+
                                                             </div>
 
                                                             <div class="d-flex justify-content-between align-items-center">
@@ -1810,6 +1897,11 @@
             document.getElementById('university_form_loading').style.display = 'block';
         }
 
+        function unlock_form_click() {
+            document.getElementById('unlock_form').style.display = 'none';
+            document.getElementById('unlock_form_loading').style.display = 'block';
+        }
+
         {% for x in user.user_detail.groups.all.first.get_manzel.activity_topics.all %}
             function activity_{{x.id}}_form_click() {
                 document.getElementById('activity_{{x.id}}_form').style.display = 'none';
@@ -1826,15 +1918,26 @@
                 {% endfor %}
             }
         {% endfor %}
+    </script>
 
-        {%  for x in user.user_detail.groups.all.first.get_side_activities %}
-            {% for t in x.template.all %}
-                tmp = 0
-                if t in self.unlocked.all():
-                    tmp += 1
-                if tmp > 1:
-                    f -= 5
-            {% endfor %}
+    <script>
+        {%  for x in user.user_detail.groups.all.first.get_manzel.activity_topics.all %}
+            {% for t in x.get_activity_templates %}
+                function unlock_{{ x.id }}_{{ t.id }}_passValueToModal() {
+                    const modalText1 = document.getElementById('first_unlock_text');
+                    const modalText2 = document.getElementById('second_unlock_text');
+                    const modalInput = document.getElementById('unlock_value');
+                    {% if x.id not in user.user_detail.groups.all.first.is_acted %}
+                        modalText1.innerHTML = " شما تا به حال هیچ یک از سطوح ماموریت « {{ x.title }} » را باز نکرده اید. ";
+                        modalText2.innerHTML = "تنها میتوانید یک سطح دشواری از هر ماموریت را انجام دهید. انتخاب شما سطح « {{ t.title }} » است ";
+                        modalInput.value= "{{ t.id }}"
+                    {% else %}
+                        modalText1.innerHTML = "شما پیش از این یکی از سطوح دیگر را باز کرده اید ";
+                        modalText2.innerHTML = "در صورت تایید باز کردن سطح « {{ t.title }} » مقدار 5 واحد آذوقه از گروه شما کسر میشود ";
+                        modalInput.value="{{ t.id }}"
+                    {% endif %}
+                }
+                {% endfor %}
         {% endfor %}
     </script>
 

@@ -424,7 +424,7 @@ class Activity_Topic(models.Model):
 class Masir_Group(models.Model):
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='نام گروه')
     users = models.ManyToManyField(User_Detail, related_name='groups', blank=True, verbose_name='اعضای گروه')
-    supergroup = models.IntegerField(default=0, verbose_name='ابرگروه')
+    supergroup = models.IntegerField(default=1, verbose_name='ابرگروه')
     manzel = models.IntegerField(default=1, verbose_name='منزل')
 
     discovered = models.ManyToManyField(Activity_Topic, related_name='discoverd', blank=True,
@@ -434,8 +434,16 @@ class Masir_Group(models.Model):
 
     introduced = models.BooleanField(default=False, verbose_name='گذراندن آموزش اولیه')
 
+    def is_acted(self):
+        y = []
+        for x in self.get_side_activities():
+            a = [t.id for t in x.template.all() if t in self.unlocked.all()]
+            if len(a) != 0:
+                y.append(x.id)
+        return y
+
     def goto_supergroup(self):
-        a = list(Masir_Group.objects.all().order_by(id()))[-1]
+        a = list(Masir_Group.objects.all().order_by('id')[-1])
         if len(a.get_supergroupmates()) < 6:
             self.supergroup = a.supergroup
         else:
@@ -492,13 +500,13 @@ class Masir_Group(models.Model):
             f = f - x.food
         for x in Manzel.objects.all()[:max(0, self.manzel - 1)]:
             f = f - x.food_for_next_manzel
-        for x in self.discovered.exclude(main=True):
-            for t in x.template.all():
-                tmp = 0
-                if t in self.unlocked.all():
-                    tmp += 1
-                if tmp > 1:
-                    f -= 5
+        for x in self.get_side_activities():
+            a = [t.id for t in x.template.all() if x.id in self.is_acted() and t in self.unlocked.all()]
+            if len(a) >= 3:
+                f -= 10
+            elif len(a) >= 2:
+                f -= 5
+
 
         return int(f * 100) / 100
 

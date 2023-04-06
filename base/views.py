@@ -342,10 +342,10 @@ def landing_page(request):
                 request,
                 'landing_page.html',
                 {
-                    'MESSAGE': str(user.user_detail)
+                    'MESSAGE': str(user)
                                + ' عزیز! ثبت نام شما با موفقیت انجام شد.'
                                + ' کد ورود شما:'
-                               + '<br>' + str(user.user_detail.code) + '<br>'
+                               + '<br>' + str(user.code) + '<br>'
                                + 'برای تشکیل تیم و شروع مسابقه به این کد نیاز خواهید داشت.'
                                + '<br> <br>' + 'چند نکته بسیار مهم:'
                                + '<ul>'
@@ -666,10 +666,10 @@ def home_page(request):
                 request,
                 'landing_page.html',
                 {
-                    'MESSAGE': str(user.user_detail)
+                    'MESSAGE': str(user)
                                + ' عزیز! ثبت نام شما با موفقیت انجام شد.'
                                + ' کد ورود شما:'
-                               + '<br>' + str(user.user_detail.code) + '<br>'
+                               + '<br>' + str(user.code) + '<br>'
                                + 'برای تشکیل تیم و شروع مسابقه به این کد نیاز خواهید داشت.'
                                + '<br> <br>' + 'چند نکته بسیار مهم:'
                                + '<ul>'
@@ -1000,6 +1000,62 @@ def home_page(request):
                     }
                 )
             )
+        if 'unlock_form' in request.POST:
+            i = request.POST['unlock_value']
+            t = Activity_Template.objects.filter(id=i).first()
+            y = 0
+            for x in user.groups.all().first().get_side_activities():
+                for a in x.template.all():
+                    if t == a:
+                        y = x
+                        break
+            if y in user.groups.all().first().unlocked.all():
+                return (
+                    render(
+                        request,
+                        'home_page.html',
+                        {
+                            'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
+                                'right'),
+                            'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
+                            'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
+                            'FAQ': FAQ.objects.filter(is_active=True),
+                            'achivements': Achivement.objects.filter(manzel=None),
+                            'exam': Exam.objects.filter(active=True).first(),
+                            'MESSAGE': 'شما قبلا این سطح را بازگشایی کرده اید.'
+                        }
+                    )
+                )
+            f = 0
+            if y.id in user.groups.all().first().is_acted():
+                f = 1
+            if f and user.groups.all().first().get_food() < 5:
+                return (
+                    render(
+                        request,
+                        'home_page.html',
+                        {
+                            'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
+                                'right'),
+                            'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
+                            'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
+                            'FAQ': FAQ.objects.filter(is_active=True),
+                            'achivements': Achivement.objects.filter(manzel=None),
+                            'exam': Exam.objects.filter(active=True).first(),
+                            'MESSAGE': 'میزان آذوقه شما کافی نمی باشد'
+                        }
+                    )
+                )
+            user.groups.all().first().unlocked.add(t)
+            user.save()
+            m = 'شما با موفقیت سطح ' + str(t) + ' از ماموریت ' + str(y) + ' را بازگشایی کردید. '
+            if f:
+                m += 'و به این دلیل 5 واحد آذوقه از دست دادید'
+            Report.objects.create(
+                group=user.groups.all().first(),
+                text=m
+            )
+            return redirect('home_page_link')
 
         if 'introduction_form' in request.POST:
             if user.groups.all().first().introduced:
@@ -1298,7 +1354,7 @@ def home_page(request):
                     )
                 if len(Club_File.objects.filter(show_public=True,
                                                 user__in=x.user.groups.all().first().users.all()).values(
-                        'level').annotate(count=Count('id', distinct=True))) >= 14 or len(
+                    'level').annotate(count=Count('id', distinct=True))) >= 14 or len(
                     Club_File.objects.filter(show_public=True, user__in=x.user.groups.all().first().users.all()).values(
                         'date__day').annotate(count=Count('id', distinct=True))) >= 14:
                     set_masir_group_and_achivement_rel(
@@ -1468,10 +1524,10 @@ def contact_admin_page(request):
                 request,
                 'landing_page.html',
                 {
-                    'MESSAGE': str(user.user_detail)
+                    'MESSAGE': str(user)
                                + ' عزیز! ثبت نام شما با موفقیت انجام شد.'
                                + ' کد ورود شما:'
-                               + '<br>' + str(user.user_detail.code) + '<br>'
+                               + '<br>' + str(user.code) + '<br>'
                                + 'برای تشکیل تیم و شروع مسابقه به این کد نیاز خواهید داشت.'
                                + '<br> <br>' + 'چند نکته بسیار مهم:'
                                + '<ul>'
