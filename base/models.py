@@ -366,6 +366,8 @@ class Activity_Template(models.Model):
     max_power = models.IntegerField(default=0, verbose_name='حداکثر توان قابل کسب')
     max_food = models.IntegerField(default=0, verbose_name='حداکثر آذوقه قابل کسب')
 
+    info = models.TextField(null=True, blank=True, default='', verbose_name='شرح')
+
     def __str__(self):
         return (self.title)
 
@@ -387,10 +389,6 @@ class Activity_Topic(models.Model):
     main = models.BooleanField(default=False, verbose_name='فعالیت اصلی؟')
     code = models.CharField(null=True, blank=True, default='', max_length=8, verbose_name='کد اکتشاف')
 
-    level1 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 1')
-    level2 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 2')
-    level3 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 3')
-
     def get_file(self):
         return (str(self.file)[4:])
 
@@ -409,6 +407,7 @@ class Activity_Topic(models.Model):
                     'type': x.get_type_display(),
                     'max_power': x.max_power,
                     'max_food': x.max_food,
+                    'info': x.info,
                 }
             )
 
@@ -428,8 +427,10 @@ class Masir_Group(models.Model):
     supergroup = models.IntegerField(default=0, verbose_name='ابرگروه')
     manzel = models.IntegerField(default=1, verbose_name='منزل')
 
-    discovered = models.ManyToManyField(Activity_Topic, related_name='discoverd', blank=True,
+    discovered = models.ManyToManyField(Activity_Topic, related_name='discovered', blank=True,
                                         verbose_name='فعالیت های اکتشاف شده')
+    unlocked = models.ManyToManyField(Activity_Template, related_name='unlocked', blank=True,
+                                        verbose_name='قالب های باز شده')
     introduced = models.BooleanField(default=False, verbose_name='گذراندن آموزش اولیه')
 
     def goto_supergroup(self):
@@ -890,6 +891,7 @@ class Masir_Group(models.Model):
         verbose_name_plural = 'گروه‌ها'
 
 
+
 class Masir_Group_And_Achivement_Rel(models.Model):
     group = models.ForeignKey(Masir_Group, related_name='achivements', on_delete=models.CASCADE, verbose_name='گروه')
     achivement = models.ForeignKey(Achivement, related_name='groups', on_delete=models.CASCADE, verbose_name='دستاورد')
@@ -917,6 +919,7 @@ class Masir_Group_And_Exams_Rel(models.Model):
     class Meta:
         verbose_name = 'ارتباط'
         verbose_name_plural = 'ارتباط میان گروه‌ها و آزمون‌ها'
+
 
 
 class Trash(models.Model):

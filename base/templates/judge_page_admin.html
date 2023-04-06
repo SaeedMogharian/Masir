@@ -32,52 +32,19 @@
                                     <button class="accordion-button collapsed masir-btn" type="button"
                                             data-bs-toggle="collapse" style="background-color: #20c997"
                                             data-bs-target="#S1" aria-expanded="false" aria-controls="S1">
-                                        شرح ماموریت دشوار
+                                        شرح ماموریت/قالب
                                     </button>
                                 </h3>
                                 <div id="S1" class="accordion-collapse collapse" aria-labelledby="H1"
                                      data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <p class="masir-paragraph-1">
-                                            {{ the_file.topic.level3 }}
+                                            {{ the_file.template.info }}
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-item col-12" style="background-color: #ffcbcb">
-                                <h3 id="H2">
-                                    <button class="accordion-button collapsed masir-btn" type="button"
-                                            data-bs-toggle="collapse" style="background-color: #20c997"
-                                            data-bs-target="#S2" aria-expanded="false" aria-controls="S2">
-                                        شرح ماموریت معمولی
-                                    </button>
-                                </h3>
-                                <div id="S2" class="accordion-collapse collapse" aria-labelledby="H2"
-                                     data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        <p class="masir-paragraph-1">
-                                            {{ the_file.topic.level2 }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item col-12" style="background-color: #ffcbcb">
-                                <h3 id="H3">
-                                    <button class="accordion-button collapsed masir-btn" type="button"
-                                            data-bs-toggle="collapse" style="background-color: #20c997"
-                                            data-bs-target="#S3" aria-expanded="false" aria-controls="S3">
-                                        شرح ماموریت آسان
-                                    </button>
-                                </h3>
-                                <div id="S3" class="accordion-collapse collapse" aria-labelledby="H3"
-                                     data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        <p class="masir-paragraph-1">
-                                            {{ the_file.topic.level1 }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+
                         {% endif %}
                     </div>
                 </div>
