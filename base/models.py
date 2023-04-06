@@ -368,7 +368,6 @@ class Activity_Template(models.Model):
 
     info = models.TextField(null=True, blank=True, default='', verbose_name='شرح')
 
-
     def __str__(self):
         return (self.title)
 
@@ -431,7 +430,7 @@ class Masir_Group(models.Model):
     discovered = models.ManyToManyField(Activity_Topic, related_name='discoverd', blank=True,
                                         verbose_name='فعالیت های اکتشاف شده')
     unlocked = models.ManyToManyField(Activity_Template, related_name='unlocked', blank=True,
-                                        verbose_name='فعالیت های باز شده')
+                                      verbose_name='فعالیت های باز شده')
 
     introduced = models.BooleanField(default=False, verbose_name='گذراندن آموزش اولیه')
 
@@ -490,6 +489,13 @@ class Masir_Group(models.Model):
             f = f - x.food
         for x in Manzel.objects.all()[:max(0, self.manzel - 1)]:
             f = f - x.food_for_next_manzel
+        for x in self.discovered.exclude(main=True):
+            for t in x.template.all():
+                tmp = 0
+                if t in self.unlocked.all():
+                    tmp += 1
+                if tmp > 1:
+                    f -= 5
 
         return int(f * 100) / 100
 

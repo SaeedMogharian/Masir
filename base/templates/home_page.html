@@ -282,16 +282,16 @@
                     </div>
                 </div>
                 <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
-                    <a class="masir-circle-button-2 masir-jelly" title="اکتشاف"
+                    <a class="masir-circle-button-2 masir-jelly" title="ماموریت مخفی"
                        style="background-image: url('{% static 'images/navbar_discover.png' %}'); margin: auto"
                        data-bs-toggle="modal" href="#discover_modal" role="button"></a>
-                    <a class="masir-circle-button-3 masir-jelly" title="صفحه اصلی"
+                    <a class="masir-circle-button-3 masir-jelly" title="ماموریت اصلی"
                        style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto;
                                "
                        data-bs-toggle="offcanvas"
                        href="#level_{{ user.user_detail.groups.all.first.get_manzel.id }}_offcanvas" role="button"
                        aria-controls="level_offcanvas"></a>
-                    <a class="masir-circle-button-2 masir-jelly" title="افق های دور"
+                    <a class="masir-circle-button-2 masir-jelly" title="ماموریت تحول"
                        style="background-image: url('{% static 'images/navbar_longterm.png' %}'); margin: auto ;"
                        data-bs-toggle="modal" href="#longterm_activity_modal" role="button"></a>
                 </div>
@@ -761,6 +761,34 @@
             </div>
         </div>
 
+        <div class="modal fade" id="unlock_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="unlock_modal_Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                    <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
+                       role="button"></a>
+                    <div class="modal-body scroll-without-scrollbar">
+                        <form action="{% url 'home_page_link' %}" method="post" onsubmit="charity_form_click()">
+                            {% csrf_token %}
+                            <div class="mb-1 mt-5" style="font-weight: 700;">ما تمایل داریم این مقدار از آذوقه گروه خود
+                                کسر کنیم و به نیازمندان صدقه دهیم:
+                            </div>
+
+                            <button type="submit" name="unlock_form" id="unlock_form" class="btn masir-btn w-100"
+                                    style="background-color: #161F6F; color: white;">ثبت صدقه
+                            </button>
+                            <button class="btn masir-btn w-100"
+                                    style="background-color: #161F6F; color: white; display: none;"
+                                    id="unlock_form_loading">
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                در حال ثبت...
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="club_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="club_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
@@ -910,7 +938,7 @@
                                                                   onsubmit="activity_{{ x.id }}_form_click()">
                                                                 {% csrf_token %}
                                                                 <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب
-                                                                    قالب
+                                                                    دشواری
                                                                 </div>
                                                                 <select name="activity_{{ x.id }}_template"
                                                                         class="form-select masir-form-control text-center"
@@ -939,24 +967,56 @@
 
                                                                     </div>
                                                                     <div class="flex col-6">
-                                                                        {% for t in x.get_activity_templates %}
-                                                                            <div class="d-flex end-0 justify-content-between align-items-center">
-                                                                                <span class="col-lg-6 col-12 btn btn-primary d-inline-block"
-                                                                                      tabindex="0"
-                                                                                      data-bs-toggle="popover"
-                                                                                      data-bs-placement="top"
-                                                                                      style="margin-top:1vh; margin-right: auto; margin-left: auto"
-                                                                                      data-bs-content="{{ t.info }}">
-                                                                                    {{ t.title }}
-                                                                                </span>
-                                                                            </div>
+                                                                        {% for t in x.template.all %}
+                                                                            {% if t in user.user_detail.groups.all.first.unlocked.all %}
+                                                                                <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                                    <span class="col-lg-6 col-10 btn btn-success d-inline-block"
+                                                                                          tabindex="0"
+                                                                                          data-bs-toggle="popover"
+                                                                                          data-bs-placement="top"
+                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto"
+                                                                                          data-bs-content="{{ t.info }}">
+                                                                                        {{ t.title }}
+                                                                                    </span>
+                                                                                    <div class="col-2">
+                                                                                        <svg viewBox="0 0 24 24"
+                                                                                             width="30px"
+                                                                                             height="30px">
+                                                                                            <path d="M 12 0 C 8.699219 0 6 2.699219 6 6 L 6 8 L 8 8 L 8 6 C 8 3.78125 9.78125 2 12 2 C 14.21875 2 16 3.78125 16 6 L 16 11 L 3 11 L 3 24 L 21 24 L 21 11 L 18 11 L 18 6 C 18 2.699219 15.300781 0 12 0 Z"/>
+                                                                                        </svg>
+                                                                                    </div>
+                                                                                </div>
+                                                                            {% else %}
+                                                                                <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                                    <span class="col-lg-6 col-10 btn btn-danger d-inline-block disabled"
+                                                                                          tabindex="0"
+                                                                                          data-bs-toggle="popover"
+                                                                                          data-bs-placement="top"
+                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto"
+                                                                                          data-bs-content="{{ t.info }}">
+                                                                                        {{ t.title }}
+                                                                                    </span>
+                                                                                    <a class="col-2 masir-jelly"
+                                                                                          data-bs-toggle="modal" href="#unlock_modal" role="button"
+                                                                                          style="margin-top:1vh; display: block"
+                                                                                          data-bs-content="<button class='btn btn-primary'>salam</button>">
+                                                                                        <svg viewBox="0 0 30 30"
+                                                                                             width="30px" fill="red"
+                                                                                             height="30px">
+                                                                                            <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"/>
+                                                                                        </svg>
+                                                                                    </a>
+                                                                                </div>
+
+
+
+                                                                            {% endif %}
 
                                                                         {% endfor %}
 
                                                                     </div>
 
                                                                 </div>
-
 
                                                                 <div class="mb-1 mt-2" style="font-weight: 700;">لینک
                                                                     فایل
