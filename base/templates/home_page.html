@@ -1088,7 +1088,7 @@
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar"
-                             style="display: block; width: max-content; background-color: gray; margin-right: auto;margin-left: auto; margin-top: 6vh; border-radius: 10%">
+                             style="display: block; width: max-content; margin-right: auto;margin-left: auto; margin-top: 6vh; border-radius: 10%">
                             {% for x in user.user_detail.groups.all.first.discovered.all %}
                                 {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main and  x.if_long %}
                                     <div class=" d-flex justify-content-center align-items-center"
