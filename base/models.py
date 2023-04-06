@@ -366,6 +366,9 @@ class Activity_Template(models.Model):
     max_power = models.IntegerField(default=0, verbose_name='حداکثر توان قابل کسب')
     max_food = models.IntegerField(default=0, verbose_name='حداکثر آذوقه قابل کسب')
 
+    info = models.TextField(null=True, blank=True, default='', verbose_name='شرح')
+
+
     def __str__(self):
         return (self.title)
 
@@ -386,10 +389,6 @@ class Activity_Topic(models.Model):
 
     main = models.BooleanField(default=False, verbose_name='فعالیت اصلی؟')
     code = models.CharField(null=True, blank=True, default='', max_length=8, verbose_name='کد اکتشاف')
-
-    level1 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 1')
-    level2 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 2')
-    level3 = models.TextField(null=True, blank=True, default='', verbose_name='سطح 3')
 
     def get_file(self):
         return (str(self.file)[4:])
@@ -430,6 +429,9 @@ class Masir_Group(models.Model):
 
     discovered = models.ManyToManyField(Activity_Topic, related_name='discoverd', blank=True,
                                         verbose_name='فعالیت های اکتشاف شده')
+    unlocked = models.ManyToManyField(Activity_Template, related_name='unlocked', blank=True,
+                                        verbose_name='فعالیت های باز شده')
+
     introduced = models.BooleanField(default=False, verbose_name='گذراندن آموزش اولیه')
 
     def goto_supergroup(self):
