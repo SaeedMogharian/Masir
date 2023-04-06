@@ -790,7 +790,7 @@
                             </div>
                             <input name="unlock_value" id="unlock_value" type="text" style="display: none"
                                    class="form-control masir-form-control text-center"
-                                   autocomplete="off" value="value" >
+                                   autocomplete="off" value="value">
                             <div class="form-check mt-3 mb-2">
                                 <input class="form-check-input" type="checkbox"
                                        required>
@@ -805,11 +805,11 @@
                                         style="background-color: #FFD700; color: black">تایید. باز میکنیم
                                 </button>
                                 <button class="btn masir-btn col-6"
-                                    style="background-color: #FFD700; color: black; display: none;"
-                                    id="unlock_form_loading">
-                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                در حال ثبت...
-                            </button>
+                                        style="background-color: #FFD700; color: black; display: none;"
+                                        id="unlock_form_loading">
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                    در حال ثبت...
+                                </button>
                                 <button type="submit" name="unlock_form_deny" id="unlock_form_deny"
                                         class="btn masir-btn col-6"
                                         style="background-color: red; color: black" aria-label="close">انصراف
@@ -921,6 +921,10 @@
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar">
+                            <a type="button" title="دانلود توضیحات ماموریت"
+                               href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
+                               style="margin-left: auto; margin-right: auto; display: block"
+                               class="btn btn-primary col-lg-6 col-md-10 col-sm-12" download="">رهنمای اکتشاف</a>
                             <form action="{% url 'home_page_link' %}" method="post" onsubmit="discover_form_click()">
                                 {% csrf_token %}
                                 <div class="h4 mb-1 mt-2" style="font-weight: 700;"> اکتشاف</div>
@@ -1133,7 +1137,8 @@
 
                                                         <form>
                                                             {% csrf_token %}
-                                                            <div class="mb-1 mt-2" style="font-weight: 700;">                                                             سطح انتخاب شده
+                                                            <div class="mb-1 mt-2" style="font-weight: 700;"> سطح انتخاب
+                                                                شده
                                                             </div>
                                                             <select name="activity_{{ x.id }}_template"
                                                                     class="form-select masir-form-control text-center"
@@ -1159,9 +1164,9 @@
 
                                                                 </div>
                                                                 <div class="flex col-6">
-                                                                        {% for t in x.topic.template.all %}
-                                                                            {% if t in user.user_detail.groups.all.first.unlocked.all %}
-                                                                                <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                    {% for t in x.topic.template.all %}
+                                                                        {% if t in user.user_detail.groups.all.first.unlocked.all %}
+                                                                            <div class="d-flex end-0 justify-content-between align-items-center">
                                                                                     <span class="col-lg-6 col-10 btn btn-success d-inline-block"
                                                                                           tabindex="0"
                                                                                           data-bs-toggle="popover"
@@ -1170,16 +1175,16 @@
                                                                                           data-bs-content="{{ t.info }}">
                                                                                         {{ t.title }}
                                                                                     </span>
-                                                                                    <div class="col-2">
-                                                                                        <svg viewBox="0 0 24 24"
-                                                                                             width="30px"
-                                                                                             height="30px">
-                                                                                            <path d="M 12 0 C 8.699219 0 6 2.699219 6 6 L 6 8 L 8 8 L 8 6 C 8 3.78125 9.78125 2 12 2 C 14.21875 2 16 3.78125 16 6 L 16 11 L 3 11 L 3 24 L 21 24 L 21 11 L 18 11 L 18 6 C 18 2.699219 15.300781 0 12 0 Z"/>
-                                                                                        </svg>
-                                                                                    </div>
+                                                                                <div class="col-2">
+                                                                                    <svg viewBox="0 0 24 24"
+                                                                                         width="30px"
+                                                                                         height="30px">
+                                                                                        <path d="M 12 0 C 8.699219 0 6 2.699219 6 6 L 6 8 L 8 8 L 8 6 C 8 3.78125 9.78125 2 12 2 C 14.21875 2 16 3.78125 16 6 L 16 11 L 3 11 L 3 24 L 21 24 L 21 11 L 18 11 L 18 6 C 18 2.699219 15.300781 0 12 0 Z"/>
+                                                                                    </svg>
                                                                                 </div>
-                                                                            {% else %}
-                                                                                <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                            </div>
+                                                                        {% else %}
+                                                                            <div class="d-flex end-0 justify-content-between align-items-center">
                                                                                     <span class="col-lg-6 col-10 btn btn-danger d-inline-block disabled"
                                                                                           tabindex="0"
                                                                                           data-bs-toggle="popover"
@@ -1188,22 +1193,22 @@
                                                                                           data-bs-content="{{ t.info }}">
                                                                                         {{ t.title }}
                                                                                     </span>
-                                                                                    <div class="col-2">
-                                                                                        <svg viewBox="0 0 30 30"
-                                                                                             width="30px" fill="red"
-                                                                                             height="30px">
-                                                                                            <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
-                                                                                        </svg>
-                                                                                    </div>
+                                                                                <div class="col-2">
+                                                                                    <svg viewBox="0 0 30 30"
+                                                                                         width="30px" fill="red"
+                                                                                         height="30px">
+                                                                                        <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
+                                                                                    </svg>
                                                                                 </div>
+                                                                            </div>
 
 
 
-                                                                            {% endif %}
+                                                                        {% endif %}
 
-                                                                        {% endfor %}
+                                                                    {% endfor %}
 
-                                                                    </div>
+                                                                </div>
 
                                                             </div>
 
@@ -1654,9 +1659,9 @@
                         <div class="mb-2 p-2 d-flex justify-content-between align-items-center"
                              style="background-color: #eeeeee;">
                             <span style="font-weight: 700; color: {{ m.color }};"> ماجرا </span>
-                            <audio controls>
+                            <video controls>
                                 <source src="{{ m.get_story }}" type="audio/mpeg">
-                            </audio>
+                            </video>
 
                         </div>
                     {% else %}
@@ -1664,9 +1669,9 @@
                         <div class="mb-2 p-2 d-flex justify-content-between align-items-center"
                              style="background-color: #eeeeee;">
                             <span style="font-weight: 700; color: {{ m.color }};"> ماجرا </span>
-                            <audio controls>
+                            <video controls>
                                 <source src="{{ m.get_story }}" type="audio/mpeg">
-                            </audio>
+                            </video>
 
                         </div>
                         {% comment %} قابل انجام ها {% endcomment %}
@@ -1930,14 +1935,14 @@
                     {% if x.id not in user.user_detail.groups.all.first.is_acted %}
                         modalText1.innerHTML = " شما تا به حال هیچ یک از سطوح ماموریت « {{ x.title }} » را باز نکرده اید. ";
                         modalText2.innerHTML = "تنها میتوانید یک سطح دشواری از هر ماموریت را انجام دهید. انتخاب شما سطح « {{ t.title }} » است ";
-                        modalInput.value= "{{ t.id }}"
+                        modalInput.value = "{{ t.id }}"
                     {% else %}
                         modalText1.innerHTML = "شما پیش از این یکی از سطوح دیگر را باز کرده اید ";
                         modalText2.innerHTML = "در صورت تایید باز کردن سطح « {{ t.title }} » مقدار 5 واحد آذوقه از گروه شما کسر میشود ";
-                        modalInput.value="{{ t.id }}"
+                        modalInput.value = "{{ t.id }}"
                     {% endif %}
                 }
-                {% endfor %}
+            {% endfor %}
         {% endfor %}
     </script>
 

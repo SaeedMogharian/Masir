@@ -248,6 +248,8 @@ class Manzel(models.Model):
     food_for_next_manzel = models.IntegerField(default=0, verbose_name='آذوقه مورد نیاز برای رسیدن به منزل بعدی')
     power_for_next_manzel = models.IntegerField(default=0, verbose_name='توان مورد نیاز برای رسیدن به منزل بعدی')
 
+    discover_help = models.FileField(null=True, blank=True, upload_to='base/static/manzel/', verbose_name='فایل رهنمای اکتشاف')
+
     def is_first(self):
         if self.id == 1:
             return True
@@ -258,6 +260,9 @@ class Manzel(models.Model):
 
     def get_image(self):
         return (str(self.back_image)[4:])
+
+    def get_discover_help(self):
+        return (str(self.discover_help)[4:])
 
     def __str__(self):
         return (self.number + ' | ' + self.title)
