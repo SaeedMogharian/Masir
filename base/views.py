@@ -125,8 +125,8 @@ def landing_page(request):
                             'landing_page.html',
                             {
                                 'MESSAGE': str(user.user_detail)
-                                            +' عزیز! '
-                                            + 'گروه شما با موفقیت'
+                                           + ' عزیز! '
+                                           + 'گروه شما با موفقیت'
                                            + ' ثبت شده است.'
                                            + '<br>'
                                            + 'چند نکته مهم:'
@@ -730,7 +730,8 @@ def home_page(request):
                                         'reports': Report.objects.filter(group=user.groups.all().first()).order_by(
                                             '-id'),
                                         'FAQ': FAQ.objects.filter(is_active=True),
-                                        'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                                        'achivements': Achivement.objects.filter(
+                                            manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                                         'exam': Exam.objects.filter(active=True).first(),
                                         'MESSAGE': 'شما قبلا یک فایل در باشگاه ارسال کرده‌اید.'
                                     }
@@ -768,7 +769,8 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان صدقه از میزان آذوقه گروه بیشتر است.'
                         }
@@ -884,7 +886,8 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'گروه شما قبلا یکبار در این آزمون شرکت کرده است.'
                         }
@@ -985,7 +988,8 @@ def home_page(request):
                                     'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
-                                    'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                                    'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                        code__contains='Mnz'),
                                     'exam': Exam.objects.filter(active=True).first(),
                                     'MESSAGE': 'آفرین! اکتشاف شما موفق بود! <br> ماموریت مخفی «' + x.title + '» به گروه شما اضافه شد'
                                 }
@@ -1002,7 +1006,8 @@ def home_page(request):
                                     'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
-                                    'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                                    'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                        code__contains='Mnz'),
 
                                     'exam': Exam.objects.filter(active=True).first(),
                                     'MESSAGE': 'این ماموریت مخفی را قبلا پیدا کرده اید. دوباره تلاش کنید! '
@@ -1019,7 +1024,8 @@ def home_page(request):
                         'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                         'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                         'FAQ': FAQ.objects.filter(is_active=True),
-                        'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                        'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                            code__contains='Mnz'),
                         'exam': Exam.objects.filter(active=True).first(),
                         'MESSAGE': 'متاسفانه اکتشاف موفق نبود!<br> بیشتر تلاش کنید '
                     }
@@ -1045,7 +1051,8 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'شما قبلا این سطح را بازگشایی کرده اید.'
                         }
@@ -1065,7 +1072,8 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان آذوقه شما کافی نمی باشد'
                         }
@@ -1094,7 +1102,8 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'شما قبلا این مرحله را گذرانده اید'
                         }
@@ -1123,30 +1132,34 @@ def home_page(request):
                                 'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                 'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                 'FAQ': FAQ.objects.filter(is_active=True),
-                                'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
+                                'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                    code__contains='Mnz'),
                                 'exam': Exam.objects.filter(active=True).first(),
                                 'MESSAGE': 'گروه شما قبلا یکبار این ماموریت را انجام داده است.'
                             }
                         )
                     )
-                if x not in user.groups.all().first().unlocked.all():
-                    return (
-                        render(
-                            request,
-                            'home_page.html',
-                            {
-                                'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                    'right'),
-                                'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
-                                'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
-                                'FAQ': FAQ.objects.filter(is_active=True),
-                                'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
-                                    code__contains='Mnz'),
-                                'exam': Exam.objects.filter(active=True).first(),
-                                'MESSAGE': 'شما به این فعالیت دسترسی ندارید'
-                            }
+                if x in user.groups.all().first().get_side_activities():
+                    template = Activity_Template.objects.filter(
+                        id=int(request.POST['activity_' + str(x.id) + '_template'])).first()
+                    if template not in user.groups.all().first().unlocked.all():
+                        return (
+                            render(
+                                request,
+                                'home_page.html',
+                                {
+                                    'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
+                                        'right'),
+                                    'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
+                                    'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
+                                    'FAQ': FAQ.objects.filter(is_active=True),
+                                    'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                        code__contains='Mnz'),
+                                    'exam': Exam.objects.filter(active=True).first(),
+                                    'MESSAGE': 'شما به این فعالیت دسترسی ندارید'
+                                }
+                            )
                         )
-                    )
                 if 'activity_' + str(x.id) + '_template' in request.POST:
                     Activity.objects.create(
                         topic=x,
@@ -1421,7 +1434,8 @@ def home_page(request):
                 set_masir_group_and_achivement_rel(
                     x.group,
                     Achivement.objects.get(
-                        code=ACTIVITIES[x.topic.co_title] + '0'+ str(int(x.template.type)) + '0'+str(round(x.get_score()))),
+                        code=ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0' + str(
+                            round(x.get_score()))),
                     (4 - int(x.template.type)) * x.get_score()
                 )
 

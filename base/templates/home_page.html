@@ -735,7 +735,8 @@
                                     از میزان صدقه مطمئن هستیم.
                                 </label>
                             </div>
-                            <button type="submit" name="charity_form" id="charity_form" class="btn masir-btn col-lg-6 col-md-6 col-12"
+                            <button type="submit" name="charity_form" id="charity_form"
+                                    class="btn masir-btn col-lg-6 col-md-6 col-12"
                                     style="background-color: #161F6F; color: white;">ثبت صدقه
                             </button>
                             <button class="btn masir-btn col-lg-6 col-md-6 col-12"
@@ -873,7 +874,8 @@
                                     از فایل ارسالی و محدوده آیات مطمئن هستم.
                                 </label>
                             </div>
-                            <button type="submit" name="club_form" id="club_form" class="btn masir-btn col-lg-6 col-md-6 col-12"
+                            <button type="submit" name="club_form" id="club_form"
+                                    class="btn masir-btn col-lg-6 col-md-6 col-12"
                                     style="background-color: #794a1e; color: white">ثبت قرائت
                             </button>
                             <button class="btn masir-btn col-lg-6 col-md-6 col-12"
@@ -908,7 +910,9 @@
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar">
-                            <div class="h4 mt-1" style="font-weight: 700; text-align: center"> منزل «{{ user.user_detail.groups.all.first.get_manzel.title }} »</div>
+                            <div class="h4 mt-1" style="font-weight: 700; text-align: center"> منزل
+                                «{{ user.user_detail.groups.all.first.get_manzel.title }} »
+                            </div>
                             <a type="button" title="رهنمای اکتشاف"
                                href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
                                style="background-color: #610909; border: 2px #610909 solid; color: white;"
@@ -934,8 +938,8 @@
                                     بررسی
                                     کد
                                 </button>
-                                <button class="btn masir-btn mt-2 col-2"
-                                        style="margin-left:0; background-color: #0A958E; display: none;"
+                                <button class="btn masir-btn mt-2"
+                                        style="margin-left:0; background-color: #b50000; border: 2px #610909 solid; color: white; display: none;"
                                         id="discover_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
                                               aria-hidden="true"></span>
@@ -1028,10 +1032,7 @@
                                                                                 <div class="d-flex end-0 justify-content-between align-items-center">
                                                                                     <span class="col-lg-6 col-10 btn btn-danger d-inline-block disabled"
                                                                                           tabindex="0"
-                                                                                          data-bs-toggle="popover"
-                                                                                          data-bs-placement="top"
-                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto"
-                                                                                          data-bs-content="{{ t.info }}">
+                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto">
                                                                                         {{ t.title }}
                                                                                     </span>
                                                                                     <a class="col-2 masir-jelly"
@@ -1268,6 +1269,18 @@
                         </div>
                         <div class="modal-body scroll-without-scrollbar"
                              style="display: block; margin-right: auto;margin-left: auto; margin-top: 6vh; border-radius: 3rem">
+                            <div class="masir-paragraph-1" style="font-weight: 600">
+                                تاریکی بخشهایی از جامعه ما را فراگرفته است...<br>
+                                ماموریت شما این است که نسبت به مشکلات بی تفاوت نباشید و به عنوان نخبگان جوان این سرزمین به پا خیزید و پس
+                                از تفکر و هم‌اندیشی در محیط زندگی خود تحول بیافرینید.<br>
+                                باید بدانید که در این مسیر خطیر به تنهایی نمی توانید تاثیر زیادی داشته باشید و لازم است همراه با دوستان خود و کسب آگاهی و
+                                دانش کافی به سمت اهدافتان حرکت کنید. امکان دارد در میانه ی مسیر دچار خستگی و یاس شوید یا
+                                اینکه تحت تاثیر عوامل فریبنده و دلربا قرار گیرید و از هدف باز بمانید. راه چاره این است
+                                که امیدتان به یگانه قدرتمند عالم هستی باشد و تنها از خودش در این حرکت کمک بخواهید. به
+                                قول امیر مومنین و مجاهدین جمجمه تان را به خدا بسپارید، دل از تعلقات کم ارزش ببُرید و با
+                                همبستگی و یاری همدیگر برای غلبه بر تاریکی ها کوشش کنید.<br><br>
+                                در «ماموریت تحول» شما می توانید...
+                            </div>
                             {% for x in user.user_detail.groups.all.first.discovered.all %}
                                 {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main and  x.if_long %}
                                     <div class=" d-flex justify-content-center align-items-center"
@@ -1298,11 +1311,11 @@
                                         <button type="submit" name="activity_{{ x.id }}_form"
                                                 id="activity_{{ x.id }}_form"
                                                 class="btn masir-btn mt-2 col-lg-6 col-md-6 col-12"
-                                                style="background-color: #0A958E;">
+                                                style="background-color: white; border: 2px black solid; color: black">
                                             بارگذاری نهایی
                                         </button>
                                         <button class="btn masir-btn col-lg-6 col-md-6 col-12"
-                                                style="background-color: #0A958E; display: none; margin-left: auto; margin-right: auto"
+                                                style="background-color: white; border: 2px black solid; color: black; display: none;"
                                                 id="activity_{{ x.id }}_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
                                               aria-hidden="true"></span>
@@ -1415,7 +1428,8 @@
                                         </label>
                                     </div>
                                     <button type="submit" name="university_form" id="university_form"
-                                            class="btn masir-btn col-lg-6 col-md-6 col-12" style="background-color: #69ff64;">ثبت نهایی
+                                            class="btn masir-btn col-lg-6 col-md-6 col-12"
+                                            style="background-color: #69ff64;">ثبت نهایی
                                         پاسخ‌ها
                                     </button>
                                     <button class="btn masir-btn col-lg-6 col-md-6 col-12"
@@ -1619,7 +1633,7 @@
                         <div class="h4" style="font-weight: 700;">شروع مسیر</div>
                         <iframe src="https://www.aparat.com/video/video/embed/videohash/lEFR2/vt/frame"
                                 allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
-                                style="width: 100%; height: 50vh; margin: a"></iframe>
+                                style="width: 100%; height: 50vh;"></iframe>
                         {% if m.is_first %}
                             <form action="{% url 'home_page_link' %}" method="post"
                                   onsubmit="introduction_form_click()"
@@ -1657,22 +1671,23 @@
                         {% endif %}
                     {% elif m.id >= 6 %}
                         {% comment %} ماجرا {% endcomment %}
+                        <div style="font-weight: 700">ماجرا</div>
                         <div class="mb-2 p-2 d-flex justify-content-between align-items-center"
                              style="background-color: #eeeeee;">
-                            <span style="font-weight: 700; color: {{ m.color }};"> ماجرا </span>
-                            <video controls>
-                                <source src="{{ m.get_story }}" type="audio/mpeg">
-                            </video>
+                            <iframe src="{{ m.get_story }}" title="ماجرا"
+                                    allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
+                                    style="width: 100%; height: 50vh;"></iframe>
 
                         </div>
                     {% else %}
                         {% comment %} ماجرا {% endcomment %}
-                        <div class="mb-2 p-2 d-flex justify-content-between align-items-center"
-                             style="background-color: #eeeeee;">
-                            <span style="font-weight: 700; color: {{ m.color }};"> ماجرا </span>
-                            <video controls>
-                                <source src="{{ m.get_story }}" type="audio/mpeg">
-                            </video>
+                        <div class="mb-2 p-2 flex justify-content-between align-items-center"
+                             style="background-color: transparent;">
+                            <div class="h5" style="font-weight: 700; color: {{ m.color }}">ماجرا</div>
+                            <iframe src="{{ m.get_story }}" title="ماجرا"
+                                    allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
+                                    name='ماجرا'
+                                    style="width: 100%; height: 50vh;"></iframe>
 
                         </div>
                         {% comment %} قابل انجام ها {% endcomment %}
@@ -1915,11 +1930,16 @@
             }
 
             function activity_{{x.id}}_template_change(sender) {
-                {% for t in x.get_activity_templates %}
+                {% for t in x.template.all %}
                     if (sender.value == {{t.id}}) {
-                        document.getElementById("activity_{{x.id}}_template_type").innerHTML = "{{t.type}}";
+                        document.getElementById("activity_{{x.id}}_template_type").innerHTML = "{{t.get_type_display}}";
                         document.getElementById("activity_{{x.id}}_template_max_power").innerHTML = "{{t.max_power}}";
                         document.getElementById("activity_{{x.id}}_template_max_food").innerHTML = "{{t.max_food}}";
+                        {% if x in user.user_detail.groups.all.first.get_side_activities and t not in user.user_detail.groups.all.first.unlocked.all %}
+                            document.getElementById("activity_{{ x.id }}_form").disabled = true;
+                        {% else %}
+                            document.getElementById("activity_{{ x.id }}_form").disabled = false;
+                        {% endif %}
                     }
                 {% endfor %}
             }
@@ -1947,6 +1967,22 @@
         {% endfor %}
     </script>
 
+    <script>
+        jQuery(function ($) {
+            $("[data-bs-toggle='popover']").popover({trigger: "click"}).click(function (event) {
+                event.stopPropagation();
+
+            }).on('inserted.bs.popover', function () {
+                $(".popover").click(function (event) {
+                    event.stopPropagation();
+                })
+            })
+
+            $(document).click(function () {
+                $("[data-bs-toggle='popover']").popover('hide')
+            })
+        })
+    </script>
     {% if MESSAGE %}
         <script>
             function show_message() {
