@@ -56,11 +56,13 @@ audio::-webkit-media-controls-panel {
     /*font-size: larger;*/
     padding: min(0.5vh, 0.5vw) min(0.5vh, 0.5vw) min(0.5vh, 0.5vw) min(0.5vh, 0.5vw);
 }
+
 @media screen and (max-width: 768px) {
     .masir-icon-pack span {
-    font-size: small;
+        font-size: small;
+    }
 }
-}
+
 @media screen and (max-width: 425px) {
     .masir-icon-pack span {
         font-size: x-small;
@@ -119,10 +121,12 @@ audio::-webkit-media-controls-panel {
     align-items: center;
     justify-content: center;
 }
+
 .masir-map-icon-1 .masir-map-icon-pin-icon svg {
     height: 3rem;
     width: 3rem;
 }
+
 @media screen and (max-width: 1300px) {
     .masir-circle-button-1 {
         height: 2em;
@@ -139,15 +143,17 @@ audio::-webkit-media-controls-panel {
         width: 3.5em;
     }
 
-    .masir-circle-icon-3{
+    .masir-circle-icon-3 {
         height: 4em;
         width: 4em;
     }
-    .masir-map-icon-pin-icon svg{
+
+    .masir-map-icon-pin-icon svg {
         height: 2.5rem !important;
         width: 2.5rem !important;
     }
 }
+
 @media screen and (max-width: 768px) {
     .masir-circle-button-1 {
         height: 1.5em;
@@ -164,15 +170,17 @@ audio::-webkit-media-controls-panel {
         width: 3em;
     }
 
-    .masir-circle-icon-3{
+    .masir-circle-icon-3 {
         height: 3em;
         width: 3em;
     }
-    .masir-map-icon-pin-icon svg{
+
+    .masir-map-icon-pin-icon svg {
         height: 2.25rem !important;
         width: 2.25rem !important;
     }
 }
+
 @media screen and (max-width: 320px) {
     .masir-circle-button-1 {
         height: 1.25em;
@@ -193,7 +201,8 @@ audio::-webkit-media-controls-panel {
         height: 3em;
         width: 3em;
     }
-    .masir-map-icon-pin-icon svg{
+
+    .masir-map-icon-pin-icon svg {
         height: 2rem !important;
         width: 2rem !important;
     }
@@ -253,27 +262,32 @@ audio::-webkit-media-controls-panel {
     opacity: 1;
     filter: brightness(66%);
 }
+
 .masir-map-icon-1 .masir-map-icon-popup div {
     font-weight: 700;
 }
+
 .masir-map-icon-1 .masir-map-icon-popup div svg {
     width: 5vh;
 }
+
 .masir-map-icon-1 .masir-map-icon-popup form label {
     font-size: x-small;
 }
 
 @media screen and (max-width: 1024px) {
-    .masir-map-icon-1 .masir-map-icon-popup div{
+    .masir-map-icon-1 .masir-map-icon-popup div {
         font-size: xx-small;
     }
+
     .masir-map-icon-1 .masir-map-icon-popup div svg {
-    width: 3vh;
-}
+        width: 3vh;
+    }
+
     .masir-map-icon-1 .masir-map-icon-popup form label {
-    font-size: x-small;
-}
-    
+        font-size: x-small;
+    }
+
 }
 
 
@@ -294,27 +308,33 @@ audio::-webkit-media-controls-panel {
     padding: 0 0.25rem;
     width: fit-content;
 }
-@media screen and (max-width: 1130px){
-    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number{
+
+@media screen and (max-width: 1130px) {
+    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number {
         font-size: small;
     }
-    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name{
+
+    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name {
         font-size: large;
     }
 }
-@media screen and (max-width: 930px){
-    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number{
+
+@media screen and (max-width: 930px) {
+    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number {
         font-size: x-small;
     }
-    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name{
+
+    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name {
         font-size: small;
     }
 }
-@media screen and (max-width: 425px){
-    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number{
+
+@media screen and (max-width: 425px) {
+    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-number {
         font-size: xx-small;
     }
-    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name{
+
+    .masir-map-icon-1 .masir-map-icon-title .masir-map-icon-title-name {
         font-size: x-small;
     }
 }
@@ -388,13 +408,18 @@ audio::-webkit-media-controls-panel {
 
 .masir-btn {
     border-radius: 2rem !important;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     font-weight: 700;
 }
+
 @media screen and (max-width: 769px) {
     .masir-map-icon-popup .masir-btn {
         font-size: small;
     }
 }
+
 @media screen and (max-width: 426px) {
     .masir-map-icon-popup .masir-btn {
         font-size: xx-small;
@@ -415,13 +440,15 @@ audio::-webkit-media-controls-panel {
     width: 100%;
 }
 
-.masir-button-oval{
-    display: block;
-    margin-top: 10vh;
-    width: 22.8vh;
-    height: 4vh;
-    background: #FBA02A;
-    border-radius: 72px;
-    padding: 2vh;
+
+.modal-content {
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+@media screen and (min-width: 1024px) {
+    .modal-content {
+        width: 75% !important;
+    }
 
 }
