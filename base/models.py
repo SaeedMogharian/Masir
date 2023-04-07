@@ -929,7 +929,7 @@ class Masir_Group(models.Model):
         return ([x.topic for x in self.activities.exclude(state='6')])
 
     def get_supergroupmates(self):
-        SGT = [{'title': x.title, 'light': x.get_light(), 'manzel': x.manzel} for x in
+        SGT = [{'title': x.title, 'light': x.get_light(), 'manzel': x.get_manzel().number} for x in
                Masir_Group.objects.filter(supergroup=self.supergroup)]
         SGT.sort(key=lambda x: x.get('light'), reverse=True)
         return (SGT)
