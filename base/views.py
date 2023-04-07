@@ -658,6 +658,7 @@ def forgot_password_page(request):
 
 def home_page(request):
     user = select_user(request.user)
+
     if not user:
         return (redirect('landing_page_link'))
     if not user.groups.all().first() and user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):

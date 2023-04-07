@@ -502,6 +502,7 @@ class Masir_Group(models.Model):
     def add_mains_to_all(self):
         for g in Masir_Group.objects.all():
             g.add_mains()
+            g.save()
 
     def get_all_charities(self):
         c = 0.0
