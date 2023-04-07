@@ -248,7 +248,8 @@ class Manzel(models.Model):
     food_for_next_manzel = models.IntegerField(default=0, verbose_name='آذوقه مورد نیاز برای رسیدن به منزل بعدی')
     power_for_next_manzel = models.IntegerField(default=0, verbose_name='توان مورد نیاز برای رسیدن به منزل بعدی')
 
-    discover_help = models.FileField(null=True, blank=True, upload_to='base/static/manzel/', verbose_name='فایل رهنمای اکتشاف')
+    discover_help = models.FileField(null=True, blank=True, upload_to='base/static/manzel/',
+                                     verbose_name='فایل رهنمای اکتشاف')
 
     def is_first(self):
         if self.id == 1:
@@ -363,6 +364,29 @@ class Exam(models.Model):
     class Meta:
         verbose_name = 'آزمون'
         verbose_name_plural = 'آزمون‌های دانشگاه'
+
+
+class Event(models.Model):
+    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='نام آزمون')
+    active = models.BooleanField(default=False, verbose_name='فعال')
+    Q = models.TextField(default='پرسش پیش‌فرض', max_length=5000, verbose_name='متن پرسش')
+    O1 = models.TextField(default='پاسخ پیش‌فرض', max_length=5000, verbose_name='گزینه 1')
+    O2 = models.TextField(default='پاسخ پیش‌فرض', max_length=5000, verbose_name='گزینه 2')
+    O3 = models.TextField(default='پاسخ پیش‌فرض', max_length=5000, verbose_name='گزینه 3')
+    O4 = models.TextField(default='پاسخ پیش‌فرض', max_length=5000, verbose_name='گزینه 4')
+    A = models.IntegerField(default=1, verbose_name='گزینه صحیح')
+
+    def get_key(self):
+        return self.A
+
+    def __str__(self):
+        if self.active:
+            return ('>> ' + str(self.title))
+        return (str(self.title))
+
+    class Meta:
+        verbose_name = 'فراخوان'
+        verbose_name_plural = 'فراخوان ها'
 
 
 class Activity_Template(models.Model):
@@ -511,7 +535,6 @@ class Masir_Group(models.Model):
                 f -= 10
             elif len(a) >= 2:
                 f -= 5
-
 
         return int(f * 100) / 100
 
