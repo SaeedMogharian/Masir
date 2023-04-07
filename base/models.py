@@ -476,7 +476,7 @@ class Masir_Group(models.Model):
         return y
 
     def goto_supergroup(self):
-        a = Masir_Group.objects.all().order_by('id')[-1]
+        a = list(Masir_Group.objects.all().order_by('id'))[-1]
         if len(a.get_supergroupmates()) < 6:
             self.supergroup = a.supergroup
         else:
