@@ -407,7 +407,7 @@ audio::-webkit-media-controls-panel {
 }
 
 .masir-btn {
-    border-radius: 2rem !important;
+    border-radius: 2rem;
     margin-left: auto;
     margin-right: auto;
     display: block;

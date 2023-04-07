@@ -890,45 +890,47 @@
 
         <div class="modal fade" id="discover_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="discover_modal_Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-            <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
-                <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
-                   role="button"></a>
-                <div class="modal-body scroll-without-scrollbar">
-                    <div class="position-relative px-5 masir-modal-header">
-                        <div class="position-absolute top-50 start-50 translate-middle d-flex"
-                             style="height: max-content;">
-                            <div class="masir-circle-icon-3"
-                                 style="background-color: #ffb1c9; color: #5a0200; border: 2px #610909 solid;">
-                                <svg viewBox="0 0 20 20" fill="none">
-                                    <path fill="currentColor"
-                                          d="m17.545 15.467l-3.779-3.779a6.15 6.15 0 0 0 .898-3.21c0-3.417-2.961-6.377-6.378-6.377A6.185 6.185 0 0 0 2.1 8.287c0 3.416 2.961 6.377 6.377 6.377a6.15 6.15 0 0 0 3.115-.844l3.799 3.801a.953.953 0 0 0 1.346 0l.943-.943c.371-.371.236-.84-.135-1.211zM4.004 8.287a4.282 4.282 0 0 1 4.282-4.283c2.366 0 4.474 2.107 4.474 4.474a4.284 4.284 0 0 1-4.283 4.283c-2.366-.001-4.473-2.109-4.473-4.474z"/>
-                                </svg>
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                    <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
+                       role="button"></a>
+                    <div class="modal-body scroll-without-scrollbar">
+                        <div class="position-relative px-5 masir-modal-header">
+                            <div class="position-absolute top-50 start-50 translate-middle d-flex"
+                                 style="height: max-content;">
+                                <div class="masir-circle-icon-3"
+                                     style="background-color: #ffb1c9; color: #5a0200; border: 2px #610909 solid;">
+                                    <svg viewBox="0 0 20 20" fill="none">
+                                        <path fill="currentColor"
+                                              d="m17.545 15.467l-3.779-3.779a6.15 6.15 0 0 0 .898-3.21c0-3.417-2.961-6.377-6.378-6.377A6.185 6.185 0 0 0 2.1 8.287c0 3.416 2.961 6.377 6.377 6.377a6.15 6.15 0 0 0 3.115-.844l3.799 3.801a.953.953 0 0 0 1.346 0l.943-.943c.371-.371.236-.84-.135-1.211zM4.004 8.287a4.282 4.282 0 0 1 4.282-4.283c2.366 0 4.474 2.107 4.474 4.474a4.284 4.284 0 0 1-4.283 4.283c-2.366-.001-4.473-2.109-4.473-4.474z"/>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-body scroll-without-scrollbar">
-                        <a type="button" title="رهنمای اشکتشاف"
-                           href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
-                           style="background-color: #610909; border: 2px #610909 solid; color: white;"
-                           class="btn btn-primary masir-btn col-lg-6 col-md-10 col-sm-12" download="">رهنمای اکتشاف</a>
-                        <div action="{% url 'home_page_link' %}" method="post" onsubmit="discover_form_click()">
-                            {% csrf_token %}
-                            <div class="h4 mb-1 mt-2" style="font-weight: 700;"> اکتشاف</div>
-                            <input name="discover_code" type="text"
-                                   class="form-control masir-form-control text-center" autocomplete="off" required>
-                            <button type="submit" name="discover_form" id="discover_form"
-                                    class="btn masir-btn mt-2 col-lg-2"
-                                    style="margin-left:0; background-color: #b50000; border: 2px #610909 solid; color: white;"> بررسی
-                                کد
-                            </button>
-                            <button class="btn masir-btn mt-2 col-2"
-                                    style="margin-left:0; background-color: #0A958E; display: none;"
-                                    id="discover_form_loading">
+                        <div class="modal-body scroll-without-scrollbar">
+                            <a type="button" title="رهنمای اشکتشاف"
+                               href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
+                               style="background-color: #610909; border: 2px #610909 solid; color: white;"
+                               class="btn btn-primary masir-btn col-lg-6 col-md-10 col-sm-12" download="">رهنمای
+                                اکتشاف</a>
+                            <form action="{% url 'home_page_link' %}" method="post" onsubmit="discover_form_click()">
+                                {% csrf_token %}
+                                <div class="h4 mb-1 mt-2" style="font-weight: 700;"> اکتشاف</div>
+                                <input name="discover_code" type="text"
+                                       class="form-control masir-form-control text-center" autocomplete="off" required>
+                                <button type="submit" name="discover_form" id="discover_form"
+                                        class="btn masir-btn mt-2 col-lg-2"
+                                        style="margin-left:0; background-color: #b50000; border: 2px #610909 solid; color: white;">
+                                    بررسی
+                                    کد
+                                </button>
+                                <button class="btn masir-btn mt-2 col-2"
+                                        style="margin-left:0; background-color: #0A958E; display: none;"
+                                        id="discover_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
                                               aria-hidden="true"></span>
-                                در حال بررسی...
-                            </button>
+                                    در حال بررسی...
+                                </button>
 
                             </form>
                             {% for m in manazel %}
@@ -940,7 +942,7 @@
                                                 <h3 id="H{{ x.id }}">
                                                     <button class="accordion-button collapsed masir-btn" type="button"
                                                             data-bs-toggle="collapse"
-                                                            style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }};"
+                                                            style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }};  border-radius: 0!important; display: flex"
                                                             data-bs-target="#S{{ x.id }}" aria-expanded="false"
                                                             aria-controls="S{{ x.id }}">
                                                         {{ x.title }}
@@ -1104,7 +1106,7 @@
                                             <h3 id="H{{ x.id }}">
                                                 <button class="accordion-button collapsed masir-btn" type="button"
                                                         data-bs-toggle="collapse"
-                                                        style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }};"
+                                                        style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }}; border-radius: 0!important; display: flex"
                                                         data-bs-target="#S{{ x.id }}" aria-expanded="false"
                                                         aria-controls="S{{ x.id }}">
                                                     {{ x.topic.title }}
@@ -1232,10 +1234,9 @@
 
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
-        </div>
         </div>
         <div class="modal fade" id="longterm_activity_modal" data-bs-backdrop="static" data-bs-keyboard="false"
              tabindex="-1"
@@ -1834,117 +1835,117 @@
             </div>
         {% endif %}
     {% endblock %}
-    </div>
+</div>
 
-    {% block scriptblock %}
-        <!-- Bootstrap -->
-        <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+{% block scriptblock %}
+    <!-- Bootstrap -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-        <script type="text/javascript">
-            var map = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"]
-            document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function ($0) {
-                return map[$0]
-            });
-        </script>
+    <script type="text/javascript">
+        var map = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"]
+        document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function ($0) {
+            return map[$0]
+        });
+    </script>
 
-        <script>
-            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                return new bootstrap.Popover(popoverTriggerEl)
-            })
-        </script>
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
 
-        <script>
-            function clear_alarm_class(sender) {
-                sender.classList.remove("alarm");
+    <script>
+        function clear_alarm_class(sender) {
+            sender.classList.remove("alarm");
+        }
+    </script>
+
+    <script>
+        function next_level_form_click() {
+            document.getElementById('next_level_form').style.display = 'none';
+            document.getElementById('next_level_form_loading').style.display = 'block';
+        }
+
+        function charity_form_click() {
+            document.getElementById('charity_form').style.display = 'none';
+            document.getElementById('charity_form_loading').style.display = 'block';
+        }
+
+        function discover_form_click() {
+            document.getElementById('discover_form').style.display = 'none';
+            document.getElementById('discover_form_loading').style.display = 'block';
+        }
+
+        function introduction_form_click() {
+            document.getElementById('introduction_form').style.display = 'none';
+            document.getElementById('introduction_form_loading').style.display = 'block';
+        }
+
+        function club_form_click() {
+            document.getElementById('club_form').style.display = 'none';
+            document.getElementById('club_form_loading').style.display = 'block';
+        }
+
+        function university_form_click() {
+            document.getElementById('university_form').style.display = 'none';
+            document.getElementById('university_form_loading').style.display = 'block';
+        }
+
+        function unlock_form_click() {
+            document.getElementById('unlock_form').style.display = 'none';
+            document.getElementById('unlock_form_loading').style.display = 'block';
+        }
+
+        {% for x in user.user_detail.groups.all.first.get_manzel.activity_topics.all %}
+            function activity_{{x.id}}_form_click() {
+                document.getElementById('activity_{{x.id}}_form').style.display = 'none';
+                document.getElementById('activity_{{x.id}}_form_loading').style.display = 'block';
             }
-        </script>
 
-        <script>
-            function next_level_form_click() {
-                document.getElementById('next_level_form').style.display = 'none';
-                document.getElementById('next_level_form_loading').style.display = 'block';
-            }
-
-            function charity_form_click() {
-                document.getElementById('charity_form').style.display = 'none';
-                document.getElementById('charity_form_loading').style.display = 'block';
-            }
-
-            function discover_form_click() {
-                document.getElementById('discover_form').style.display = 'none';
-                document.getElementById('discover_form_loading').style.display = 'block';
-            }
-
-            function introduction_form_click() {
-                document.getElementById('introduction_form').style.display = 'none';
-                document.getElementById('introduction_form_loading').style.display = 'block';
-            }
-
-            function club_form_click() {
-                document.getElementById('club_form').style.display = 'none';
-                document.getElementById('club_form_loading').style.display = 'block';
-            }
-
-            function university_form_click() {
-                document.getElementById('university_form').style.display = 'none';
-                document.getElementById('university_form_loading').style.display = 'block';
-            }
-
-            function unlock_form_click() {
-                document.getElementById('unlock_form').style.display = 'none';
-                document.getElementById('unlock_form_loading').style.display = 'block';
-            }
-
-            {% for x in user.user_detail.groups.all.first.get_manzel.activity_topics.all %}
-                function activity_{{x.id}}_form_click() {
-                    document.getElementById('activity_{{x.id}}_form').style.display = 'none';
-                    document.getElementById('activity_{{x.id}}_form_loading').style.display = 'block';
-                }
-
-                function activity_{{x.id}}_template_change(sender) {
-                    {% for t in x.get_activity_templates %}
-                        if (sender.value == {{t.id}}) {
-                            document.getElementById("activity_{{x.id}}_template_type").innerHTML = "{{t.type}}";
-                            document.getElementById("activity_{{x.id}}_template_max_power").innerHTML = "{{t.max_power}}";
-                            document.getElementById("activity_{{x.id}}_template_max_food").innerHTML = "{{t.max_food}}";
-                        }
-                    {% endfor %}
-                }
-            {% endfor %}
-        </script>
-
-        <script>
-            {%  for x in user.user_detail.groups.all.first.get_manzel.activity_topics.all %}
+            function activity_{{x.id}}_template_change(sender) {
                 {% for t in x.get_activity_templates %}
-                    function unlock_{{ x.id }}_{{ t.id }}_passValueToModal() {
-                        const modalText1 = document.getElementById('first_unlock_text');
-                        const modalText2 = document.getElementById('second_unlock_text');
-                        const modalInput = document.getElementById('unlock_value');
-                        {% if x.id not in user.user_detail.groups.all.first.is_acted %}
-                            modalText1.innerHTML = " شما تا به حال هیچ یک از سطوح ماموریت « {{ x.title }} » را باز نکرده اید. ";
-                            modalText2.innerHTML = "تنها میتوانید یک سطح دشواری از هر ماموریت را انجام دهید. انتخاب شما سطح « {{ t.title }} » است ";
-                            modalInput.value = "{{ t.id }}"
-                        {% else %}
-                            modalText1.innerHTML = "شما پیش از این یکی از سطوح دیگر را باز کرده اید ";
-                            modalText2.innerHTML = "در صورت تایید باز کردن سطح « {{ t.title }} » مقدار 5 واحد آذوقه از گروه شما کسر میشود ";
-                            modalInput.value = "{{ t.id }}"
-                        {% endif %}
+                    if (sender.value == {{t.id}}) {
+                        document.getElementById("activity_{{x.id}}_template_type").innerHTML = "{{t.type}}";
+                        document.getElementById("activity_{{x.id}}_template_max_power").innerHTML = "{{t.max_power}}";
+                        document.getElementById("activity_{{x.id}}_template_max_food").innerHTML = "{{t.max_food}}";
                     }
                 {% endfor %}
-            {% endfor %}
-        </script>
+            }
+        {% endfor %}
+    </script>
 
-        {% if MESSAGE %}
-            <script>
-                function show_message() {
-                    var message_modal = new bootstrap.Modal(document.getElementById('message_modal'), {
-                        keyboard: false
-                    });
-                    message_modal.show()
+    <script>
+        {%  for x in user.user_detail.groups.all.first.get_manzel.activity_topics.all %}
+            {% for t in x.get_activity_templates %}
+                function unlock_{{ x.id }}_{{ t.id }}_passValueToModal() {
+                    const modalText1 = document.getElementById('first_unlock_text');
+                    const modalText2 = document.getElementById('second_unlock_text');
+                    const modalInput = document.getElementById('unlock_value');
+                    {% if x.id not in user.user_detail.groups.all.first.is_acted %}
+                        modalText1.innerHTML = " شما تا به حال هیچ یک از سطوح ماموریت « {{ x.title }} » را باز نکرده اید. ";
+                        modalText2.innerHTML = "تنها میتوانید یک سطح دشواری از هر ماموریت را انجام دهید. انتخاب شما سطح « {{ t.title }} » است ";
+                        modalInput.value = "{{ t.id }}"
+                    {% else %}
+                        modalText1.innerHTML = "شما پیش از این یکی از سطوح دیگر را باز کرده اید ";
+                        modalText2.innerHTML = "در صورت تایید باز کردن سطح « {{ t.title }} » مقدار 5 واحد آذوقه از گروه شما کسر میشود ";
+                        modalInput.value = "{{ t.id }}"
+                    {% endif %}
                 }
-            </script>
-        {% endif %}
-    {% endblock %}
+            {% endfor %}
+        {% endfor %}
+    </script>
+
+    {% if MESSAGE %}
+        <script>
+            function show_message() {
+                var message_modal = new bootstrap.Modal(document.getElementById('message_modal'), {
+                    keyboard: false
+                });
+                message_modal.show()
+            }
+        </script>
+    {% endif %}
+{% endblock %}
 </body>
 </html>

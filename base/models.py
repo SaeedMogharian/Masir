@@ -36,6 +36,8 @@ ACTIVITY_STATE_CHOICES = (
     ('5', 'رد شده و اعلام نشده'),
     ('6', 'رد شده'),
 )
+MEDIA_ROOT = 'media'
+STATIC_ROOT = 'static'
 
 ACTIVITIES = {
     'قیام و حرکت': '01',
@@ -238,7 +240,7 @@ class Manzel(models.Model):
     number = models.CharField(default='منزل چندم', max_length=100, verbose_name='شماره منزل')
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان منزل')
     co_title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان معرفتی')
-    story = models.FileField(null=True, blank=True, upload_to='base/static/manzel/', verbose_name='فایل داستان')
+    story = models.URLField(null=True, blank=True, max_length=200, verbose_name='فایل داستان')
     back_image = models.FileField(null=True, blank=True, upload_to='base/static/manzel/',
                                   verbose_name='تصویر پس زمینه منزل')
     color = ColorField(default='FFFFFF', verbose_name='رنگ پس‌زمینه نَوبار')
@@ -257,13 +259,13 @@ class Manzel(models.Model):
         return False
 
     def get_story(self):
-        return (str(self.story)[4:])
+        return self.story
 
     def get_image(self):
         return (str(self.back_image)[4:])
 
     def get_discover_help(self):
-        return (str(self.discover_help)[4:])
+        return 'https://masir1402.ir/media/'+str(self.discover_help)
 
     def __str__(self):
         return (self.number + ' | ' + self.title)
@@ -421,7 +423,7 @@ class Activity_Topic(models.Model):
     code = models.CharField(null=True, blank=True, default='', max_length=8, verbose_name='کد اکتشاف')
 
     def get_file(self):
-        return (str(self.file)[4:])
+        return 'https://masir1402.ir/media/'+str(self.file)
 
     def if_long(self):
         if not self.manzel:
