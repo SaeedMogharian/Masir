@@ -391,12 +391,12 @@ audio::-webkit-media-controls-panel {
     font-weight: 700;
 }
 @media screen and (max-width: 769px) {
-    .masir-btn{
+    .masir-map-icon-popup .masir-btn {
         font-size: small;
     }
 }
 @media screen and (max-width: 426px) {
-    .masir-btn{
+    .masir-map-icon-popup .masir-btn {
         font-size: xx-small;
     }
 
