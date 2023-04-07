@@ -41,7 +41,7 @@ STATIC_ROOT = 'static'
 
 ACTIVITIES = {
     'قیام و حرکت': '01',
-    'مشورت و عظم': '02',
+    'مشورت و عزم': '02',
     'حرکت جمعی': '03',
     'امر به معروف و نهی از منکر': '04',
     'شناخت و بینش': '05',
@@ -574,7 +574,7 @@ class Masir_Group(models.Model):
         for x in self.activities.filter(state='4'):
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(
-                    code=ACTIVITIES[x.topic.co_title] + '_0' + str(int(x.template.type)) + '0'+str(round(x.get_score()))),
+                    code=ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0'+str(round(x.get_score()))),
                 (4 - int(x.template.type)) * x.get_score()
             )
         if len(self.discovered.all()) >= 16:

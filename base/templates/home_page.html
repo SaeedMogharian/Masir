@@ -348,15 +348,15 @@
                            data-bs-toggle="offcanvas" href="#reports_offcanvas" role="button"
                            aria-controls="reports_offcanvas"
                            onclick="clear_alarm_class(this)"></a>
-                        {#                <a class="masir-circle-button-2 masir-jelly" title="رهنمای مسیر"#}
-                        {#                   style="background-image: url('{% static 'images/navbar_help.png' %}'); margin: auto max(0.15vw, 0.15vh);"#}
-                        {#                   href="{% url 'help_page_link' %}"></a>#}
                         <a class="masir-circle-button-2 masir-jelly" title="شایستگی ها"
                            style="background-image: url('{% static 'images/navbar_statistics.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                            data-bs-toggle="modal" href="#achivements_modal" role="button"></a>
                         <a class="masir-circle-button-2 masir-jelly" title="سوالات و قوانین"
                            style="background-image: url('{% static 'images/navbar_faq.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                            href="{% url 'contact_admin_page_link' %}"></a>
+                        <a class="masir-circle-button-2 masir-jelly" title="اکسیر حیات"
+                           style="background-image: url('{% static 'images/navbar_help.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                           href="{% url 'help_page_link' %}"></a>
                     </div>
                 </div>
             </nav>
@@ -735,10 +735,10 @@
                                     از میزان صدقه مطمئن هستیم.
                                 </label>
                             </div>
-                            <button type="submit" name="charity_form" id="charity_form" class="btn masir-btn w-100"
+                            <button type="submit" name="charity_form" id="charity_form" class="btn masir-btn col-lg-6 col-md-6 col-12"
                                     style="background-color: #161F6F; color: white;">ثبت صدقه
                             </button>
-                            <button class="btn masir-btn w-100"
+                            <button class="btn masir-btn col-lg-6 col-md-6 col-12"
                                     style="background-color: #161F6F; color: white; display: none;"
                                     id="charity_form_loading">
                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -873,10 +873,10 @@
                                     از فایل ارسالی و محدوده آیات مطمئن هستم.
                                 </label>
                             </div>
-                            <button type="submit" name="club_form" id="club_form" class="btn masir-btn w-100"
+                            <button type="submit" name="club_form" id="club_form" class="btn masir-btn col-lg-6 col-md-6 col-12"
                                     style="background-color: #794a1e; color: white">ثبت قرائت
                             </button>
-                            <button class="btn masir-btn w-100"
+                            <button class="btn masir-btn col-lg-6 col-md-6 col-12"
                                     style="background-color: #794a1e; color: white; display: none;"
                                     id="club_form_loading">
                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -908,18 +908,27 @@
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar">
-                            <a type="button" title="رهنمای اشکتشاف"
+                            <div class="h4 mt-1" style="font-weight: 700; text-align: center"> منزل «{{ user.user_detail.groups.all.first.get_manzel.title }} »</div>
+                            <a type="button" title="رهنمای اکتشاف"
                                href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
                                style="background-color: #610909; border: 2px #610909 solid; color: white;"
-                               class="btn btn-primary masir-btn col-lg-6 col-md-10 col-sm-12" download="">رهنمای
-                                اکتشاف</a>
+                               class="btn btn-primary masir-btn col-lg-6 col-md-10 col-sm-12" download="">دانلود فایل
+                                رهنمای اکتشاف
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="30" height="30" viewBox="0 0 50 50">
+                                    <image x="2" y="3" width="30" height="30"
+                                           xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAtCAYAAADRLVmZAAABYElEQVRoge3Y20rDQBDG8cTe6q2+kic8VXwW8SF8AH020R6woOCNCB7AvwykJl03mqQ7my7Od9tk5tdhu1020wiwB0yBCbCj0kQJLuB5xho91jSKJhtZHsXUx8D2f5+HpTa2q/wS21WqsV3F0jDAEHgCHoCDZOYGzCq7ylSjR65RVLQLTfI8eJ9kt0ODx47BY8fgsWPw2DF47PQCBzaArV6+MXBWHF3v3aMrTpzP5Mj7AnwCl33AHyu8D+D0L7g8Uzw7j+A3Y8Nnju8b74N70JJnYL0rwDudBu8dAu8+vFuzBi3vnnR2doVn5Xr14d340MOWvcLBs/LW6tWDrUurSavBW+IFfdyxR3h4Q3xntCq8KL5bg38DjpasrQfPyuu3Kn5pdBR40WQfuAFGsoQC1VxI7mI17kBCxHXa6TB2fiyVVCITHyXovhX41QpA2uZafq0D4AK48/7frVbEeA4MvgDqvDywb7Y5KQAAAABJRU5ErkJggg=="/>
+                                </svg>
+
+
+                            </a>
                             <form action="{% url 'home_page_link' %}" method="post" onsubmit="discover_form_click()">
                                 {% csrf_token %}
                                 <div class="h4 mb-1 mt-2" style="font-weight: 700;"> اکتشاف</div>
                                 <input name="discover_code" type="text"
                                        class="form-control masir-form-control text-center" autocomplete="off" required>
                                 <button type="submit" name="discover_form" id="discover_form"
-                                        class="btn masir-btn mt-2 col-lg-2"
+                                        class="btn masir-btn mt-2 col-lg-2" title="بررسی کد"
                                         style="margin-left:0; background-color: #b50000; border: 2px #610909 solid; color: white;">
                                     بررسی
                                     کد
@@ -935,7 +944,7 @@
                             </form>
                             {% for m in manazel %}
                                 {% if m == user.user_detail.groups.all.first.get_manzel %}
-                                    <div class="h4" style="font-weight: 700;"> ماموریت های مخفی</div>
+                                    <div class="h4" style="font-weight: 700;">ماموریت های مخفی {{ m.number }}</div>
                                     {% for x in m.activity_topics.all %}
                                         {% if x not in user.user_detail.groups.all.first.get_activity_topics and not x.main and x in user.user_detail.groups.all.first.discovered.all %}
                                             <div class="accordion-item col-12" style="background-color: #F3F3F3">
@@ -954,7 +963,7 @@
                                                     <div class="accordion-body">
                                                         <div class="mb-3 p-2" style="background-color: #eeeeee;">
                                                             <div class=" d-flex justify-content-center align-items-center"
-                                                                 style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 10%">
+                                                                 style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
                                                                 <span style="margin:1vw; font-weight: 700;"> دانلود توضیحات ماموریت </span>
                                                                 <a class="masir-circle-button-2"
                                                                    title="دانلود توضیحات ماموریت"
@@ -1076,12 +1085,12 @@
                                                                 </div>
                                                                 <button type="submit" name="activity_{{ x.id }}_form"
                                                                         id="activity_{{ x.id }}_form"
-                                                                        class="btn masir-btn w-100 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}"
+                                                                        class="btn masir-btn col-lg-6 col-md-6 col-12 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}"
                                                                         style="background-color: #69ff64;"
                                                                         {% if m != user.user_detail.groups.all.first.get_manzel %}
                                                                         disabled {% endif %}  >بارگذاری نهایی
                                                                 </button>
-                                                                <button class="btn masir-btn w-100"
+                                                                <button class="btn masir-btn col-lg-6 col-md-6 col-12"
                                                                         style="background-color: #69ff64; display: none;"
                                                                         id="activity_{{ x.id }}_form_loading">
                                                                     <span class="spinner-grow spinner-grow-sm"
@@ -1238,6 +1247,7 @@
                 </div>
             </div>
         </div>
+
         <div class="modal fade" id="longterm_activity_modal" data-bs-backdrop="static" data-bs-keyboard="false"
              tabindex="-1"
              aria-labelledby="longterm_activity_modal_Label" aria-hidden="true">
@@ -1286,11 +1296,11 @@
                                         </div>
                                         <button type="submit" name="activity_{{ x.id }}_form"
                                                 id="activity_{{ x.id }}_form"
-                                                class="btn masir-btn mt-2 col-lg-4 col-md-6 col-12"
+                                                class="btn masir-btn mt-2 col-lg-6 col-md-6 col-12"
                                                 style="background-color: #0A958E;">
                                             بارگذاری نهایی
                                         </button>
-                                        <button class="btn masir-btn col-lg-4 col-md-6 col-12"
+                                        <button class="btn masir-btn col-lg-6 col-md-6 col-12"
                                                 style="background-color: #0A958E; display: none; margin-left: auto; margin-right: auto"
                                                 id="activity_{{ x.id }}_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
@@ -1307,7 +1317,7 @@
                             {% for x in user.user_detail.groups.all.first.activities.all %}
                                 {% if x.topic.main and x.topic.if_long %}
                                     <div class=" d-flex justify-content-center align-items-center"
-                                    >
+                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
                                         <span style="margin:1vw; font-weight: 700;"> {{ x.topic.title }} </span>
                                         <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
                                            style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
@@ -1404,10 +1414,10 @@
                                         </label>
                                     </div>
                                     <button type="submit" name="university_form" id="university_form"
-                                            class="btn masir-btn w-100" style="background-color: #69ff64;">ثبت نهایی
+                                            class="btn masir-btn col-lg-6 col-md-6 col-12" style="background-color: #69ff64;">ثبت نهایی
                                         پاسخ‌ها
                                     </button>
-                                    <button class="btn masir-btn w-100"
+                                    <button class="btn masir-btn col-lg-6 col-md-6 col-12"
                                             style="background-color: #69ff64; display: none;"
                                             id="university_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
@@ -1631,11 +1641,11 @@
 
                                 <button type="submit" name="introduction_form"
                                         id="introduction_form"
-                                        class="btn masir-btn w-100 mt-2"
+                                        class="btn masir-btn col-lg-6 col-md-6 col-12 mt-2"
                                         style="background-color: #69ff64;">
                                     ثبت نهایی
                                 </button>
-                                <button class="btn masir-btn w-100"
+                                <button class="btn masir-btn col-lg-6 col-md-6 col-12"
                                         style="background-color: #69ff64; display: none;"
                                         id="introduction_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
@@ -1721,12 +1731,12 @@
                                         </div>
                                         <button type="submit" name="activity_{{ x.id }}_form"
                                                 id="activity_{{ x.id }}_form"
-                                                class="btn masir-btn w-100 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}"
+                                                class="btn masir-btn col-lg-6 col-md-6 col-12 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}"
                                                 style="background-color: #69ff64;"
                                                 {% if m != user.user_detail.groups.all.first.get_manzel %}
                                                 disabled {% endif %}  >بارگذاری نهایی
                                         </button>
-                                        <button class="btn masir-btn w-100"
+                                        <button class="btn masir-btn col-lg-6 col-md-6 col-12"
                                                 style="background-color: #69ff64; display: none;"
                                                 id="activity_{{ x.id }}_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
