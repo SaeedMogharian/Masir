@@ -38,22 +38,22 @@ ACTIVITY_STATE_CHOICES = (
 )
 
 ACTIVITIES = {
-    'قیام و حرکت': '010',
-    'مشورت و عظم': '011',
-    'حرکت جمعی': '012',
-    'امر به معروف و نهی از منکر': '013',
-    'شناخت و بینش': '020',
-    'فرقان': '021',
-    'دشمن شناسی': '022',
-    'هدف و مسیر': '023',
-    'صبر و استفامت': '030',
-    'امید به یاری خداوند': '031',
-    'آزمایش': '032',
-    'استعانت': '033',
-    'جهاد': '040',
-    'روشنگری': '041',
-    'اتحاد و تعاون': '042',
-    'انقطاع': '043',
+    'قیام و حرکت': '01',
+    'مشورت و عظم': '02',
+    'حرکت جمعی': '03',
+    'امر به معروف و نهی از منکر': '04',
+    'شناخت و بینش': '05',
+    'فرقان': '06',
+    'دشمن شناسی': '07',
+    'هدف و مسیر': '08',
+    'صبر و استفامت': '09',
+    'امید به یاری خداوند': '10',
+    'آزمایش': '11',
+    'استعانت': '12',
+    'جهاد': '13',
+    'روشنگری': '14',
+    'اتحاد و تعاون': '15',
+    'انقطاع': '16',
 }
 
 
@@ -548,28 +548,34 @@ class Masir_Group(models.Model):
         for x in self.activities.filter(state='4'):
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(
-                    code=ACTIVITIES[x.topic.title] + '_' + str(int(x.template.type)) + str(round(x.get_score()))),
+                    code=ACTIVITIES[x.topic.co_title] + '_0' + str(int(x.template.type)) + '0'+str(round(x.get_score()))),
                 (4 - int(x.template.type)) * x.get_score()
             )
+        if len(self.discovered.all()) >= 16:
+            self.set_masir_group_and_achivement_rel(
+                Achivement.objects.get(code='Mng'),
+                40
+            )
+
 
         if len(self.activities.filter(state='4')) >= 1:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Flg_5'),
+                Achivement.objects.get(code='Flg_1'),
                 5
             )
         if len(self.activities.filter(state='4')) >= 5:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Flg_10'),
+                Achivement.objects.get(code='Flg_5'),
                 15
             )
         if len(self.activities.filter(state='4')) >= 10:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Flg_15'),
+                Achivement.objects.get(code='Flg_10'),
                 20
             )
         if len(self.activities.filter(state='4')) >= 15:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Flg_20'),
+                Achivement.objects.get(code='Flg_15'),
                 25
             )
         if len(self.activities.filter(state='4')) >= 16:
@@ -584,22 +590,22 @@ class Masir_Group(models.Model):
                 tmp = tmp + 1
         if tmp >= 7:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Nqs_20'),
+                Achivement.objects.get(code='Nqs_7'),
                 50
             )
         if tmp >= 5:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Nqs_15'),
+                Achivement.objects.get(code='Nqs_5'),
                 40
             )
         if tmp >= 3:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Nqs_10'),
+                Achivement.objects.get(code='Nqs_3'),
                 30
             )
         if tmp >= 1:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Nqs_5'),
+                Achivement.objects.get(code='Nqs_1'),
                 20
             )
 
@@ -672,16 +678,16 @@ class Masir_Group(models.Model):
                 30
             )
 
-        for m in range(1, 5):
+        for m in range(1, 7):
             tmp = 0
             for a in self.activities.filter(topic__manzel=Manzel.objects.all()[m - 1]):
                 tmp = tmp + (a.get_score() * (4 - int(a.template.type)))
-            if tmp > 25:
+            if tmp > 35:
                 self.set_masir_group_and_achivement_rel(
                     Achivement.objects.get(code='Mnz_' + str(m)),
                     10
                 )
-        if self.manzel == 4:
+        if self.manzel == 5:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Lst_0'),
                 40
@@ -763,22 +769,22 @@ class Masir_Group(models.Model):
 
         if len(self.exams.filter(show_public=True)) >= 1:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Uni_5'),
+                Achivement.objects.get(code='Uni_1'),
                 10
             )
         if len(self.exams.filter(show_public=True)) >= 5:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Uni_10'),
+                Achivement.objects.get(code='Uni_5'),
                 15
             )
         if len(self.exams.filter(show_public=True)) >= 10:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Uni_15'),
+                Achivement.objects.get(code='Uni_10'),
                 20
             )
         if len(self.exams.filter(show_public=True)) >= 15:
             self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Uni_20'),
+                Achivement.objects.get(code='Uni_15'),
                 25
             )
 
