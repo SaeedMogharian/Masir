@@ -913,7 +913,7 @@ def home_page(request):
                         Achivement.objects.get(code='Mnz_' + str(g.manzel)),
                         10
                     )
-                if g.manzel == 4:
+                if g.manzel == 5:
                     set_masir_group_and_achivement_rel(
                         g,
                         Achivement.objects.get(code='Lst_0'),
@@ -1224,25 +1224,25 @@ def home_page(request):
                 if len(x.group.exams.filter(show_public=True)) >= 1:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Uni_5'),
+                        Achivement.objects.get(code='Uni_1'),
                         5
                     )
                 if len(x.group.exams.filter(show_public=True)) >= 5:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Uni_10'),
+                        Achivement.objects.get(code='Uni_5'),
                         10
                     )
                 if len(x.group.exams.filter(show_public=True)) >= 10:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Uni_15'),
+                        Achivement.objects.get(code='Uni_10'),
                         15
                     )
                 if len(x.group.exams.filter(show_public=True)) >= 15:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Uni_20'),
+                        Achivement.objects.get(code='Uni_15'),
                         20
                     )
 
@@ -1378,32 +1378,32 @@ def home_page(request):
                 set_masir_group_and_achivement_rel(
                     x.group,
                     Achivement.objects.get(
-                        code=ACTIVITIES[x.topic.title] + '_' + str(int(x.template.type)) + str(round(x.get_score()))),
+                        code=ACTIVITIES[x.topic.co_title] + '_' + '0'+str(int(x.template.type)) + '0'+str(round(x.get_score()))),
                     (4 - int(x.template.type)) * x.get_score()
                 )
 
                 if len(x.group.activities.filter(state='4')) >= 1:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Flg_5'),
+                        Achivement.objects.get(code='Flg_1'),
                         15
                     )
                 if len(x.group.activities.filter(state='4')) >= 5:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Flg_10'),
+                        Achivement.objects.get(code='Flg_5'),
                         20
                     )
                 if len(x.group.activities.filter(state='4')) >= 10:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Flg_15'),
+                        Achivement.objects.get(code='Flg_10'),
                         25
                     )
                 if len(x.group.activities.filter(state='4')) >= 15:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Flg_20'),
+                        Achivement.objects.get(code='Flg_15'),
                         30
                     )
                 if len(x.group.activities.filter(state='4')) >= 16:
@@ -1420,25 +1420,25 @@ def home_page(request):
                 if tmp >= 7:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Nqs_20'),
+                        Achivement.objects.get(code='Nqs_7'),
                         50
                     )
                 if tmp >= 5:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Nqs_15'),
+                        Achivement.objects.get(code='Nqs_5'),
                         40
                     )
                 if tmp >= 3:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Nqs_10'),
+                        Achivement.objects.get(code='Nqs_3'),
                         30
                     )
                 if tmp >= 1:
                     set_masir_group_and_achivement_rel(
                         x.group,
-                        Achivement.objects.get(code='Nqs_5'),
+                        Achivement.objects.get(code='Nqs_1'),
                         20
                     )
 
