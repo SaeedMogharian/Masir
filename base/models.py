@@ -702,7 +702,7 @@ class Masir_Group(models.Model):
                 30
             )
 
-        for m in range(1, 7):
+        for m in range(2, 6):
             tmp = 0
             for a in self.activities.filter(topic__manzel=Manzel.objects.all()[m - 1]):
                 tmp = tmp + (a.get_score() * (4 - int(a.template.type)))

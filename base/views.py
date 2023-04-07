@@ -115,7 +115,7 @@ def landing_page(request):
                 password=request.POST['login_password']
             )
             if user and user.is_active:
-                if user.user_detail.id in [16, 40]:
+                if user.user_detail.id in [16, 40, 986]:
                     login(request, user)
                     return (redirect('home_page_link'))
                 elif user.user_detail.groups.all().first():
@@ -730,7 +730,7 @@ def home_page(request):
                                         'reports': Report.objects.filter(group=user.groups.all().first()).order_by(
                                             '-id'),
                                         'FAQ': FAQ.objects.filter(is_active=True),
-                                        'achivements': Achivement.objects.filter(manzel=None),
+                                        'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                                         'exam': Exam.objects.filter(active=True).first(),
                                         'MESSAGE': 'شما قبلا یک فایل در باشگاه ارسال کرده‌اید.'
                                     }
@@ -768,7 +768,7 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان صدقه از میزان آذوقه گروه بیشتر است.'
                         }
@@ -884,7 +884,7 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'گروه شما قبلا یکبار در این آزمون شرکت کرده است.'
                         }
@@ -985,7 +985,7 @@ def home_page(request):
                                     'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
-                                    'achivements': Achivement.objects.filter(manzel=None),
+                                    'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                                     'exam': Exam.objects.filter(active=True).first(),
                                     'MESSAGE': 'آفرین! اکتشاف شما موفق بود! <br> ماموریت مخفی «' + x.title + '» به گروه شما اضافه شد'
                                 }
@@ -1002,7 +1002,7 @@ def home_page(request):
                                     'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
-                                    'achivements': Achivement.objects.filter(manzel=None),
+                                    'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
 
                                     'exam': Exam.objects.filter(active=True).first(),
                                     'MESSAGE': 'این ماموریت مخفی را قبلا پیدا کرده اید. دوباره تلاش کنید! '
@@ -1019,7 +1019,7 @@ def home_page(request):
                         'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                         'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                         'FAQ': FAQ.objects.filter(is_active=True),
-                        'achivements': Achivement.objects.filter(manzel=None),
+                        'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                         'exam': Exam.objects.filter(active=True).first(),
                         'MESSAGE': 'متاسفانه اکتشاف موفق نبود!<br> بیشتر تلاش کنید '
                     }
@@ -1045,7 +1045,7 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'شما قبلا این سطح را بازگشایی کرده اید.'
                         }
@@ -1065,7 +1065,7 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان آذوقه شما کافی نمی باشد'
                         }
@@ -1094,7 +1094,7 @@ def home_page(request):
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
-                            'achivements': Achivement.objects.filter(manzel=None),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
                             'MESSAGE': 'شما قبلا این مرحله را گذرانده اید'
                         }
@@ -1123,7 +1123,7 @@ def home_page(request):
                                 'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                 'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                 'FAQ': FAQ.objects.filter(is_active=True),
-                                'achivements': Achivement.objects.filter(manzel=None),
+                                'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                                 'exam': Exam.objects.filter(active=True).first(),
                                 'MESSAGE': 'گروه شما قبلا یکبار این ماموریت را انجام داده است.'
                             }
@@ -1517,7 +1517,7 @@ def home_page(request):
                 'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                 'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                 'FAQ': FAQ.objects.filter(is_active=True),
-                'achivements': Achivement.objects.filter(manzel=None),
+                'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                 'exam': Exam.objects.filter(active=True).first()
             }
         )

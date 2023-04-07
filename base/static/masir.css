@@ -387,7 +387,7 @@ audio::-webkit-media-controls-panel {
 }
 
 .masir-btn {
-    border-radius: 0 !important;
+    border-radius: 2rem !important;
     font-weight: 700;
 }
 @media screen and (max-width: 769px) {

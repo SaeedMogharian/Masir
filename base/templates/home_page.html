@@ -866,7 +866,8 @@
                                         بارگذاری شده را در اینجا وارد کنید.
                                     </div>
                                     <input name="club_file_{{ u.id }}" type="url"
-                                           class="form-control masir-form-control text-center" autocomplete="off">
+                                           class="form-control masir-form-control text-center {% if u != user.user_detail %} disabled {% endif %}" autocomplete="off"
+                                    {% if u != user.user_detail %} disabled {% endif %}>
                                 {% else %}
                                     <div class="mt-5 mb-2 text-center" style="color: #794a1e; font-weight: 700;">
                                         فایل قرائت ارسال شده از طرف
@@ -923,8 +924,8 @@
                         <div class="modal-body scroll-without-scrollbar">
                             <a type="button" title="دانلود توضیحات ماموریت"
                                href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
-                               style="margin-left: auto; margin-right: auto; display: block"
-                               class="btn btn-primary col-lg-6 col-md-10 col-sm-12" download="">رهنمای اکتشاف</a>
+                               style="margin-left: auto; margin-right: auto; display: block; background-color: #610909; border: 2px #610909 solid; color: white; border-radius: 5rem!important;"
+                               class="btn btn-primary masir-btn col-lg-6 col-md-10 col-sm-12" download="">رهنمای اکتشاف</a>
                             <form action="{% url 'home_page_link' %}" method="post" onsubmit="discover_form_click()">
                                 {% csrf_token %}
                                 <div class="h4 mb-1 mt-2" style="font-weight: 700;"> اکتشاف</div>
@@ -932,7 +933,7 @@
                                        class="form-control masir-form-control text-center" autocomplete="off" required>
                                 <button type="submit" name="discover_form" id="discover_form"
                                         class="btn masir-btn mt-2"
-                                        style="display: block; margin-right: auto; background-color: #0A958E;"> بررسی کد
+                                        style="display: block; margin-right: auto; background-color: #b50000; border: 2px #610909 solid; color: white; border-radius: 5rem!important;"> بررسی کد
                                 </button>
                                 <button class="btn masir-btn mt-2"
                                         style="margin-right: auto; background-color: #0A958E; display: none;"
@@ -1127,7 +1128,7 @@
                                                 <div class="accordion-body">
                                                     <div class="mb-3 p-2" style="background-color: #eeeeee;">
                                                         <div class=" d-flex justify-content-center align-items-center"
-                                                             style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 10%">
+                                                             style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
                                                             <span style="margin:1vw; font-weight: 700;"> دانلود توضیحات ماموریت </span>
                                                             <a class="masir-circle-button-2"
                                                                title="دانلود توضیحات ماموریت"
@@ -1266,11 +1267,11 @@
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar"
-                             style="display: block; width: max-content; margin-right: auto;margin-left: auto; margin-top: 6vh; border-radius: 10%">
+                             style="display: block; margin-right: auto;margin-left: auto; margin-top: 6vh; border-radius: 3rem">
                             {% for x in user.user_detail.groups.all.first.discovered.all %}
                                 {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main and  x.if_long %}
                                     <div class=" d-flex justify-content-center align-items-center"
-                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 10%">
+                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
                                         <span style="margin:1vw; font-weight: 700;"> {{ x.title }} </span>
                                         <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
                                            style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
