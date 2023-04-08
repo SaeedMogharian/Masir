@@ -552,7 +552,7 @@ class Masir_Group(models.Model):
             if x.get_score() > 1.5:
                 p = p + x.template.max_power
             else:
-                p += x.template.max_power * x.get_score() / 5
+                p += 1
 
         return (p)
 
