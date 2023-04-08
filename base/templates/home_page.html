@@ -479,7 +479,7 @@
                                             </svg>
 
 
-                                            مصرف آذوقه‌ تا منزل بعد:
+                                            آذوقه مورد نیاز برای حرکت:
                                             {{ x.food_for_next_manzel }}
                                         </div>
                                         <div style=" color: #00690e;">
@@ -490,7 +490,16 @@
                                             آذوقه‌ی اضافی قابل حمل:
                                             {{ x.max_export_food }}
                                         </div>
-
+                                        {% if x == user.user_detail.groups.all.first.get_manzel and user.user_detail.groups.all.first.has_next_manzel %}
+                                            <div class="d-block info" tabindex="0" data-bs-toggle="popover"
+                                                 data-bs-placement="top" style="margin-left: 0"
+                                                 data-bs-trigger="hover focus" data-bs-content="برای اینکه بتوانید از یک منزل به منزل دیگر بروید، باید حداقل آذوقه و توان لازم را بدست بیارید. در این صورت، کلید «حرکت» برای شما فعال می شود.
+                                                    تا وقتی که فرمان حرکت را صادر نکنید، وارد منزل بعد نمی شوید.
+                                                    شما نمی توانید بیش از یک مقدار مشخصی با خودتان آذوقه ی اضافه حمل کنید! مثلا اگر برای عبور از یک منزل نیاز به 50 آذوقه داشته باشید و شما 80 آذوقه مهیا کرده باشید، میتوانید 10 آذوقه‌ی مازاد با خودتان حمل کنید! مابقی در راه از بین می رود. بنابراین در مثال فوق، 20 آذوقه هدر می رود و شما با 10 آذوقه وارد منزل بعدی می شوید. مگر اینکه قبل از حرکت، تدبیر دیگری برای آذوقه های مازاد بکنید.
+                                                    حداکثر میزان آذوقه‌ی مازاد قابل حمل از یک منزل به منزل دیگر بستگی به پیچیدگی یا مسافت مسیر بین آن دو منزل دارد.
+                                                    نکته ی بسیار مهم این است که بعدی از عبور از یک منزل، امکان انجام ماموریتهای باقی مانده‌ی منزل قبل وجود ندارد. بنابراین در تصمیم خودت بسیار دقت کنید! ">
+                                            </div>
+                                        {% endif %}
 
 
                                     {% endif %}
@@ -510,7 +519,8 @@
                                 <a class="btn masir-btn w-100 mt-1"
                                    style="background-color: {{ x.color }}; color: white;"
                                    data-bs-toggle="offcanvas" href="#level_{{ x.id }}_offcanvas" role="button"
-                                   aria-controls="level_{{ x.id }}_offcanvas">مشاهده وضعیت منزل</a>
+                                   aria-controls="level_{{ x.id }}_offcanvas">مشاهده وضعیت منزل
+                                </a>
                                 {% if x == user.user_detail.groups.all.first.get_manzel and user.user_detail.groups.all.first.has_next_manzel %}
                                     <form action="{% url 'home_page_link' %}" method="post"
                                           onsubmit="next_level_form_click()">
@@ -536,7 +546,8 @@
                                                 class="btn masir-btn w-100 mt-1  {% if user.user_detail.groups.all.first.get_food < x.food_for_next_manzel or user.user_detail.groups.all.first.get_power < x.power_for_next_manzel %} disabled {% endif %}"
                                                 style="background-color: {{ x.color }}; color: white;"
                                                 {% if user.user_detail.groups.all.first.get_food >= x.food_for_next_manzel or user.user_detail.groups.all.first.get_power >= x.power_for_next_manzel %}
-                                                href="#" {% endif %} >حرکت به منزل بعدی
+                                                href="#" {% endif %} >
+                                            حرکت به منزل بعدی
                                         </button>
                                         <button class="btn masir-btn w-100"
                                                 style="background-color: {{ x.color }}; color: white; display: none;"
@@ -939,11 +950,12 @@
                                     </div>
                                     <div class="mb-1 mt-1" style="font-weight: 700;">لینک فایل صوتی قرائت</div>
                                     <div class="mb-1">
-                                    <div class="d-inline-block info" tabindex="0"
-                                                                     data-bs-toggle="popover"
-                                                                     data-bs-placement="top"
-                                                                     data-bs-trigger="hover focus" data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
-                                                                </div>
+                                        <div class="d-inline-block info" tabindex="0"
+                                             data-bs-toggle="popover"
+                                             data-bs-placement="top"
+                                             data-bs-trigger="hover focus"
+                                             data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                        </div>
                                         ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس فایل
                                         بارگذاری شده را در اینجا وارد کنید.
                                     </div>
@@ -1124,7 +1136,7 @@
                                                                                           data-bs-placement="top"
                                                                                           style="margin-top:1vh; margin-right: auto; margin-left: auto"
                                                                                           data-bs-content="{{ t.info }}">
-                                                                                        {{ t.title }}
+                                                                                        {{ t.get_title }}
                                                                                     </span>
                                                                                     <div class="col-2">
                                                                                         <svg viewBox="0 0 24 24"
@@ -1139,7 +1151,7 @@
                                                                                     <span class="col-lg-6 col-10 btn btn-danger d-inline-block disabled"
                                                                                           tabindex="0"
                                                                                           style="margin-top:1vh; margin-right: auto; margin-left: auto">
-                                                                                        {{ t.title }}
+                                                                                        {{ t.get_title }}
                                                                                     </span>
                                                                                     <a class="col-2 masir-jelly"
                                                                                        onclick="unlock_{{ x.id }}_{{ t.id }}_passValueToModal()"
@@ -1172,10 +1184,11 @@
                                                                 </div>
                                                                 <div class="mb-1">
                                                                     <div class="d-inline-block info" tabindex="0"
-                                                                     data-bs-toggle="popover"
-                                                                     data-bs-placement="top"
-                                                                     data-bs-trigger="hover focus" data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
-                                                                </div>
+                                                                         data-bs-toggle="popover"
+                                                                         data-bs-placement="top"
+                                                                         data-bs-trigger="hover focus"
+                                                                         data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                                                    </div>
                                                                     ابتدا فایل خود را در یک آپلود سنتر
                                                                     بارگذاری کرده و
                                                                     سپس آدرس
@@ -1291,7 +1304,7 @@
                                                                                           data-bs-placement="top"
                                                                                           style="margin-top:1vh; margin-right: auto; margin-left: auto"
                                                                                           data-bs-content="{{ t.info }}">
-                                                                                        {{ t.title }}
+                                                                                        {{ t.get_title }}
                                                                                     </span>
                                                                                 <div class="col-2">
                                                                                     <svg viewBox="0 0 24 24"
@@ -1308,7 +1321,7 @@
 
                                                                                 <div class="col-lg-6 col-10 btn btn-success d-inline-block disabled"
                                                                                      style="margin-top:1vh; margin-right: auto; margin-left: auto">
-                                                                                    {{ t.title }}
+                                                                                    {{ t.get_title }}
                                                                                 </div>
 
                                                                                 <div class="col-2">
@@ -1332,12 +1345,12 @@
                                                             </div>
 
                                                             <div class="d-inline-block info" tabindex="0"
-                                                                     data-bs-toggle="popover"
-                                                                     data-bs-placement="top"
-                                                                     data-bs-trigger="hover focus" data-bs-content="پس از اینکه اثری را ارسال می کنید، وضعیت داوری مربوط به آن از «در انتظار داوری» به «در حال داوری» تغییر می کند.
+                                                                 data-bs-toggle="popover"
+                                                                 data-bs-placement="top"
+                                                                 data-bs-trigger="hover focus" data-bs-content="پس از اینکه اثری را ارسال می کنید، وضعیت داوری مربوط به آن از «در انتظار داوری» به «در حال داوری» تغییر می کند.
                                                         پس  داوری شدن، وضعیت به «داوری شده» تبدیل می شود.
                                                         در صورت وجود مشکل در لینک یا عدم دقت در انتخاب قالب، داوران به شما بازخورد می دهند که در آن صورت باید مشکل را برطرف کنید و مجددا لینک را بفرستید">
-                                                                </div>
+                                                            </div>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 <span> وضعیت: </span>
                                                                 <span>
@@ -1436,10 +1449,11 @@
                                         <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
                                         <div class="mb-1">
                                             <div class="d-inline-block info" tabindex="0"
-                                                                     data-bs-toggle="popover"
-                                                                     data-bs-placement="top"
-                                                                     data-bs-trigger="hover focus" data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
-                                                                </div>
+                                                 data-bs-toggle="popover"
+                                                 data-bs-placement="top"
+                                                 data-bs-trigger="hover focus"
+                                                 data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                            </div>
                                             ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس
                                             فایل
                                             بارگذاری شده را در اینجا وارد کنید.
@@ -1863,10 +1877,11 @@
                                         <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
                                         <div class="mb-1">
                                             <div class="d-inline-block info" tabindex="0"
-                                                                     data-bs-toggle="popover"
-                                                                     data-bs-placement="top"
-                                                                     data-bs-trigger="hover focus" data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
-                                                                </div>
+                                                 data-bs-toggle="popover"
+                                                 data-bs-placement="top"
+                                                 data-bs-trigger="hover focus"
+                                                 data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                            </div>
                                             ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس
                                             فایل
                                             بارگذاری شده را در اینجا وارد کنید.
@@ -1939,12 +1954,12 @@
                                         </div>
 
                                         <div class="d-inline-block info" tabindex="0"
-                                                                     data-bs-toggle="popover"
-                                                                     data-bs-placement="top"
-                                                                     data-bs-trigger="hover focus" data-bs-content="پس از اینکه اثری را ارسال می کنید، وضعیت داوری مربوط به آن از «در انتظار داوری» به «در حال داوری» تغییر می کند.
+                                             data-bs-toggle="popover"
+                                             data-bs-placement="top"
+                                             data-bs-trigger="hover focus" data-bs-content="پس از اینکه اثری را ارسال می کنید، وضعیت داوری مربوط به آن از «در انتظار داوری» به «در حال داوری» تغییر می کند.
                                                         پس  داوری شدن، وضعیت به «داوری شده» تبدیل می شود.
                                                         در صورت وجود مشکل در لینک یا عدم دقت در انتخاب قالب، داوران به شما بازخورد می دهند که در آن صورت باید مشکل را برطرف کنید و مجددا لینک را بفرستید">
-                                                                </div>
+                                        </div>
 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span> وضعیت: </span>
@@ -2111,23 +2126,6 @@
                 }
             {% endfor %}
         {% endfor %}
-    </script>
-
-    <script>
-        jQuery(function ($) {
-            $("[data-bs-toggle='popover']").popover({trigger: "click"}).click(function (event) {
-                event.stopPropagation();
-
-            }).on('inserted.bs.popover', function () {
-                $(".popover").click(function (event) {
-                    event.stopPropagation();
-                })
-            })
-
-            $(document).click(function () {
-                $("[data-bs-toggle='popover']").popover('hide')
-            })
-        })
     </script>
     {% if MESSAGE %}
         <script>

@@ -401,6 +401,16 @@ class Activity_Template(models.Model):
 
     info = models.TextField(null=True, blank=True, default='', verbose_name='شرح')
 
+    def get_title(self):
+        if 'آسان' in self.title:
+            return 'آسان'
+        if 'متوسط' in self.title:
+            return 'متوسط'
+        if 'سخت' in self.title:
+            return 'سخت'
+        return self.title
+
+
     def __str__(self):
         return (self.title)
 
@@ -436,7 +446,7 @@ class Activity_Topic(models.Model):
             T.append(
                 {
                     'id': x.id,
-                    'title': x.title,
+                    'title': x.get_title(),
                     'type': x.get_type_display(),
                     'max_power': x.max_power,
                     'max_food': x.max_food,
@@ -457,7 +467,7 @@ class Activity_Topic(models.Model):
 class Masir_Group(models.Model):
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='نام گروه')
     users = models.ManyToManyField(User_Detail, related_name='groups', blank=True, verbose_name='اعضای گروه')
-    supergroup = models.IntegerField(default=1, verbose_name='ابرگروه')
+    supergroup = models.IntegerField(default=0, verbose_name='ابرگروه')
     manzel = models.IntegerField(default=1, verbose_name='منزل')
 
     discovered = models.ManyToManyField(Activity_Topic, related_name='discoverd', blank=True,
@@ -476,8 +486,9 @@ class Masir_Group(models.Model):
         return y
 
     def goto_supergroup(self):
-        a = list(Masir_Group.objects.all().order_by('id'))[-1]
-        if len(a.get_supergroupmates()) < 6:
+        a = [x.supergroup for x in Masir_Group.objects.all()]
+        s = [x.id for x in Masir_Group.objects.filter(supergroup=max(a))]
+        if len(s) < 6:
             self.supergroup = a.supergroup
         else:
             self.supergroup = a.supergroup + 1
@@ -522,7 +533,7 @@ class Masir_Group(models.Model):
     def get_food(self):
         f = 0
         if self.introduced:
-            f += 10
+            f += 50
         for x in self.exams.filter(show_public=True):
             f = f + x.score
         x: Activity
@@ -638,7 +649,7 @@ class Masir_Group(models.Model):
         tmp = 0
         for u in self.users.all():
             tmp = tmp + len(u.club_files.filter(show_public=True))
-        if tmp >= 14:
+        if tmp >= 18:
             self.delete_masir_group_and_achivement_rel(
                 [
                     Achivement.objects.get(code='Qra_5'),
@@ -652,7 +663,7 @@ class Masir_Group(models.Model):
                 Achivement.objects.get(code='Qra_5'),
                 0
             )
-        elif tmp >= 9:
+        elif tmp >= 14:
             self.delete_masir_group_and_achivement_rel(
                 [
                     Achivement.objects.get(code='Qra_5'),
@@ -666,7 +677,7 @@ class Masir_Group(models.Model):
                 Achivement.objects.get(code='Qra_4'),
                 0
             )
-        elif tmp >= 5:
+        elif tmp >= 9:
             self.delete_masir_group_and_achivement_rel(
                 [
                     Achivement.objects.get(code='Qra_5'),
@@ -680,7 +691,7 @@ class Masir_Group(models.Model):
                 Achivement.objects.get(code='Qra_3'),
                 0
             )
-        elif tmp >= 0:
+        elif tmp >= 5:
             self.delete_masir_group_and_achivement_rel(
                 [
                     Achivement.objects.get(code='Qra_5'),
@@ -692,6 +703,20 @@ class Masir_Group(models.Model):
             )
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Qra_2'),
+                0
+            )
+        elif tmp >= 1:
+            self.delete_masir_group_and_achivement_rel(
+                [
+                    Achivement.objects.get(code='Qra_5'),
+                    Achivement.objects.get(code='Qra_4'),
+                    Achivement.objects.get(code='Qra_3'),
+                    Achivement.objects.get(code='Qra_2'),
+                    Achivement.objects.get(code='Qra_1')
+                ]
+            )
+            self.set_masir_group_and_achivement_rel(
+                Achivement.objects.get(code='Qra_1'),
                 0
             )
 
