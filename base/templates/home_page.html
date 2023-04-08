@@ -643,8 +643,8 @@
                                         ابرگروه
                                     </div>
                                     {% for g in user.user_detail.groups.all.first.get_supergroupmates %}
-                                        <div class="text-center" style="font-weight: 700;"> {{ g.title }} ({{ g.manzel }})
-                                        </div>
+                                        <div class="text-center" style="font-weight: 700;{% if g.title == user.user_detail.groups.all.first.title %} color:{{ user.user_detail.groups.all.first.get_manzel.color }} {% endif %} "> {% if g.title == user.user_detail.groups.all.first.title %} -->{{ g.title }} ({{ g.manzel }})<--- {% else %}{{ g.title }} ({{ g.manzel }}){% endif %} </div>
+
                                     {% endfor %}
                                 </div>
                             </div>
@@ -1343,7 +1343,7 @@
                                         <span style="margin:1vw; font-weight: 700;"> {{ x.topic.title }} </span>
                                         <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
                                            style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
-                                           href="{{ x.get_file }}" download></a>
+                                           href="{{ x.topic.get_file }}" download></a>
                                     </div>
                                     <form>
                                         {% csrf_token %}

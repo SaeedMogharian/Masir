@@ -1081,7 +1081,14 @@ def home_page(request):
                 )
             user.groups.all().first().unlocked.add(t)
             user.save()
-            m = 'شما با موفقیت سطح ' + str(t) + ' از ماموریت ' + str(y) + ' را بازگشایی کردید. '
+            display=''
+            if 'آسان' in str(t):
+                display='آسان'
+            elif 'متوسط' in str(t):
+                display='متوسط'
+            else:
+                display='دشوار'
+            m = 'شما با موفقیت سطح «' + display + '» از ماموریت «' + str(y) + '» را بازگشایی کردید. '
             if f:
                 m += 'و به این دلیل 5 واحد آذوقه از دست دادید'
             Report.objects.create(
