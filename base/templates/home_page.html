@@ -920,13 +920,13 @@
                                     </svg>
                                 </div>
                                 <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
-                                         data-bs-placement="top"
-                                         data-bs-trigger="hover focus" data-bs-content="باشگاه محلی است برای قوی شدن و کسب توان.
+                                     data-bs-placement="top"
+                                     data-bs-trigger="hover focus" data-bs-content="باشگاه محلی است برای قوی شدن و کسب توان.
                                         برخلاف بخشهای دیگر که به صورت گروهی انجام می شود، هر یک از اعضای گروه می توانند به صورت جدا و فردی در باشگاه شرکت کنند.
                                         در هر شبانه روز بیشتر از یک بار نمی توانید در باشگاه شرکت کنید.
                                         به ازای هر بار شرکت در باشگاه هر کس باید بخش تعیین شده ای از قرآن کریم را قرائت کند، صوت خود را ضبط کند و لینک فایل آن را ارسال نماید تا توسط مسئولین مسابقه تایید شود.
                                         به ازای هر بار شرکت توسط هر فرد و تایید آن، یک واحد توان به کل گروه شما اضافه می شود؛ فارغ از اینکه چه مقدار از قرآن قرائت می شود.">
-                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -938,7 +938,13 @@
                                         {{ u.get_club_level }}
                                     </div>
                                     <div class="mb-1 mt-1" style="font-weight: 700;">لینک فایل صوتی قرائت</div>
-                                    <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس فایل
+                                    <div class="mb-1">
+                                    <div class="d-inline-block info" tabindex="0"
+                                                                     data-bs-toggle="popover"
+                                                                     data-bs-placement="top"
+                                                                     data-bs-trigger="hover focus" data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                                                </div>
+                                        ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس فایل
                                         بارگذاری شده را در اینجا وارد کنید.
                                     </div>
                                     <input name="club_file_{{ u.id }}" type="url"
@@ -998,15 +1004,15 @@
                                     </svg>
                                 </div>
                                 <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
-                                         data-bs-placement="top"
-                                         data-bs-trigger="hover focus" data-bs-content="در هر منزل 3 ماموریت مخفی وجود دارد! برای باز کردن هر ماموریت مخفی باید رمز مرتبط با آن را کشف کنید.
+                                     data-bs-placement="top"
+                                     data-bs-trigger="hover focus" data-bs-content="در هر منزل 3 ماموریت مخفی وجود دارد! برای باز کردن هر ماموریت مخفی باید رمز مرتبط با آن را کشف کنید.
                                         برای کشف این ماموریتها باید با دقت زیاد تصاویر کلیپ داستان مسابقه را مشاهده کنید و از آن یک کد استخراج کنید.
                                         معمای مربوطه در کتاب راهنما را حل کنید و با کمک آن کد، رمز را بدست آورید.
                                         پس از کشف ماموریت، متن توضیحات معرفتی برای شما باز می شود.
                                         سپس سه فعالیت با سطوح دشواری متفاوت برای شما نمایش داده می شود که باید یک مورد را انتخاب کنید (آسان، متوسط و دشوار)
                                         به کمک متن توضیحات و توضیحات فعالیت باز شده باید ماموریت را انجام دهید و ارسال کنید.
                                         اگر از انتخاب گزینه خود پشیمان باشید، می توانید 5 آذوقه خرج کنید تا سطح دیگر را باز کنید. ">
-                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar">
@@ -1064,8 +1070,7 @@
                                                     </button>
                                                 </h3>
                                                 <div id="S{{ x.id }}" class="accordion-collapse collapse"
-                                                     aria-labelledby="H{{ x.id }}"
-                                                     data-bs-parent="#accordionFlushExample">
+                                                     aria-labelledby="H{{ x.id }}">
                                                     <div class="accordion-body">
                                                         <div class="mb-3 p-2" style="background-color: #eeeeee;">
                                                             <div class=" d-flex justify-content-center align-items-center"
@@ -1165,7 +1170,13 @@
                                                                 <div class="mb-1 mt-2" style="font-weight: 700;">لینک
                                                                     فایل
                                                                 </div>
-                                                                <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر
+                                                                <div class="mb-1">
+                                                                    <div class="d-inline-block info" tabindex="0"
+                                                                     data-bs-toggle="popover"
+                                                                     data-bs-placement="top"
+                                                                     data-bs-trigger="hover focus" data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                                                </div>
+                                                                    ابتدا فایل خود را در یک آپلود سنتر
                                                                     بارگذاری کرده و
                                                                     سپس آدرس
                                                                     فایل
@@ -1213,9 +1224,12 @@
 
                                         {% endif %}
                                     {% endfor %}
+
+
                                     {% for x in user.user_detail.groups.all.first.activities.all %}
                                         {% if x.topic in m.activity_topics.all and not x.topic.main %}
                                             <h3 id="H{{ x.id }}">
+
                                                 <button class="accordion-button collapsed masir-btn" type="button"
                                                         data-bs-toggle="collapse"
                                                         style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }}; border-radius: 0!important; display: flex"
@@ -1223,10 +1237,10 @@
                                                         aria-controls="S{{ x.id }}">
                                                     {{ x.topic.title }}
                                                 </button>
+
                                             </h3>
                                             <div id="S{{ x.id }}" class="accordion-collapse collapse"
-                                                 aria-labelledby="H{{ x.id }}"
-                                                 data-bs-parent="#accordionFlushExample">
+                                                 aria-labelledby="H{{ x.id }}">
                                                 <div class="accordion-body">
                                                     <div class="mb-3 p-2" style="background-color: #eeeeee;">
                                                         <div class=" d-flex justify-content-center align-items-center"
@@ -1269,6 +1283,7 @@
                                                                 <div class="flex col-6">
                                                                     {% for t in x.topic.template.all %}
                                                                         {% if t in user.user_detail.groups.all.first.unlocked.all %}
+
                                                                             <div class="d-flex end-0 justify-content-between align-items-center">
                                                                                     <span class="col-lg-6 col-10 btn btn-success d-inline-block"
                                                                                           tabindex="0"
@@ -1286,16 +1301,16 @@
                                                                                     </svg>
                                                                                 </div>
                                                                             </div>
+
                                                                         {% else %}
+
                                                                             <div class="d-flex end-0 justify-content-between align-items-center">
-                                                                                    <span class="col-lg-6 col-10 btn btn-danger d-inline-block disabled"
-                                                                                          tabindex="0"
-                                                                                          data-bs-toggle="popover"
-                                                                                          data-bs-placement="top"
-                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto"
-                                                                                          data-bs-content="{{ t.info }}">
-                                                                                        {{ t.title }}
-                                                                                    </span>
+
+                                                                                <div class="col-lg-6 col-10 btn btn-success d-inline-block disabled"
+                                                                                     style="margin-top:1vh; margin-right: auto; margin-left: auto">
+                                                                                    {{ t.title }}
+                                                                                </div>
+
                                                                                 <div class="col-2">
                                                                                     <svg viewBox="0 0 30 30"
                                                                                          width="30px" fill="red"
@@ -1307,6 +1322,7 @@
 
 
 
+
                                                                         {% endif %}
 
                                                                     {% endfor %}
@@ -1315,6 +1331,13 @@
 
                                                             </div>
 
+                                                            <div class="d-inline-block info" tabindex="0"
+                                                                     data-bs-toggle="popover"
+                                                                     data-bs-placement="top"
+                                                                     data-bs-trigger="hover focus" data-bs-content="پس از اینکه اثری را ارسال می کنید، وضعیت داوری مربوط به آن از «در انتظار داوری» به «در حال داوری» تغییر می کند.
+                                                        پس  داوری شدن، وضعیت به «داوری شده» تبدیل می شود.
+                                                        در صورت وجود مشکل در لینک یا عدم دقت در انتخاب قالب، داوران به شما بازخورد می دهند که در آن صورت باید مشکل را برطرف کنید و مجددا لینک را بفرستید">
+                                                                </div>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 <span> وضعیت: </span>
                                                                 <span>
@@ -1340,6 +1363,8 @@
 
                                         {% endif %}
                                     {% endfor %}
+
+
                                 {% endif %}
 
                             {% endfor %}
@@ -1351,126 +1376,133 @@
             </div>
         </div>
 
-{#        <div class="modal fade" id="longterm_activity_modal" data-bs-backdrop="static" data-bs-keyboard="false"#}
-{#             tabindex="-1"#}
-{#             aria-labelledby="longterm_activity_modal_Label" aria-hidden="true">#}
-{#            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">#}
-{#                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">#}
-{#                    <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"#}
-{#                       role="button"></a>#}
-{#                    <div class="modal-body scroll-without-scrollbar">#}
-{#                        <div class="position-relative px-5 masir-modal-header">#}
-{#                            <div class="position-absolute top-50 start-50 translate-middle d-flex"#}
-{#                                 style="height: max-content;">#}
-{#                                <div class="masir-circle-icon-3"#}
-{#                                     style="background-color: #35393d; border: 2px black solid;">#}
-{#                                    <img class="masir-circle-button-3" src="{% static 'images/flag.png' %}">#}
-{##}
-{#                                </div>#}
-{#                                <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"#}
-{#                                         data-bs-placement="top"#}
-{#                                         data-bs-trigger="hover focus" data-bs-content="امتیاز انجام این ماموریت چندین برابر یک ماموریت اصلی یا فرعی است.#}
-{#                                        شما باید از لیست پیشنهادی ارائه شده یک فعالیت بلندمدت انتخاب کنید.#}
-{#                                        در کل بازه زمانی مسابقه فرصت دارید آن را انجام دهید و در انتهای مسابقه گزارش خود را ارسال کنید.#}
-{#                                        در این ماموریت باید تلاش کنید یک تحول حداقلی در محیط زندگی اجتماعی خود ایجاد کنید. ">#}
-{#                                    </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="modal-body scroll-without-scrollbar"#}
-{#                             style="display: block; margin-right: auto;margin-left: auto; margin-top: 6vh; border-radius: 3rem">#}
-{#                            <div class="masir-paragraph-1" style="font-weight: 600">#}
-{#                                تاریکی بخشهایی از جامعه ما را فراگرفته است...<br>#}
-{#                                ماموریت شما این است که نسبت به مشکلات بی تفاوت نباشید و به عنوان نخبگان جوان این سرزمین#}
-{#                                به پا خیزید و پس#}
-{#                                از تفکر و هم‌اندیشی در محیط زندگی خود تحول بیافرینید.<br>#}
-{#                                باید بدانید که در این مسیر خطیر به تنهایی نمی توانید تاثیر زیادی داشته باشید و لازم است#}
-{#                                همراه با دوستان خود و کسب آگاهی و#}
-{#                                دانش کافی به سمت اهدافتان حرکت کنید. امکان دارد در میانه ی مسیر دچار خستگی و یاس شوید یا#}
-{#                                اینکه تحت تاثیر عوامل فریبنده و دلربا قرار گیرید و از هدف باز بمانید. راه چاره این است#}
-{#                                که امیدتان به یگانه قدرتمند عالم هستی باشد و تنها از خودش در این حرکت کمک بخواهید. به#}
-{#                                قول امیر مومنین و مجاهدین جمجمه تان را به خدا بسپارید، دل از تعلقات کم ارزش ببُرید و با#}
-{#                                همبستگی و یاری همدیگر برای غلبه بر تاریکی ها کوشش کنید.<br><br>#}
-{#                                در «ماموریت تحول» شما می توانید...#}
-{#                            </div>#}
-{#                            {% for x in user.user_detail.groups.all.first.discovered.all %}#}
-{#                                {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main and  x.if_long %}#}
-{#                                    <div class=" d-flex justify-content-center align-items-center"#}
-{#                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">#}
-{#                                        <span style="margin:1vw; font-weight: 700;">#}
-{##}
-{#                                            {{ x.title }}#}
-{#                                        </span>#}
-{#                                        <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"#}
-{#                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"#}
-{#                                           href="{{ x.get_file }}" download></a>#}
-{#                                    </div>#}
-{#                                    <form action="{% url 'home_page_link' %}" method="post"#}
-{#                                          onsubmit="activity_{{ x.id }}_form_click()">#}
-{#                                        {% csrf_token %}#}
-{#                                        <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>#}
-{#                                        <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس#}
-{#                                            فایل#}
-{#                                            بارگذاری شده را در اینجا وارد کنید.#}
-{#                                        </div>#}
-{#                                        <input name="activity_{{ x.id }}_file" type="url"#}
-{#                                               class="form-control masir-form-control text-center" autocomplete="off"#}
-{#                                               required>#}
-{##}
-{#                                        <div class="form-check mt-3 mb-2">#}
-{#                                            <input class="form-check-input" type="checkbox" required>#}
-{#                                            <label class="form-check-label" for="flexCheckDefault">#}
-{#                                                از فایل ارسالی مطمئن هستیم.#}
-{#                                            </label>#}
-{#                                        </div>#}
-{#                                        <button type="submit" name="activity_{{ x.id }}_form"#}
-{#                                                id="activity_{{ x.id }}_form"#}
-{#                                                class="btn masir-btn mt-2 col-lg-6 col-md-6 col-12"#}
-{#                                                style="background-color: white; border: 2px black solid; color: black">#}
-{#                                            بارگذاری نهایی#}
-{#                                        </button>#}
-{#                                        <button class="btn masir-btn col-lg-6 col-md-6 col-12"#}
-{#                                                style="background-color: white; border: 2px black solid; color: black; display: none;"#}
-{#                                                id="activity_{{ x.id }}_form_loading">#}
-{#                                        <span class="spinner-grow spinner-grow-sm" role="status"#}
-{#                                              aria-hidden="true"></span>#}
-{#                                            در حال بارگذاری...#}
-{#                                        </button>#}
-{#                                        <div class="d-flex justify-content-center align-items-center">#}
-{#                                            <span> وضعیت: </span>#}
-{#                                            <span> ارسال نشده </span>#}
-{#                                        </div>#}
-{#                                    </form>#}
-{#                                {% endif %}#}
-{#                            {% endfor %}#}
-{#                            {% for x in user.user_detail.groups.all.first.activities.all %}#}
-{#                                {% if x.topic.main and x.topic.if_long %}#}
-{#                                    <div class=" d-flex justify-content-center align-items-center"#}
-{#                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">#}
-{#                                        <span style="margin:1vw; font-weight: 700;"> {{ x.topic.title }} </span>#}
-{#                                        <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"#}
-{#                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"#}
-{#                                           href="{{ x.topic.get_file }}" download></a>#}
-{#                                    </div>#}
-{#                                    <form>#}
-{#                                        {% csrf_token %}#}
-{#                                        <div class="d-flex justify-content-center align-items-center">#}
-{#                                            <span> وضعیت:  </span>#}
-{#                                            <span>#}
-{#                                              {% if x.state == '4' or x.state == '6' %}#}
-{#                                                  {{ x.get_state_display }}#}
-{#                                              {% else %}#}
-{#                                                  در حال داوری#}
-{#                                              {% endif %}#}
-{#                                            </span>#}
-{#                                        </div>#}
-{#                                    </form>#}
-{#                                {% endif %}#}
-{#                            {% endfor %}#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
+        <div class="modal fade" id="longterm_activity_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1"
+             aria-labelledby="longterm_activity_modal_Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                    <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
+                       role="button"></a>
+                    <div class="modal-body scroll-without-scrollbar">
+                        <div class="position-relative px-5 masir-modal-header">
+                            <div class="position-absolute top-50 start-50 translate-middle d-flex"
+                                 style="height: max-content;">
+                                <div class="masir-circle-icon-3"
+                                     style="background-color: #35393d; border: 2px black solid;">
+                                    <img class="masir-circle-button-3" src="{% static 'images/flag.png' %}">
+
+                                </div>
+                                <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
+                                     data-bs-placement="top"
+                                     data-bs-trigger="hover focus" data-bs-content="امتیاز انجام این ماموریت چندین برابر یک ماموریت اصلی یا فرعی است.
+                                        شما باید از لیست پیشنهادی ارائه شده یک فعالیت بلندمدت انتخاب کنید.
+                                        در کل بازه زمانی مسابقه فرصت دارید آن را انجام دهید و در انتهای مسابقه گزارش خود را ارسال کنید.
+                                        در این ماموریت باید تلاش کنید یک تحول حداقلی در محیط زندگی اجتماعی خود ایجاد کنید. ">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-body scroll-without-scrollbar"
+                             style="display: block; margin-right: auto;margin-left: auto; margin-top: 6vh; border-radius: 3rem">
+                            <div class="masir-paragraph-1" style="font-weight: 600">
+                                تاریکی بخشهایی از جامعه ما را فراگرفته است...<br>
+                                ماموریت شما این است که نسبت به مشکلات بی تفاوت نباشید و به عنوان نخبگان جوان این سرزمین
+                                به پا خیزید و پس
+                                از تفکر و هم‌اندیشی در محیط زندگی خود تحول بیافرینید.<br>
+                                باید بدانید که در این مسیر خطیر به تنهایی نمی توانید تاثیر زیادی داشته باشید و لازم است
+                                همراه با دوستان خود و کسب آگاهی و
+                                دانش کافی به سمت اهدافتان حرکت کنید. امکان دارد در میانه ی مسیر دچار خستگی و یاس شوید یا
+                                اینکه تحت تاثیر عوامل فریبنده و دلربا قرار گیرید و از هدف باز بمانید. راه چاره این است
+                                که امیدتان به یگانه قدرتمند عالم هستی باشد و تنها از خودش در این حرکت کمک بخواهید. به
+                                قول امیر مومنین و مجاهدین جمجمه تان را به خدا بسپارید، دل از تعلقات کم ارزش ببُرید و با
+                                همبستگی و یاری همدیگر برای غلبه بر تاریکی ها کوشش کنید.<br><br>
+                                در «ماموریت تحول» شما می توانید...
+                            </div>
+                            {% for x in user.user_detail.groups.all.first.discovered.all %}
+                                {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main and  x.if_long %}
+                                    <div class=" d-flex justify-content-center align-items-center"
+                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
+                                        <span style="margin:1vw; font-weight: 700;">
+
+                                            {{ x.title }}
+                                        </span>
+                                        <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
+                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
+                                           href="{{ x.get_file }}" download></a>
+                                    </div>
+                                    <form action="{% url 'home_page_link' %}" method="post"
+                                          onsubmit="activity_{{ x.id }}_form_click()">
+                                        {% csrf_token %}
+                                        <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
+                                        <div class="mb-1">
+                                            <div class="d-inline-block info" tabindex="0"
+                                                                     data-bs-toggle="popover"
+                                                                     data-bs-placement="top"
+                                                                     data-bs-trigger="hover focus" data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                                                </div>
+                                            ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس
+                                            فایل
+                                            بارگذاری شده را در اینجا وارد کنید.
+                                        </div>
+                                        <input name="activity_{{ x.id }}_file" type="url"
+                                               class="form-control masir-form-control text-center" autocomplete="off"
+                                               required>
+
+                                        <div class="form-check mt-3 mb-2">
+                                            <input class="form-check-input" type="checkbox" required>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                از فایل ارسالی مطمئن هستیم.
+                                            </label>
+                                        </div>
+                                        <button type="submit" name="activity_{{ x.id }}_form"
+                                                id="activity_{{ x.id }}_form"
+                                                class="btn masir-btn mt-2 col-lg-6 col-md-6 col-12"
+                                                style="background-color: white; border: 2px black solid; color: black">
+                                            بارگذاری نهایی
+                                        </button>
+                                        <button class="btn masir-btn col-lg-6 col-md-6 col-12"
+                                                style="background-color: white; border: 2px black solid; color: black; display: none;"
+                                                id="activity_{{ x.id }}_form_loading">
+                                        <span class="spinner-grow spinner-grow-sm" role="status"
+                                              aria-hidden="true"></span>
+                                            در حال بارگذاری...
+                                        </button>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <span> وضعیت: </span>
+                                            <span> ارسال نشده </span>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            {% endfor %}
+                            {% for x in user.user_detail.groups.all.first.activities.all %}
+                                {% if x.topic.main and x.topic.if_long %}
+                                    <div class=" d-flex justify-content-center align-items-center"
+                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
+                                        <span style="margin:1vw; font-weight: 700;"> {{ x.topic.title }} </span>
+                                        <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
+                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
+                                           href="{{ x.topic.get_file }}" download></a>
+                                    </div>
+                                    <form>
+                                        {% csrf_token %}
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <span> وضعیت:  </span>
+                                            <span>
+                                              {% if x.state == '4' or x.state == '6' %}
+                                                  {{ x.get_state_display }}
+                                              {% else %}
+                                                  در حال داوری
+                                              {% endif %}
+                                            </span>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="university_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="university_modal_Label" aria-hidden="true">
@@ -1489,12 +1521,13 @@
                                     </svg>
                                 </div>
                                 <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
-                                         data-bs-placement="top"
-                                         data-bs-trigger="hover focus" data-bs-content="دانشگاه محلی است برای تغذیه‌ی فکر و کسب آذوقه.
+                                     data-bs-placement="top"
+                                     data-bs-trigger="hover focus" data-bs-content="دانشگاه محلی است برای تغذیه‌ی فکر و کسب آذوقه.
                                             در هر شبانه‌روز، 10 سوال چهارگزینه‌ای از آیات قرآن کریم از شما پرسیده می شود که با پاسخ صحیح به آنها می‌توانید آذوقه بدست آورید.
                                             سوالات دانشگاه در عصر هر روز تغییر می کند و تا روز بعد فرصت پاسخ به آنها را دارید.
                                         به ازای هر پاسخ صحیح در دانشگاه یک واحد آذوقه دریافت می کنید.">
                                 </div>
+
                             </div>
                         </div>
 
@@ -1575,42 +1608,7 @@
                 </div>
             </div>
         </div>
-        {% comment %}
-        <div class="modal fade" id="faq_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-             aria-labelledby="faq_modal_Label" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
-                    <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
-                       role="button"></a>
-                    <div class="modal-body scroll-without-scrollbar">
-                        <div class="position-relative px-5 masir-modal-header mb-5">
-                            <div class="position-absolute top-50 start-50 translate-middle d-flex"
-                                 style="height: max-content;">
-                                <div class="masir-circle-icon-3"
-                                     style="background-color: #bedeff; color: #3d6185; border: 2px #3d6185 solid;">
-                                    <svg viewBox="0 0 202.423 202.423" fill="currentcolor">
-                                        <path d="M87.416,186.643c-4.359,0-7.885,3.541-7.885,7.874c0,4.362,3.525,7.906,7.885,7.906c4.357,0,7.885-3.544,7.885-7.906 C95.301,190.184,91.774,186.643,87.416,186.643z"/>
-                                        <path d="M101.212,0c-34.694,0-62.92,28.226-62.92,62.92c0,4.142,3.358,7.5,7.5,7.5c4.142,0,7.5-3.358,7.5-7.5 c0-26.423,21.497-47.92,47.92-47.92c26.422,0,47.918,21.497,47.918,47.92c0,26.425-21.496,47.923-47.918,47.923 c-0.259,0-0.516,0.013-0.769,0.039c-11.128,0.4-20.088,9.36-20.488,20.487c-0.026,0.253-0.039,0.509-0.039,0.769v30.922 c0,4.142,3.358,7.5,7.5,7.5c4.142,0,7.5-3.358,7.5-7.5v-30.922c0-3.471,2.824-6.295,6.296-6.295 c34.693,0,62.918-28.227,62.918-62.923C164.13,28.226,135.906,0,101.212,0z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
 
-                        {% for x in FAQ %}
-                            <div class="mb-2">
-                                <div class="p-2" style="background-color: #c5c5c5; font-weight: 700;">
-                                    {{ x.question }}
-                                </div>
-                                <div class="p-2" style="background-color: #eeeeee;">
-                                    {{ x.answer }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endcomment %}
         <div class="modal fade" id="achivements_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="achivements_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
@@ -1814,15 +1812,15 @@
                         {% comment %} قابل انجام ها {% endcomment %}
                         <div class="h4" style="font-weight: 700;">
                             <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
-                                         data-bs-placement="top"
-                                         data-bs-trigger="hover focus" data-bs-content="هر ماموریت یک موضوع کلی دارد که توضیحات معرفتی مربوط به آن قرار داده شده است.
+                                 data-bs-placement="top"
+                                 data-bs-trigger="hover focus" data-bs-content="هر ماموریت یک موضوع کلی دارد که توضیحات معرفتی مربوط به آن قرار داده شده است.
                                     وظیفه‌ی شما این است که متن توضیحات را با دقت مطالعه کنید، از بین 6 قالب پیشنهادی یک مورد را انتخاب کنید و یک اثر تولید کنید و بفرستید.
                                     ارزش هر قالب بر اساس نوع چوبی، سنگی یا طلایی مشخص می شود (به ترتیب ارزشمندی).
                                     هر چه نوع قالب ارزشمندتر باشد، امتیاز نهایی حاصل از آن اثر شما بیشتر خواهد بود.
                                     علاوه بر این، با انتخاب هر قالب، تا سقف معینی می‌توانید آذوقه بدست بیاورید (به نسبت امتیازی که از خود فعالیت بدست می آورید. یعنی مثلا اگر به ازای قالب الف حداکثر 40 آذوقه قابل کسب باشد و شما امتیاز 4 از 5 دریافت کرده باشید، نهایتا 32 آذوقه نصیب شما می شود)
                                     حداکثر میزان توان قابل کسب هم بسته به نوع قالب متفاوت است.
                                     برای اینکه بتوانید حداکثر توان را بدست بیاورید اثرتان باید حداقلی از کیفیت را داشته باشد (امتیازی که از داور کسب می کنید باید بیشتر از یک باشد، در غیر این صورت صرفا بابت انجام فعالیت، 1 واحد توان کسب می کنید). ">
-                                    </div>
+                            </div>
                             ماموریت اصلی
                         </div>
                         {% for x in m.activity_topics.all %}
@@ -1863,7 +1861,13 @@
                                         </div>
 
                                         <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
-                                        <div class="mb-1">ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس
+                                        <div class="mb-1">
+                                            <div class="d-inline-block info" tabindex="0"
+                                                                     data-bs-toggle="popover"
+                                                                     data-bs-placement="top"
+                                                                     data-bs-trigger="hover focus" data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                                                </div>
+                                            ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس
                                             فایل
                                             بارگذاری شده را در اینجا وارد کنید.
                                         </div>
@@ -1871,6 +1875,7 @@
                                                class="form-control masir-form-control text-center" autocomplete="off"
                                                required {% if m != user.user_detail.groups.all.first.get_manzel %}
                                                disabled {% endif %} >
+
 
                                         <div class="form-check mt-3 mb-2">
                                             <input class="form-check-input" type="checkbox" required>
@@ -1932,6 +1937,14 @@
                                             <span> حداکثر آذوقه قابل کسب: </span>
                                             <span id="activity_{{ x.id }}_template_max_food">{{ x.template.max_food }}</span>
                                         </div>
+
+                                        <div class="d-inline-block info" tabindex="0"
+                                                                     data-bs-toggle="popover"
+                                                                     data-bs-placement="top"
+                                                                     data-bs-trigger="hover focus" data-bs-content="پس از اینکه اثری را ارسال می کنید، وضعیت داوری مربوط به آن از «در انتظار داوری» به «در حال داوری» تغییر می کند.
+                                                        پس  داوری شدن، وضعیت به «داوری شده» تبدیل می شود.
+                                                        در صورت وجود مشکل در لینک یا عدم دقت در انتخاب قالب، داوران به شما بازخورد می دهند که در آن صورت باید مشکل را برطرف کنید و مجددا لینک را بفرستید">
+                                                                </div>
 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span> وضعیت: </span>
