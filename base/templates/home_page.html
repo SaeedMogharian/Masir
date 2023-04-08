@@ -691,16 +691,16 @@
                                 <div class="w-100 scroll-without-scrollbar mt-3 flex-fill"
                                      style="font-weight: 700; background-color: #eeeeee; padding: 0.5rem; overflow: scroll;">
                                     <div class="masir-title-1 text-center mt-0 mb-3" style="color: #3d6185;">
-                                <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
-                                      data-bs-placement="top"
-                                      data-bs-trigger="hover focus" data-bs-content="در مسیر، تمام گروه‌ها با هم مسابقه می‌دهند اما هر گروه در یک اَبَرگروه با 5 گروه دیگر همراه می شود.
+                                        <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
+                                             data-bs-placement="top"
+                                             data-bs-trigger="hover focus" data-bs-content="در مسیر، تمام گروه‌ها با هم مسابقه می‌دهند اما هر گروه در یک اَبَرگروه با 5 گروه دیگر همراه می شود.
                                         تا آخر مسابقه شما نمی دانید نسبت به تمام گروه های مسابقه چه وضعیتی دارید.
                                         شما صرفا وضعیت اَبَرگروه خودتان را می بینید و می دانید در آن چندم هستید.
                                         اطلاعاتی که درباره ی کل گروه ها دارید بر اساس آمار کلی نشانهای کسب‌شده است.
                                         در صفحه آمار نشانها، تعداد گروه‌هایی که در کل مسابقه توانستند هر نشان را کسب کنند نمایش داده می شود. ">
-                            </div>
-                                جایگاه در ابرگروه
-                            </div>
+                                        </div>
+                                        جایگاه در ابرگروه
+                                    </div>
                                     {% for g in user.user_detail.groups.all.first.get_supergroupmates %}
                                         <div class="text-center"
                                              style="font-weight: 700;{% if g.title == user.user_detail.groups.all.first.title %} color:{{ user.user_detail.groups.all.first.get_manzel.color }} {% endif %} ">
@@ -729,19 +729,23 @@
                                 <div class="w-100 scroll-without-scrollbar mt-3 flex-fill"
                                      style="font-weight: 700; background-color: #eeeeee; padding: 0.5rem; overflow: scroll;">
                                     <div class="masir-title-1 text-center mt-0 mb-3" style="color: #ce6300;">
-                                <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
-                                      data-bs-placement="top"
-                                      data-bs-trigger="hover focus" data-bs-content="به ازای انجام هر ماموریت یک «دستاورد» کسب می کنید.
+                                        <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
+                                             data-bs-placement="top"
+                                             data-bs-trigger="hover focus" data-bs-content="به ازای انجام هر ماموریت یک «دستاورد» کسب می کنید.
                                         یک سری «نشان» هم در مسابقه وجود دارد که در شرایط مختلف می توانید آنها را کسب کنید (مثلا اگر کیفیت فعالیتهای شما خیلی بالا باشد، یا اگر به صورت مستمر برخی فعالیتها را انجام دهید، یا اگر تمام فعالیتها را انجام دهید یا ...)
                                         ا توجه به اینکه امتیاز نهایی بر اساس دستاوردها و نشانها محاسبه می شود، لازم است که به خوبی نشانهای مختلف و شرایط کسب آنها را بررسی کنید تا آگاهانه برنامه‌ریزی کنید.">
-                            </div>
-                                دستاوردها
-                            </div>
+                                        </div>
+                                        دستاوردها
+                                    </div>
                                     <div class="row mx-0 row-cols-4 row-cols-sm-6 row-cols-md-8 row-cols-lg-12">
                                         {% for x in user.user_detail.groups.all.first.get_achivements %}
-                                            <div class="col px-1">
-                                                <img class="masir-achievement" src="{{ x.achivement.get_image }}">
-                                            </div>
+                                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                                                  data-bs-placement="top"
+                                                  data-bs-trigger="hover focus"
+                                                  data-bs-content="{{ x.achivement.text }}">
+                                            <img class="masir-achievement" src="{{ x.achivement.get_image }}">
+
+                                            </span>
 
                                         {% endfor %}
                                     </div>
