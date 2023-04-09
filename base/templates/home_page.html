@@ -236,8 +236,8 @@
                 left: 6vw;
             }
         }
-        
-        @media screen and (max-height: 600px)  {
+
+        @media screen and (max-height: 600px) {
             .tent {
                 min-width: 10em;
                 width: 22vw;
@@ -255,10 +255,11 @@
 
             .zigg {
                 width: 12vw;
-                min-width: 6em!important;
+                min-width: 6em !important;
             }
-            
+
         }
+
         .info {
             background-image: url("{% static 'images/info-icon.png' %}");
             margin-right: auto;
@@ -278,6 +279,19 @@
             animation-name: masir-jelly-animation;
             animation-duration: 1.5s;
             animation-iteration-count: infinite;
+        }
+
+        .masir-map-icon-popup {
+            position: absolute;
+            bottom: 0;
+            transform: translateX(100%);
+            background-color: #ffffffc0;
+            border: 2px solid;
+            border-radius: 25px;
+            padding: 0.5em;
+            width: max-content;
+            visibility: hidden;
+            opacity: 0;
         }
 
     </style>
