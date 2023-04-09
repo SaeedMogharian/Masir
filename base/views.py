@@ -115,32 +115,7 @@ def landing_page(request):
                 password=request.POST['login_password']
             )
             if user and user.is_active:
-                if user.user_detail.id in [16, 40, 986]:
-                    login(request, user)
-                    return (redirect('home_page_link'))
-                elif user.user_detail.groups.all().first():
-                    return (
-                        render(
-                            request,
-                            'landing_page.html',
-                            {
-                                'MESSAGE': str(user.user_detail)
-                                           + ' عزیز! '
-                                           + 'گروه شما با موفقیت'
-                                           + ' ثبت شده است.'
-                                           + '<br>'
-                                           + 'چند نکته مهم:'
-                                           + '<ul>'
-                                           + '<li>' + 'مسابقه از نیمه دوم ماه مبارک رمضان آغاز خواهد شد.' + '</li>'
-                                           + '<li>' + 'حتما و حتما در یکی از کانالهای مسابقه عضو شوید تا اطلاعیه‌های بعدی را دریافت نمایید.' + '</li>'
-                                           + '</ul>',
-                                'cities': City.objects.all().order_by('name'),
-                                'schools': School.objects.all().order_by('name'),
-                                'announcements': Announcement.objects.filter(is_public=True)
-                            }
-                        )
-                    )
-                elif user.user_detail.accessibility != Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
+                if user.user_detail.groups.all().first() or user.user_detail.accessibility != Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
                     login(request, user)
                     return (redirect('home_page_link'))
 
