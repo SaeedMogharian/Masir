@@ -164,27 +164,29 @@
         }
 
         .oasis {
-            width: 80vw;
-            max-width: 35em !important;
+            width: 60vw;
+            max-width: 30em !important;
+
         }
 
         .zigg {
-            width: 19vw;
+            width: 14vw;
             max-width: 13em;
             right: 10vw;
             top: 40% !important;
+
 
         }
 
         .sand {
             width: 48vw;
-            max-width: 28em;
+            max-width: 26em;
             top: 15% !important;
         }
 
         .tent {
             width: 25vw;
-            max-width: 18em;
+            max-width: 15em;
             left: 10vw;
             top: 40% !important;
         }
@@ -214,7 +216,7 @@
 
         @media screen and (max-width: 426px) {
             .tent {
-                width: 8em;
+                width: 8.75em;
                 top: 45% !important;
                 left: 6vw;
             }
@@ -230,11 +232,33 @@
 
             .zigg {
                 width: 6em;
-                top: 45% !important;
+                top: 52% !important;
                 left: 6vw;
             }
         }
+        
+        @media screen and (max-height: 600px)  {
+            .tent {
+                min-width: 10em;
+                width: 22vw;
+            }
 
+            .oasis {
+                max-width: 37vw !important;
+                min-width: 16em !important;
+            }
+
+            .sand {
+                width: 16em;
+                top: 26% !important;
+            }
+
+            .zigg {
+                width: 12vw;
+                min-width: 6em!important;
+            }
+            
+        }
         .info {
             background-image: url("{% static 'images/info-icon.png' %}");
             margin-right: auto;
