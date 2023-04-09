@@ -103,32 +103,42 @@
                 </li>
               {% endfor %}
             </ul>
-            <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto" onsubmit="university_show_scores_admin_form_click()">
+              <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto" onsubmit="event_show_scores_admin_form_click()">
               {% csrf_token %}
-              <button type="submit" name="university_show_scores_admin_form" id="university_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #64b1ff;">
-              نمایش عمومی نتایج همه آزمون‌های دانشگاه
+              <button type="submit" name="event_show_scores_admin_form" id="event_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #64b1ff;">
+              نمایش عمومی نتایج فراخوان ها
               </button>
-              <button class="btn masir-btn w-100" style="background-color: #64b1ff; display: none;" id="university_show_scores_admin_form_loading">
+              <button class="btn masir-btn w-100" style="background-color: #64b1ff; display: none;" id="event_show_scores_admin_form_loading">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                در حال انجام...
+              </button>
+            </form>
+            <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2" onsubmit="university_show_scores_admin_form_click()">
+              {% csrf_token %}
+              <button type="submit" name="university_show_scores_admin_form" id="university_show_scores_admin_form" class="btn masir-btn w-100" style="background-color:#64ff64 ;">
+              نمایش عمومی نتایج دانشگاه
+              </button>
+              <button class="btn masir-btn w-100" style="background-color: #64ff64; display: none;" id="university_show_scores_admin_form_loading">
                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                 در حال انجام...
               </button>
             </form>
             <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2" onsubmit="club_show_scores_admin_form_click()">
               {% csrf_token %}
-              <button type="submit" name="club_show_scores_admin_form" id="club_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #64ff64;">
+              <button type="submit" name="club_show_scores_admin_form" id="club_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #CD7F32;">
               نمایش عمومی نتایج باشگاه
               </button>
-              <button class="btn masir-btn w-100" style="background-color: #64ff64; display: none;" id="club_show_scores_admin_form_loading">
+              <button class="btn masir-btn w-100" style="background-color: #CD7F32; display: none;" id="club_show_scores_admin_form_loading">
                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                 در حال انجام...
               </button>
             </form>
             <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2" onsubmit="activities_show_scores_admin_form_click()">
               {% csrf_token %}
-              <button type="submit" name="activities_show_scores_admin_form" id="activities_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #f264ff;">
-              نمایش عمومی نتایج فعالیت‌ها
+              <button type="submit" name="activities_show_scores_admin_form" id="activities_show_scores_admin_form" class="btn masir-btn w-100" style="background-color: #5a0200; color: white">
+              نمایش عمومی نتایج ماموریت ها
               </button>
-              <button class="btn masir-btn w-100" style="background-color: #f264ff; display: none;" id="activities_show_scores_admin_form_loading">
+              <button class="btn masir-btn w-100" style="background-color: #5a0200; color: white; display: none;" id="activities_show_scores_admin_form_loading">
                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                 در حال انجام...
               </button>
@@ -174,6 +184,10 @@
       function university_show_scores_admin_form_click(){
         document.getElementById('university_show_scores_admin_form').style.display = 'none';
         document.getElementById('university_show_scores_admin_form_loading').style.display = 'block';
+      }
+      function event_show_scores_admin_form_click(){
+        document.getElementById('event_show_scores_admin_form').style.display = 'none';
+        document.getElementById('event_show_scores_admin_form_loading').style.display = 'block';
       }
 
       function club_show_scores_admin_form_click(){

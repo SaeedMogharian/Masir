@@ -364,7 +364,7 @@ audio::-webkit-media-controls-panel {
 
 .masir-offcanvas {
     background-color: #ffffffc0;
-    border-left: 3px #3d6185 solid;
+    border-left: 3px #f0aa4b solid;
     max-width: 90% !important;
     min-width: 40vw;
 }

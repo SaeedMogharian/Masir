@@ -181,7 +181,7 @@ class User_Detail(models.Model):
 
     class Meta:
         verbose_name = 'کاربر'
-        verbose_name_plural = 'اطلاعات کاربران'
+        verbose_name_plural = 'کاربران - اطلاعات'
 
 
 class Message(models.Model):
@@ -212,7 +212,7 @@ class Message(models.Model):
 
     class Meta:
         verbose_name = 'پیام‌'
-        verbose_name_plural = 'پیام‌های کاربران'
+        verbose_name_plural = 'کاربران - پیام‌ها'
 
 
 class Announcement(models.Model):
@@ -265,7 +265,7 @@ class Manzel(models.Model):
         return (str(self.back_image)[4:])
 
     def get_discover_help(self):
-        return 'https://masir1402.ir/media/'+str(self.discover_help)
+        return 'https://masir1402.ir/media/' + str(self.discover_help)
 
     def __str__(self):
         return (self.number + ' | ' + self.title)
@@ -315,7 +315,7 @@ class Club_File(models.Model):
 
     class Meta:
         verbose_name = 'فایل‌'
-        verbose_name_plural = 'فایل‌های باشگاه'
+        verbose_name_plural = 'گروه ها - فایل های باشگاه'
 
 
 class Question(models.Model):
@@ -331,7 +331,7 @@ class Question(models.Model):
 
     class Meta:
         verbose_name = 'پرسش'
-        verbose_name_plural = 'پرسش‌های آزمون‌های دانشگاه'
+        verbose_name_plural = 'آزمون‌های دانشگاه - پرسش ها'
 
 
 class FAQ(models.Model):
@@ -371,9 +371,9 @@ class Exam(models.Model):
 
 
 class Event(models.Model):
-    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='نام آزمون')
+    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='نام فراخوان')
     active = models.BooleanField(default=False, verbose_name='فعال')
-    Q = models.TextField(default='پرسش پیش‌فرض', max_length=5000, verbose_name='متن پرسش')
+    Q = models.TextField(default='پرسش پیش‌فرض', max_length=5000, verbose_name='متن فراخوان')
     O1 = models.TextField(default='پاسخ پیش‌فرض', max_length=5000, verbose_name='گزینه 1')
     O2 = models.TextField(default='پاسخ پیش‌فرض', max_length=5000, verbose_name='گزینه 2')
     O3 = models.TextField(default='پاسخ پیش‌فرض', max_length=5000, verbose_name='گزینه 3')
@@ -410,13 +410,12 @@ class Activity_Template(models.Model):
             return 'سخت'
         return self.title
 
-
     def __str__(self):
         return (self.title)
 
     class Meta:
         verbose_name = 'قالب فعالیت'
-        verbose_name_plural = 'قالب‌های فعالیت‌ها'
+        verbose_name_plural = 'فعالیت‌ها - قالب‌ها'
 
 
 class Activity_Topic(models.Model):
@@ -433,7 +432,7 @@ class Activity_Topic(models.Model):
     code = models.CharField(null=True, blank=True, default='', max_length=8, verbose_name='کد اکتشاف')
 
     def get_file(self):
-        return 'https://masir1402.ir/media/'+str(self.file)
+        return 'https://masir1402.ir/media/' + str(self.file)
 
     def if_long(self):
         if not self.manzel:
@@ -461,7 +460,7 @@ class Activity_Topic(models.Model):
 
     class Meta:
         verbose_name = 'موضوع فعالیت'
-        verbose_name_plural = 'موضوعات فعالیت‌ها'
+        verbose_name_plural = 'فعالیت‌ها - موضوعات'
 
 
 class Masir_Group(models.Model):
@@ -536,6 +535,8 @@ class Masir_Group(models.Model):
             f += 50
         for x in self.exams.filter(show_public=True):
             f = f + x.score
+        for x in self.events.filter(show_public=True):
+            f = f + (x.score * 5)
         x: Activity
         for x in self.activities.filter(state='4'):
             f = f + (x.get_score() * x.template.max_food / 5)
@@ -585,7 +586,8 @@ class Masir_Group(models.Model):
         for x in self.activities.filter(state='4'):
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(
-                    code=ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0'+str(round(x.get_score()))),
+                    code=ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0' + str(
+                        round(x.get_score()))),
                 (4 - int(x.template.type)) * x.get_score()
             )
         if len(self.discovered.all()) >= 16:
@@ -593,7 +595,6 @@ class Masir_Group(models.Model):
                 Achivement.objects.get(code='Mng'),
                 40
             )
-
 
         if len(self.activities.filter(state='4')) >= 1:
             self.set_masir_group_and_achivement_rel(
@@ -934,6 +935,8 @@ class Masir_Group(models.Model):
             l = l + x.score
         for x in self.exams.filter(show_public=True):
             l = l + x.score / 2
+        for x in self.events.filter(show_public=True):
+            l = l + x.score * 10
         for x in self.users.all():
             l = l + len(x.club_files.filter(show_public=True)) / 2
         for x in self.charities.all():
@@ -966,6 +969,13 @@ class Masir_Group(models.Model):
                 return (True)
         return (False)
 
+    def has_active_event(self):
+        if Event.objects.filter(active=True).first():
+            if not Masir_Group_And_Event_Rel.objects.filter(group=self,
+                                                            event=Event.objects.filter(active=True).first()).first():
+                return (True)
+        return (False)
+
     def __str__(self):
         return (str(self.title) + ' | ' + str(self.supergroup))
 
@@ -984,7 +994,7 @@ class Masir_Group_And_Achivement_Rel(models.Model):
 
     class Meta:
         verbose_name = 'ارتباط'
-        verbose_name_plural = 'ارتباط میان گروه‌ها و دستاوردها'
+        verbose_name_plural = 'گروه ها - دستاوردها'
 
 
 class Masir_Group_And_Exams_Rel(models.Model):
@@ -996,11 +1006,27 @@ class Masir_Group_And_Exams_Rel(models.Model):
     date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
 
     def __str__(self):
-        return (str(self.exam) + ' | ' + str(self.group))
+        return (str(self.event) + ' | ' + str(self.group))
 
     class Meta:
         verbose_name = 'ارتباط'
-        verbose_name_plural = 'ارتباط میان گروه‌ها و آزمون‌ها'
+        verbose_name_plural = 'گروه ها - ارتباط با دانشگاه ها'
+
+
+class Masir_Group_And_Event_Rel(models.Model):
+    group = models.ForeignKey(Masir_Group, related_name='events', on_delete=models.CASCADE, verbose_name='گروه')
+    event = models.ForeignKey(Event, related_name='groups', on_delete=models.CASCADE, verbose_name='فراخوان')
+    score = models.IntegerField(default=0, verbose_name='امتیاز')
+    answers = models.CharField(default='', max_length=50, verbose_name='پاسخ‌ها')
+    show_public = models.BooleanField(default=False, verbose_name='نمایش عمومی')
+    date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
+
+    def __str__(self):
+        return (str(self.event) + ' | ' + str(self.group))
+
+    class Meta:
+        verbose_name = 'ارتباط'
+        verbose_name_plural = 'گروه ها - ارتباط با فراخوان ها'
 
 
 class Trash(models.Model):
@@ -1013,7 +1039,7 @@ class Trash(models.Model):
 
     class Meta:
         verbose_name = 'اسراف'
-        verbose_name_plural = 'اسراف‌ها'
+        verbose_name_plural = 'گروه ها - اسراف‌ها'
 
 
 class Charity(models.Model):
@@ -1026,7 +1052,7 @@ class Charity(models.Model):
 
     class Meta:
         verbose_name = 'صدقه'
-        verbose_name_plural = 'صدقات'
+        verbose_name_plural = 'گروه ها - صدقات'
 
 
 class Report(models.Model):
@@ -1039,7 +1065,7 @@ class Report(models.Model):
 
     class Meta:
         verbose_name = 'گزارش'
-        verbose_name_plural = 'گزارش‌ها'
+        verbose_name_plural = 'گروه ها - گزارش‌ها'
 
 
 class Activity(models.Model):
@@ -1070,4 +1096,4 @@ class Activity(models.Model):
 
     class Meta:
         verbose_name = 'فعالیت'
-        verbose_name_plural = 'فعالیت‌ها'
+        verbose_name_plural = 'گروه ها - فعالیت‌ها'

@@ -115,7 +115,8 @@ def landing_page(request):
                 password=request.POST['login_password']
             )
             if user and user.is_active:
-                if user.user_detail.groups.all().first() or user.user_detail.accessibility != Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
+                if user.user_detail.groups.all().first() or user.user_detail.accessibility != Accessibility.objects.get(
+                        title='دسترسی دانش‌آموزی'):
                     login(request, user)
                     return (redirect('home_page_link'))
 
@@ -708,6 +709,7 @@ def home_page(request):
                                         'achivements': Achivement.objects.filter(
                                             manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                                         'exam': Exam.objects.filter(active=True).first(),
+                                        'event': Event.objects.filter(active=True).first(),
                                         'MESSAGE': 'شما قبلا یک فایل در باشگاه ارسال کرده‌اید.'
                                     }
                                 )
@@ -747,6 +749,7 @@ def home_page(request):
                             'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                                 code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
+                            'event': Event.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان صدقه از میزان آذوقه گروه بیشتر است.'
                         }
                     )
@@ -864,6 +867,7 @@ def home_page(request):
                             'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                                 code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
+                            'event': Event.objects.filter(active=True).first(),
                             'MESSAGE': 'گروه شما قبلا یکبار در این آزمون شرکت کرده است.'
                         }
                     )
@@ -890,6 +894,48 @@ def home_page(request):
             )
 
             return (redirect('home_page_link'))
+
+        if 'event_form' in request.POST:
+            event = Event.objects.filter(active=True).first()
+            if Masir_Group_And_Event_Rel.objects.filter(group=user.groups.all().first(), event=event).first():
+                return (
+                    render(
+                        request,
+                        'home_page.html',
+                        {
+                            'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
+                                'right'),
+                            'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
+                            'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
+                            'FAQ': FAQ.objects.filter(is_active=True),
+                            'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
+                                code__contains='Mnz'),
+                            'exam': Exam.objects.filter(active=True).first(),
+                            'event': Event.objects.filter(active=True).first(),
+                            'MESSAGE': 'گروه شما قبلا یکبار در این فراخوان شرکت کرده است.'
+                        }
+                    )
+                )
+            score = 0
+            answers = ''
+            a = request.POST['Q']
+            if event.A == int(a):
+                score = 1
+            answers = a
+
+            Masir_Group_And_Event_Rel.objects.create(
+                group=user.groups.all().first(),
+                event=event,
+                score=score,
+                answers=answers
+            )
+
+            Report.objects.create(
+                group=user.groups.all().first(),
+                text='پاسخ‌های شما به فراخوان' + str(event) + ' با موفقیت ثبت شد.'
+            )
+
+            return redirect('home_page_link')
 
         # رفتن به منزل بعد
         if 'next_level_form' in request.POST:
@@ -966,6 +1012,7 @@ def home_page(request):
                                     'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                                         code__contains='Mnz'),
                                     'exam': Exam.objects.filter(active=True).first(),
+                                    'event': Event.objects.filter(active=True).first(),
                                     'MESSAGE': 'آفرین! اکتشاف شما موفق بود! <br> ماموریت مخفی «' + x.title + '» به گروه شما اضافه شد'
                                 }
                             )
@@ -985,6 +1032,7 @@ def home_page(request):
                                         code__contains='Mnz'),
 
                                     'exam': Exam.objects.filter(active=True).first(),
+                                    'event': Event.objects.filter(active=True).first(),
                                     'MESSAGE': 'این ماموریت مخفی را قبلا پیدا کرده اید. دوباره تلاش کنید! '
                                 }
                             )
@@ -1002,6 +1050,7 @@ def home_page(request):
                         'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                             code__contains='Mnz'),
                         'exam': Exam.objects.filter(active=True).first(),
+                        'event': Event.objects.filter(active=True).first(),
                         'MESSAGE': 'متاسفانه اکتشاف موفق نبود!<br> بیشتر تلاش کنید '
                     }
                 )
@@ -1029,6 +1078,7 @@ def home_page(request):
                             'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                                 code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
+                            'event': Event.objects.filter(active=True).first(),
                             'MESSAGE': 'شما قبلا این سطح را بازگشایی کرده اید.'
                         }
                     )
@@ -1050,13 +1100,14 @@ def home_page(request):
                             'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                                 code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
+                            'event': Event.objects.filter(active=True).first(),
                             'MESSAGE': 'میزان آذوقه شما کافی نمی باشد'
                         }
                     )
                 )
             user.groups.all().first().unlocked.add(t)
             user.save()
-            display=t.get_title()
+            display = t.get_title()
             m = 'شما با موفقیت سطح «' + display + '» از ماموریت «' + str(y) + '» را بازگشایی کردید. '
             if f:
                 m += 'و به این دلیل 5 واحد آذوقه از دست دادید'
@@ -1081,6 +1132,7 @@ def home_page(request):
                             'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                                 code__contains='Mnz'),
                             'exam': Exam.objects.filter(active=True).first(),
+                            'event': Event.objects.filter(active=True).first(),
                             'MESSAGE': 'شما قبلا این مرحله را گذرانده اید'
                         }
                     )
@@ -1111,6 +1163,7 @@ def home_page(request):
                                 'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                                     code__contains='Mnz'),
                                 'exam': Exam.objects.filter(active=True).first(),
+                                'event': Event.objects.filter(active=True).first(),
                                 'MESSAGE': 'گروه شما قبلا یکبار این ماموریت را انجام داده است.'
                             }
                         )
@@ -1132,6 +1185,7 @@ def home_page(request):
                                     'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(
                                         code__contains='Mnz'),
                                     'exam': Exam.objects.filter(active=True).first(),
+                                    'event': Event.objects.filter(active=True).first(),
                                     'MESSAGE': 'شما به این فعالیت دسترسی ندارید'
                                 }
                             )
@@ -1295,6 +1349,22 @@ def home_page(request):
                 )
 
             return (redirect('home_page_link'))
+
+        if 'event_show_scores_admin_form' in request.POST:
+            for x in Masir_Group_And_Event_Rel.objects.filter(show_public=False):
+                x.show_public = True
+                x.save()
+                a = 'اشتباه'
+                if x.score == 1:
+                    a = 'درست'
+
+                Report.objects.create(
+                    group=x.group,
+                    text='نتایج فراخوان ' + str(x.event.title) + ' منتشر شد و پاسخ گروه شما در این فراخوان ' + str(
+                        a) + ' بود.'
+                )
+
+            return redirect('home_page_link')
 
         if 'club_show_scores_admin_form' in request.POST:
             for x in Club_File.objects.filter(show_public=False, verified=True):
@@ -1526,7 +1596,8 @@ def home_page(request):
                 'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                 'FAQ': FAQ.objects.filter(is_active=True),
                 'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
-                'exam': Exam.objects.filter(active=True).first()
+                'exam': Exam.objects.filter(active=True).first(),
+                'event': Event.objects.filter(active=True).first(),
             }
         )
     )

@@ -42,14 +42,20 @@
         }
 
         .leftnav {
-            height: min(28vw, 30vh);
-            min-height: 5em;
+            height: max(30vh, 30vw);
+            max-height: 23em !important;
             width: 5vw;
             position: fixed;
             z-index: 1;
             top: 0;
             left: 0;
 
+        }
+
+        @media screen and (max-width: 1400px) {
+            .leftnav {
+                height: max(25vh, 25vw);
+            }
         }
 
         .rightnav {
@@ -244,6 +250,12 @@
             min-height: 1em !important;
         }
 
+        #event {
+            animation-name: masir-jelly-animation;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+        }
+
     </style>
 
     <title>مسابقه مسیر</title>
@@ -349,6 +361,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="position-absolute top-50 start-50 translate-middle d-flex"
+                     style="height: max-content;">
+                    {% if event %}
+                        <a id='event' class="masir-circle-button-2 masir-jelly mt-5" title="باران"
+                           style="background-image: url('{% static 'images/event-rain.png' %}');"
+                           data-bs-toggle="modal" href="#event_modal" role="button"></a>
+                    {% endif %}
+                </div>
+
             </div>
             <nav class="leftnav">
                 <div id="masir-leftbar-bg" class="position-relative">
@@ -372,10 +393,13 @@
                         <a class="masir-circle-button-2 masir-jelly" title="اکسیر حیات"
                            style="background-image: url('{% static 'images/navbar_help.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                            href="{% url 'help_page_link' %}"></a>
+
+
                     </div>
                 </div>
             </nav>
         </nav>
+
     {% endblock %}
 
     {% block mainblock %}
@@ -471,11 +495,9 @@
                                             {{ x.power_for_next_manzel }}
                                         </div>
                                         <div style=" color: #00690e;">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="50"
-                                                 height="50" viewBox="0 0 512 512">
-                                                <image x="42" y="85" width="428" height="342"
-                                                       xlink:href="data:img/png;base64,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"/>
+                                            <svg width="50" height="50" viewBox="0 0 512 512">
+                                                <image y="127" width="512" height="258"
+                                                       href="data:img/png;base64,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"></image>
                                             </svg>
 
 
@@ -568,10 +590,10 @@
         <div class="modal fade" id="profile_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="profile_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
-                    <div class="modal-body scroll-without-scrollbar">
+                    <div class="modal-body scroll-without-scrollbar" style="overflow-x: hidden">
                         <div class="d-flex">
                             <a class="masir-circle-button-2 masir-jelly" title="خروج"
                                style="background-image: url('{% static 'images/navbar_logout.png' %}'); margin: auto max(0.15vw, 0.15vh); min-width: 2em; min-height: 2em"
@@ -773,7 +795,7 @@
         <div class="modal fade" id="charity_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="charity_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
@@ -847,7 +869,7 @@
         <div class="modal fade" id="unlock_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="unlock_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
@@ -904,7 +926,7 @@
         <div class="modal fade" id="club_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="club_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
@@ -1001,7 +1023,7 @@
         <div class="modal fade" id="discover_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="discover_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
@@ -1031,55 +1053,233 @@
                             <div class="h4 mt-1" style="font-weight: 700; text-align: center"> منزل
                                 «{{ user.user_detail.groups.all.first.get_manzel.title }} »
                             </div>
-                            <a type="button" title="رهنمای اکتشاف"
-                               href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
-                               style="background-color: #610909; border: 2px #610909 solid; color: white; margin-top: 4vh"
-                               class="btn btn-primary masir-btn col-lg-6 col-md-10 col-sm-12" download="">دانلود فایل
-                                رهنمای اکتشاف
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                     width="30" height="30" viewBox="0 0 50 50">
-                                    <image x="2" y="3" width="30" height="30"
-                                           xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAtCAYAAADRLVmZAAABYElEQVRoge3Y20rDQBDG8cTe6q2+kic8VXwW8SF8AH020R6woOCNCB7AvwykJl03mqQ7my7Od9tk5tdhu1020wiwB0yBCbCj0kQJLuB5xho91jSKJhtZHsXUx8D2f5+HpTa2q/wS21WqsV3F0jDAEHgCHoCDZOYGzCq7ylSjR65RVLQLTfI8eJ9kt0ODx47BY8fgsWPw2DF47PQCBzaArV6+MXBWHF3v3aMrTpzP5Mj7AnwCl33AHyu8D+D0L7g8Uzw7j+A3Y8Nnju8b74N70JJnYL0rwDudBu8dAu8+vFuzBi3vnnR2doVn5Xr14d340MOWvcLBs/LW6tWDrUurSavBW+IFfdyxR3h4Q3xntCq8KL5bg38DjpasrQfPyuu3Kn5pdBR40WQfuAFGsoQC1VxI7mI17kBCxHXa6TB2fiyVVCITHyXovhX41QpA2uZafq0D4AK48/7frVbEeA4MvgDqvDywb7Y5KQAAAABJRU5ErkJggg=="/>
-                                </svg>
+                            {% if user.user_detail.groups.all.first.get_manzel.id != 1 %}
+                                <a type="button" title="رهنمای اکتشاف"
+                                   href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
+                                   style="background-color: #610909; border: 2px #610909 solid; color: white; margin-top: 4vh"
+                                   class="btn btn-primary masir-btn col-lg-6 col-md-10 col-sm-12" download="">دانلود
+                                    فایل
+                                    رهنمای اکتشاف
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="30" height="30" viewBox="0 0 50 50">
+                                        <image x="2" y="3" width="30" height="30"
+                                               xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAtCAYAAADRLVmZAAABYElEQVRoge3Y20rDQBDG8cTe6q2+kic8VXwW8SF8AH020R6woOCNCB7AvwykJl03mqQ7my7Od9tk5tdhu1020wiwB0yBCbCj0kQJLuB5xho91jSKJhtZHsXUx8D2f5+HpTa2q/wS21WqsV3F0jDAEHgCHoCDZOYGzCq7ylSjR65RVLQLTfI8eJ9kt0ODx47BY8fgsWPw2DF47PQCBzaArV6+MXBWHF3v3aMrTpzP5Mj7AnwCl33AHyu8D+D0L7g8Uzw7j+A3Y8Nnju8b74N70JJnYL0rwDudBu8dAu8+vFuzBi3vnnR2doVn5Xr14d340MOWvcLBs/LW6tWDrUurSavBW+IFfdyxR3h4Q3xntCq8KL5bg38DjpasrQfPyuu3Kn5pdBR40WQfuAFGsoQC1VxI7mI17kBCxHXa6TB2fiyVVCITHyXovhX41QpA2uZafq0D4AK48/7frVbEeA4MvgDqvDywb7Y5KQAAAABJRU5ErkJggg=="/>
+                                    </svg>
 
-                            </a>
-                            <form action="{% url 'home_page_link' %}" method="post" onsubmit="discover_form_click()" style=" margin-top: 3vh">
-                                {% csrf_token %}
-                                <div class="h4 mb-1 mt-2" style="font-weight: 700;">
-                                    اکتشاف
-                                </div>
-                                <input name="discover_code" type="text"
-                                       class="form-control masir-form-control text-center" autocomplete="off"
-                                       placeholder="کد اکتشاف شده را وارد کنید" required>
-                                <button type="submit" name="discover_form" id="discover_form"
-                                        class="btn masir-btn mt-2 col-lg-2" title="بررسی کد"
-                                        style="margin-left:0; background-color: #b50000; border: 2px #610909 solid; color: white;">
-                                    بررسی
-                                    کد
-                                </button>
-                                <button class="btn masir-btn mt-2"
-                                        style="margin-left:0; background-color: #b50000; border: 2px #610909 solid; color: white; display: none;"
-                                        id="discover_form_loading">
+                                </a>
+                                <form action="{% url 'home_page_link' %}" method="post" onsubmit="discover_form_click()"
+                                      style=" margin-top: 3vh">
+                                    {% csrf_token %}
+                                    <div class="h4 mb-1 mt-2" style="font-weight: 700;">
+                                        اکتشاف
+                                    </div>
+                                    <input name="discover_code" type="text"
+                                           class="form-control masir-form-control text-center" autocomplete="off"
+                                           placeholder="کد اکتشاف شده را وارد کنید" required>
+                                    <button type="submit" name="discover_form" id="discover_form"
+                                            class="btn masir-btn mt-2 col-lg-2" title="بررسی کد"
+                                            style="margin-left:0; background-color: #b50000; border: 2px #610909 solid; color: white;">
+                                        بررسی
+                                        کد
+                                    </button>
+                                    <button class="btn masir-btn mt-2"
+                                            style="margin-left:0; background-color: #b50000; border: 2px #610909 solid; color: white; display: none;"
+                                            id="discover_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
                                               aria-hidden="true"></span>
-                                    در حال بررسی...
-                                </button>
+                                        در حال بررسی...
+                                    </button>
 
-                            </form>
-                            {% for m in manazel %}
-                                {% if m == user.user_detail.groups.all.first.get_manzel and m.id != 1%}
-                                    <div class="h4" style="font-weight: 700;">ماموریت های مخفی {{ m.number }}</div>
-                                    {% for x in m.activity_topics.all %}
-                                        {% if x not in user.user_detail.groups.all.first.get_activity_topics and not x.main and x in user.user_detail.groups.all.first.discovered.all %}
-                                            <div class="accordion-item col-12" style="background-color: #F3F3F3">
+                                </form>
+                                {% for m in manazel %}
+                                    {% if m == user.user_detail.groups.all.first.get_manzel %}
+                                        <div class="h4" style="font-weight: 700;">ماموریت های مخفی {{ m.number }}</div>
+                                        {% for x in m.activity_topics.all %}
+                                            {% if x not in user.user_detail.groups.all.first.get_activity_topics and not x.main and x in user.user_detail.groups.all.first.discovered.all %}
+                                                <div class="accordion-item col-12" style="background-color: #F3F3F3">
+                                                    <h3 id="H{{ x.id }}">
+                                                        <button class="accordion-button collapsed masir-btn"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }};  border-radius: 0!important; display: flex"
+                                                                data-bs-target="#S{{ x.id }}" aria-expanded="false"
+                                                                aria-controls="S{{ x.id }}">
+                                                            {{ x.title }}
+                                                        </button>
+                                                    </h3>
+                                                    <div id="S{{ x.id }}" class="accordion-collapse collapse"
+                                                         aria-labelledby="H{{ x.id }}">
+                                                        <div class="accordion-body">
+                                                            <div class="mb-3 p-2" style="background-color: #eeeeee;">
+                                                                <div class=" d-flex justify-content-center align-items-center"
+                                                                     style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
+                                                                    <span style="margin:1vw; font-weight: 700;"> دانلود توضیحات ماموریت </span>
+                                                                    <a class="masir-circle-button-2"
+                                                                       title="دانلود توضیحات ماموریت"
+                                                                       style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
+                                                                       href="{{ x.get_file }}" download></a>
+                                                                </div>
+
+                                                                <form action="{% url 'home_page_link' %}" method="post"
+                                                                      onsubmit="activity_{{ x.id }}_form_click()">
+                                                                    {% csrf_token %}
+                                                                    <div class="mb-1 mt-2" style="font-weight: 700;">
+                                                                        انتخاب
+                                                                        دشواری
+                                                                    </div>
+                                                                    <select name="activity_{{ x.id }}_template"
+                                                                            class="form-select masir-form-control text-center"
+                                                                            onchange="activity_{{ x.id }}_template_change(this)"
+                                                                            {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                                            disabled {% else %} required {% endif %} >
+                                                                        {% for t in x.get_activity_templates %}
+                                                                            <option value="{{ t.id }}"> {{ t.title }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+
+                                                                    <div class="row">
+                                                                        <div class="flex col-6">
+                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                <span> نوع قالب: </span>
+                                                                                <span id="activity_{{ x.id }}_template_type">{{ x.get_activity_templates.0.type }}</span>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                <span> حداکثر توان قابل کسب: </span>
+                                                                                <span id="activity_{{ x.id }}_template_max_power">{{ x.get_activity_templates.0.max_power }}</span>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                <span> حداکثر آذوقه قابل کسب: </span>
+                                                                                <span id="activity_{{ x.id }}_template_max_food">{{ x.get_activity_templates.0.max_food }}</span>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="flex col-6">
+                                                                            {% for t in x.template.all %}
+                                                                                {% if t in user.user_detail.groups.all.first.unlocked.all %}
+                                                                                    <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                                    <span class="col-lg-6 col-10 btn btn-success d-inline-block"
+                                                                                          tabindex="0"
+                                                                                          data-bs-toggle="popover"
+                                                                                          data-bs-placement="top"
+                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto"
+                                                                                          data-bs-content="{{ t.info }}">
+                                                                                        {{ t.get_title }}
+                                                                                    </span>
+                                                                                        <div class="col-2">
+                                                                                            <svg viewBox="0 0 24 24"
+                                                                                                 width="30px"
+                                                                                                 height="30px">
+                                                                                                <path d="M 12 0 C 8.699219 0 6 2.699219 6 6 L 6 8 L 8 8 L 8 6 C 8 3.78125 9.78125 2 12 2 C 14.21875 2 16 3.78125 16 6 L 16 11 L 3 11 L 3 24 L 21 24 L 21 11 L 18 11 L 18 6 C 18 2.699219 15.300781 0 12 0 Z"/>
+                                                                                            </svg>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                {% else %}
+                                                                                    <div class="d-flex end-0 justify-content-between align-items-center">
+                                                                                    <span class="col-lg-6 col-10 btn btn-danger d-inline-block disabled"
+                                                                                          tabindex="0"
+                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto">
+                                                                                        {{ t.get_title }}
+                                                                                    </span>
+                                                                                        <a class="col-2 masir-jelly"
+                                                                                           onclick="unlock_{{ x.id }}_{{ t.id }}_passValueToModal()"
+                                                                                           title="باز کردن شرح ماموریت"
+                                                                                           data-bs-toggle="modal"
+                                                                                           href="#unlock_modal"
+                                                                                           role="button"
+                                                                                           style="margin-top:1vh; display: block"
+                                                                                           id="unlock_button_{{ t.id }}">
+                                                                                            <svg viewBox="0 0 30 30"
+                                                                                                 width="30px" fill="red"
+                                                                                                 height="30px">
+                                                                                                <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
+                                                                                            </svg>
+                                                                                        </a>
+                                                                                    </div>
+
+
+
+                                                                                {% endif %}
+
+                                                                            {% endfor %}
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="mb-1 mt-2" style="font-weight: 700;">
+                                                                        لینک
+                                                                        فایل
+                                                                    </div>
+                                                                    <div class="mb-1">
+                                                                        <div class="d-inline-block info" tabindex="0"
+                                                                             data-bs-toggle="popover"
+                                                                             data-bs-placement="top"
+                                                                             data-bs-trigger="hover focus"
+                                                                             data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                                                        </div>
+                                                                        ابتدا فایل خود را در یک آپلود سنتر
+                                                                        بارگذاری کرده و
+                                                                        سپس آدرس
+                                                                        فایل
+                                                                        بارگذاری شده را در اینجا وارد کنید.
+                                                                    </div>
+                                                                    <input name="activity_{{ x.id }}_file" type="url"
+                                                                           class="form-control masir-form-control text-center"
+                                                                           autocomplete="off"
+                                                                           required
+                                                                            {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                                           disabled {% endif %} >
+
+                                                                    <div class="form-check mt-3 mb-2">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                               required>
+                                                                        <label class="form-check-label"
+                                                                               for="flexCheckDefault">
+                                                                            از سطح انتخابی و فایل ارسالی مطمئن هستیم.
+                                                                        </label>
+                                                                    </div>
+                                                                    <button type="submit"
+                                                                            name="activity_{{ x.id }}_form"
+                                                                            id="activity_{{ x.id }}_form"
+                                                                            class="btn masir-btn col-lg-6 col-md-6 col-12 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}"
+                                                                            style="background-color: {{ m.color }}; color:white"
+                                                                            {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                                            disabled {% endif %} disabled>بارگذاری نهایی
+                                                                    </button>
+                                                                    <button class="btn masir-btn col-lg-6 col-md-6 col-12"
+                                                                            style="background-color: {{ m.color }}; color:white; display: none;"
+                                                                            id="activity_{{ x.id }}_form_loading">
+                                                                    <span class="spinner-grow spinner-grow-sm"
+                                                                          role="status"
+                                                                          aria-hidden="true"></span>
+                                                                        در حال بارگذاری...
+                                                                    </button>
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <span> وضعیت: </span>
+                                                                        <span> ارسال نشده </span>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            {% endif %}
+                                        {% endfor %}
+
+
+                                        {% for x in user.user_detail.groups.all.first.activities.all %}
+                                            {% if x.topic in m.activity_topics.all and not x.topic.main %}
                                                 <h3 id="H{{ x.id }}">
+
                                                     <button class="accordion-button collapsed masir-btn" type="button"
                                                             data-bs-toggle="collapse"
-                                                            style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }};  border-radius: 0!important; display: flex"
+                                                            style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }}; border-radius: 0!important; display: flex"
                                                             data-bs-target="#S{{ x.id }}" aria-expanded="false"
                                                             aria-controls="S{{ x.id }}">
-                                                        {{ x.title }}
+                                                        {{ x.topic.title }}
                                                     </button>
+
                                                 </h3>
                                                 <div id="S{{ x.id }}" class="accordion-collapse collapse"
                                                      aria-labelledby="H{{ x.id }}">
@@ -1094,41 +1294,39 @@
                                                                    href="{{ x.get_file }}" download></a>
                                                             </div>
 
-                                                            <form action="{% url 'home_page_link' %}" method="post"
-                                                                  onsubmit="activity_{{ x.id }}_form_click()">
+                                                            <form>
                                                                 {% csrf_token %}
-                                                                <div class="mb-1 mt-2" style="font-weight: 700;"> انتخاب
-                                                                    دشواری
+                                                                <div class="mb-1 mt-2" style="font-weight: 700;"> سطح
+                                                                    انتخاب
+                                                                    شده
                                                                 </div>
                                                                 <select name="activity_{{ x.id }}_template"
                                                                         class="form-select masir-form-control text-center"
-                                                                        onchange="activity_{{ x.id }}_template_change(this)"
-                                                                        {% if m != user.user_detail.groups.all.first.get_manzel %}
-                                                                        disabled {% else %} required {% endif %} >
-                                                                    {% for t in x.get_activity_templates %}
-                                                                        <option value="{{ t.id }}"> {{ t.title }}</option>
-                                                                    {% endfor %}
+                                                                        disabled>
+                                                                    <option> {{ x.template.title }} </option>
                                                                 </select>
+
 
                                                                 <div class="row">
                                                                     <div class="flex col-6">
                                                                         <div class="d-flex justify-content-between align-items-center">
                                                                             <span> نوع قالب: </span>
-                                                                            <span id="activity_{{ x.id }}_template_type">{{ x.get_activity_templates.0.type }}</span>
+                                                                            <span id="activity_{{ x.id }}_template_type">{{ x.template.get_type_display }}</span>
                                                                         </div>
                                                                         <div class="d-flex justify-content-between align-items-center">
                                                                             <span> حداکثر توان قابل کسب: </span>
-                                                                            <span id="activity_{{ x.id }}_template_max_power">{{ x.get_activity_templates.0.max_power }}</span>
+                                                                            <span id="activity_{{ x.id }}_template_max_power">{{ x.template.max_power }}</span>
                                                                         </div>
                                                                         <div class="d-flex justify-content-between align-items-center">
                                                                             <span> حداکثر آذوقه قابل کسب: </span>
-                                                                            <span id="activity_{{ x.id }}_template_max_food">{{ x.get_activity_templates.0.max_food }}</span>
+                                                                            <span id="activity_{{ x.id }}_template_max_food">{{ x.template.max_food }}</span>
                                                                         </div>
 
                                                                     </div>
                                                                     <div class="flex col-6">
-                                                                        {% for t in x.template.all %}
+                                                                        {% for t in x.topic.template.all %}
                                                                             {% if t in user.user_detail.groups.all.first.unlocked.all %}
+
                                                                                 <div class="d-flex end-0 justify-content-between align-items-center">
                                                                                     <span class="col-lg-6 col-10 btn btn-success d-inline-block"
                                                                                           tabindex="0"
@@ -1146,28 +1344,25 @@
                                                                                         </svg>
                                                                                     </div>
                                                                                 </div>
+
                                                                             {% else %}
+
                                                                                 <div class="d-flex end-0 justify-content-between align-items-center">
-                                                                                    <span class="col-lg-6 col-10 btn btn-danger d-inline-block disabled"
-                                                                                          tabindex="0"
-                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto">
+
+                                                                                    <div class="col-lg-6 col-10 btn btn-success d-inline-block disabled"
+                                                                                         style="margin-top:1vh; margin-right: auto; margin-left: auto">
                                                                                         {{ t.get_title }}
-                                                                                    </span>
-                                                                                    <a class="col-2 masir-jelly"
-                                                                                       onclick="unlock_{{ x.id }}_{{ t.id }}_passValueToModal()"
-                                                                                       title="باز کردن شرح ماموریت"
-                                                                                       data-bs-toggle="modal"
-                                                                                       href="#unlock_modal"
-                                                                                       role="button"
-                                                                                       style="margin-top:1vh; display: block"
-                                                                                       id="unlock_button_{{ t.id }}">
+                                                                                    </div>
+
+                                                                                    <div class="col-2">
                                                                                         <svg viewBox="0 0 30 30"
                                                                                              width="30px" fill="red"
                                                                                              height="30px">
                                                                                             <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
                                                                                         </svg>
-                                                                                    </a>
+                                                                                    </div>
                                                                                 </div>
+
 
 
 
@@ -1179,208 +1374,48 @@
 
                                                                 </div>
 
-                                                                <div class="mb-1 mt-2" style="font-weight: 700;">لینک
-                                                                    فایل
-                                                                </div>
-                                                                <div class="mb-1">
-                                                                    <div class="d-inline-block info" tabindex="0"
-                                                                         data-bs-toggle="popover"
-                                                                         data-bs-placement="top"
-                                                                         data-bs-trigger="hover focus"
-                                                                         data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
-                                                                    </div>
-                                                                    ابتدا فایل خود را در یک آپلود سنتر
-                                                                    بارگذاری کرده و
-                                                                    سپس آدرس
-                                                                    فایل
-                                                                    بارگذاری شده را در اینجا وارد کنید.
-                                                                </div>
-                                                                <input name="activity_{{ x.id }}_file" type="url"
-                                                                       class="form-control masir-form-control text-center"
-                                                                       autocomplete="off"
-                                                                       required
-                                                                        {% if m != user.user_detail.groups.all.first.get_manzel %}
-                                                                       disabled {% endif %} >
-
-                                                                <div class="form-check mt-3 mb-2">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                           required>
-                                                                    <label class="form-check-label"
-                                                                           for="flexCheckDefault">
-                                                                        از سطح انتخابی و فایل ارسالی مطمئن هستیم.
-                                                                    </label>
-                                                                </div>
-                                                                <button type="submit" name="activity_{{ x.id }}_form"
-                                                                        id="activity_{{ x.id }}_form"
-                                                                        class="btn masir-btn col-lg-6 col-md-6 col-12 mt-2 {% if m != user.user_detail.groups.all.first.get_manzel %} disabled {% endif %}"
-                                                                        style="background-color: {{ m.color }}; color:white"
-                                                                        {% if m != user.user_detail.groups.all.first.get_manzel %}
-                                                                        disabled {% endif %} disabled >بارگذاری نهایی
-                                                                </button>
-                                                                <button class="btn masir-btn col-lg-6 col-md-6 col-12"
-                                                                        style="background-color: {{ m.color }}; color:white; display: none;"
-                                                                        id="activity_{{ x.id }}_form_loading">
-                                                                    <span class="spinner-grow spinner-grow-sm"
-                                                                          role="status"
-                                                                          aria-hidden="true"></span>
-                                                                    در حال بارگذاری...
-                                                                </button>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <span> وضعیت: </span>
-                                                                    <span> ارسال نشده </span>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        {% endif %}
-                                    {% endfor %}
-
-
-                                    {% for x in user.user_detail.groups.all.first.activities.all %}
-                                        {% if x.topic in m.activity_topics.all and not x.topic.main %}
-                                            <h3 id="H{{ x.id }}">
-
-                                                <button class="accordion-button collapsed masir-btn" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }}; border-radius: 0!important; display: flex"
-                                                        data-bs-target="#S{{ x.id }}" aria-expanded="false"
-                                                        aria-controls="S{{ x.id }}">
-                                                    {{ x.topic.title }}
-                                                </button>
-
-                                            </h3>
-                                            <div id="S{{ x.id }}" class="accordion-collapse collapse"
-                                                 aria-labelledby="H{{ x.id }}">
-                                                <div class="accordion-body">
-                                                    <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                                        <div class=" d-flex justify-content-center align-items-center"
-                                                             style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
-                                                            <span style="margin:1vw; font-weight: 700;"> دانلود توضیحات ماموریت </span>
-                                                            <a class="masir-circle-button-2"
-                                                               title="دانلود توضیحات ماموریت"
-                                                               style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
-                                                               href="{{ x.get_file }}" download></a>
-                                                        </div>
-
-                                                        <form>
-                                                            {% csrf_token %}
-                                                            <div class="mb-1 mt-2" style="font-weight: 700;"> سطح انتخاب
-                                                                شده
-                                                            </div>
-                                                            <select name="activity_{{ x.id }}_template"
-                                                                    class="form-select masir-form-control text-center"
-                                                                    disabled>
-                                                                <option> {{ x.template.title }} </option>
-                                                            </select>
-
-
-                                                            <div class="row">
-                                                                <div class="flex col-6">
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <span> نوع قالب: </span>
-                                                                        <span id="activity_{{ x.id }}_template_type">{{ x.template.get_type_display }}</span>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <span> حداکثر توان قابل کسب: </span>
-                                                                        <span id="activity_{{ x.id }}_template_max_power">{{ x.template.max_power }}</span>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <span> حداکثر آذوقه قابل کسب: </span>
-                                                                        <span id="activity_{{ x.id }}_template_max_food">{{ x.template.max_food }}</span>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="flex col-6">
-                                                                    {% for t in x.topic.template.all %}
-                                                                        {% if t in user.user_detail.groups.all.first.unlocked.all %}
-
-                                                                            <div class="d-flex end-0 justify-content-between align-items-center">
-                                                                                    <span class="col-lg-6 col-10 btn btn-success d-inline-block"
-                                                                                          tabindex="0"
-                                                                                          data-bs-toggle="popover"
-                                                                                          data-bs-placement="top"
-                                                                                          style="margin-top:1vh; margin-right: auto; margin-left: auto"
-                                                                                          data-bs-content="{{ t.info }}">
-                                                                                        {{ t.get_title }}
-                                                                                    </span>
-                                                                                <div class="col-2">
-                                                                                    <svg viewBox="0 0 24 24"
-                                                                                         width="30px"
-                                                                                         height="30px">
-                                                                                        <path d="M 12 0 C 8.699219 0 6 2.699219 6 6 L 6 8 L 8 8 L 8 6 C 8 3.78125 9.78125 2 12 2 C 14.21875 2 16 3.78125 16 6 L 16 11 L 3 11 L 3 24 L 21 24 L 21 11 L 18 11 L 18 6 C 18 2.699219 15.300781 0 12 0 Z"/>
-                                                                                    </svg>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        {% else %}
-
-                                                                            <div class="d-flex end-0 justify-content-between align-items-center">
-
-                                                                                <div class="col-lg-6 col-10 btn btn-success d-inline-block disabled"
-                                                                                     style="margin-top:1vh; margin-right: auto; margin-left: auto">
-                                                                                    {{ t.get_title }}
-                                                                                </div>
-
-                                                                                <div class="col-2">
-                                                                                    <svg viewBox="0 0 30 30"
-                                                                                         width="30px" fill="red"
-                                                                                         height="30px">
-                                                                                        <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
-                                                                                    </svg>
-                                                                                </div>
-                                                                            </div>
-
-
-
-
-                                                                        {% endif %}
-
-                                                                    {% endfor %}
-
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="d-inline-block info" tabindex="0"
-                                                                 data-bs-toggle="popover"
-                                                                 data-bs-placement="top"
-                                                                 data-bs-trigger="hover focus" data-bs-content="پس از اینکه اثری را ارسال می کنید، وضعیت داوری مربوط به آن از «در انتظار داوری» به «در حال داوری» تغییر می کند.
+                                                                <div class="d-inline-block info" tabindex="0"
+                                                                     data-bs-toggle="popover"
+                                                                     data-bs-placement="top"
+                                                                     data-bs-trigger="hover focus" data-bs-content="پس از اینکه اثری را ارسال می کنید، وضعیت داوری مربوط به آن از «در انتظار داوری» به «در حال داوری» تغییر می کند.
                                                         پس  داوری شدن، وضعیت به «داوری شده» تبدیل می شود.
                                                         در صورت وجود مشکل در لینک یا عدم دقت در انتخاب قالب، داوران به شما بازخورد می دهند که در آن صورت باید مشکل را برطرف کنید و مجددا لینک را بفرستید">
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <span> وضعیت: </span>
-                                                                <span>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                    <span> وضعیت: </span>
+                                                                    <span>
                                               {% if x.state == '4' or x.state == '6' %}
                                                   {{ x.get_state_display }}
                                               {% else %}
                                                   در حال داوری
                                               {% endif %}
                                             </span>
-                                                            </div>
+                                                                </div>
 
-                                                            {% if x.comment %}
-                                                                {% if x.state == '4' or x.state == '6' %}
-                                                                    <div style="text-align: justify; color: #800228; font-weight: 700;">
-                                                                        {{ x.comment }}
-                                                                    </div>
+                                                                {% if x.comment %}
+                                                                    {% if x.state == '4' or x.state == '6' %}
+                                                                        <div style="text-align: justify; color: #800228; font-weight: 700;">
+                                                                            {{ x.comment }}
+                                                                        </div>
+                                                                    {% endif %}
                                                                 {% endif %}
-                                                            {% endif %}
-                                                        </form>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                        {% endif %}
-                                    {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
 
 
-                                {% endif %}
+                                    {% endif %}
 
-                            {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="h4 mt-5" style="font-weight: 700; text-align: center">
+                                    ماموریت ها از منزل بعد آغاز می شوند
+                                </div>
+                            {% endif %}
 
                         </div>
                     </div>
@@ -1393,7 +1428,7 @@
              tabindex="-1"
              aria-labelledby="longterm_activity_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
@@ -1402,7 +1437,12 @@
                                  style="height: max-content;">
                                 <div class="masir-circle-icon-3"
                                      style="background-color: #35393d; border: 2px black solid;">
-                                    <img class="masir-circle-button-3" src="{% static 'images/flag.png' %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="125" height="125" viewBox="0 0 125 125">
+                                        <image x="25" y="15" width="80" height="115"
+                                               href="data:img/png;base64,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"/>
+                                    </svg>
+
 
                                 </div>
                                 <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
@@ -1431,87 +1471,94 @@
                                 همبستگی و یاری همدیگر برای غلبه بر تاریکی ها کوشش کنید.<br><br>
                                 در «ماموریت تحول» شما می توانید...
                             </div>
-                            {% for x in user.user_detail.groups.all.first.discovered.all %}
-                                {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main and  x.if_long %}
-                                    <div class=" d-flex justify-content-center align-items-center"
-                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
+                            {% if user.user_detail.groups.all.first.get_manzel.id != 1 %}
+                                {% for x in user.user_detail.groups.all.first.discovered.all %}
+                                    {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main and  x.if_long %}
+                                        <div class=" d-flex justify-content-center align-items-center"
+                                             style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
                                         <span style="margin:1vw; font-weight: 700;">
 
                                             {{ x.title }}
                                         </span>
-                                        <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
-                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
-                                           href="{{ x.get_file }}" download></a>
-                                    </div>
-                                    <form action="{% url 'home_page_link' %}" method="post"
-                                          onsubmit="activity_{{ x.id }}_form_click()">
-                                        {% csrf_token %}
-                                        <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
-                                        <div class="mb-1">
-                                            <div class="d-inline-block info" tabindex="0"
-                                                 data-bs-toggle="popover"
-                                                 data-bs-placement="top"
-                                                 data-bs-trigger="hover focus"
-                                                 data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                            <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
+                                               style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
+                                               href="{{ x.get_file }}" download></a>
+                                        </div>
+                                        <form action="{% url 'home_page_link' %}" method="post"
+                                              onsubmit="activity_{{ x.id }}_form_click()">
+                                            {% csrf_token %}
+                                            <div class="mb-1 mt-2" style="font-weight: 700;">لینک فایل</div>
+                                            <div class="mb-1">
+                                                <div class="d-inline-block info" tabindex="0"
+                                                     data-bs-toggle="popover"
+                                                     data-bs-placement="top"
+                                                     data-bs-trigger="hover focus"
+                                                     data-bs-content="برای ارسال اثر خود باید آن را  در یک آپلودسنتر بارگذاری کنید و لینکش را اینجا قرار دهید! از سایتهای مختلفی می توانید استفاده کنید، اما پیشنهاد اصلی ما این است که از سایت uupload.ir استفاده کنید.">
+                                                </div>
+                                                ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس
+                                                فایل
+                                                بارگذاری شده را در اینجا وارد کنید.
                                             </div>
-                                            ابتدا فایل خود را در یک آپلود سنتر بارگذاری کرده و سپس آدرس
-                                            فایل
-                                            بارگذاری شده را در اینجا وارد کنید.
-                                        </div>
-                                        <input name="activity_{{ x.id }}_file" type="url"
-                                               class="form-control masir-form-control text-center" autocomplete="off"
-                                               required>
+                                            <input name="activity_{{ x.id }}_file" type="url"
+                                                   class="form-control masir-form-control text-center"
+                                                   autocomplete="off"
+                                                   required>
 
-                                        <div class="form-check mt-3 mb-2">
-                                            <input class="form-check-input" type="checkbox" required>
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                از فایل ارسالی مطمئن هستیم.
-                                            </label>
-                                        </div>
-                                        <button type="submit" name="activity_{{ x.id }}_form"
-                                                id="activity_{{ x.id }}_form"
-                                                class="btn masir-btn mt-2 col-lg-6 col-md-6 col-12"
-                                                style="background-color: white; border: 2px black solid; color: black">
-                                            بارگذاری نهایی
-                                        </button>
-                                        <button class="btn masir-btn col-lg-6 col-md-6 col-12"
-                                                style="background-color: white; border: 2px black solid; color: black; display: none;"
-                                                id="activity_{{ x.id }}_form_loading">
+                                            <div class="form-check mt-3 mb-2">
+                                                <input class="form-check-input" type="checkbox" required>
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    از فایل ارسالی مطمئن هستیم.
+                                                </label>
+                                            </div>
+                                            <button type="submit" name="activity_{{ x.id }}_form"
+                                                    id="activity_{{ x.id }}_form"
+                                                    class="btn masir-btn mt-2 col-lg-6 col-md-6 col-12"
+                                                    style="background-color: white; border: 2px black solid; color: black">
+                                                بارگذاری نهایی
+                                            </button>
+                                            <button class="btn masir-btn col-lg-6 col-md-6 col-12"
+                                                    style="background-color: white; border: 2px black solid; color: black; display: none;"
+                                                    id="activity_{{ x.id }}_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
                                               aria-hidden="true"></span>
-                                            در حال بارگذاری...
-                                        </button>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <span> وضعیت: </span>
-                                            <span> ارسال نشده </span>
+                                                در حال بارگذاری...
+                                            </button>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <span> وضعیت: </span>
+                                                <span> ارسال نشده </span>
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for x in user.user_detail.groups.all.first.activities.all %}
+                                    {% if x.topic.main and x.topic.if_long %}
+                                        <div class=" d-flex justify-content-center align-items-center"
+                                             style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
+                                            <span style="margin:1vw; font-weight: 700;"> {{ x.topic.title }} </span>
+                                            <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
+                                               style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
+                                               href="{{ x.topic.get_file }}" download></a>
                                         </div>
-                                    </form>
-                                {% endif %}
-                            {% endfor %}
-                            {% for x in user.user_detail.groups.all.first.activities.all %}
-                                {% if x.topic.main and x.topic.if_long %}
-                                    <div class=" d-flex justify-content-center align-items-center"
-                                         style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
-                                        <span style="margin:1vw; font-weight: 700;"> {{ x.topic.title }} </span>
-                                        <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
-                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
-                                           href="{{ x.topic.get_file }}" download></a>
-                                    </div>
-                                    <form>
-                                        {% csrf_token %}
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <span> وضعیت:  </span>
-                                            <span>
+                                        <form>
+                                            {% csrf_token %}
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <span> وضعیت:  </span>
+                                                <span>
                                               {% if x.state == '4' or x.state == '6' %}
                                                   {{ x.get_state_display }}
                                               {% else %}
                                                   در حال داوری
                                               {% endif %}
                                             </span>
-                                        </div>
-                                    </form>
-                                {% endif %}
-                            {% endfor %}
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="h4 mt-5" style="font-weight: 700; text-align: center">
+                                    پس از گذشتن از منزل صفرم این بخش برای شما باز می شود
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -1521,7 +1568,7 @@
         <div class="modal fade" id="university_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="university_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
@@ -1623,10 +1670,113 @@
             </div>
         </div>
 
+        <div class="modal fade" id="event_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="event_modal_Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
+                    <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
+                       role="button"></a>
+                    <div class="modal-body scroll-without-scrollbar">
+                        <div class="position-relative px-5 masir-modal-header">
+                            <div class="position-absolute top-50 start-50 translate-middle d-flex"
+                                 style="height: max-content;">
+                                <div class="masir-circle-icon-3"
+                                     style="background-color: #aac4f2; border: 2px #3739d7 solid;">
+                                    <svg width="512" height="512" viewBox="0 0 512 512">
+                                        <image x="16" y="16" width="480" height="480"
+                                               href="data:img/png;base64,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"/>
+                                    </svg>
+
+                                </div>
+                                <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
+                                     data-bs-placement="top"
+                                     data-bs-trigger="hover focus"
+                                     data-bs-content="شما به رویداد امروز رسیدید! فراخوان رو انجام بدبد و امتیاز بگیرید ">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {% if event %}
+                            {% if user.user_detail.groups.all.first.has_active_event %}
+                                <form action="{% url 'home_page_link' %}" method="post"
+                                      onsubmit="event_form_click()">
+                                    {% csrf_token %}
+                                    <div class="mt-5" style="color: #25576c; font-weight: 700;"> {{ event.title }}
+                                    </div>
+
+                                    <div class="mt-2 p-2" style="background-color: #eeeeee;">
+                                        <div>
+                                            {{ event.Q }}
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="Q"
+                                                   value="1" required>
+                                            <label class="form-check-label">
+                                                {{ event.O1 }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="Q"
+                                                   value="2" required>
+                                            <label class="form-check-label">
+                                                {{ event.O2 }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="Q"
+                                                   value="3" required>
+                                            <label class="form-check-label">
+                                                {{ event.O3 }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="Q"
+                                                   value="4" required>
+                                            <label class="form-check-label">
+                                                {{ event.O4 }}
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check mt-5 mb-3">
+                                        <input class="form-check-input" type="checkbox" required>
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            از پاسخ‌ خود مطمئن هستیم.
+                                        </label>
+                                    </div>
+                                    <button type="submit" name="event_form" id="event_form"
+                                            class="btn masir-btn col-lg-6 col-md-6 col-12"
+                                            style="background-color: #69ff64;">ثبت نهایی
+                                    </button>
+                                    <button class="btn masir-btn col-lg-6 col-md-6 col-12"
+                                            style="background-color: #69ff64; display: none;"
+                                            id="event_form_loading">
+                                        <span class="spinner-grow spinner-grow-sm" role="status"
+                                              aria-hidden="true"></span>
+                                        در حال ثبت...
+                                    </button>
+                                </form>
+                            {% else %}
+                                <div class="my-5 pt-5 text-center" style="color: #25576c; font-weight: 700;">
+                                    گروه شما یکبار در فراخوان فعلی شرکت کرده است.
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="my-5 pt-5 text-center" style="color: #25576c; font-weight: 700;">
+                                در حال حاضر فراخوان فعالی وجود ندارد.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="achivements_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="achivements_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
                        role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
@@ -1786,8 +1936,9 @@
                                     <input class="form-check-input" type="checkbox" required>
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
-                                        <a href="https://www.aparat.com/v/R3cJd">«اکسیر حیات – معرفی کلی مسابقه مسیر»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        <a href="https://www.aparat.com/v/R3cJd">«اکسیر حیات – معرفی کلی مسابقه
+                                            مسیر»</a>
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
@@ -1795,7 +1946,7 @@
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
                                         <a href="https://www.aparat.com/v/3hY4f">«اکسیر حیات – امتیازها»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
@@ -1803,7 +1954,7 @@
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
                                         <a href="https://www.aparat.com/v/7PUgt">«اکسیر حیات – نحوه حرکت»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
@@ -1811,7 +1962,7 @@
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
                                         <a href="https://www.aparat.com/v/JIK8s">«اکسیر حیات – ماموریت اصلی»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
@@ -1819,15 +1970,16 @@
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
                                         <a href="https://www.aparat.com/v/IyqEZ">«اکسیر حیات – ماموریت مخفی»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
                                     <input class="form-check-input" type="checkbox" required>
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
-                                        <a href="https://www.aparat.com/v/DEnS8">«اکسیر حیات – باشگاه، دانشگاه و صدقه»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        <a href="https://www.aparat.com/v/DEnS8">«اکسیر حیات – باشگاه، دانشگاه و
+                                            صدقه»</a>
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
@@ -1835,7 +1987,7 @@
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
                                         <a href="https://www.aparat.com/v/OtWgH">«اکسیر حیات – ماموریت تحول»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
@@ -1843,23 +1995,25 @@
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
                                         <a href="https://www.aparat.com/v/ENyWs">«اکسیر حیات – ارزیابی و داوری»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
                                     <input class="form-check-input" type="checkbox" required>
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
-                                        <a href="https://www.aparat.com/v/Rz6qf">«اکسیر حیات – رده بندی و اَبَرگروه ها»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        <a href="https://www.aparat.com/v/Rz6qf">«اکسیر حیات – رده بندی و اَبَرگروه
+                                            ها»</a>
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
                                 <div class="form-check mt-3 mb-2">
                                     <input class="form-check-input" type="checkbox" required>
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ویدئوی
-                                        <a href="https://www.aparat.com/v/Ybqwi">«اکسیر حیات – تذکرات و نکات خیلی مهم»</a>
-                                         رو با دقت مشاهده کرده ایم
+                                        <a href="https://www.aparat.com/v/Ybqwi">«اکسیر حیات – تذکرات و نکات خیلی
+                                            مهم»</a>
+                                        رو با دقت مشاهده کرده ایم
                                     </label><br>
                                 </div>
 
@@ -2071,7 +2225,7 @@
             <div class="modal fade" id="message_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                  aria-labelledby="message_modal_Label" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                    <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
+                    <div class="modal-content masir-modal py-3" style="border: 3px #f0aa4b solid;">
                         <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal"
                            aria-label="Close" role="button"></a>
                         <div class="modal-body scroll-without-scrollbar">
@@ -2153,6 +2307,11 @@
         function university_form_click() {
             document.getElementById('university_form').style.display = 'none';
             document.getElementById('university_form_loading').style.display = 'block';
+        }
+
+        function event_form_click() {
+            document.getElementById('event_form').style.display = 'none';
+            document.getElementById('event_form_loading').style.display = 'block';
         }
 
         function unlock_form_click() {
