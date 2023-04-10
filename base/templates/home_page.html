@@ -279,6 +279,7 @@
             animation-name: masir-jelly-animation;
             animation-duration: 1.5s;
             animation-iteration-count: infinite;
+            position: absolute !important;
         }
 
         .level-block {
@@ -310,7 +311,6 @@
             font-style: normal;
             line-height: 1.5;
             font-weight: 400;
-            text-align: start;
             text-shadow: none;
             text-transform: none;
             letter-spacing: normal;
@@ -420,7 +420,7 @@
 
                 </nav>
             </div>
-            <div id="masir-profile-bg" class="position-relative">
+            <div id="masir-profile-bg" style="margin-top: 6rem">
                 <div class="masir-navbar-right-part position-absolute top-50 start-0 translate-middle-y d-flex mt-3"
                      style="height: max-content;">
                     <div class="d-flex align-items-center masir-profile">
@@ -434,14 +434,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-50 start-50 translate-middle d-flex"
-                     style="height: max-content;">
-                    {% if event %}
-                        <a id='event' class="masir-circle-button-2 masir-jelly mt-5" title="باران"
-                           style="background-image: url('{% static 'images/event-rain.png' %}');"
+                {% if event %}
+                    <div class="position-relative top-50 start-50 translate-middle d-flex mt-3"
+                         style="height: max-content;">
+                        <a class="masir-circle-button-2 top-50 start-50 masir-jelly" title="باران"
+                           style="background-image: url('{% static 'images/event-rain.png' %}');  margin: 0 auto"
                            data-bs-toggle="modal" href="#event_modal" role="button"></a>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
 
             </div>
             <nav class="leftnav">
@@ -722,15 +722,15 @@
                                         <span style="font-weight: 700;">{{ user.user_detail.groups.all.first.activities.all|length }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between" style="color:#3eb4fe;">
-                                        <span style="font-weight: 700;">
-                                            <div class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
-                                                 data-bs-placement="top"
-                                                 data-bs-trigger="hover focus" data-bs-content="تمام دستاوردها و نشانها بیانگر نحوه عملکرد شما در مسابقه هستند که نهایتا به امتیاز حیات تبدیل می شوند.
+                                        <div style="font-weight: 700;">
+                                            <span class="d-inline-block info" tabindex="0" data-bs-toggle="popover"
+                                                  data-bs-placement="top"
+                                                  data-bs-trigger="hover focus" data-bs-content="تمام دستاوردها و نشانها بیانگر نحوه عملکرد شما در مسابقه هستند که نهایتا به امتیاز حیات تبدیل می شوند.
                                                     به تعبیر دیگر تمام کارهای شما در مسابقه ثبت می شوند و در امتیاز نهایی شما محاسبه می شوند.
                                                     حیات امتیاز نهایی شماست که مشخص کننده رتبه واقعی شما در مسابقه است. ">
-                                            </div>
+                                            </span>
                                             امتیاز حیات:
-                                        </span>
+                                        </div>
                                         <span style="font-weight: 700;">{{ user.user_detail.groups.all.first.get_light }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between" style="color: #75dd2e">
@@ -1025,7 +1025,8 @@
                                               stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </div>
-                                <div class="d-inline-block info position-absolute end-0" tabindex="0" data-bs-toggle="popover"
+                                <div class="d-inline-block info position-absolute end-0" tabindex="0"
+                                     data-bs-toggle="popover"
                                      data-bs-placement="top"
                                      data-bs-trigger="hover focus" data-bs-content="باشگاه محلی است برای قوی شدن و کسب توان.
                                         برخلاف بخشهای دیگر که به صورت گروهی انجام می شود، هر یک از اعضای گروه می توانند به صورت جدا و فردی در باشگاه شرکت کنند.
@@ -1109,7 +1110,8 @@
                                               d="m17.545 15.467l-3.779-3.779a6.15 6.15 0 0 0 .898-3.21c0-3.417-2.961-6.377-6.378-6.377A6.185 6.185 0 0 0 2.1 8.287c0 3.416 2.961 6.377 6.377 6.377a6.15 6.15 0 0 0 3.115-.844l3.799 3.801a.953.953 0 0 0 1.346 0l.943-.943c.371-.371.236-.84-.135-1.211zM4.004 8.287a4.282 4.282 0 0 1 4.282-4.283c2.366 0 4.474 2.107 4.474 4.474a4.284 4.284 0 0 1-4.283 4.283c-2.366-.001-4.473-2.109-4.473-4.474z"/>
                                     </svg>
                                 </div>
-                                <div class="d-inline-block info position-absolute end-0" tabindex="0" data-bs-toggle="popover"
+                                <div class="d-inline-block info position-absolute end-0" tabindex="0"
+                                     data-bs-toggle="popover"
                                      data-bs-placement="top"
                                      data-bs-trigger="hover focus" data-bs-content="در هر منزل 3 ماموریت مخفی وجود دارد! برای باز کردن هر ماموریت مخفی باید رمز مرتبط با آن را کشف کنید.
                                         برای کشف این ماموریتها باید با دقت زیاد تصاویر کلیپ داستان مسابقه را مشاهده کنید و از آن یک کد استخراج کنید.
@@ -1237,15 +1239,15 @@
                                                                                              data-bs-content="{{ t.info }}">
                                                                                             {{ t.get_title }}
                                                                                         </div>
-{#                                                                                        <div class="level-block col-lg-6 col-10 d-inline-block"#}
-{#                                                                                             style="margin-top:1vh; margin-right: auto; margin-left: auto;"#}
-{#                                                                                             id="template_{{ t.id }}_btn">#}
-{#                                                                                            {{ t.get_title }}#}
-{#                                                                                            <div id="template_{{ t.id }}_info"#}
-{#                                                                                                 class="masir-map-icon-popup">#}
-{#                                                                                                {{ t.info | safe }}#}
-{#                                                                                            </div>#}
-{#                                                                                        </div>#}
+                                                                                        {#                                                                                        <div class="level-block col-lg-6 col-10 d-inline-block"#}
+                                                                                        {#                                                                                             style="margin-top:1vh; margin-right: auto; margin-left: auto;"#}
+                                                                                        {#                                                                                             id="template_{{ t.id }}_btn">#}
+                                                                                        {#                                                                                            {{ t.get_title }}#}
+                                                                                        {#                                                                                            <div id="template_{{ t.id }}_info"#}
+                                                                                        {#                                                                                                 class="masir-map-icon-popup">#}
+                                                                                        {#                                                                                                {{ t.info | safe }}#}
+                                                                                        {#                                                                                            </div>#}
+                                                                                        {#                                                                                        </div>#}
 
                                                                                         <div class="col-2">
                                                                                             <svg viewBox="0 0 24 24"
@@ -1518,7 +1520,8 @@
 
 
                                 </div>
-                                <div class="d-inline-block info position-absolute end-0" tabindex="0" data-bs-toggle="popover"
+                                <div class="d-inline-block info position-absolute end-0" tabindex="0"
+                                     data-bs-toggle="popover"
                                      data-bs-placement="top"
                                      data-bs-trigger="hover focus" data-bs-content="امتیاز انجام این ماموریت چندین برابر یک ماموریت اصلی یا فرعی است.
                                         شما باید از لیست پیشنهادی ارائه شده یک فعالیت بلندمدت انتخاب کنید.
@@ -1652,7 +1655,8 @@
                                         <path d="m32 59h13c1.1 0 2-0.9 2-2v-30c0-2.2-2-4-4-4h-10.7c-1.3 0-2.3 1-2.3 2.3v31.7c0 1.1 0.9 2 2 2z m44-30v32c0 2.2-1.8 4-4 4h-44c-2.2 0-4-1.8-4-4v-32c-3.3 0-6 2.7-6 6v30c0 3.3 2.7 6 6 6h19c1.1 0 2 0.9 2 2s0.9 2 2 2h6c1.1 0 2-0.9 2-2s0.9-2 2-2h19c3.3 0 6-2.7 6-6v-30c0-3.3-2.7-6-6-6z m-21 30h12.7c1.3 0 2.3-1 2.3-2.3v-31.7c0-1.1-0.9-2-2-2h-11c-2 0-4 1.8-4 4v30c0 1.1 0.9 2 2 2z"></path>
                                     </svg>
                                 </div>
-                                <div class="d-inline-block info position-absolute end-0" tabindex="0" data-bs-toggle="popover"
+                                <div class="d-inline-block info position-absolute end-0" tabindex="0"
+                                     data-bs-toggle="popover"
                                      data-bs-placement="top"
                                      data-bs-trigger="hover focus" data-bs-content="دانشگاه محلی است برای تغذیه‌ی فکر و کسب آذوقه.
                                             در هر شبانه‌روز، 10 سوال چهارگزینه‌ای از آیات قرآن کریم از شما پرسیده می شود که با پاسخ صحیح به آنها می‌توانید آذوقه بدست آورید.
@@ -1759,7 +1763,8 @@
                                     </svg>
 
                                 </div>
-                                <div class="d-inline-block info position-absolute end-0" tabindex="0" data-bs-toggle="popover"
+                                <div class="d-inline-block info position-absolute end-0" tabindex="0"
+                                     data-bs-toggle="popover"
                                      data-bs-placement="top"
                                      data-bs-trigger="hover focus"
                                      data-bs-content="شما به رویداد امروز رسیدید! فراخوان رو انجام بدبد و امتیاز بگیرید ">
@@ -2430,6 +2435,43 @@
                 }
             {% endfor %}
         {% endfor %}
+    </script>
+    <script>
+
+        window.addEventListener('load', function () {
+            hidePopoversOnClickOutside();
+        });
+
+        function hidePopoversOnClickOutside() {
+            document.addEventListener('click', function (event) {
+                // Get all popover buttons on the page
+                var buttons = document.querySelectorAll('[data-bs-toggle="popover"]');
+
+                // Check if the clicked element is a popover or its related button
+                for (var i = 0; i < buttons.length; i++) {
+                    var button = buttons[i];
+                    var popover = button.nextElementSibling;
+
+                    // Exclude triggers with data-bs-trigger="hover focus"
+                    if (button.getAttribute('data-bs-trigger') === 'hover focus') {
+                        continue;
+                    }
+
+                    // Check if the clicked element is inside the popover
+                    if (popover && popover.contains(event.target)) {
+                        return;
+                    }
+
+                    // Hide the popover if the clicked element is outside the popover and its related button
+                    if (popover && popover.classList.contains('show') && (event.target !== button && !button.contains(event.target))) {
+                        popover.classList.remove('show');
+                        button.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+        }
+
+
     </script>
     {% if MESSAGE %}
         <script>

@@ -485,12 +485,10 @@ class Masir_Group(models.Model):
         return y
 
     def goto_supergroup(self):
-        a = [x.supergroup for x in Masir_Group.objects.all()]
-        s = [x.id for x in Masir_Group.objects.filter(supergroup=max(a))]
-        if len(s) < 6:
-            self.supergroup = a.supergroup
-        else:
-            self.supergroup = a.supergroup + 1
+        a = len([x.id for x in Masir_Group.objects.filter(supergroup=0)])
+        s = a//6 + 1
+
+        self.supergroup = s
         self.save()
 
     def get_side_activities(self):
