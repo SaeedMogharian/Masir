@@ -191,7 +191,7 @@ class Message(models.Model):
     answer = models.TextField(null=True, blank=True, max_length=5000, verbose_name='متن پاسخ')
     support = models.ForeignKey(User_Detail, null=True, blank=True, related_name='support', on_delete=models.SET_NULL,
                                 verbose_name='پشتیبان')
-    date = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
+    date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
 
     def get_group(self):
         user = User.objects.filter(username=self.phone).first()
@@ -306,9 +306,16 @@ class Club_File(models.Model):
     link = models.CharField(default='#', max_length=1000, verbose_name='لینک فایل')
     title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان فایل')
     level = models.IntegerField(default=0, verbose_name='مرحله')
-    date = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
+    date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
     verified = models.BooleanField(default=False, verbose_name='تایید شده')
+    denied = models.BooleanField(default=False, verbose_name='رد شده')
     show_public = models.BooleanField(default=False, verbose_name='نمایش عمومی')
+
+    comment = models.TextField(null=True, blank=True, max_length=5000, verbose_name='توضیحات داور')
+    referee = models.ForeignKey(User_Detail, null=True, blank=True, related_name='club_judges', on_delete=models.SET_NULL,
+                                verbose_name='داور باشگاه')
+
+
 
     def __str__(self):
         return (str(self.level) + '. ' + str(self.user) + ' | ' + self.title)
@@ -647,7 +654,7 @@ class Masir_Group(models.Model):
 
         tmp = 0
         for u in self.users.all():
-            tmp = tmp + len(u.club_files.filter(show_public=True))
+            tmp = tmp + len(u.club_files.filter(show_public=True, verified=True))
         if tmp >= 18:
             self.delete_masir_group_and_achivement_rel(
                 [
@@ -719,9 +726,9 @@ class Masir_Group(models.Model):
                 0
             )
 
-        if len(Club_File.objects.filter(show_public=True, user__in=self.users.all()).values('level').annotate(
+        if len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values('level').annotate(
                 count=Count('id', distinct=True))) >= 14 or len(
-            Club_File.objects.filter(show_public=True, user__in=self.users.all()).values('date__day').annotate(
+            Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values('date__day').annotate(
                 count=Count('id', distinct=True))) >= 14:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Vrz_0'),
@@ -1084,6 +1091,8 @@ class Activity(models.Model):
     score4 = models.IntegerField(default=0, verbose_name='امتیاز جذابیت برای مخاطب')
     score5 = models.IntegerField(default=0,
                                  verbose_name='امتیاز اشاره به کاربردی بودن مفاهیم در زندگی امروزی، به صورت مستقیم یا غیرمستقیم')
+
+    date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
 
     def get_score(self):
         return (float(

@@ -896,7 +896,7 @@ def home_page(request):
 
             Report.objects.create(
                 group=user.groups.all().first(),
-                text='پاسخ‌های شما به ' + str(exam) + ' با موفقیت ثبت شد.'
+                text='پاسخ‌های شما به آزمون' + str(exam) + ' با موفقیت ثبت شد.'
             )
 
             return (redirect('home_page_link'))
@@ -1373,13 +1373,13 @@ def home_page(request):
             return redirect('home_page_link')
 
         if 'club_show_scores_admin_form' in request.POST:
-            for x in Club_File.objects.filter(show_public=False, verified=True):
+            for x in Club_File.objects.filter(show_public=False, verified=True, denied=False):
                 x.show_public = True
                 x.save()
 
                 tmp = 0
                 for u in x.user.groups.all().first().users.all():
-                    tmp = tmp + len(u.club_files.filter(show_public=True))
+                    tmp = tmp + len(u.club_files.filter(show_public=True, verified=True))
                 if tmp >= 18:
                     delete_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
@@ -1460,10 +1460,10 @@ def home_page(request):
                         Achivement.objects.get(code='Qra_1'),
                         0
                     )
-                if len(Club_File.objects.filter(show_public=True,
+                if len(Club_File.objects.filter(show_public=True, verified=True,
                                                 user__in=x.user.groups.all().first().users.all()).values(
                     'level').annotate(count=Count('id', distinct=True))) >= 14 or len(
-                    Club_File.objects.filter(show_public=True, user__in=x.user.groups.all().first().users.all()).values(
+                    Club_File.objects.filter(show_public=True, verified= True, user__in=x.user.groups.all().first().users.all()).values(
                         'date__day').annotate(count=Count('id', distinct=True))) >= 14:
                     set_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
@@ -1476,6 +1476,14 @@ def home_page(request):
                     text='فایل ارسال شده از طرف ' + str(x.user) + ' با عنوان «' + str(x.title) + '» تایید شد.'
                 )
 
+            for x in Club_File.objects.filter(show_public=False, verified=False, denied=True):
+                x.show_public = True
+                x.save()
+
+                Report.objects.create(
+                    group=x.user.groups.all().first(),
+                    text='فایل ارسال شده از طرف ' + str(x.user) + ' با عنوان «' + str(x.title) + '» به دلیل «' + str(x.comment) + '» در بررسی رد شد'
+                )
             return (redirect('home_page_link'))
 
         if 'activities_show_scores_admin_form' in request.POST:
@@ -1723,7 +1731,7 @@ def club_page(request):
             request,
             'club_page_admin.html',
             {
-                'club_files': Club_File.objects.all().order_by('verified', '-id')
+                'club_files': Club_File.objects.all().order_by('-denied', 'verified', '-id')
             }
         )
     )
@@ -1743,13 +1751,28 @@ def club_detail_page(request, id):
         return (redirect('club_page_link'))
 
     if request.method == 'POST':
+        the_file.show_public = False
+        the_file.referee = user
         if 'club_admin_form' in request.POST and not the_file.verified:
             the_file.verified = True
+            the_file.denied = False
+            the_file.comment = None;
             the_file.save()
 
             u = the_file.user
             u.club_level = the_file.level + 1
             u.save()
+        if 'club_admin_deny_form' in request.POST:
+            the_file.denied = True
+            the_file.verified = False
+            the_file.comment = request.POST['club_admin_denied_message']
+            the_file.save()
+
+            u = the_file.user
+            u.club_level = the_file.level
+            u.save()
+
+
 
         return (redirect('club_page_link'))
 
@@ -1805,6 +1828,7 @@ def judge_detail_page(request, id):
         return (redirect('judge_page_link'))
 
     the_file.state = '2'
+    the_file.referee = user
     the_file.save()
 
     if request.method == 'POST':

@@ -167,10 +167,10 @@
                         {% endif %}
                         <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
                         <span>
-                          <b style="font-weight: 700;">{{ x.get_state_display }}</b> | {{ x.topic }} | {{ x.template }} | {{ x.group }}
+                          {{ x.topic }} | {{ x.template }} -- {{ x.group }} --  {{ x.date }}
                         </span>
                             <span>
-                         {{ x.referee }} | {{ x.get_score }}
+                         {{ x.referee }} | {{ x.get_score }} | <b style="font-weight: 700;">{{ x.get_state_display }}</b>
                         </span>
                         </div>
 
