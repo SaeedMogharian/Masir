@@ -252,6 +252,7 @@ class Manzel(models.Model):
 
     discover_help = models.FileField(null=True, blank=True, upload_to='base/static/manzel/',
                                      verbose_name='فایل رهنمای اکتشاف')
+    active = models.BooleanField(default=True, verbose_name='فعال')
 
     def is_first(self):
         if self.id == 1:
@@ -266,6 +267,12 @@ class Manzel(models.Model):
 
     def get_discover_help(self):
         return 'https://masir1402.ir/media/' + str(self.discover_help)
+
+    def next_manzel_active(self):
+        if Manzel.objects.filter(id=self.id + 1).first():
+            if Manzel.objects.filter(id=self.id + 1).first().active:
+                return True
+        return False
 
     def __str__(self):
         return (self.number + ' | ' + self.title)
@@ -312,10 +319,9 @@ class Club_File(models.Model):
     show_public = models.BooleanField(default=False, verbose_name='نمایش عمومی')
 
     comment = models.TextField(null=True, blank=True, max_length=5000, verbose_name='توضیحات داور')
-    referee = models.ForeignKey(User_Detail, null=True, blank=True, related_name='club_judges', on_delete=models.SET_NULL,
+    referee = models.ForeignKey(User_Detail, null=True, blank=True, related_name='club_judges',
+                                on_delete=models.SET_NULL,
                                 verbose_name='داور باشگاه')
-
-
 
     def __str__(self):
         return (str(self.level) + '. ' + str(self.user) + ' | ' + self.title)
@@ -493,7 +499,7 @@ class Masir_Group(models.Model):
 
     def goto_supergroup(self):
         a = len([x.id for x in Masir_Group.objects.exclude(supergroup=0)])
-        s = a//6 + 1
+        s = a // 6 + 1
 
         self.supergroup = s
         self.save()
@@ -726,9 +732,11 @@ class Masir_Group(models.Model):
                 0
             )
 
-        if len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values('level').annotate(
+        if len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
+                'level').annotate(
                 count=Count('id', distinct=True))) >= 14 or len(
-            Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values('date__day').annotate(
+            Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
+                'date__day').annotate(
                 count=Count('id', distinct=True))) >= 14:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Vrz_0'),

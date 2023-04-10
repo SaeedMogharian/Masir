@@ -610,21 +610,25 @@
                                         {% endfor %}
                                     </div>
                                 {% endif %}
-                                {% comment %} حرکت به منزل بعد {% endcomment %}
+
                                 <a class="btn masir-btn w-100 mt-1"
                                    style="background-color: {{ x.color }}; color: white;"
                                    data-bs-toggle="offcanvas" href="#level_{{ x.id }}_offcanvas" role="button"
                                    aria-controls="level_{{ x.id }}_offcanvas">مشاهده وضعیت منزل
                                 </a>
+                            {% comment %} حرکت به منزل بعد {% endcomment %}
                                 {% if x == user.user_detail.groups.all.first.get_manzel and user.user_detail.groups.all.first.has_next_manzel %}
                                     <form action="{% url 'home_page_link' %}" method="post"
                                           onsubmit="next_level_form_click()">
                                         {% csrf_token %}
+
+
                                         {% if user.user_detail.groups.all.first.get_food >= x.food_for_next_manzel and user.user_detail.groups.all.first.get_power >= x.power_for_next_manzel %}
-                                            <div class="form-check mt-1 mb-1">
+                                            {% if x.next_manzel_active %}
+                                                <div class="form-check mt-1 mb-1">
                                                 <input class="form-check-input" type="checkbox" required>
                                                 <label class="form-check-label" for="flexCheckDefault">
-                                                    به حداکثر آذوقه قابل حمل توجه کرده‌ایم.
+                                                    به حداکثر آذوقه قابل حمل توجه کردیم.
                                                 </label><br>
                                                 <input class="form-check-input" type="checkbox" required>
                                                 <label class="form-check-label" for="flexCheckDefault">
@@ -635,12 +639,19 @@
                                                     حواسمون هست که دیگه نمیتونیم برگردیم
                                                 </label>
                                             </div>
+                                            {% else %}
+                                                <div class="form-check mt-1 mb-1">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        استقرار شما در هر منزل نمیتواند کمتر از 2 روز باشد
+                                                    </label>
+                                                </div>
+                                            {% endif %}
                                         {% endif %}
 
                                         <button type="submit" name="next_level_form" id="next_level_form"
-                                                class="btn masir-btn w-100 mt-1  {% if user.user_detail.groups.all.first.get_food < x.food_for_next_manzel or user.user_detail.groups.all.first.get_power < x.power_for_next_manzel %} disabled {% endif %}"
+                                                class="btn masir-btn w-100 mt-1  {% if user.user_detail.groups.all.first.get_food < x.food_for_next_manzel or user.user_detail.groups.all.first.get_power < x.power_for_next_manzel or not x.next_manzel_active %} disabled {% endif %}"
                                                 style="background-color: {{ x.color }}; color: white;"
-                                                {% if user.user_detail.groups.all.first.get_food >= x.food_for_next_manzel or user.user_detail.groups.all.first.get_power >= x.power_for_next_manzel %}
+                                                {% if user.user_detail.groups.all.first.get_food >= x.food_for_next_manzel or user.user_detail.groups.all.first.get_power >= x.power_for_next_manzel or not x.next_manzel_active %}
                                                 href="#" {% endif %} >
                                             حرکت به منزل بعدی
                                         </button>
