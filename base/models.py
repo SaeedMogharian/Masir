@@ -485,7 +485,7 @@ class Masir_Group(models.Model):
         return y
 
     def goto_supergroup(self):
-        a = len([x.id for x in Masir_Group.objects.filter(supergroup=0)])
+        a = len([x.id for x in Masir_Group.objects.exclude(supergroup=0)])
         s = a//6 + 1
 
         self.supergroup = s

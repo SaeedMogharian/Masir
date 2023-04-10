@@ -301,6 +301,7 @@ def landing_page(request):
                                            + '<ul>'
                                            + '<li>' + 'مسابقه از نیمه دوم ماه مبارک رمضان آغاز خواهد شد.' + '</li>'
                                            + '<li>' + 'حتما و حتما در یکی از کانالهای مسابقه عضو شوید تا اطلاعیه‌های بعدی را دریافت نمایید.' + '</li>'
+                                           + '<li>' + "<a href='#login_modal'>"+" ورود به صفحه مسابقه" + '</a>' +'</li>'
                                            + '</ul>',
                                 'cities': City.objects.all().order_by('name'),
                                 'schools': School.objects.all().order_by('name'),
@@ -313,7 +314,12 @@ def landing_page(request):
                         request,
                         'landing_page.html',
                         {
-                            'MESSAGE': 'اعضای گروه نباید در گروه دیگری عضو باشند.',
+                            'MESSAGE': 'اعضای گروه نباید در گروه دیگری عضو باشند.'
+                                        +'<br>'
+                                        +'اگر از صحت اطلاعات خود مطمئن هستید اقدام به '
+                                        +"<a href='#login_modal'>"+" ورود " + '</a>'
+                                        +'کنید.',
+
                             'cities': City.objects.all().order_by('name'),
                             'schools': School.objects.all().order_by('name'),
                             'announcements': Announcement.objects.filter(is_public=True)
