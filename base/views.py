@@ -1496,13 +1496,15 @@ def home_page(request):
             for x in Activity.objects.filter(state='3').exclude(topic__manzel=None):
                 x.state = '4'
                 x.save()
-
+                main_score = 1
+                if x.topic.main:
+                    main_score = 2
                 set_masir_group_and_achivement_rel(
                     x.group,
                     Achivement.objects.get(
                         code=ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0' + str(
                             round(x.get_score()))),
-                    (4 - int(x.template.type)) * x.get_score()
+                    (4 - int(x.template.type)) * x.get_score() * main_score
                 )
 
                 if len(x.group.activities.filter(state='4')) >= 1:
