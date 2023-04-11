@@ -1488,7 +1488,7 @@ def home_page(request):
                 Report.objects.create(
                     group=x.user.groups.all().first(),
                     text='فایل ارسال شده از طرف ' + str(x.user) + ' با عنوان «' + str(x.title) + '» به دلیل «' + str(
-                        x.comment) + '» در بررسی رد شد'
+                        x.comment) + '» در بررسی رد شد.'
                 )
             return (redirect('home_page_link'))
 
@@ -1499,6 +1499,7 @@ def home_page(request):
                 main_score = 1
                 if x.topic.main:
                     main_score = 2
+
                 set_masir_group_and_achivement_rel(
                     x.group,
                     Achivement.objects.get(
@@ -1567,10 +1568,17 @@ def home_page(request):
                         20
                     )
 
-                text = 'ماموریت ' + str(x.topic) + ' داوری شد.'
+                code = ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0' + str(
+                    round(x.get_score()))
+                ati = Achivement.objects.filter(code=code).first().title
+                ate = Achivement.objects.filter(code=code).first().text
+
+                text = 'احسنت به شما! به ازای «' + str(x.ate) + '» نشان «' + str(ati) + '» رو به دست آوردید و ' + str(
+                    (4 - int(x.template.type)) * round(
+                        x.get_score()) * main_score) + ' واحد امتیاز حیات به گروه شما اضافه شد.'
 
                 if x.cheated:
-                    text += ' اما به دلیل حرکت شما پیش از اعلام نتایج داوری، تنها امتیاز حیات و توان آن به شما تعلق گرفت و آذوقه ای دریافت نکردید.'
+                    text += ' اما به دلیل حرکت شما پیش از اعلام نتایج داوری، آذوقه ای دریافت نکردید.'
 
                 Report.objects.create(
                     group=x.group,
@@ -1583,7 +1591,7 @@ def home_page(request):
 
                 Report.objects.create(
                     group=x.group,
-                    text='ماموریت ' + str(x.topic) + ' در داوری رد شد.'
+                    text='متاسفانه ماموریت ' + str(x.topic) + ' به دلیل «' + str(x.comment) + '» در داوری رد شد.'
                 )
 
             return (redirect('home_page_link'))
