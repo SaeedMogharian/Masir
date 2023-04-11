@@ -489,6 +489,12 @@ class Masir_Group(models.Model):
 
     introduced = models.BooleanField(default=False, verbose_name='گذراندن آموزش اولیه')
 
+    def has_unjudged_activity(self):
+        if self.activities.exclude(state='4').exclude(state='6').first():
+            return True
+        return False
+
+
     def is_acted(self):
         y = []
         for x in self.get_side_activities():
@@ -549,7 +555,7 @@ class Masir_Group(models.Model):
         for x in self.events.filter(show_public=True):
             f = f + (x.score * 5)
         x: Activity
-        for x in self.activities.filter(state='4'):
+        for x in self.activities.filter(state='4').exclude(cheated=True):
             f = f + (x.get_score() * x.template.max_food / 5)
         for x in self.charities.all():
             f = f - x.value
@@ -1101,6 +1107,8 @@ class Activity(models.Model):
                                  verbose_name='امتیاز اشاره به کاربردی بودن مفاهیم در زندگی امروزی، به صورت مستقیم یا غیرمستقیم')
 
     date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
+
+    cheated = models.BooleanField(default=False, verbose_name='رفتن به منزل بعد قبل از داوری')
 
     def get_score(self):
         return (float(

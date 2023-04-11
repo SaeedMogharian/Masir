@@ -984,6 +984,13 @@ def home_page(request):
                     group=user.groups.all().first(),
                     text=text
                 )
+                if user.groups.all().first().has_unjudged_activity():
+                    for x in user.groups.all().first().activities.exclude(state='4').exclude(state='6').all():
+                        x.cheated = True
+                        x.save()
+
+
+
 
                 return (redirect('home_page_link'))
 
@@ -1756,7 +1763,7 @@ def club_detail_page(request, id):
         if 'club_admin_form' in request.POST and not the_file.verified:
             the_file.verified = True
             the_file.denied = False
-            the_file.comment = None;
+            the_file.comment = None
             the_file.save()
 
             u = the_file.user

@@ -421,7 +421,7 @@
                 </nav>
             </div>
             <div id="masir-profile-bg" style="margin-top: 6rem">
-                <div class="masir-navbar-right-part position-absolute top-50 start-0 translate-middle-y d-flex mt-3"
+                <div class="masir-navbar-right-part position-absolute top-50 start-0 translate-middle-y d-flex"
                      style="height: max-content;">
                     <div class="d-flex align-items-center masir-profile">
                         <a class="masir-circle-button-2 masir-jelly ms-lg-5 mx-1" title="پروفایل گروه"
@@ -433,9 +433,10 @@
                             <span class="ms-1"> {{ user.first_name }} {{ user.last_name }} </span>
                         </div>
                     </div>
+
                 </div>
                 {% if event %}
-                    <div class="position-relative top-50 start-50 translate-middle d-flex mt-3"
+                    <div class="position-absolute top-50 start-50 translate-middle d-flex mt-3"
                          style="height: max-content;">
                         <a class="masir-circle-button-2 top-50 start-50 masir-jelly" title="باران"
                            style="background-image: url('{% static 'images/event-rain.png' %}');  margin: 0 auto"
@@ -616,7 +617,7 @@
                                    data-bs-toggle="offcanvas" href="#level_{{ x.id }}_offcanvas" role="button"
                                    aria-controls="level_{{ x.id }}_offcanvas">مشاهده وضعیت منزل
                                 </a>
-                            {% comment %} حرکت به منزل بعد {% endcomment %}
+                                {% comment %} حرکت به منزل بعد {% endcomment %}
                                 {% if x == user.user_detail.groups.all.first.get_manzel and user.user_detail.groups.all.first.has_next_manzel %}
                                     <form action="{% url 'home_page_link' %}" method="post"
                                           onsubmit="next_level_form_click()">
@@ -626,19 +627,19 @@
                                         {% if user.user_detail.groups.all.first.get_food >= x.food_for_next_manzel and user.user_detail.groups.all.first.get_power >= x.power_for_next_manzel %}
                                             {% if x.next_manzel_active %}
                                                 <div class="form-check mt-1 mb-1">
-                                                <input class="form-check-input" type="checkbox" required>
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    به حداکثر آذوقه قابل حمل توجه کردیم.
-                                                </label><br>
-                                                <input class="form-check-input" type="checkbox" required>
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    کارمون با ماموریت های این منزل تموم شده
-                                                </label><br>
-                                                <input class="form-check-input" type="checkbox" required>
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    حواسمون هست که دیگه نمیتونیم برگردیم
-                                                </label>
-                                            </div>
+                                                    <input class="form-check-input" type="checkbox" required>
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        به حداکثر آذوقه قابل حمل توجه کردیم.
+                                                    </label><br>
+                                                    <input class="form-check-input" type="checkbox" required>
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        کارمون با ماموریت های این منزل تموم شده
+                                                    </label><br>
+                                                    <input class="form-check-input" type="checkbox" required>
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        حواسمون هست که دیگه نمیتونیم برگردیم
+                                                    </label>
+                                                </div>
                                             {% else %}
                                                 <div class="form-check mt-1 mb-1">
                                                     <label class="form-check-label" for="flexCheckDefault">
@@ -2345,14 +2346,14 @@
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
     <script type="text/javascript">
-        var map = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"]
+        var map = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"];
         document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function ($0) {
             return map[$0]
         });
     </script>
 
     <script>
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl)
         })
@@ -2438,11 +2439,11 @@
                     {% if x.id not in user.user_detail.groups.all.first.is_acted %}
                         modalText1.innerHTML = " شما تا به حال هیچ یک از سطوح ماموریت « {{ x.title }} » را باز نکرده اید. ";
                         modalText2.innerHTML = "تنها میتوانید یک سطح دشواری از هر ماموریت را انجام دهید. انتخاب شما سطح « {{ t.title }} » است ";
-                        modalInput.value = "{{ t.id }}"
+                        modalInput.value = "{{ t.id }}";
                     {% else %}
                         modalText1.innerHTML = "شما پیش از این یکی از سطوح دیگر را باز کرده اید ";
                         modalText2.innerHTML = "در صورت تایید باز کردن سطح « {{ t.title }} » مقدار 5 واحد آذوقه از گروه شما کسر میشود ";
-                        modalInput.value = "{{ t.id }}"
+                        modalInput.value = "{{ t.id }}";
                     {% endif %}
                 }
             {% endfor %}
