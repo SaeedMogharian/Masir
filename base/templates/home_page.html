@@ -1141,7 +1141,7 @@
                                 «{{ user.user_detail.groups.all.first.get_manzel.title }} »
                             </div>
                             {% if user.user_detail.groups.all.first.get_manzel.id != 1 %}
-                                
+
                                 <a type="button" title="رهنمای اکتشاف"
                                    href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
                                    style="background-color: #610909; border: 2px #610909 solid; color: white; margin-top: 4vh"
@@ -1341,9 +1341,8 @@
                                                                           aria-hidden="true"></span>
                                                                         در حال بارگذاری...
                                                                     </button>
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <span> وضعیت: </span>
-                                                                        <span> ارسال نشده </span>
+                                                                    <div class="d-flex justify-content-center align-items-center  mt-3">
+                                                                        <span style="font-weight: 700">ارسال نشده</span>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -1469,24 +1468,46 @@
                                                         پس  داوری شدن، وضعیت به «داوری شده» تبدیل می شود.
                                                         در صورت وجود مشکل در لینک یا عدم دقت در انتخاب قالب، داوران به شما بازخورد می دهند که در آن صورت باید مشکل را برطرف کنید و مجددا لینک را بفرستید">
                                                                 </div>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <span> وضعیت: </span>
-                                                                    <span>
-                                              {% if x.state == '4' or x.state == '6' %}
-                                                  {{ x.get_state_display }}
-                                              {% else %}
-                                                  در حال داوری
-                                              {% endif %}
-                                            </span>
-                                                                </div>
+                                                                <div class="d-flex justify-content-center align-items-center mt-3 col-lg-8 col-md-10 col-12"
+                                                                     style="background-color: {% if x.state == '1' or x.state == '2' or x.state == '3' or x.state == '5' %} #FF8A00 {% elif x.state == '4' %} #14D26C {% elif x.state == '6' %} #E63635 {% endif %};
+                                                                             margin: auto">
+                                                                    {% if x.state == '1' or x.state == '2' or x.state == '3' or x.state == '5' %}
+                                                                        <span style="font-weight: 700; color: white; outline-color: #636363">در حال داوری...</span>
+                                                                    {% elif x.state == '4' %}
+                                                                        <span style="font-weight: 700; color: white;">ماموریت با موفقیت انجام شده است.</span>
+                                                                    {% elif x.state == '6' %}
+                                                                        <div class="flex w-100">
+                                                                            <span style="font-weight: 700; color: white;"
+                                                                                  class="d-flex justify-content-center align-items-center">رد شده (نیازمند ارسال دوباره)</span>
+                                                                            <div class="accordion-item  w-100"
+                                                                                 style="background-color: #ffcbcb">
+                                                                                <h3 id="H_deny_{{ x.id }}">
+                                                                                    <button class="accordion-button collapsed w-100"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="collapse"
+                                                                                            style="background-color: #E63635; color: white; height: 1rem !important; border: 0 !important;"
+                                                                                            data-bs-target="#S_deny_{{ x.id }}"
+                                                                                            aria-expanded="false"
+                                                                                            aria-controls="S_deny_{{ x.id }}">
+                                                                                        دلیل رد شدن در داوری
 
-                                                                {% if x.comment %}
-                                                                    {% if x.state == '4' or x.state == '6' %}
-                                                                        <div style="text-align: justify; color: #800228; font-weight: 700;">
-                                                                            {{ x.comment }}
+                                                                                    </button>
+                                                                                </h3>
+                                                                                <div id="S_deny_{{ x.id }}"
+                                                                                     class="accordion-collapse collapse w-100"
+                                                                                     aria-labelledby="H_deny_{{ x.id }}">
+                                                                                    <div class="accordion-body "
+                                                                                         style="background-color: white">
+                                                                                        <div style="text-align: justify; color: #800228; font-weight: 400;">
+                                                                                            {{ x.comment }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
+
                                                                     {% endif %}
-                                                                {% endif %}
+                                                                </div>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -1607,9 +1628,8 @@
                                               aria-hidden="true"></span>
                                                 در حال بارگذاری...
                                             </button>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <span> وضعیت: </span>
-                                                <span> ارسال نشده </span>
+                                            <div class="d-flex justify-content-center align-items-center  mt-3">
+                                                <span style="font-weight: 700">ارسال نشده</span>
                                             </div>
                                         </form>
                                     {% endif %}
@@ -1625,15 +1645,45 @@
                                         </div>
                                         <form>
                                             {% csrf_token %}
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <span> وضعیت:  </span>
-                                                <span>
-                                              {% if x.state == '4' or x.state == '6' %}
-                                                  {{ x.get_state_display }}
-                                              {% else %}
-                                                  در حال داوری
-                                              {% endif %}
-                                            </span>
+                                            <div class="d-flex justify-content-center align-items-center mt-3 col-lg-8 col-md-10 col-12"
+                                                 style="background-color: {% if x.state == '1' or x.state == '2' or x.state == '3' or x.state == '5' %} #FF8A00 {% elif x.state == '4' %} #14D26C {% elif x.state == '6' %} #E63635 {% endif %};
+                                                         margin: auto">
+                                                {% if x.state == '1' or x.state == '2' or x.state == '3' or x.state == '5' %}
+                                                    <span style="font-weight: 700; color: white; outline-color: #636363">در حال داوری...</span>
+                                                {% elif x.state == '4' %}
+                                                    <span style="font-weight: 700; color: white;">ماموریت با موفقیت انجام شده است.</span>
+                                                {% elif x.state == '6' %}
+                                                    <div class="flex w-100">
+                                                        <span style="font-weight: 700; color: white;"
+                                                              class="d-flex justify-content-center align-items-center">رد شده (نیازمند ارسال دوباره)</span>
+                                                        <div class="accordion-item  w-100"
+                                                             style="background-color: #ffcbcb">
+                                                            <h3 id="H_deny_{{ x.id }}">
+                                                                <button class="accordion-button collapsed w-100"
+                                                                        type="button"
+                                                                        data-bs-toggle="collapse"
+                                                                        style="background-color: #E63635; color: white; height: 1rem !important; border: 0 !important;"
+                                                                        data-bs-target="#S_deny_{{ x.id }}"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="S_deny_{{ x.id }}">
+                                                                    دلیل رد شدن در داوری
+
+                                                                </button>
+                                                            </h3>
+                                                            <div id="S_deny_{{ x.id }}"
+                                                                 class="accordion-collapse collapse w-100"
+                                                                 aria-labelledby="H_deny_{{ x.id }}">
+                                                                <div class="accordion-body "
+                                                                     style="background-color: white">
+                                                                    <div style="text-align: justify; color: #800228; font-weight: 400;">
+                                                                        {{ x.comment }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                {% endif %}
                                             </div>
                                         </form>
                                     {% endif %}
@@ -2156,7 +2206,8 @@
                         {% for x in m.activity_topics.all %}
                             {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main %}
                                 <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                   <span style="font-weight: 700; color: {{ m.color }}; margin-left: auto; font-size: large; padding: 0" class="col-6"> {{ x.title }} </span>
+                                    <span style="font-weight: 700; color: {{ m.color }}; margin-left: auto; font-size: large; padding: 0"
+                                          class="col-6"> {{ x.title }} </span>
                                     <a class="justify-content-center align-content-center d-block col-6 btn masir-btn"
                                        style="width: max-content; background-color: gray; margin-right: auto; padding: 0"
                                        href="{{ x.get_file }}" download title="دانلود توضیحات ماموریت">
@@ -2228,9 +2279,8 @@
                                               aria-hidden="true"></span>
                                             در حال بارگذاری...
                                         </button>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span> وضعیت: </span>
-                                            <span> ارسال نشده </span>
+                                        <div class="d-flex justify-content-center align-items-center  mt-3">
+                                            <span style="font-weight: 700">ارسال نشده</span>
                                         </div>
                                     </form>
                                 </div>
@@ -2242,7 +2292,8 @@
                             {% if x.topic in m.activity_topics.all and x.topic.main %}
 
                                 <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                <span style="font-weight: 700; color: {{ m.color }}; margin-left: auto; font-size: large; padding: 0" class="col-6"> {{ x.topic.title }} </span>
+                                    <span style="font-weight: 700; color: {{ m.color }}; margin-left: auto; font-size: large; padding: 0"
+                                          class="col-6"> {{ x.topic.title }} </span>
                                     <a class="justify-content-center align-content-center d-block col-6 btn masir-btn"
                                        style="width: max-content; background-color: gray; margin-right: auto; padding: 0"
                                        href="{{ x.topic.get_file }}" download title="دانلود توضیحات ماموریت">
@@ -2281,24 +2332,47 @@
                                                         در صورت وجود مشکل در لینک یا عدم دقت در انتخاب قالب، داوران به شما بازخورد می دهند که در آن صورت باید مشکل را برطرف کنید و مجددا لینک را بفرستید">
                                         </div>
 
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span> وضعیت: </span>
-                                            <span>
-                          {% if x.state == '4' or x.state == '6' %}
-                              {{ x.get_state_display }}
-                          {% else %}
-                              در حال داوری
-                          {% endif %}
-                        </span>
+                                        <div class="d-flex justify-content-center align-items-center mt-3 col-lg-8 col-md-10 col-12"
+                                             style="background-color: {% if x.state == '1' or x.state == '2' or x.state == '3' or x.state == '5' %} #FF8A00 {% elif x.state == '4' %} #14D26C {% elif x.state == '6' %} #E63635 {% endif %};
+                                                     margin: auto">
+                                            {% if x.state == '1' or x.state == '2' or x.state == '3' or x.state == '5' %}
+                                                <span style="font-weight: 700; color: white; outline-color: #636363">در حال داوری...</span>
+                                            {% elif x.state == '4' %}
+                                                <span style="font-weight: 700; color: white;">ماموریت با موفقیت انجام شده است.</span>
+                                            {% elif x.state == '6' %}
+                                                <div class="flex w-100">
+                                                    <span style="font-weight: 700; color: white;"
+                                                          class="d-flex justify-content-center align-items-center">رد شده (نیازمند ارسال دوباره)</span>
+                                                    <div class="accordion-item  w-100"
+                                                         style="background-color: #ffcbcb">
+                                                        <h3 id="H_deny_{{ x.id }}">
+                                                            <button class="accordion-button collapsed w-100"
+                                                                    type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    style="background-color: #E63635; color: white; height: 1rem !important; border: 0 !important;"
+                                                                    data-bs-target="#S_deny_{{ x.id }}"
+                                                                    aria-expanded="false"
+                                                                    aria-controls="S_deny_{{ x.id }}">
+                                                                دلیل رد شدن در داوری
+
+                                                            </button>
+                                                        </h3>
+                                                        <div id="S_deny_{{ x.id }}"
+                                                             class="accordion-collapse collapse w-100"
+                                                             aria-labelledby="H_deny_{{ x.id }}">
+                                                            <div class="accordion-body "
+                                                                 style="background-color: white">
+                                                                <div style="text-align: justify; color: #800228; font-weight: 400;">
+                                                                    {{ x.comment }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            {% endif %}
                                         </div>
 
-                                        {% if x.comment %}
-                                            {% if x.state == '4' or x.state == '6' %}
-                                                <div style="text-align: justify; color: #800228; font-weight: 700;">
-                                                    {{ x.comment }}
-                                                </div>
-                                            {% endif %}
-                                        {% endif %}
                                     </form>
                                 </div>
                             {% endif %}
