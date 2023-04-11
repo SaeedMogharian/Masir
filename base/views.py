@@ -301,7 +301,7 @@ def landing_page(request):
                                            + '<ul>'
                                            + '<li>' + 'مسابقه از نیمه دوم ماه مبارک رمضان آغاز خواهد شد.' + '</li>'
                                            + '<li>' + 'حتما و حتما در یکی از کانالهای مسابقه عضو شوید تا اطلاعیه‌های بعدی را دریافت نمایید.' + '</li>'
-                                           + '<li>' + "<a href='#login_modal'>"+" ورود به صفحه مسابقه" + '</a>' +'</li>'
+                                           + '<li>' + "<a href='#login_modal'>" + " ورود به صفحه مسابقه" + '</a>' + '</li>'
                                            + '</ul>',
                                 'cities': City.objects.all().order_by('name'),
                                 'schools': School.objects.all().order_by('name'),
@@ -315,10 +315,10 @@ def landing_page(request):
                         'landing_page.html',
                         {
                             'MESSAGE': 'اعضای گروه نباید در گروه دیگری عضو باشند.'
-                                        +'<br>'
-                                        +'اگر از صحت اطلاعات خود مطمئن هستید اقدام به '
-                                        +"<a href='#login_modal'>"+" ورود " + '</a>'
-                                        +'کنید.',
+                                       + '<br>'
+                                       + 'اگر از صحت اطلاعات خود مطمئن هستید اقدام به '
+                                       + "<a href='#login_modal'>" + " ورود " + '</a>'
+                                       + 'کنید.',
 
                             'cities': City.objects.all().order_by('name'),
                             'schools': School.objects.all().order_by('name'),
@@ -989,9 +989,6 @@ def home_page(request):
                         x.cheated = True
                         x.save()
 
-
-
-
                 return (redirect('home_page_link'))
 
         # اکتشاف
@@ -1470,7 +1467,8 @@ def home_page(request):
                 if len(Club_File.objects.filter(show_public=True, verified=True,
                                                 user__in=x.user.groups.all().first().users.all()).values(
                     'level').annotate(count=Count('id', distinct=True))) >= 14 or len(
-                    Club_File.objects.filter(show_public=True, verified= True, user__in=x.user.groups.all().first().users.all()).values(
+                    Club_File.objects.filter(show_public=True, verified=True,
+                                             user__in=x.user.groups.all().first().users.all()).values(
                         'date__day').annotate(count=Count('id', distinct=True))) >= 14:
                     set_masir_group_and_achivement_rel(
                         x.user.groups.all().first(),
@@ -1489,7 +1487,8 @@ def home_page(request):
 
                 Report.objects.create(
                     group=x.user.groups.all().first(),
-                    text='فایل ارسال شده از طرف ' + str(x.user) + ' با عنوان «' + str(x.title) + '» به دلیل «' + str(x.comment) + '» در بررسی رد شد'
+                    text='فایل ارسال شده از طرف ' + str(x.user) + ' با عنوان «' + str(x.title) + '» به دلیل «' + str(
+                        x.comment) + '» در بررسی رد شد'
                 )
             return (redirect('home_page_link'))
 
@@ -1566,9 +1565,14 @@ def home_page(request):
                         20
                     )
 
+                text = 'ماموریت ' + str(x.topic) + ' داوری شد.'
+
+                if x.cheated:
+                    text += ' اما به دلیل حرکت شما پیش از اعلام نتایج داوری، تنها امتیاز حیات و توان آن به شما تعلق گرفت و آذوقه ای دریافت نکردید.'
+
                 Report.objects.create(
                     group=x.group,
-                    text='ماموریت ' + str(x.topic) + ' داوری شد.'
+                    text=text
                 )
 
             for x in Activity.objects.filter(state='5'):
@@ -1778,8 +1782,6 @@ def club_detail_page(request, id):
             u = the_file.user
             u.club_level = the_file.level
             u.save()
-
-
 
         return (redirect('club_page_link'))
 
