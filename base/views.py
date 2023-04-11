@@ -1573,7 +1573,7 @@ def home_page(request):
                 ati = Achivement.objects.filter(code=code).first().title
                 ate = Achivement.objects.filter(code=code).first().text
 
-                text = 'احسنت به شما! به ازای «' + str(x.ate) + '» نشان «' + str(ati) + '» رو به دست آوردید و ' + str(
+                text = 'احسنت به شما! به ازای «' + str(ate) + '» نشان «' + str(ati) + '» رو به دست آوردید و ' + str(
                     (4 - int(x.template.type)) * round(
                         x.get_score()) * main_score) + ' واحد امتیاز حیات به گروه شما اضافه شد.'
 
