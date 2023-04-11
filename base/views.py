@@ -1503,7 +1503,7 @@ def home_page(request):
                 set_masir_group_and_achivement_rel(
                     x.group,
                     Achivement.objects.get(
-                        code=ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0' + str(
+                        code=ACTIVITIES[x.topic.co_title] + '0' + str(4-int(x.template.type)) + '0' + str(
                             round(x.get_score()))),
                     (4 - int(x.template.type)) * x.get_score() * main_score
                 )

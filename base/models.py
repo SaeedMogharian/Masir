@@ -601,11 +601,14 @@ class Masir_Group(models.Model):
     def recalculate_achivements(self):
         self.achivements.all().delete()
         for x in self.activities.filter(state='4'):
+            main_score = 1
+            if x.topic.main:
+                main_score = 2
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(
-                    code=ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0' + str(
+                    code=ACTIVITIES[x.topic.co_title] + '0' + str(4-int(x.template.type)) + '0' + str(
                         round(x.get_score()))),
-                (4 - int(x.template.type)) * x.get_score()
+                (4 - int(x.template.type)) * x.get_score() * main_score
             )
         if len(self.discovered.all()) >= 16:
             self.set_masir_group_and_achivement_rel(

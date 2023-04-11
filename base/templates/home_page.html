@@ -1141,6 +1141,7 @@
                                 «{{ user.user_detail.groups.all.first.get_manzel.title }} »
                             </div>
                             {% if user.user_detail.groups.all.first.get_manzel.id != 1 %}
+                                
                                 <a type="button" title="رهنمای اکتشاف"
                                    href="{{ user.user_detail.groups.all.first.get_manzel.get_discover_help }}"
                                    style="background-color: #610909; border: 2px #610909 solid; color: white; margin-top: 4vh"
@@ -1198,14 +1199,14 @@
                                                          aria-labelledby="H{{ x.id }}">
                                                         <div class="accordion-body">
                                                             <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                                                <div class=" d-flex justify-content-center align-items-center"
-                                                                     style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
-                                                                    <span style="margin:1vw; font-weight: 700;"> دانلود توضیحات ماموریت </span>
-                                                                    <a class="masir-circle-button-2"
-                                                                       title="دانلود توضیحات ماموریت"
-                                                                       style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
-                                                                       href="{{ x.get_file }}" download></a>
-                                                                </div>
+                                                                <a class=" d-flex justify-content-center align-items-center btn masir-btn"
+                                                                   style="display: block; width: max-content; background-color: gray; margin: auto; padding: 0"
+                                                                   href="{{ x.get_file }}" download
+                                                                   title="دانلود توضیحات ماموریت">
+                                                                    <span style="margin:auto 0.5vw; font-weight: 700; color: white"> دانلود توضیحات ماموریت </span>
+                                                                    <img class="masir-circle-button-1"
+                                                                         style="background-image: url('{% static 'images/download.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);">
+                                                                </a>
 
                                                                 <form action="{% url 'home_page_link' %}" method="post"
                                                                       onsubmit="activity_{{ x.id }}_form_click()">
@@ -1371,15 +1372,14 @@
                                                      aria-labelledby="H{{ x.id }}">
                                                     <div class="accordion-body">
                                                         <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                                            <div class=" d-flex justify-content-center align-items-center"
-                                                                 style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
-                                                                <span style="margin:1vw; font-weight: 700;"> دانلود توضیحات ماموریت </span>
-                                                                <a class="masir-circle-button-2"
-                                                                   title="دانلود توضیحات ماموریت"
-                                                                   style="background-image: url('{% static 'images/pdf_icon.png' %}');
-                                                                           margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
-                                                                   href="{{ x.get_file }}" download></a>
-                                                            </div>
+                                                            <a class=" d-flex justify-content-center align-items-center btn masir-btn"
+                                                               style="display: block; width: max-content; background-color: gray; margin: auto; padding: 0"
+                                                               href="{{ x.get_file }}" download
+                                                               title="دانلود توضیحات ماموریت">
+                                                                <span style="margin:auto 0.5vw; font-weight: 700; color: white"> دانلود توضیحات ماموریت </span>
+                                                                <img class="masir-circle-button-1"
+                                                                     style="background-image: url('{% static 'images/download.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);">
+                                                            </a>
 
                                                             <form>
                                                                 {% csrf_token %}
@@ -1563,16 +1563,13 @@
                             {% if user.user_detail.groups.all.first.get_manzel.id != 1 %}
                                 {% for x in user.user_detail.groups.all.first.discovered.all %}
                                     {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main and  x.if_long %}
-                                        <div class=" d-flex justify-content-center align-items-center"
-                                             style="display: block; width: max-content; background-color: gray; margin: auto; border-radius: 3rem">
-                                        <span style="margin:1vw; font-weight: 700;">
-
-                                            {{ x.title }}
-                                        </span>
-                                            <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
-                                               style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);"
-                                               href="{{ x.get_file }}" download></a>
-                                        </div>
+                                        <a class=" d-flex justify-content-center align-items-center btn masir-btn"
+                                           style="display: block; width: max-content; background-color: gray; margin: auto; padding: 0"
+                                           href="{{ x.get_file }}" download title="دانلود توضیحات ماموریت">
+                                            <span style="margin:auto 0.5vw; font-weight: 700; color: white"> دانلود توضیحات ماموریت </span>
+                                            <img class="masir-circle-button-1"
+                                                 style="background-image: url('{% static 'images/download.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);">
+                                        </a>
                                         <form action="{% url 'home_page_link' %}" method="post"
                                               onsubmit="activity_{{ x.id }}_form_click()">
                                             {% csrf_token %}
@@ -2159,12 +2156,14 @@
                         {% for x in m.activity_topics.all %}
                             {% if x not in user.user_detail.groups.all.first.get_activity_topics and x.main %}
                                 <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                    <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
-                                        <span style="font-weight: 700; color: {{ m.color }};"> {{ x.title }} </span>
-                                        <a class="masir-circle-button-2" title="دانلود توضیحات ماموریت"
-                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                                           href="{{ x.get_file }}" download></a>
-                                    </div>
+                                   <span style="font-weight: 700; color: {{ m.color }}; margin-left: auto; font-size: large; padding: 0" class="col-6"> {{ x.title }} </span>
+                                    <a class="justify-content-center align-content-center d-block col-6 btn masir-btn"
+                                       style="width: max-content; background-color: gray; margin-right: auto; padding: 0"
+                                       href="{{ x.get_file }}" download title="دانلود توضیحات ماموریت">
+                                        <span style="margin:auto 0.5vw; font-weight: 700; color: white;"> دانلود توضیحات ماموریت </span>
+                                        <img class="masir-circle-button-1"
+                                             style="background-image: url('{% static 'images/download.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);">
+                                    </a>
 
                                     <form action="{% url 'home_page_link' %}" method="post"
                                           onsubmit="activity_{{ x.id }}_form_click()">
@@ -2241,13 +2240,17 @@
                         {% comment %} داوری شده ها {% endcomment %}
                         {% for x in user.user_detail.groups.all.first.activities.all %}
                             {% if x.topic in m.activity_topics.all and x.topic.main %}
+
                                 <div class="mb-3 p-2" style="background-color: #eeeeee;">
-                                    <div class="mb-2 p-2 d-flex justify-content-between align-items-center">
-                                        <span style="font-weight: 700; color: {{ m.color }};"> {{ x.topic.title }} </span>
-                                        <a class="masir-circle-button-2" title="عنوان ماموریت"
-                                           style="background-image: url('{% static 'images/pdf_icon.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                                           href="{{ x.topic.get_file }}" download></a>
-                                    </div>
+                                <span style="font-weight: 700; color: {{ m.color }}; margin-left: auto; font-size: large; padding: 0" class="col-6"> {{ x.topic.title }} </span>
+                                    <a class="justify-content-center align-content-center d-block col-6 btn masir-btn"
+                                       style="width: max-content; background-color: gray; margin-right: auto; padding: 0"
+                                       href="{{ x.topic.get_file }}" download title="دانلود توضیحات ماموریت">
+                                        <span style="margin:auto 0.5vw; font-weight: 700; color: white;"> دانلود توضیحات ماموریت </span>
+                                        <img class="masir-circle-button-1"
+                                             style="background-image: url('{% static 'images/download.png' %}'); margin: max(0.15vw, 0.15vh) max(0.15vw, 0.15vh);">
+                                    </a>
+
 
                                     <form>
                                         {% csrf_token %}
@@ -2449,43 +2452,7 @@
             {% endfor %}
         {% endfor %}
     </script>
-    <script>
 
-        window.addEventListener('load', function () {
-            hidePopoversOnClickOutside();
-        });
-
-        function hidePopoversOnClickOutside() {
-            document.addEventListener('click', function (event) {
-                // Get all popover buttons on the page
-                var buttons = document.querySelectorAll('[data-bs-toggle="popover"]');
-
-                // Check if the clicked element is a popover or its related button
-                for (var i = 0; i < buttons.length; i++) {
-                    var button = buttons[i];
-                    var popover = button.nextElementSibling;
-
-                    // Exclude triggers with data-bs-trigger="hover focus"
-                    if (button.getAttribute('data-bs-trigger') === 'hover focus') {
-                        continue;
-                    }
-
-                    // Check if the clicked element is inside the popover
-                    if (popover && popover.contains(event.target)) {
-                        return;
-                    }
-
-                    // Hide the popover if the clicked element is outside the popover and its related button
-                    if (popover && popover.classList.contains('show') && (event.target !== button && !button.contains(event.target))) {
-                        popover.classList.remove('show');
-                        button.setAttribute('aria-expanded', 'false');
-                    }
-                }
-            });
-        }
-
-
-    </script>
     {% if MESSAGE %}
         <script>
             function show_message() {
