@@ -960,7 +960,7 @@ class Masir_Group(models.Model):
         for x in self.events.filter(show_public=True):
             l = l + x.score * 10
         for x in self.users.all():
-            l = l + len(x.club_files.filter(show_public=True)) / 2
+            l = l + len(x.club_files.filter(show_public=True, verified=True)) / 2
         for x in self.charities.all():
             l = l + x.value
 
