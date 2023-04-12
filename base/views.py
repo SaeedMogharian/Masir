@@ -115,11 +115,10 @@ def landing_page(request):
                 password=request.POST['login_password']
             )
             if user and user.is_active:
+                login(request, user)
                 if user.user_detail.groups.all().first() or user.user_detail.accessibility != Accessibility.objects.get(
                         title='دسترسی دانش‌آموزی'):
-                    login(request, user)
                     return (redirect('home_page_link'))
-
                 return (
                     render(
                         request,
@@ -301,7 +300,7 @@ def landing_page(request):
                                            + '<ul>'
                                            + '<li>' + 'مسابقه از نیمه دوم ماه مبارک رمضان آغاز خواهد شد.' + '</li>'
                                            + '<li>' + 'حتما و حتما در یکی از کانالهای مسابقه عضو شوید تا اطلاعیه‌های بعدی را دریافت نمایید.' + '</li>'
-                                           + '<li>' + "<a href='#login_modal'>" + " ورود به صفحه مسابقه" + '</a>' + '</li>'
+                                           + '<li>' + "<a data-bs-toggle='modal' href='#login_modal' role='button' > ورود </a>" + '</li>'
                                            + '</ul>',
                                 'cities': City.objects.all().order_by('name'),
                                 'schools': School.objects.all().order_by('name'),
@@ -317,7 +316,7 @@ def landing_page(request):
                             'MESSAGE': 'اعضای گروه نباید در گروه دیگری عضو باشند.'
                                        + '<br>'
                                        + 'اگر از صحت اطلاعات خود مطمئن هستید اقدام به '
-                                       + "<a href='#login_modal'>" + " ورود " + '</a>'
+                                       + "<a data-bs-toggle='modal' href='#login_modal' role='button' > ورود </a>"
                                        + 'کنید.',
 
                             'cities': City.objects.all().order_by('name'),
