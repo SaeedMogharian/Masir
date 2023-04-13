@@ -600,6 +600,7 @@
 
                                     {% endif %}
                                 {% else %}
+                                    {% comment %}
                                     <div class="row mx-0">
                                         {% for a in user.user_detail.groups.all.first.get_achivements %}
                                             {% if a.achivement in x.achivements.all %}
@@ -610,6 +611,7 @@
                                             {% endif %}
                                         {% endfor %}
                                     </div>
+                                    {% endcomment %}
                                 {% endif %}
 
                                 <a class="btn masir-btn w-100 mt-1"

@@ -1751,7 +1751,7 @@ def club_page(request):
             request,
             'club_page_admin.html',
             {
-                'club_files': Club_File.objects.all().order_by('-denied', 'verified', '-id')
+                'club_files': Club_File.objects.all().order_by('show_public', 'verified', 'denied', '-id', )
             }
         )
     )
