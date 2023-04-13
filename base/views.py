@@ -1064,6 +1064,7 @@ def home_page(request):
                     }
                 )
             )
+
         if 'unlock_form' in request.POST:
             i = request.POST['unlock_value']
             t = Activity_Template.objects.filter(id=i).first()
@@ -1502,7 +1503,7 @@ def home_page(request):
                 set_masir_group_and_achivement_rel(
                     x.group,
                     Achivement.objects.get(
-                        code=ACTIVITIES[x.topic.co_title] + '0' + str(4-int(x.template.type)) + '0' + str(
+                        code=ACTIVITIES[x.topic.co_title] + '0' + str(4 - int(x.template.type)) + '0' + str(
                             round(x.get_score()))),
                     (4 - int(x.template.type)) * x.get_score() * main_score
                 )
@@ -1606,8 +1607,20 @@ def home_page(request):
         if user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
             user_is_admin = True
 
-        SGT = [{'title': str(x), 'light': x.get_light(), 'users': x.users.all()} for x in Masir_Group.objects.all()]
+        SGT = [{'title': str(x), 'light': x.get_light(), 'power': x.get_power(), 'food': x.get_food(),
+                'manzel': x.get_manzel().id-1, 'users': x.users.all()} for x in
+               Masir_Group.objects.all()]
         SGT.sort(key=lambda x: x.get('light'), reverse=True)
+
+        if request.method == 'POST':
+            if 'life_sort_form' in request.POST:
+                SGT.sort(key=lambda x: x['light'], reverse=True)
+            if 'food_sort_form' in request.POST:
+                SGT.sort(key=lambda x: x['food'], reverse=True)
+            if 'manzel_sort_form' in request.POST:
+                SGT.sort(key=lambda x: x['manzel'], reverse=True)
+            if 'power_sort_form' in request.POST:
+                SGT.sort(key=lambda x: x['power'], reverse=True)
 
         return (
             render(
