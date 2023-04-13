@@ -1910,7 +1910,19 @@ def statistics_page(request):
     if not user.accessibility.statistics_page:
         return (redirect('home_page_link'))
 
-    groups_all = [len(Masir_Group.objects.all()), 0, 0]
+    groups_all = [len(Masir_Group.objects.all()), 0, 0, 0]
+    discover_all = [0, 0]
+    for x in Masir_Group.objects.all():
+        if x.get_light() > 14:
+            groups_all[1] = groups_all[1] + 1
+        if x.activities.all().first():
+            groups_all[2] = groups_all[2] + 1
+        if x.introduced:
+            groups_all[3] += 1
+        if len(x.discovered.all()) > 5:
+            discover_all[0] += 1
+            discover_all[1] += len(x.discovered.all())-5
+
     charities_all = [0, len(Charity.objects.all().values('group').annotate(count=Count('id', distinct=True)))]
     for x in Charity.objects.all():
         charities_all[0] = charities_all[0] + x.value
@@ -1919,18 +1931,15 @@ def statistics_page(request):
                      count=Count('id', distinct=True)))]
     club_files_all = [len(Club_File.objects.all()),
                       len(Club_File.objects.all().values('user').annotate(count=Count('id', distinct=True)))]
-    activitiy_templates_all = []
-    for x in Activity_Template.objects.all():
-        activitiy_templates_all.append({'template': x, 'count': len(x.activities.all())})
-    activitiy_templates_all.sort(key=lambda x: x.get('count'), reverse=True)
-    activitiy_templates_all = Activity.objects.all().values('template__title').annotate(
-        count=Count('id', distinct=True)).order_by('count')
-    for x in Masir_Group.objects.all():
-        if x.get_light() > 64:
-            groups_all[1] = groups_all[1] + 1
-        if x.activities.all().first():
-            groups_all[2] = groups_all[2] + 1
+    events_all = [len(Masir_Group_And_Event_Rel.objects.all()),
+                 len(Masir_Group_And_Event_Rel.objects.all().values('group').annotate(
+                     count=Count('id', distinct=True)))]
 
+    activity_topic_all = Activity.objects.all().exclude(topic__manzel=None).exclude(state='6').values('topic__title', 'topic__manzel__number').annotate(
+        count=Count('id', distinct=True)).order_by('-count')
+
+
+    '''
     votes = {
         'all': len(Vote.objects.all()),
         'all_valid': len(Vote.objects.filter(is_valid=True)),
@@ -1955,19 +1964,22 @@ def statistics_page(request):
             votes[x][1] = (votes[x][0] / votes['all_valid']) * 100
         except:
             pass
-
+    '''
     return (
         render(
             request,
             'statistics_page_admin.html',
             {
-                'votes': votes,
+                # 'votes': votes,
                 'groups_all': groups_all,
                 'charities_all': charities_all,
                 'exams_all': exams_all,
                 'club_files_all': club_files_all,
-                'activitiy_templates_all': activitiy_templates_all,
-                'groups': Masir_Group.objects.all().order_by('supergroup')
+                # 'activitiy_templates_all': activitiy_templates_all,
+                'groups': Masir_Group.objects.all().order_by('supergroup'),
+                'activity_topic_all': activity_topic_all,
+                'discover_all': discover_all,
+                'events_all': events_all,
             }
         )
     )
