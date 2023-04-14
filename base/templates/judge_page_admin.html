@@ -161,19 +161,19 @@
                         {% if x.state != '4' %}<a class="text-decoration-none link-dark"
                                                   href="{% url 'judge_detail_page_link' x.id %}">{% endif %}
                     <div class="mb-2 pb-2"
-                         style="background-color: {% if x.state == '1' %} #ffcbcb {% else %} {% if x.state == '2' %} #ffffcb {% else %} {% if x.state == '3' %} #cbffcb {% else %} {% if x.state == '4' %} #cbcbff {% else %} {% if x.state == '5' %} #ffcbff {% else %} #cbcbff {% endif %} {% endif %} {% endif %} {% endif %} {% endif %} {% if x.get_score > 4 %} border: 3px solid #ffff00 {% endif %}">
+                         style="background-color: {% if x.state == '1' %} #ffcbcb {% else %} {% if x.state == '2' %} #ffffcb {% else %} {% if x.state == '3' %} #cbffcb {% else %} {% if x.state == '4' %} #cbcbff {% else %} {% if x.state == '5' %} #ffcbff {% else %} #cbcbff {% endif %} {% endif %} {% endif %} {% endif %} {% endif %} {% if x.get_score > 4 %} ; border: 3px solid #ffff00 {% endif %}">
                         {% if x.get_score > 4 %}
                             <div class="p-2 text-center" style="background-color: #ffff00; font-weight: 700;">
                                 اثر برتر
                             </div>
                         {% endif %}
                         <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
-                        <span>
-                          {{ x.topic }} | {{ x.template }} -- {{ x.group }} --  {{ x.date }}
-                        </span>
                             <span>
-                         {{ x.referee }} | {{ x.get_score }} | <b style="font-weight: 700;">{{ x.get_state_display }}</b>
-                        </span>
+                            {{ x.topic }} | {{ x.template }} -- {{ x.group }} --  {{ x.date }}
+                            </span>
+                            <span>
+                            {{ x.referee }} | {{ x.get_score }} | <b style="font-weight: 700;">{{ x.get_state_display }}</b>
+                            </span>
                         </div>
 
                         <div class="p-2" style="text-align: justify;">
