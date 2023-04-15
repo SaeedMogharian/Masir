@@ -960,8 +960,11 @@ def home_page(request):
 
                 tmp = 0
                 for x in g.activities.filter(topic__manzel=g.get_manzel()):
-                    tmp = tmp + (x.get_score() * (4 - int(x.template.type)))
-                if tmp > 35:
+                    main_score = 1
+                    if x.topic.main:
+                        main_score = 2
+                    tmp = tmp + (x.get_score() * (4 - int(x.template.type)))*main_score
+                if tmp >= 35:
                     set_masir_group_and_achivement_rel(
                         g,
                         Achivement.objects.get(code='Mnz_' + str(g.manzel)),
