@@ -1186,12 +1186,11 @@
                                         {% if m.id == user.user_detail.groups.all.first.prev_manzel %}
                                             <br>
                                             <div class="h4" style="font-weight: 700;">منازل قبلی</div>
-                                        {% endif %}
-
-                                        {% if m == user.user_detail.groups.all.first.get_manzel %}
+                                        {% elif m == user.user_detail.groups.all.first.get_manzel %}
                                             <div class="h4 mt-3" style="font-weight: 700; text-align:center">ماموریت های مخفی </div>
                                             <div class="h4 mt-3" style="font-weight: 700;"> {{ m.number }} | {{ m.title }}</div>
                                         {% endif %}
+
                                         {% for x in m.activity_topics.all %}
                                             {% if x not in user.user_detail.groups.all.first.get_activity_topics and not x.main and x in user.user_detail.groups.all.first.discovered.all %}
                                                 <div class="accordion-item w-100" style="background-color: #F3F3F3">
