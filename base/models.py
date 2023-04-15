@@ -494,6 +494,8 @@ class Masir_Group(models.Model):
             return True
         return False
 
+    def prev_manzel(self):
+        return self.manzel -1
 
     def is_acted(self):
         y = []

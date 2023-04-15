@@ -1139,8 +1139,8 @@
                             </div>
                         </div>
                         <div class="modal-body scroll-without-scrollbar">
-                            <div class="h4 mt-1" style="font-weight: 700; text-align: center"> منزل
-                                «{{ user.user_detail.groups.all.first.get_manzel.title }} »
+                            <div class="h4 mt-1" style="font-weight: 700; text-align: center">
+                                « {{ user.user_detail.groups.all.first.get_manzel.number }} | {{ user.user_detail.groups.all.first.get_manzel.title }} »
                             </div>
                             {% if user.user_detail.groups.all.first.get_manzel.id != 1 %}
 
@@ -1182,8 +1182,16 @@
 
                                 </form>
                                 {% for m in manazel %}
-                                    {% if m == user.user_detail.groups.all.first.get_manzel %}
-                                        <div class="h4" style="font-weight: 700;">ماموریت های مخفی {{ m.number }}</div>
+                                    {% if m.id != 1 and m.id != 6 %}
+                                        {% if m.id == user.user_detail.groups.all.first.prev_manzel %}
+                                            <br>
+                                            <div class="h4" style="font-weight: 700;">منازل قبلی</div>
+                                        {% endif %}
+
+                                        {% if m == user.user_detail.groups.all.first.get_manzel %}
+                                            <div class="h4 mt-3" style="font-weight: 700; text-align:center">ماموریت های مخفی </div>
+                                            <div class="h4 mt-3" style="font-weight: 700;"> {{ m.number }} | {{ m.title }}</div>
+                                        {% endif %}
                                         {% for x in m.activity_topics.all %}
                                             {% if x not in user.user_detail.groups.all.first.get_activity_topics and not x.main and x in user.user_detail.groups.all.first.discovered.all %}
                                                 <div class="accordion-item w-100" style="background-color: #F3F3F3">
@@ -1194,7 +1202,7 @@
                                                                 style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }};  border-radius: 0!important; display: flex"
                                                                 data-bs-target="#S{{ x.id }}" aria-expanded="false"
                                                                 aria-controls="S{{ x.id }}">
-                                                            {{ x.title }}
+                                                            {{ x.title }} {% if m.id != user.user_detail.groups.all.first.get_manzel.id %} | {{ m.number }}{% endif %}
                                                         </button>
                                                     </h3>
                                                     <div id="S{{ x.id }}" class="accordion-collapse collapse"
@@ -1255,17 +1263,8 @@
                                                                                              data-bs-content="{{ t.info }}">
                                                                                             {{ t.get_title }}
                                                                                         </div>
-                                                                                        {#                                                                                        <div class="level-block col-lg-6 col-10 d-inline-block"#}
-                                                                                        {#                                                                                             style="margin-top:1vh; margin-right: auto; margin-left: auto;"#}
-                                                                                        {#                                                                                             id="template_{{ t.id }}_btn">#}
-                                                                                        {#                                                                                            {{ t.get_title }}#}
-                                                                                        {#                                                                                            <div id="template_{{ t.id }}_info"#}
-                                                                                        {#                                                                                                 class="masir-map-icon-popup">#}
-                                                                                        {#                                                                                                {{ t.info | safe }}#}
-                                                                                        {#                                                                                            </div>#}
-                                                                                        {#                                                                                        </div>#}
 
-                                                                                        <div class="col-2">
+                                                                                        <div class="col-2" title="باز شده">
                                                                                             <svg viewBox="0 0 24 24"
                                                                                                  width="30px"
                                                                                                  height="30px">
@@ -1280,20 +1279,32 @@
                                                                                              style="margin-top:1vh; margin-right: auto; margin-left: auto">
                                                                                             {{ t.get_title }}
                                                                                         </div>
-                                                                                        <a class="col-2 masir-jelly"
-                                                                                           onclick="unlock_{{ x.id }}_{{ t.id }}_passValueToModal()"
-                                                                                           title="باز کردن شرح ماموریت"
-                                                                                           data-bs-toggle="modal"
-                                                                                           href="#unlock_modal"
-                                                                                           role="button"
-                                                                                           style="margin-top:1vh; display: block"
-                                                                                           id="unlock_button_{{ t.id }}">
-                                                                                            <svg viewBox="0 0 30 30"
-                                                                                                 width="30px" fill="red"
-                                                                                                 height="30px">
-                                                                                                <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
-                                                                                            </svg>
-                                                                                        </a>
+                                                                                        {% if user.user_detail.groups.all.first.get_manzel.id == m.id %}
+                                                                                            <a class="col-2 masir-jelly"
+                                                                                               onclick="unlock_{{ x.id }}_{{ t.id }}_passValueToModal()"
+                                                                                               title="باز کردن شرح ماموریت"
+                                                                                               data-bs-toggle="modal"
+                                                                                               href="#unlock_modal"
+                                                                                               role="button"
+                                                                                               style="margin-top:1vh; display: block"
+                                                                                               id="unlock_button_{{ t.id }}">
+                                                                                                <svg viewBox="0 0 30 30"
+                                                                                                     width="30px"
+                                                                                                     fill="red"
+                                                                                                     height="30px">
+                                                                                                    <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
+                                                                                                </svg>
+                                                                                            </a>
+                                                                                        {% else %}
+                                                                                            <div class="col-2" title=" شما از این منزل گذشته اید">
+                                                                                                <svg viewBox="0 0 30 30"
+                                                                                                     width="30px"
+                                                                                                     fill="red"
+                                                                                                     height="30px">
+                                                                                                    <path d="M 15 2 C 11.145666 2 8 5.1456661 8 9 L 8 11 L 6 11 C 4.895 11 4 11.895 4 13 L 4 25 C 4 26.105 4.895 27 6 27 L 24 27 C 25.105 27 26 26.105 26 25 L 26 13 C 26 11.895 25.105 11 24 11 L 22 11 L 22 9 C 22 5.2715823 19.036581 2.2685653 15.355469 2.0722656 A 1.0001 1.0001 0 0 0 15 2 z M 15 4 C 17.773666 4 20 6.2263339 20 9 L 20 11 L 10 11 L 10 9 C 10 6.2263339 12.226334 4 15 4 z"></path>
+                                                                                                </svg>
+                                                                                            </div>
+                                                                                        {% endif %}
                                                                                     </div>
                                                                                 {% endif %}
 
@@ -1313,15 +1324,17 @@
                                                                         فایل
                                                                     </div>
                                                                     <input name="activity_{{ x.id }}_file" type="url"
-                                                                           class="form-control masir-form-control text-center"
+                                                                           class="form-control masir-form-control text-center {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                                           disabled {% endif %}"
                                                                            autocomplete="off"
                                                                            required
                                                                             {% if m != user.user_detail.groups.all.first.get_manzel %}
                                                                            disabled {% endif %} >
 
                                                                     <div class="form-check mt-3 mb-2">
-                                                                        <input class="form-check-input" type="checkbox"
-                                                                               required>
+                                                                        <input class="form-check-input" type="checkbox"{% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                                           disabled {% else %} required{% endif %}
+                                                                               >
                                                                         <label class="form-check-label"
                                                                                for="flexCheckDefault">
                                                                             از سطح انتخابی و فایل ارسالی مطمئن هستیم.
@@ -1424,7 +1437,7 @@
                                                                                           data-bs-content="{{ t.info }}">
                                                                                         {{ t.get_title }}
                                                                                     </span>
-                                                                                    <div class="col-2">
+                                                                                    <div class="col-2" title="باز شده">
                                                                                         <svg viewBox="0 0 24 24"
                                                                                              width="30px"
                                                                                              height="30px">
@@ -1443,7 +1456,7 @@
                                                                                         {{ t.get_title }}
                                                                                     </div>
 
-                                                                                    <div class="col-2">
+                                                                                    <div class="col-2" title="ماموریت شما در حال داوری است">
                                                                                         <svg viewBox="0 0 30 30"
                                                                                              width="30px" fill="red"
                                                                                              height="30px">
@@ -1518,8 +1531,11 @@
                                             {% endif %}
                                         {% endfor %}
 
+                                        <hr>
 
                                     {% endif %}
+
+
 
                                 {% endfor %}
                             {% else %}
