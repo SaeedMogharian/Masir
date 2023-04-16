@@ -85,6 +85,12 @@
                        style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                        href="{% url 'contact_admin_page_link' %}"></a>
                 {% endif %}
+                {% if user.user_detail.accessibility.statistics_page %}
+                    <a class="masir-circle-button-2 masir-jelly" title="تابلو امتیازات"
+                       style="background-image: url('{% static 'images/navbar_leaderboard.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                       href="{% url 'leaderboard_page_link' %}"></a>
+                {% endif %}
+
             </div>
             <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
             </div>
@@ -106,59 +112,9 @@
             <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100"
                  style="max-height: 80vh; overflow: scroll;">
                 {% if user_is_admin %}
-                    <ul id="group_list" class="list-group list-group-flush container mb-3">
-                        <li class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
-                            <div class="col-lg-9 col-8">
-                                <div class="fw-bold"> مشخصات گروه</div>
-                            </div>
-                            <div class="row col-lg-3 col-4">
-                                <form action="{% url 'home_page_link' %}" method="post" class="col-lg-3 col-6">
-                                    {% csrf_token %}
-                                    <button class="masir-btn btn-primary" style="margin-left: 0" type="submit" name="life_sort_form" id="life_sort_form">حیات
-                                    </button>
-                                </form>
-                                <form action="{% url 'home_page_link' %}" method="post" class="col-lg-3 col-6">
-                                    {% csrf_token %}
-                                    <button class="masir-btn btn-secondary" style="margin-left: 0"  type="submit" name="manzel_sort_form" id="manzel_sort_form">منزل
-                                    </button>
-                                </form>
-                                <form action="{% url 'home_page_link' %}" method="post" class="col-lg-3 col-6">
-                                    {% csrf_token %}
-                                    <button class="masir-btn btn-success" style="margin-left: 0"  type="submit" name="food_sort_form" id="food_sort_form">آذوقه
-                                    </button>
-                                </form>
-                                <form action="{% url 'home_page_link' %}" method="post" class="col-lg-3 col-6">
-                                    {% csrf_token %}
-                                    <button class="masir-btn btn-warning" style="margin-left: 0" type="submit" name="power_sort_form" id="power_sort_form" >توان
-                                    </button>
-
-                                </form>
-                            </div>
-
-                        </li>
-                        {% for g in groups %}
-                            <li class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
-                                <div class="ms-2 me-auto col-lg-9 col-8">
-                                    <div class="fw-bold"> {{ g.title }} </div>
-                                    {% for u in g.users %}
-                                        {% if u != g.users.all|first %} - {% endif %} {{ u }}
-                                    {% endfor %}
-                                </div>
-
-                                <div class="row col-lg-3 col-4">
-                                    <span class="badge bg-primary masir-btn col-lg-3 col-6" class="life"
-                                          style="margin-left: 0"> {{ g.light }} </span>
-                                    <span class="badge bg-secondary masir-btn col-lg-3 col-6 "
-                                          style="margin-left: 0"> منزل {{ g.manzel }} </span>
-                                    <span class="badge bg-success masir-btn col-lg-3 col-6"
-                                          style="margin-left: 0"> {{ g.food }} </span>
-                                    <span class="badge bg-warning masir-btn col-lg-3 col-6"
-                                          style="margin-left: 0"> {{ g.power }} </span>
-
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div style="height: 100vh">
+                        <img class="mt-5" style="margin: auto; display: block; width: 40vw; min-width: 20em" src="{% static 'images/origin-with-detail.png' %}">
+                    </div>
                     <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto"
                           onsubmit="event_show_scores_admin_form_click()">
                         {% csrf_token %}
@@ -283,7 +239,7 @@
             document.getElementById('achivements_recalculate_admin_form_loading').style.display = 'block';
         }
     </script>
-    
+
 {% endblock %}
 </body>
 </html>

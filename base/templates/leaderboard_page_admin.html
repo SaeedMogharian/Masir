@@ -1,0 +1,93 @@
+{% extends "home_page_admin.html" %}
+{% load static %}
+{% load request_tag %}
+
+{% block static_masir %}
+    {% url 'home_page_link' %}
+{% endblock %}
+{% block mainblock %}
+    <div style="width: 100vw; height: 100vh; position: relative; overflow: hidden;">
+        <div id="masir-map3-background"></div>
+        <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100"
+             style="max-height: 80vh; overflow: scroll;">
+            {% if user_is_admin %}
+                <ul id="group_list" class="list-group list-group-flush container mb-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
+                        <div class="col-lg-9 col-8">
+                            <div class="fw-bold"> مشخصات گروه</div>
+                        </div>
+                        <div class="row col-lg-3 col-4">
+                            <form action="{% url 'home_page_link' %}" method="post" class="col-lg-3 col-6">
+                                {% csrf_token %}
+                                <button class="masir-btn btn-primary" style="margin-left: 0" type="submit"
+                                        name="life_sort_form" id="life_sort_form">حیات
+                                </button>
+                            </form>
+                            <form action="{% url 'home_page_link' %}" method="post" class="col-lg-3 col-6">
+                                {% csrf_token %}
+                                <button class="masir-btn btn-secondary" style="margin-left: 0" type="submit"
+                                        name="manzel_sort_form" id="manzel_sort_form">منزل
+                                </button>
+                            </form>
+                            <form action="{% url 'home_page_link' %}" method="post" class="col-lg-3 col-6">
+                                {% csrf_token %}
+                                <button class="masir-btn btn-success" style="margin-left: 0" type="submit"
+                                        name="food_sort_form" id="food_sort_form">آذوقه
+                                </button>
+                            </form>
+                            <form action="{% url 'home_page_link' %}" method="post" class="col-lg-3 col-6">
+                                {% csrf_token %}
+                                <button class="masir-btn btn-warning" style="margin-left: 0" type="submit"
+                                        name="power_sort_form" id="power_sort_form">توان
+                                </button>
+
+                            </form>
+                        </div>
+
+                    </li>
+                    {% for g in groups %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
+                            <div class="ms-2 me-auto col-lg-9 col-8">
+                                <div class="fw-bold"> {{ g.title }} </div>
+                                {% for u in g.users %}
+                                    {% if u != g.users.all|first %} - {% endif %} {{ u }}
+                                {% endfor %}
+                            </div>
+
+                            <div class="row col-lg-3 col-4">
+                                    <span class="badge bg-primary masir-btn col-lg-3 col-6" class="life"
+                                          style="margin-left: 0"> {{ g.light }} </span>
+                                <span class="badge bg-secondary masir-btn col-lg-3 col-6 "
+                                      style="margin-left: 0"> منزل {{ g.manzel }} </span>
+                                <span class="badge bg-success masir-btn col-lg-3 col-6"
+                                      style="margin-left: 0"> {{ g.food }} </span>
+                                <span class="badge bg-warning masir-btn col-lg-3 col-6"
+                                      style="margin-left: 0"> {{ g.power }} </span>
+
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul> %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scriptblock %}
+    <!-- Bootstrap -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script type="text/javascript">
+        var map = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"];
+        document.getElementById("maindiv").innerHTML = document.getElementById("maindiv").innerHTML.replace(/\d(?=[^<>]*(<|$))/g, function ($0) {
+            return map[$0]
+        });
+    </script>
+
+    <script>
+        function club_admin_form_click() {
+            document.getElementById('club_admin_form').style.display = 'none';
+            document.getElementById('club_admin_form_loading').style.display = 'block';
+        }
+    </script>
+{% endblock %}

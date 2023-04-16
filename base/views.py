@@ -963,7 +963,7 @@ def home_page(request):
                     main_score = 1
                     if x.topic.main:
                         main_score = 2
-                    tmp = tmp + (x.get_score() * (4 - int(x.template.type)))*main_score
+                    tmp = tmp + (x.get_score() * (4 - int(x.template.type))) * main_score
                 if tmp >= 35:
                     set_masir_group_and_achivement_rel(
                         g,
@@ -1610,28 +1610,12 @@ def home_page(request):
         if user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
             user_is_admin = True
 
-        SGT = [{'title': str(x), 'light': x.get_light(), 'power': x.get_power(), 'food': x.get_food(),
-                'manzel': x.get_manzel().id-1, 'users': x.users.all()} for x in
-               Masir_Group.objects.all()]
-        SGT.sort(key=lambda x: x.get('light'), reverse=True)
-
-        if request.method == 'POST':
-            if 'life_sort_form' in request.POST:
-                SGT.sort(key=lambda x: x['light'], reverse=True)
-            if 'food_sort_form' in request.POST:
-                SGT.sort(key=lambda x: x['food'], reverse=True)
-            if 'manzel_sort_form' in request.POST:
-                SGT.sort(key=lambda x: x['manzel'], reverse=True)
-            if 'power_sort_form' in request.POST:
-                SGT.sort(key=lambda x: x['power'], reverse=True)
-
         return (
             render(
                 request,
                 'home_page_admin.html',
                 {
                     'user_is_admin': user_is_admin,
-                    'groups': SGT
                 }
             )
         )
@@ -1648,6 +1632,43 @@ def home_page(request):
                 'achivements': Achivement.objects.filter(manzel=None) | Achivement.objects.filter(code__contains='Mnz'),
                 'exam': Exam.objects.filter(active=True).first(),
                 'event': Event.objects.filter(active=True).first(),
+            }
+        )
+    )
+
+
+def leaderboard_page(request):
+    user = select_user(request.user)
+    if not user:
+        return (redirect('landing_page_link'))
+    if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
+        return (redirect('home_page_link'))
+    if not user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
+        return (redirect('home_page_link'))
+    user_is_admin = True
+
+    SGT = [{'title': str(x), 'light': x.get_light(), 'power': x.get_power(), 'food': x.get_food(),
+            'manzel': x.get_manzel().id - 1, 'users': x.users.all()} for x in
+           Masir_Group.objects.all()]
+    SGT.sort(key=lambda x: x.get('light'), reverse=True)
+
+    if request.method == 'POST':
+        if 'life_sort_form' in request.POST:
+            SGT.sort(key=lambda x: x.get('light'), reverse=True)
+        if 'food_sort_form' in request.POST:
+            SGT.sort(key=lambda x: x.get('food'), reverse=True)
+        if 'manzel_sort_form' in request.POST:
+            SGT.sort(key=lambda x: x.get('manzel'), reverse=True)
+        if 'power_sort_form' in request.POST:
+            SGT.sort(key=lambda x: x.get('power'), reverse=True)
+
+    return (
+        render(
+            request,
+            'leaderboard_page_admin.html',
+            {
+                'user_is_admin': user_is_admin,
+                'groups': SGT
             }
         )
     )
@@ -1924,7 +1945,7 @@ def statistics_page(request):
             groups_all[3] += 1
         if len(x.discovered.all()) > 5:
             discover_all[0] += 1
-            discover_all[1] += len(x.discovered.all())-5
+            discover_all[1] += len(x.discovered.all()) - 5
 
     charities_all = [0, len(Charity.objects.all().values('group').annotate(count=Count('id', distinct=True)))]
     for x in Charity.objects.all():
@@ -1935,12 +1956,12 @@ def statistics_page(request):
     club_files_all = [len(Club_File.objects.all()),
                       len(Club_File.objects.all().values('user').annotate(count=Count('id', distinct=True)))]
     events_all = [len(Masir_Group_And_Event_Rel.objects.all()),
-                 len(Masir_Group_And_Event_Rel.objects.all().values('group').annotate(
-                     count=Count('id', distinct=True)))]
+                  len(Masir_Group_And_Event_Rel.objects.all().values('group').annotate(
+                      count=Count('id', distinct=True)))]
 
-    activity_topic_all = Activity.objects.all().exclude(topic__manzel=None).exclude(state='6').values('topic__title', 'topic__manzel__number').annotate(
+    activity_topic_all = Activity.objects.all().exclude(topic__manzel=None).exclude(state='6').values('topic__title',
+                                                                                                      'topic__manzel__number').annotate(
         count=Count('id', distinct=True)).order_by('-count')
-
 
     '''
     votes = {
