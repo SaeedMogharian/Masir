@@ -111,10 +111,12 @@
             <div id="masir-map3-background"></div>
             <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100"
                  style="max-height: 80vh; overflow: scroll;">
+                <div style="height: 100vh">
+                    <img class="mt-5" style="margin: auto; display: block; width: 40vw; min-width: 20em"
+                         src="{% static 'images/origin-with-detail.png' %}">
+                </div>
                 {% if user_is_admin %}
-                    <div style="height: 100vh">
-                        <img class="mt-5" style="margin: auto; display: block; width: 40vw; min-width: 20em" src="{% static 'images/origin-with-detail.png' %}">
-                    </div>
+
                     <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto"
                           onsubmit="event_show_scores_admin_form_click()">
                         {% csrf_token %}
