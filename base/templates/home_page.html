@@ -1377,7 +1377,7 @@
                                                             style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }}; border-radius: 0!important; display: flex"
                                                             data-bs-target="#S{{ x.id }}" aria-expanded="false"
                                                             aria-controls="S{{ x.id }}">
-                                                        {{ x.topic.title }}
+                                                        {{ x.topic.title }} {% if m.id != user.user_detail.groups.all.first.get_manzel.id %} | {{ m.number }}{% endif %}
                                                     </button>
 
                                                 </h3>

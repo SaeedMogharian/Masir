@@ -706,7 +706,7 @@ def home_page(request):
                                     'home_page.html',
                                     {
                                         'manazel': Manzel.objects.filter(
-                                            id__lte=user.groups.all().first().manzel).order_by('right'),
+                                            id__lte=user.groups.all().first().manzel).order_by('-id'),
                                         'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                         'reports': Report.objects.filter(group=user.groups.all().first()).order_by(
                                             '-id'),
@@ -747,7 +747,7 @@ def home_page(request):
                         'home_page.html',
                         {
                             'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                'right'),
+                                '-id'),
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
@@ -865,7 +865,7 @@ def home_page(request):
                         'home_page.html',
                         {
                             'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                'right'),
+                                '-id'),
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
@@ -909,7 +909,7 @@ def home_page(request):
                         'home_page.html',
                         {
                             'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                'right'),
+                                '-id'),
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
@@ -1017,7 +1017,7 @@ def home_page(request):
                                 'home_page.html',
                                 {
                                     'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                        'right'),
+                                        '-id'),
                                     'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
@@ -1036,7 +1036,7 @@ def home_page(request):
                                 'home_page.html',
                                 {
                                     'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                        'right'),
+                                        '-id'),
                                     'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
@@ -1055,7 +1055,7 @@ def home_page(request):
                     'home_page.html',
                     {
                         'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                            'right'),
+                            '-id'),
                         'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                         'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                         'FAQ': FAQ.objects.filter(is_active=True),
@@ -1084,7 +1084,7 @@ def home_page(request):
                         'home_page.html',
                         {
                             'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                'right'),
+                                '-id'),
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
@@ -1106,7 +1106,7 @@ def home_page(request):
                         'home_page.html',
                         {
                             'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                'right'),
+                                '-id'),
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
@@ -1138,7 +1138,7 @@ def home_page(request):
                         'home_page.html',
                         {
                             'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                'right'),
+                                '-id'),
                             'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                             'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                             'FAQ': FAQ.objects.filter(is_active=True),
@@ -1169,7 +1169,7 @@ def home_page(request):
                             'home_page.html',
                             {
                                 'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                    'right'),
+                                    '-id'),
                                 'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                 'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                 'FAQ': FAQ.objects.filter(is_active=True),
@@ -1191,7 +1191,7 @@ def home_page(request):
                                 'home_page.html',
                                 {
                                     'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by(
-                                        'right'),
+                                        '-id'),
                                     'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                                     'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                                     'FAQ': FAQ.objects.filter(is_active=True),
@@ -1641,7 +1641,7 @@ def home_page(request):
             request,
             'home_page.html',
             {
-                'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by('right'),
+                'manazel': Manzel.objects.filter(id__lte=user.groups.all().first().manzel).order_by('-id'),
                 'announcements': Announcement.objects.filter(is_active=True).order_by('-id'),
                 'reports': Report.objects.filter(group=user.groups.all().first()).order_by('-id'),
                 'FAQ': FAQ.objects.filter(is_active=True),

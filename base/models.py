@@ -756,9 +756,9 @@ class Masir_Group(models.Model):
 
         for m in range(2, 6):
             tmp = 0
-            for a in self.activities.filter(topic__manzel=Manzel.objects.filter(id=m)):
+            for a in self.activities.filter(topic__manzel=Manzel.objects.filter(id=m).first()):
                 main_score = 1
-                if x.topic.main:
+                if a.topic.main:
                     main_score = 2
                 tmp = tmp + (a.get_score() * (4 - int(a.template.type))) * main_score
             if tmp > 35:
