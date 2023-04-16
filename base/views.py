@@ -1648,22 +1648,8 @@ def leaderboard_page(request):
     user_is_admin = True
 
     SGT = [{'title': str(x), 'light': x.get_light(), 'power': x.get_power(), 'food': x.get_food(),
-            'manzel': x.get_manzel().id - 1, 'users': x.users.all(), 'supergroup': x.supergroup} for x in
+            'manzel': int(x.manzel - 1), 'users': x.users.all(), 'supergroup': x.supergroup} for x in
            Masir_Group.objects.all()]
-    SGT.sort(key=lambda x: x.get('light'), reverse=True)
-
-    if request.method == 'POST':
-        if 'life_sort_form' in request.POST:
-            SGT.sort(key=lambda x: x.get('light'), reverse=True)
-        if 'food_sort_form' in request.POST:
-            SGT.sort(key=lambda x: x.get('food'), reverse=True)
-        if 'manzel_sort_form' in request.POST:
-            SGT.sort(key=lambda x: x.get('manzel'), reverse=True)
-        if 'power_sort_form' in request.POST:
-            SGT.sort(key=lambda x: x.get('power'), reverse=True)
-        if 'supergroup_sort_form' in request.POST:
-            SGT.sort(key=lambda x: x.get('supergroup'), reverse=False)
-
     return (
         render(
             request,
