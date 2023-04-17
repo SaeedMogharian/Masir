@@ -644,7 +644,7 @@
                                             {% else %}
                                                 <div class="form-check mt-1 mb-1">
                                                     <label class="form-check-label" for="flexCheckDefault">
-                                                        #مواجهه_با_سختی_مسیر<br>1
+                                                        #مواجهه_با_سختی_مسیر<br>
                                                         #تزلزل<br>
                                                         #استقامت
                                                     </label>
@@ -862,9 +862,25 @@
                                         {% for x in user.user_detail.groups.all.first.get_achivements %}
                                             <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
                                                   data-bs-placement="top"
-                                                  data-bs-trigger="hover focus"
-                                                  data-bs-content="{{ x.achivement.text }}">
-                                            <img class="masir-achievement" src="{{ x.achivement.get_image }}">
+                                                  data-bs-trigger="hover focus" title="{{ x.achivement.text }}"
+                                                  data-bs-content="{% if x.achivement.report %}
+                                                   {{ x.achivement.report }} {% else %}
+                                                  {% if 'Mqz' in x.achivement.code %}
+                                                  به ازای پاسخ صحیح به سوالات دانشگاه
+                                                    {{ user.user_detail.groups.all.first.get_exam_light }}
+                                                  {% elif 'Qra' in x.achivement.code %}
+                                                  به ازای شرکت در باشگاه
+                                                    {{ user.user_detail.groups.all.first.get_club_light }}
+                                                به ازای دادن صدقه
+                                                   {% elif 'Sdq' in x.achivement.code %}
+                                                    {{ user.user_detail.groups.all.first.get_charity_light }}
+                                                    {% else %}
+                                                     به ازای این نشان
+                                                    {{ x.score }}
+                                                    {% endif %}
+                                                   واحد حیات دریافت کرده‌اید 
+                                                  {% endif %}">
+                                                <img class="masir-achievement" src="{{ x.achivement.get_image }}">
 
                                             </span>
 
@@ -1140,7 +1156,8 @@
                         </div>
                         <div class="modal-body scroll-without-scrollbar">
                             <div class="h4 mt-1" style="font-weight: 700; text-align: center">
-                                « {{ user.user_detail.groups.all.first.get_manzel.number }} | {{ user.user_detail.groups.all.first.get_manzel.title }} »
+                                « {{ user.user_detail.groups.all.first.get_manzel.number }}
+                                | {{ user.user_detail.groups.all.first.get_manzel.title }} »
                             </div>
                             {% if user.user_detail.groups.all.first.get_manzel.id != 1 %}
 
@@ -1187,8 +1204,11 @@
                                             <br>
                                             <div class="h4" style="font-weight: 700;">منازل قبلی</div>
                                         {% elif m == user.user_detail.groups.all.first.get_manzel %}
-                                            <div class="h4 mt-3" style="font-weight: 700; text-align:center">ماموریت های مخفی شما </div>
-                                            <div class="h4 mt-3" style="font-weight: 700;"> {{ m.number }} | {{ m.title }}</div>
+                                            <div class="h4 mt-3" style="font-weight: 700; text-align:center">ماموریت های
+                                                مخفی شما
+                                            </div>
+                                            <div class="h4 mt-3" style="font-weight: 700;"> {{ m.number }}
+                                                | {{ m.title }}</div>
                                         {% endif %}
 
                                         {% for x in m.activity_topics.all %}
@@ -1201,7 +1221,9 @@
                                                                 style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }};  border-radius: 0!important; display: flex"
                                                                 data-bs-target="#S{{ x.id }}" aria-expanded="false"
                                                                 aria-controls="S{{ x.id }}">
-                                                            {{ x.title }} {% if m.id != user.user_detail.groups.all.first.get_manzel.id %} | {{ m.number }}{% endif %}
+                                                            {{ x.title }}
+                                                            {% if m.id != user.user_detail.groups.all.first.get_manzel.id %}
+                                                                | {{ m.number }}{% endif %}
                                                         </button>
                                                     </h3>
                                                     <div id="S{{ x.id }}" class="accordion-collapse collapse"
@@ -1263,7 +1285,8 @@
                                                                                             {{ t.get_title }}
                                                                                         </div>
 
-                                                                                        <div class="col-2" title="باز شده">
+                                                                                        <div class="col-2"
+                                                                                             title="باز شده">
                                                                                             <svg viewBox="0 0 24 24"
                                                                                                  width="30px"
                                                                                                  height="30px">
@@ -1295,7 +1318,8 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         {% else %}
-                                                                                            <div class="col-2" title=" شما از این منزل گذشته اید">
+                                                                                            <div class="col-2"
+                                                                                                 title=" شما از این منزل گذشته اید">
                                                                                                 <svg viewBox="0 0 30 30"
                                                                                                      width="30px"
                                                                                                      fill="red"
@@ -1331,9 +1355,10 @@
                                                                            disabled {% endif %} >
 
                                                                     <div class="form-check mt-3 mb-2">
-                                                                        <input class="form-check-input" type="checkbox"{% if m != user.user_detail.groups.all.first.get_manzel %}
-                                                                           disabled {% else %} required{% endif %}
-                                                                               >
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                                {% if m != user.user_detail.groups.all.first.get_manzel %}
+                                                                               disabled {% else %} required{% endif %}
+                                                                        >
                                                                         <label class="form-check-label"
                                                                                for="flexCheckDefault">
                                                                             از سطح انتخابی و فایل ارسالی مطمئن هستیم.
@@ -1377,7 +1402,9 @@
                                                             style="background-color: #F3F3F3; font-weight: 700; color: {{ m.color }}; border-radius: 0!important; display: flex"
                                                             data-bs-target="#S{{ x.id }}" aria-expanded="false"
                                                             aria-controls="S{{ x.id }}">
-                                                        {{ x.topic.title }} {% if m.id != user.user_detail.groups.all.first.get_manzel.id %} | {{ m.number }}{% endif %}
+                                                        {{ x.topic.title }}
+                                                        {% if m.id != user.user_detail.groups.all.first.get_manzel.id %}
+                                                            | {{ m.number }}{% endif %}
                                                     </button>
 
                                                 </h3>
@@ -1455,7 +1482,8 @@
                                                                                         {{ t.get_title }}
                                                                                     </div>
 
-                                                                                    <div class="col-2" title="ماموریت شما در حال داوری است">
+                                                                                    <div class="col-2"
+                                                                                         title="ماموریت شما در حال داوری است">
                                                                                         <svg viewBox="0 0 30 30"
                                                                                              width="30px" fill="red"
                                                                                              height="30px">

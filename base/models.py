@@ -600,25 +600,26 @@ class Masir_Group(models.Model):
             if Masir_Group_And_Achivement_Rel.objects.filter(group=self, achivement=x).first():
                 Masir_Group_And_Achivement_Rel.objects.filter(group=self, achivement=x).first().delete()
 
-    #محاسبه نشان ها
+    # محاسبه نشان ها
     def ach_mission(self, x):
-            main_score = 2 if x.topic.main else 1
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(
-                    code=ACTIVITIES[x.topic.co_title] + '0' + str(4 - int(x.template.type)) + '0' + str(
-                        round(x.get_score()))),
-                (4 - int(x.template.type)) * x.get_score() * main_score
-            )
+        main_score = 2 if x.topic.main else 1
+        self.set_masir_group_and_achivement_rel(
+            Achivement.objects.get(
+                code=ACTIVITIES[x.topic.co_title] + '0' + str(4 - int(x.template.type)) + '0' + str(
+                    round(x.get_score()))),
+            (4 - int(x.template.type)) * x.get_score() * main_score
+        )
 
     def ach_manzel(self, manzel_id):
-            tmp = 0
-            for a in Masir_Group_And_Achivement_Rel.objects.filter(group=self,achivement__manzel=Manzel.objects.filter(id=manzel_id).first()).exclude(achivement__code__contains='Mnz'):
-                tmp += a.score
-            if tmp > 35:
-                self.set_masir_group_and_achivement_rel(
-                    Achivement.objects.get(code='Mnz_' + str(manzel_id)),
-                    10
-                )
+        tmp = 0
+        for a in Masir_Group_And_Achivement_Rel.objects.filter(group=self, achivement__manzel=Manzel.objects.filter(
+                id=manzel_id).first()).exclude(achivement__code__contains='Mnz'):
+            tmp += a.score
+        if tmp > 35:
+            self.set_masir_group_and_achivement_rel(
+                Achivement.objects.get(code='Mnz_' + str(manzel_id)),
+                10
+            )
 
     def ach_last(self):
         if self.get_manzel() == 5:
@@ -629,31 +630,31 @@ class Masir_Group(models.Model):
 
     def ach_flg_nqs(self):
         # نشان پرچم
-            for i in range(0, 16, 5):
-                a = i if i!=0 else i+1
-                s = a+10 if a!=1 else 5
-                if len(self.activities.filter(state='4')) >= a:
-                    self.set_masir_group_and_achivement_rel(
-                        Achivement.objects.get(code='Flg_'+str(a)),
-                        s
-                    )
-            if len(self.activities.filter(state='4')) >= 16:
+        for i in range(0, 16, 5):
+            a = i if i != 0 else i + 1
+            s = a + 10 if a != 1 else 5
+            if len(self.activities.filter(state='4')) >= a:
                 self.set_masir_group_and_achivement_rel(
-                    Achivement.objects.get(code='Sun_0'),
-                    70
+                    Achivement.objects.get(code='Flg_' + str(a)),
+                    s
                 )
+        if len(self.activities.filter(state='4')) >= 16:
+            self.set_masir_group_and_achivement_rel(
+                Achivement.objects.get(code='Sun_0'),
+                70
+            )
 
-            # نشان بی نقص
-            tmp = 0
-            for a in self.activities.filter(state='4'):
-                if a.get_score() >= 4.5:
-                    tmp += 1
-            for i in range(1,8,2):
-                if tmp >= i:
-                    self.set_masir_group_and_achivement_rel(
-                        Achivement.objects.get(code='Nqs_'+str(i)),
-                        20+(i//2)*10
-                    )
+        # نشان بی نقص
+        tmp = 0
+        for a in self.activities.filter(state='4'):
+            if a.get_score() >= 4.5:
+                tmp += 1
+        for i in range(1, 8, 2):
+            if tmp >= i:
+                self.set_masir_group_and_achivement_rel(
+                    Achivement.objects.get(code='Nqs_' + str(i)),
+                    20 + (i // 2) * 10
+                )
 
     def ach_mng(self):
         if len(self.discovered.all()) >= 16:
@@ -663,7 +664,7 @@ class Masir_Group(models.Model):
             )
 
     def ach_qra_vrz(self):
-        #نشان قاری
+        # نشان قاری
         tmp = 0
         for u in self.users.all():
             tmp = tmp + len(u.club_files.filter(show_public=True, verified=True))
@@ -680,12 +681,15 @@ class Masir_Group(models.Model):
                     ]
                 )
                 self.set_masir_group_and_achivement_rel(
-                    Achivement.objects.get(code='Qra_'+str(5-step.index(i))),
+                    Achivement.objects.get(code='Qra_' + str(5 - step.index(i))),
                     0
                 )
-                break    
-        # نشان ورزیده
-        if len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values('level').annotate(ount=Count('id', distinct=True))) >= 14 or len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values('date__day').annotate(count=Count('id', distinct=True))) >= 14:
+                break
+                # نشان ورزیده
+        if len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
+                'level').annotate(ount=Count('id', distinct=True))) >= 14 or len(
+                Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
+                        'date__day').annotate(count=Count('id', distinct=True))) >= 14:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Vrz_0'),
                 30
@@ -708,7 +712,7 @@ class Masir_Group(models.Model):
                     ]
                 )
                 self.set_masir_group_and_achivement_rel(
-                    Achivement.objects.get(code='Mqz_'+str((i//30)+1)),
+                    Achivement.objects.get(code='Mqz_' + str((i // 30) + 1)),
                     0
                 )
                 break
@@ -719,12 +723,12 @@ class Masir_Group(models.Model):
                 50
             )
         # قلم
-        for i in range(0,16,5):
-            a = i if i!=0 else i+1
+        for i in range(0, 16, 5):
+            a = i if i != 0 else i + 1
             if len(self.exams.filter(show_public=True)) >= a:
                 self.set_masir_group_and_achivement_rel(
-                    Achivement.objects.get(code='Uni_'+str(a)),
-                    i+5
+                    Achivement.objects.get(code='Uni_' + str(a)),
+                    i + 5
                 )
 
     def ach_sdq(self):
@@ -743,12 +747,9 @@ class Masir_Group(models.Model):
                     ]
                 )
                 self.set_masir_group_and_achivement_rel(
-                    Achivement.objects.get(code='Sdq_'+str((i//20)+1)),
+                    Achivement.objects.get(code='Sdq_' + str((i // 20) + 1)),
                     0
                 )
-        
-
-
 
     def recalculate_achivements(self):
         self.achivements.all().delete()
@@ -798,6 +799,24 @@ class Masir_Group(models.Model):
         for x in self.charities.all():
             l = l + x.value
 
+        return int(l * 100) / 100
+
+    def get_exam_light(self):
+        l = 0
+        for x in self.exams.filter(show_public=True):
+            l = l + x.score / 2
+        return int(l * 100) / 100
+
+    def get_club_light(self):
+        l = 0
+        for x in self.users.all():
+            l = l + len(x.club_files.filter(show_public=True, verified=True)) / 2
+        return int(l * 100) / 100
+
+    def get_charity_light(self):
+        l = 0
+        for x in self.charities.all():
+            l = l + x.value
         return int(l * 100) / 100
 
     def get_xp(self):

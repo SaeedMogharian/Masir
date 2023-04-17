@@ -763,7 +763,7 @@ def home_page(request):
                 group=user.groups.all().first(),
                 value=int(request.POST['charity_value'])
             )
-            
+
             # دست رحمت
             user.groups.all().first().ach_sdq()
 
@@ -884,8 +884,6 @@ def home_page(request):
                 g.save()
 
                 g.ach_last()
-
-                
 
                 text = text + ' و با ' + str(g.get_food()) + ' آذوقه به منزل بعد رسیدید.'
 
@@ -1138,11 +1136,11 @@ def home_page(request):
             for x in Masir_Group_And_Exams_Rel.objects.filter(show_public=False):
                 x.show_public = True
                 x.save()
-                g = x.group 
-                g : Masir_Group
+                g = x.group
+                g: Masir_Group
 
                 # مغز متفکر
-                #قلم
+                # قلم
                 # کمال
                 g.ach_mqz_qlm_kml()
 
@@ -1174,7 +1172,7 @@ def home_page(request):
             for x in Club_File.objects.filter(show_public=False, verified=True, denied=False):
                 x.show_public = True
                 x.save()
-                g= x.user.groups.all().first()
+                g = x.user.groups.all().first()
                 g: Masir_Group
                 # قاری
                 # ورزیده
@@ -1204,10 +1202,9 @@ def home_page(request):
                 g = x.group
                 g: Masir_Group
 
-                #دستاورد ماموریت ها
+                # دستاورد ماموریت ها
                 g.ach_mission(x)
 
-                
                 # پرچم
                 # بی نقص
                 g.ach_flg_nqs
