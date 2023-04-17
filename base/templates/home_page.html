@@ -299,7 +299,6 @@
         .level-block .masir-map-icon-popup {
             position: absolute;
             overflow: visible !important;
-            color: black;
             left: 0;
             border: 1px solid transparent;
             background-color: white;
@@ -995,10 +994,10 @@
                             <div class="row">
                                 <button type="submit" name="unlock_form" id="unlock_form"
                                         class="btn masir-btn col-6"
-                                        style="background-color: #FFD700; color: black">تایید. باز میکنیم
+                                        style="background-color: #FFD700;">تایید. باز میکنیم
                                 </button>
                                 <button class="btn masir-btn col-6"
-                                        style="background-color: #FFD700; color: black; display: none;"
+                                        style="background-color: #FFD700; display: none;"
                                         id="unlock_form_loading">
                                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                                     در حال ثبت...
@@ -1187,7 +1186,7 @@
                                             <br>
                                             <div class="h4" style="font-weight: 700;">منازل قبلی</div>
                                         {% elif m == user.user_detail.groups.all.first.get_manzel %}
-                                            <div class="h4 mt-3" style="font-weight: 700; text-align:center">ماموریت های مخفی </div>
+                                            <div class="h4 mt-3" style="font-weight: 700; text-align:center">ماموریت های مخفی شما </div>
                                             <div class="h4 mt-3" style="font-weight: 700;"> {{ m.number }} | {{ m.title }}</div>
                                         {% endif %}
 
@@ -1635,11 +1634,11 @@
                                             <button type="submit" name="activity_{{ x.id }}_form"
                                                     id="activity_{{ x.id }}_form"
                                                     class="btn masir-btn mt-2 col-lg-6 col-md-6 col-12"
-                                                    style="background-color: white; border: 2px black solid; color: black">
+                                                    style="background-color: white; border: 2px black solid;">
                                                 بارگذاری نهایی
                                             </button>
                                             <button class="btn masir-btn col-lg-6 col-md-6 col-12"
-                                                    style="background-color: white; border: 2px black solid; color: black; display: none;"
+                                                    style="background-color: white; border: 2px black solid; display: none;"
                                                     id="activity_{{ x.id }}_form_loading">
                                         <span class="spinner-grow spinner-grow-sm" role="status"
                                               aria-hidden="true"></span>
