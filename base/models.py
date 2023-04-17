@@ -495,7 +495,7 @@ class Masir_Group(models.Model):
         return False
 
     def prev_manzel(self):
-        return self.manzel -1
+        return self.manzel - 1
 
     def is_acted(self):
         y = []
@@ -600,355 +600,184 @@ class Masir_Group(models.Model):
             if Masir_Group_And_Achivement_Rel.objects.filter(group=self, achivement=x).first():
                 Masir_Group_And_Achivement_Rel.objects.filter(group=self, achivement=x).first().delete()
 
-    def recalculate_achivements(self):
-        self.achivements.all().delete()
-        for x in self.activities.filter(state='4'):
-            main_score = 1
-            if x.topic.main:
-                main_score = 2
+    #محاسبه نشان ها
+    def ach_mission(self, x):
+            main_score = 2 if x.topic.main else 1
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(
-                    code=ACTIVITIES[x.topic.co_title] + '0' + str(4-int(x.template.type)) + '0' + str(
+                    code=ACTIVITIES[x.topic.co_title] + '0' + str(4 - int(x.template.type)) + '0' + str(
                         round(x.get_score()))),
                 (4 - int(x.template.type)) * x.get_score() * main_score
             )
+
+    def ach_manzel(self, manzel_id):
+            tmp = 0
+            for a in Masir_Group_And_Achivement_Rel.objects.filter(group=self,achivement__manzel=Manzel.objects.filter(id=manzel_id).first()).exclude(achivement__code__contains='Mnz'):
+                tmp += a.score
+            if tmp > 35:
+                self.set_masir_group_and_achivement_rel(
+                    Achivement.objects.get(code='Mnz_' + str(manzel_id)),
+                    10
+                )
+
+    def ach_last(self):
+        if self.get_manzel() == 5:
+            self.set_masir_group_and_achivement_rel(
+                Achivement.objects.get(code='Lst_0'),
+                40
+            )
+
+    def ach_flg_nqs(self):
+        # نشان پرچم
+            for i in range(0, 16, 5):
+                a = i if i!=0 else i+1
+                s = a+10 if a!=1 else 5
+                if len(self.activities.filter(state='4')) >= a:
+                    self.set_masir_group_and_achivement_rel(
+                        Achivement.objects.get(code='Flg_'+str(a)),
+                        s
+                    )
+            if len(self.activities.filter(state='4')) >= 16:
+                self.set_masir_group_and_achivement_rel(
+                    Achivement.objects.get(code='Sun_0'),
+                    70
+                )
+
+            # نشان بی نقص
+            tmp = 0
+            for a in self.activities.filter(state='4'):
+                if a.get_score() >= 4.5:
+                    tmp += 1
+            for i in range(1,8,2):
+                if tmp >= i:
+                    self.set_masir_group_and_achivement_rel(
+                        Achivement.objects.get(code='Nqs_'+str(i)),
+                        20+(i//2)*10
+                    )
+
+    def ach_mng(self):
         if len(self.discovered.all()) >= 16:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Mng'),
                 40
             )
 
-        if len(self.activities.filter(state='4')) >= 1:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Flg_1'),
-                5
-            )
-        if len(self.activities.filter(state='4')) >= 5:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Flg_5'),
-                15
-            )
-        if len(self.activities.filter(state='4')) >= 10:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Flg_10'),
-                20
-            )
-        if len(self.activities.filter(state='4')) >= 15:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Flg_15'),
-                25
-            )
-        if len(self.activities.filter(state='4')) >= 16:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Sun_0'),
-                70
-            )
-
-        tmp = 0
-        for a in self.activities.filter(state='4'):
-            if a.get_score() >= 4.5:
-                tmp = tmp + 1
-        if tmp >= 7:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Nqs_7'),
-                50
-            )
-        if tmp >= 5:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Nqs_5'),
-                40
-            )
-        if tmp >= 3:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Nqs_3'),
-                30
-            )
-        if tmp >= 1:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Nqs_1'),
-                20
-            )
-
+    def ach_qra_vrz(self):
+        #نشان قاری
         tmp = 0
         for u in self.users.all():
             tmp = tmp + len(u.club_files.filter(show_public=True, verified=True))
-        if tmp >= 18:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Qra_5'),
-                    Achivement.objects.get(code='Qra_4'),
-                    Achivement.objects.get(code='Qra_3'),
-                    Achivement.objects.get(code='Qra_2'),
-                    Achivement.objects.get(code='Qra_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Qra_5'),
-                0
-            )
-        elif tmp >= 14:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Qra_5'),
-                    Achivement.objects.get(code='Qra_4'),
-                    Achivement.objects.get(code='Qra_3'),
-                    Achivement.objects.get(code='Qra_2'),
-                    Achivement.objects.get(code='Qra_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Qra_4'),
-                0
-            )
-        elif tmp >= 9:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Qra_5'),
-                    Achivement.objects.get(code='Qra_4'),
-                    Achivement.objects.get(code='Qra_3'),
-                    Achivement.objects.get(code='Qra_2'),
-                    Achivement.objects.get(code='Qra_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Qra_3'),
-                0
-            )
-        elif tmp >= 5:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Qra_5'),
-                    Achivement.objects.get(code='Qra_4'),
-                    Achivement.objects.get(code='Qra_3'),
-                    Achivement.objects.get(code='Qra_2'),
-                    Achivement.objects.get(code='Qra_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Qra_2'),
-                0
-            )
-        elif tmp >= 1:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Qra_5'),
-                    Achivement.objects.get(code='Qra_4'),
-                    Achivement.objects.get(code='Qra_3'),
-                    Achivement.objects.get(code='Qra_2'),
-                    Achivement.objects.get(code='Qra_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Qra_1'),
-                0
-            )
-
-        if len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
-                'level').annotate(
-                count=Count('id', distinct=True))) >= 14 or len(
-            Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
-                'date__day').annotate(
-                count=Count('id', distinct=True))) >= 14:
+        step = [18, 14, 9, 5, 1]
+        for i in step:
+            if tmp >= i:
+                self.delete_masir_group_and_achivement_rel(
+                    [
+                        Achivement.objects.get(code='Qra_5'),
+                        Achivement.objects.get(code='Qra_4'),
+                        Achivement.objects.get(code='Qra_3'),
+                        Achivement.objects.get(code='Qra_2'),
+                        Achivement.objects.get(code='Qra_1')
+                    ]
+                )
+                self.set_masir_group_and_achivement_rel(
+                    Achivement.objects.get(code='Qra_'+str(5-step.index(i))),
+                    0
+                )
+                break    
+        # نشان ورزیده
+        if len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values('level').annotate(ount=Count('id', distinct=True))) >= 14 or len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values('date__day').annotate(count=Count('id', distinct=True))) >= 14:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Vrz_0'),
                 30
             )
 
-        for m in range(2, 6):
-            tmp = 0
-            for a in self.activities.filter(topic__manzel=Manzel.objects.filter(id=m).first()):
-                main_score = 1
-                if a.topic.main:
-                    main_score = 2
-                tmp = tmp + (a.get_score() * (4 - int(a.template.type))) * main_score
-            if tmp > 35:
-                self.set_masir_group_and_achivement_rel(
-                    Achivement.objects.get(code='Mnz_' + str(m)),
-                    10
-                )
-        if self.manzel == 5:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Lst_0'),
-                40
-            )
-
+    def ach_mqz_qlm_kml(self):
+        # مغز متفکر
         tmp = 0
         for e in self.exams.filter(show_public=True):
-            tmp = tmp + e.score
-        if tmp >= 120:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Mqz_5'),
-                    Achivement.objects.get(code='Mqz_4'),
-                    Achivement.objects.get(code='Mqz_3'),
-                    Achivement.objects.get(code='Mqz_2'),
-                    Achivement.objects.get(code='Mqz_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Mqz_5'),
-                0
-            )
-        elif tmp >= 90:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Mqz_5'),
-                    Achivement.objects.get(code='Mqz_4'),
-                    Achivement.objects.get(code='Mqz_3'),
-                    Achivement.objects.get(code='Mqz_2'),
-                    Achivement.objects.get(code='Mqz_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Mqz_4'),
-                0
-            )
-        elif tmp >= 60:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Mqz_5'),
-                    Achivement.objects.get(code='Mqz_4'),
-                    Achivement.objects.get(code='Mqz_3'),
-                    Achivement.objects.get(code='Mqz_2'),
-                    Achivement.objects.get(code='Mqz_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Mqz_3'),
-                0
-            )
-        elif tmp >= 30:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Mqz_5'),
-                    Achivement.objects.get(code='Mqz_4'),
-                    Achivement.objects.get(code='Mqz_3'),
-                    Achivement.objects.get(code='Mqz_2'),
-                    Achivement.objects.get(code='Mqz_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Mqz_2'),
-                0
-            )
-        elif tmp > 0:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Mqz_5'),
-                    Achivement.objects.get(code='Mqz_4'),
-                    Achivement.objects.get(code='Mqz_3'),
-                    Achivement.objects.get(code='Mqz_2'),
-                    Achivement.objects.get(code='Mqz_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Mqz_1'),
-                0
-            )
-
-        if len(self.exams.filter(show_public=True)) >= 1:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Uni_1'),
-                10
-            )
-        if len(self.exams.filter(show_public=True)) >= 5:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Uni_5'),
-                15
-            )
-        if len(self.exams.filter(show_public=True)) >= 10:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Uni_10'),
-                20
-            )
-        if len(self.exams.filter(show_public=True)) >= 15:
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Uni_15'),
-                25
-            )
-
-        tmp = 0
-        for x in self.exams.filter(show_public=True):
-            tmp = tmp + x.score
+            tmp += e.score
+        for i in range(120, -1, -30):
+            if tmp >= i:
+                self.delete_masir_group_and_achivement_rel(
+                    [
+                        Achivement.objects.get(code='Mqz_5'),
+                        Achivement.objects.get(code='Mqz_4'),
+                        Achivement.objects.get(code='Mqz_3'),
+                        Achivement.objects.get(code='Mqz_2'),
+                        Achivement.objects.get(code='Mqz_1')
+                    ]
+                )
+                self.set_masir_group_and_achivement_rel(
+                    Achivement.objects.get(code='Mqz_'+str((i//30)+1)),
+                    0
+                )
+                break
+        # کمال مطلق
         if tmp >= 150:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Kml_0'),
                 50
             )
+        # قلم
+        for i in range(0,16,5):
+            a = i if i!=0 else i+1
+            if len(self.exams.filter(show_public=True)) >= a:
+                self.set_masir_group_and_achivement_rel(
+                    Achivement.objects.get(code='Uni_'+str(a)),
+                    i+5
+                )
 
+    def ach_sdq(self):
         tmp = 0
         for x in self.charities.all():
-            tmp = tmp + x.value
-        if tmp >= 80:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Sdq_5'),
-                    Achivement.objects.get(code='Sdq_4'),
-                    Achivement.objects.get(code='Sdq_3'),
-                    Achivement.objects.get(code='Sdq_2'),
-                    Achivement.objects.get(code='Sdq_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Sdq_5'),
-                0
-            )
-        elif tmp >= 60:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Sdq_5'),
-                    Achivement.objects.get(code='Sdq_4'),
-                    Achivement.objects.get(code='Sdq_3'),
-                    Achivement.objects.get(code='Sdq_2'),
-                    Achivement.objects.get(code='Sdq_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Sdq_4'),
-                0
-            )
-        elif tmp >= 40:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Sdq_5'),
-                    Achivement.objects.get(code='Sdq_4'),
-                    Achivement.objects.get(code='Sdq_3'),
-                    Achivement.objects.get(code='Sdq_2'),
-                    Achivement.objects.get(code='Sdq_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Sdq_3'),
-                0
-            )
-        elif tmp >= 20:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Sdq_5'),
-                    Achivement.objects.get(code='Sdq_4'),
-                    Achivement.objects.get(code='Sdq_3'),
-                    Achivement.objects.get(code='Sdq_2'),
-                    Achivement.objects.get(code='Sdq_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Sdq_2'),
-                0
-            )
-        elif tmp > 0:
-            self.delete_masir_group_and_achivement_rel(
-                [
-                    Achivement.objects.get(code='Sdq_5'),
-                    Achivement.objects.get(code='Sdq_4'),
-                    Achivement.objects.get(code='Sdq_3'),
-                    Achivement.objects.get(code='Sdq_2'),
-                    Achivement.objects.get(code='Sdq_1')
-                ]
-            )
-            self.set_masir_group_and_achivement_rel(
-                Achivement.objects.get(code='Sdq_1'),
-                0
-            )
+            tmp += x.value
+        for i in range(80, -1, -20):
+            if tmp >= i:
+                self.delete_masir_group_and_achivement_rel(
+                    [
+                        Achivement.objects.get(code='Sdq_5'),
+                        Achivement.objects.get(code='Sdq_4'),
+                        Achivement.objects.get(code='Sdq_3'),
+                        Achivement.objects.get(code='Sdq_2'),
+                        Achivement.objects.get(code='Sdq_1')
+                    ]
+                )
+                self.set_masir_group_and_achivement_rel(
+                    Achivement.objects.get(code='Sdq_'+str((i//20)+1)),
+                    0
+                )
+        
+
+
+
+    def recalculate_achivements(self):
+        self.achivements.all().delete()
+        # دستاورد ماموریت ها
+        for x in self.activities.filter(state='4'):
+            self.ach_mission(x)
+        # نشان ذره بین
+        self.ach_mng()
+
+        # نشان پرچم
+        # نشان بی نقص
+        self.ach_flg_nqs()
+
+        # نشان قاری
+        # نشان ورزیده
+        self.ach_qra_vrz()
+
+        # نشان منازل
+        for m in range(2, 6):
+            self.ach_manzel(m)
+        self.ach_last()
+
+        # مغز متفکر
+        # قلم
+        # کمال مطلق
+        self.ach_mqz_qlm_kml()
+
+        # دست رحمت
+        self.ach_sdq()
 
     def get_achivements(self):
         # نشان کمال مطلق

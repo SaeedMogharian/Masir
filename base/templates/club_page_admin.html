@@ -34,17 +34,17 @@
                         <button type="submit" name="club_admin_form" class="btn masir-btn w-100 mt-2"
                                 style="background-color: #4ed426;" id="club_admin_form">تایید
                         </button>
-                        <button type="submit" name="club_admin_deny_form" class="btn masir-btn w-100 mt-2"
-                                style="background-color: #ad0900; color: white ; display: none;"
-                                id="club_admin_deny_form">عدم تایید
-                        </button>
-                    </div>
-
-                    <div id="club_form_loading" style="display: none;">
                         <button class="btn masir-btn w-100 mt-2" style="background-color: #4ed426; display: none;"
                                 id="club_admin_form_loading">
                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                             در حال ارسال...
+                        </button>
+                    </div>
+
+                    <div id="club_deny_form" style="display: none">
+                        <button type="submit" name="club_admin_deny_form" class="btn masir-btn w-100 mt-2"
+                                style="background-color: #ad0900; color: white ; display: block;"
+                                id="club_admin_deny_form">عدم تایید
                         </button>
                         <button class="btn masir-btn w-100 mt-2"
                                 style="background-color: #ad0900; color: white; display: none;"
@@ -105,15 +105,15 @@
 
         function club_admin_denied_message_change(e) {
             if (e.value == "") {
-                document.getElementById('club_admin_form').style.display = 'block';
-                document.getElementById('club_admin_form_loading').style.display = 'block';
-                document.getElementById('club_admin_deny_form').style.display = 'none';
-                document.getElementById('club_admin_deny_form_loading').style.display = 'none';
+                document.getElementById('club_form').style.display = 'block';
+                //document.getElementById('club_admin_form_loading').style.display = 'block';
+                document.getElementById('club_deny_form').style.display = 'none';
+                //document.getElementById('club_admin_deny_form_loading').style.display = 'none';
             } else {
-                document.getElementById('club_admin_form').style.display = 'none';
-                document.getElementById('club_admin_form_loading').style.display = 'none';
-                document.getElementById('club_admin_deny_form').style.display = 'block';
-                document.getElementById('club_admin_deny_form_loading').style.display = 'block';
+                document.getElementById('club_form').style.display = 'none';
+                //document.getElementById('club_admin_form_loading').style.display = 'none';
+                document.getElementById('club_deny_form').style.display = 'block';
+                //document.getElementById('club_admin_deny_form_loading').style.display = 'block';
             }
         }
 
@@ -121,6 +121,8 @@
         function club_admin_form_click() {
             document.getElementById('club_admin_form').style.display = 'none';
             document.getElementById('club_admin_form_loading').style.display = 'block';
+            document.getElementById('club_admin_deny_form').style.display = 'none';
+            document.getElementById('club_admin_deny_form_loading').style.display = 'block';
         }
 
     </script>
