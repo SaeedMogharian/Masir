@@ -647,6 +647,7 @@ class Masir_Group(models.Model):
         # نشان بی نقص
         tmp = 0
         for a in self.activities.filter(state='4'):
+            a: Activity
             if a.get_score() >= 4.5:
                 tmp += 1
         for i in range(1, 8, 2):
@@ -657,7 +658,11 @@ class Masir_Group(models.Model):
                 )
 
     def ach_mng(self):
-        if len(self.discovered.all()) >= 16:
+        tmp = 0
+        for a in self.discovered.all():
+            if not a.if_long():
+                tmp += 1
+        if tmp >= 16:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Mng'),
                 40
@@ -688,8 +693,8 @@ class Masir_Group(models.Model):
                 # نشان ورزیده
         if len(Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
                 'level').annotate(ount=Count('id', distinct=True))) >= 14 or len(
-                Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
-                        'date__day').annotate(count=Count('id', distinct=True))) >= 14:
+            Club_File.objects.filter(show_public=True, verified=True, user__in=self.users.all()).values(
+                'date__day').annotate(count=Count('id', distinct=True))) >= 14:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Vrz_0'),
                 30
@@ -701,7 +706,7 @@ class Masir_Group(models.Model):
         for e in self.exams.filter(show_public=True):
             tmp += e.score
         for i in range(120, -1, -30):
-            if tmp >= i and tmp>0:
+            if tmp >= i and tmp > 0:
                 self.delete_masir_group_and_achivement_rel(
                     [
                         Achivement.objects.get(code='Mqz_5'),
@@ -736,7 +741,7 @@ class Masir_Group(models.Model):
         for x in self.charities.all():
             tmp += x.value
         for i in range(80, -1, -20):
-            if tmp >= i and tmp>0:
+            if tmp >= i and tmp > 0:
                 self.delete_masir_group_and_achivement_rel(
                     [
                         Achivement.objects.get(code='Sdq_5'),

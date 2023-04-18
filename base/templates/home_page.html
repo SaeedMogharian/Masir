@@ -860,11 +860,10 @@
                                     </div>
                                     <div class="row mx-0 row-cols-4 row-cols-sm-6 row-cols-md-8 row-cols-lg-12">
                                         {% for x in user.user_detail.groups.all.first.get_achivements %}
-                                            {% if x.score %}
-                                                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
-                                                    data-bs-placement="top"
-                                                    data-bs-trigger="hover focus" title="{{ x.achivement.text }}"
-                                                    data-bs-content="{% if x.achivement.report %}
+                                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                                                  data-bs-placement="top"
+                                                  data-bs-trigger="hover focus" title="{{ x.achivement.text }}"
+                                                  data-bs-content="{% if x.achivement.report %}
                                                     {{ x.achivement.report }} {% else %}
                                                     {% if 'Mqz' in x.achivement.code %}
                                                         به ازای پاسخ صحیح به سوالات دانشگاه
@@ -884,7 +883,7 @@
                                                     <img class="masir-achievement" src="{{ x.achivement.get_image }}">
 
                                                 </span>
-                                                {%endif%}
+
 
                                         {% endfor %}
                                     </div>
