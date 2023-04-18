@@ -701,7 +701,7 @@ class Masir_Group(models.Model):
         for e in self.exams.filter(show_public=True):
             tmp += e.score
         for i in range(120, -1, -30):
-            if tmp >= i:
+            if tmp >= i and tmp>0:
                 self.delete_masir_group_and_achivement_rel(
                     [
                         Achivement.objects.get(code='Mqz_5'),
@@ -736,7 +736,7 @@ class Masir_Group(models.Model):
         for x in self.charities.all():
             tmp += x.value
         for i in range(80, -1, -20):
-            if tmp >= i:
+            if tmp >= i and tmp>0:
                 self.delete_masir_group_and_achivement_rel(
                     [
                         Achivement.objects.get(code='Sdq_5'),
@@ -750,6 +750,7 @@ class Masir_Group(models.Model):
                     Achivement.objects.get(code='Sdq_' + str((i // 20) + 1)),
                     0
                 )
+                break
 
     def recalculate_achivements(self):
         self.achivements.all().delete()
