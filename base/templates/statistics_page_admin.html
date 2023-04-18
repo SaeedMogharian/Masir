@@ -276,7 +276,7 @@
                 {% endcomment %}
 
                 {% for x in groups %}
-                    <div class="mb-2 pb-2" style="background-color: #cbe2ff;">
+                    <div class="mb-2 pb-2" style="background-color: {% if x.activities.all.first %} #8affa9 {% elif x.get_light > 14 %} #cbe2ff {% elif x.introduced %} #948e7b {% else %} #ff8a8a {% endif %}">
                         <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
                     <span>
                       {{ x }}
@@ -389,7 +389,18 @@
                                     {% endfor %}
                                 </ul>
                             </div>
+                            <div class="col">
+                                فراخوان:
+                                <ul>
+                                    {% for u in x.events.all %}
+                                        <li {% if u.show_public %} style="font-weight: 700;" {% endif %}>
+                                            {{ u.event }} | {{ u.score }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
+                        
                     </div>
                 {% endfor %}
             </div>
