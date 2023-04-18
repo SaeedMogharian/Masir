@@ -157,6 +157,8 @@
             {% endif %}
             {% if activities_for_admin and user_is_admin %}
                 <div class="w-75 mt-5 mx-auto">
+                    <button class="btn btn-info masir-btn mb-3" id="filter-btn" onclick="filterTopActivities()">فیلتر آثار برتر </button>
+                    <a class="btn btn-info masir-btn mb-3" style="display: none; width: max-content" id="back-btn" href="{% url 'judge_page_link' %}">بازگشت به نمایش اصلی</a>
                     {% for x in activities_for_admin %}
                         {% if x.state != '4' %}<a class="text-decoration-none link-dark"
                                                   href="{% url 'judge_detail_page_link' x.id %}">{% endif %}
@@ -217,4 +219,24 @@
             document.getElementById('judge_admin_cancel_form_loading').style.display = 'block';
         }
     </script>
+
+    <script>
+        function filterTopActivities() {
+          // Select all activities
+          var activities = document.querySelectorAll('.mb-2');
+          
+          // Loop through each activity and show/hide based on whether it's a top activity or not
+          activities.forEach(function(activity) {
+            if (activity.querySelector('.p-2.text-center') !== null) {
+              activity.style.display = 'block';
+            } else {
+              activity.style.display = 'none';
+            }
+          });
+
+          var filt = document.getElementById('filter-btn').disabled=true;
+          var filt = document.getElementById('back-btn').style.display='block';
+        }
+    </script>
+        
 {% endblock %}
