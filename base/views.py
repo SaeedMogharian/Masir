@@ -878,7 +878,8 @@ def home_page(request):
                 g = user.groups.all().first()
 
                 # نشان منزل
-                g.ach_mission()
+
+                g.ach_manzel(g.manzel)
 
                 g.manzel = g.manzel + 1
                 g.save()
