@@ -870,6 +870,10 @@ class Masir_Group_And_Achivement_Rel(models.Model):
     achivement = models.ForeignKey(Achivement, related_name='groups', on_delete=models.CASCADE, verbose_name='دستاورد')
     score = models.FloatField(default=0, verbose_name='امتیاز')
 
+
+    def get_score(self):
+        return round(self.score,2)
+
     def __str__(self):
         return (str(self.group) + ' | ' + str(self.achivement))
 

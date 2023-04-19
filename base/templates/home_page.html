@@ -875,8 +875,10 @@
                                                         به ازای دادن صدقه
                                                         {{ user.user_detail.groups.all.first.get_charity_light }}
                                                     {% else %}
-                                                        به ازای این نشان
-                                                        {{ x.score }}
+                                                         به ازای نشان 
+                                                        {{x.achivement.title}}
+                                                         مقدار 
+                                                        {{ x.get_score }}
                                                     {% endif %}
                                                     واحد حیات دریافت کرده‌اید 
                                                     {% endif %}">
