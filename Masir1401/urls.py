@@ -33,6 +33,9 @@ urlpatterns = [
     path('home/judge/', judge_page, name='judge_page_link'),
     path('home/judge/<int:id>/', judge_detail_page, name='judge_detail_page_link'),
 
+    path('home/longterm_judge/', longterm_judge_page, name='longterm_judge_page_link'),
+    path('home/longterm_judge/<int:id>/', longterm_judge_detail_page, name='longterm_judge_detail_page_link'),
+
     path('home/statistics/', statistics_page, name='statistics_page_link'),
     path('home/leaderboard/', leaderboard_page, name='leaderboard_page_link'),
 

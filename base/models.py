@@ -757,6 +757,7 @@ class Masir_Group(models.Model):
                 )
                 break
 
+    # محاسبه مجدد
     def recalculate_achivements(self):
         self.achivements.all().delete()
         # دستاورد ماموریت ها
@@ -965,20 +966,26 @@ class Activity(models.Model):
     state = models.CharField(default='1', max_length=1, choices=ACTIVITY_STATE_CHOICES, verbose_name='وضعیت')
     comment = models.TextField(null=True, blank=True, max_length=5000, verbose_name='توضیحات داور')
 
-    score1 = models.IntegerField(default=0, verbose_name='امتیاز محتوای مناسب، غنی و منسجم')
-    score2 = models.IntegerField(default=0, verbose_name='امتیاز رعایت نکات حداقلی فنی درباره‌ی هر قالب')
-    score3 = models.IntegerField(default=0, verbose_name='امیتیاز خلاقیت و نوآوری')
-    score4 = models.IntegerField(default=0, verbose_name='امتیاز جذابیت برای مخاطب')
-    score5 = models.IntegerField(default=0,
-                                 verbose_name='امتیاز اشاره به کاربردی بودن مفاهیم در زندگی امروزی، به صورت مستقیم یا غیرمستقیم')
+    score1 = models.IntegerField(default=0, verbose_name='معیار 1')
+    score2 = models.IntegerField(default=0, verbose_name='معیار 2')
+    score3 = models.IntegerField(default=0, verbose_name='معیار 3')
+    score4 = models.IntegerField(default=0, verbose_name='معیار 4')
+    score5 = models.IntegerField(default=0, verbose_name='معیار 5')
+    score6 = models.IntegerField(default=0, verbose_name='معیار 6')
+    score7 = models.IntegerField(default=0, verbose_name='معیار 7')
+
 
     date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
 
     cheated = models.BooleanField(default=False, verbose_name='رفتن به منزل بعد قبل از داوری')
 
     def get_score(self):
-        return (float(
-            "{:.2f}".format((self.score1 + self.score2 + self.score3 + self.score4 + self.score5) / 5)))
+        if not self.topic.if_long():
+            return (float(
+                "{:.2f}".format((self.score1 + self.score2 + self.score3 + self.score4 + self.score5) / 5)))
+        else:
+            return (float(
+                "{:.2f}".format((self.score1 + self.score2 + self.score3 + self.score4 + self.score5 + self.score6 + self.score7) / 7)))
 
     def __str__(self):
         return (str(self.topic) + ' | ' + str(self.template) + ' | ' + str(self.group))

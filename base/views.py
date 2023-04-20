@@ -1536,6 +1536,7 @@ def judge_detail_page(request, id):
 
         if 'judge_admin_cancel_form' in request.POST:
             the_file.state = '1'
+            the_file.referee = None
             the_file.save()
 
         return (redirect('judge_page_link'))
@@ -1547,6 +1548,83 @@ def judge_detail_page(request, id):
             {
                 'the_file': the_file,
                 'activities': None
+            }
+        )
+    )
+
+
+def longterm_judge_page(request):
+    user = select_user(request.user)
+    if not user:
+        return (redirect('landing_page_link'))
+    if not user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
+        return (redirect('home_page_link'))
+
+    return (
+        render(
+            request,
+            'longterm_judge_page_admin.html',
+            {
+                'longterms': Activity.objects.filter(topic__manzel=None).order_by('-id'),
+            }
+        )
+    )
+
+
+def longterm_judge_detail_page(request, id):
+    user = select_user(request.user)
+    if not user:
+        return (redirect('landing_page_link'))
+    if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
+        return (redirect('landing_page_link'))
+    if not user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
+        return (redirect('longterm_judge_page_link'))
+
+    the_file = Activity.objects.filter(id=id).first()
+    if not the_file:
+        return (redirect('longterm_judge_page_link'))
+
+    the_file.state = '2'
+    the_file.referee = user
+    the_file.save()
+
+    if request.method == 'POST':
+        if 'judge_admin_form' in request.POST:
+            the_file.referee = user
+
+            the_file.score1 = int(request.POST['judge_admin_score1'])
+            the_file.score2 = int(request.POST['judge_admin_score2'])
+            the_file.score3 = int(request.POST['judge_admin_score3'])
+            the_file.score4 = int(request.POST['judge_admin_score4'])
+            the_file.score5 = int(request.POST['judge_admin_score5'])
+            the_file.score6 = int(request.POST['judge_admin_score6'])
+            the_file.score7 = int(request.POST['judge_admin_score7'])
+
+            the_file.state = '3'
+            the_file.save()
+
+        if 'judge_admin_deny_form' in request.POST:
+            the_file.referee = user
+
+            the_file.comment = request.POST['judge_admin_denied_message']
+
+            the_file.state = '5'
+            the_file.save()
+
+        if 'judge_admin_cancel_form' in request.POST:
+            the_file.state = '1'
+            the_file.referee = None
+            the_file.save()
+
+        return (redirect('longterm_judge_page_link'))
+
+    return (
+        render(
+            request,
+            'longterm_judge_page_admin.html',
+            {
+                'the_file': the_file,
+                'longterms': None
             }
         )
     )
