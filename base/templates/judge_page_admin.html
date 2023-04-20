@@ -134,8 +134,7 @@
             {% if activities %}
                 <div class="w-75 mt-5 mx-auto">
                     {% for x in activities %}
-                        {% if not x.topic.if_long %}
-                            <a class="text-decoration-none link-dark" href="{% url 'judge_detail_page_link' x.id %}">
+                        <a class="text-decoration-none link-dark" href="{% url 'judge_detail_page_link' x.id %}">
                                 <div class="mb-2 pb-2" style="background-color: #ffcbcb;">
                                     <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
                         <span>
@@ -151,7 +150,6 @@
                                     </div>
                                 </div>
                             </a>
-                        {% endif %}
                     {% endfor %}
                 </div>
             {% endif %}

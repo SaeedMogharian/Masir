@@ -622,7 +622,7 @@ class Masir_Group(models.Model):
             )
 
     def ach_last(self):
-        if self.get_manzel() == 5:
+        if self.manzel == 5:
             self.set_masir_group_and_achivement_rel(
                 Achivement.objects.get(code='Lst_0'),
                 40
