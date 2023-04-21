@@ -1,0 +1,119 @@
+{% extends "home_page_admin.html" %}
+{% load static %}
+{% load request_tag %}
+
+{% block static_masir %}
+    {% url 'home_page_link' %}
+{% endblock %}
+{% block mainblock %}
+
+    <div style="width: 100vw; height: 100vh; position: relative; overflow: hidden;">
+        <div id="masir-map3-background"></div>
+        <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100"
+             style="max-height: 80vh; overflow: scroll;">
+            {% if user_is_admin %}
+                <table id="group_list" class="list-group list-group-flush container mb-3 mt-5">
+                    <thead>
+                    <tr class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
+                        <th class="fw-bold col-7">مشخصات گروه</th>
+
+                        <th class="row col-lg-5 col-md-5 col-sm-4 col-4">
+
+                            <span class="btn btn-primary col-lg-2 col-md-4 col-sm-6 col-6" role="button"
+                                  onclick="sortTable(1)">
+                                حیات
+                            </span>
+
+                            <span class="btn btn-success col-lg-2 col-md-4 col-sm-6 col-6" role="button"
+                                  onclick="sortTable(2)">
+                                آذوقه
+                            </span>
+
+                            <span class="btn btn-warning col-lg-2 col-md-4 col-sm-6 col-6" role="button"
+                                  onclick="sortTable(3)">
+                                توان
+                            </span>
+
+                            <span class="btn btn-secondary col-lg-2 col-md-4 col-sm-6 col-6" role="button"
+                                  onclick="sortTable(4)">منزل
+                            </span>
+
+                            <span class="btn btn-info col-lg-2 col-md-4 col-sm-6 col-6 " role="button"
+                                  onclick="sortTable(5)">
+                                ابرگروه
+                            </span>
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for g in groups %}
+                        <tr class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
+                            <td class="col-7">
+                                <span class="fw-bold">{{ g.title }}</span><br>
+                                <span> {% for u in g.users %} {% if u != g.users.all|first %} - {% endif %}
+                                    {{ u }} {% endfor %}<span>
+                            </td>
+                            <td class="badge bg-primary masir-btn col-lg-1 col-md-1 col-sm-1 col-1" class="life"
+                                style="margin-left: 0"> {{ g.light }} </td>
+                            <td class="badge bg-success masir-btn col-lg-1 col-md-1 col-sm-1 col-1"
+                                style="margin-left: 0">{{ g.food }}</td>
+                            <td class="badge bg-warning masir-btn col-lg-1 col-md-1 col-sm-1 col-1"
+                                style="margin-left: 0">{{ g.power }}</td>
+                            <td class="badge bg-secondary masir-btn col-lg-1 col-md-1 col-sm-1 col-1"
+                                style="margin-left: 0">{{ g.manzel }}</td>
+                            <td class="badge bg-info masir-btn col-lg-1 col-md-1 col-sm-1 col-1"
+                                style="margin-left: 0">{{ g.supergroup }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scriptblock %}
+    <!-- Bootstrap -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script>
+        var sortOrders = [-1, -1, -1, -1, -1, -1];
+
+        function sortTable(columnIndex) {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("group_list");
+            switching = true;
+            /* Make a loop that will continue until
+            no switching has been done: */
+            while (switching) {
+                // Start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /* Loop through all table rows (except the
+                first, which contains table headers): */
+                for (i = 1; i < (rows.length - 1); i++) {
+                    // Start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /* Get the two elements you want to compare,
+                    one from current row and one from the next: */
+
+                    x = parseFloat(rows[i].getElementsByTagName("td")[columnIndex].innerHTML);
+                    y = parseFloat(rows[i + 1].getElementsByTagName("td")[columnIndex].innerHTML);
+                    if ((sortOrders[columnIndex] == -1 && x < y) || (sortOrders[columnIndex] == 1 && x > y)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    /* If a switch has been marked, make the switch
+                    and mark that a switch has been done: */
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+            sortOrders[columnIndex] *= -1;
+
+        }
+    </script>
+{% endblock %}
