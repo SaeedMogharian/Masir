@@ -1490,7 +1490,7 @@ def judge_page(request):
             {
                 'activities': Activity.objects.filter(state='1').exclude(topic__manzel=None).order_by('-id'),
                 'user_is_admin': user_is_admin,
-                'activities_for_admin': Activity.objects.exclude(state='1').order_by('state', '-id'),
+                'activities_for_admin': Activity.objects.exclude(state='1').exclude(topic__manzel=None).order_by('state', '-id'),
             }
         )
     )
