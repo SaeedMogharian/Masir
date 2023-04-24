@@ -154,6 +154,29 @@ class Vote(models.Model):
         verbose_name = 'رای'
         verbose_name_plural = 'آرای کاربران'
 
+class Top_Work(models.Model):
+    number = models.IntegerField(default=1, verbose_name='شماره')
+
+    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان')
+
+    link = models.URLField(null=True, blank=True, max_length=200, verbose_name='لینک اثر')
+   
+    type = models.CharField(default='1', max_length=1, choices=(
+    ('1', 'صوتی'),
+    ('2', 'ویدیویی'),
+    ('3', 'تصویری')
+), verbose_name='نوع اثر')
+
+
+    def __str__(self):
+        return str(self.type + '|' + self.title)
+
+    class Meta:
+        verbose_name = 'عنوان اثر'
+        verbose_name_plural = 'آثار برتر'
+
+
+
 
 class User_Detail(models.Model):
     user = models.OneToOneField(User, related_name='user_detail', on_delete=models.CASCADE, verbose_name='کاربر')
