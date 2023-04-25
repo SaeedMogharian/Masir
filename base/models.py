@@ -154,6 +154,7 @@ class Vote(models.Model):
         verbose_name = 'رای'
         verbose_name_plural = 'آرای کاربران'
 
+
 class Top_Work(models.Model):
     number = models.IntegerField(default=1, verbose_name='شماره')
 
@@ -174,8 +175,6 @@ class Top_Work(models.Model):
     class Meta:
         verbose_name = 'عنوان اثر'
         verbose_name_plural = 'آثار برتر'
-
-
 
 
 class User_Detail(models.Model):

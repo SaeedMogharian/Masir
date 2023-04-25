@@ -574,6 +574,7 @@ def people_judge_page(request):
             request,
             'people_judge_page.html',
             {
+                'topworks': Top_Work.objects.all()
             }
         )
     )
