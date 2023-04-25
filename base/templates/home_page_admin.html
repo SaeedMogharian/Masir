@@ -198,6 +198,40 @@
                             در حال انجام...
                         </button>
                     </form>
+                    
+                    <br><br>
+                    <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2"
+                          onsubmit="longterm_activities_show_scores_admin_form_click()">
+                        {% csrf_token %}
+                        <button type="submit" name="longterm_activities_show_scores_admin_form"
+                                id="longterm_activities_show_scores_admin_form" class="btn masir-btn w-100"
+                                style="background-color: white; color: green">
+                            نمایش عمومی نتایج ماموریت تحول‌های تایید شده
+                        </button>
+                        <button class="btn masir-btn w-100"
+                                style="background-color: white; color: green; display: none;"
+                                id="longterm_activities_show_scores_admin_form_loading">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            در حال انجام...
+                        </button>
+                    </form>
+                    
+                    
+                    <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2"
+                    onsubmit="longterm_activities_deny_show_scores_admin_form_click()">
+                  {% csrf_token %}
+                  <button type="submit" name="longterm_activities_deny_show_scores_admin_form"
+                          id="longterm_activities_deny_show_scores_admin_form" class="btn masir-btn w-100"
+                          style="background-color: white; color: red;">
+                      نمایش عمومی نتایج ماموریت تحول‌های رد شده
+                  </button>
+                  <button class="btn masir-btn w-100"
+                          style="background-color: white; color: red; display: none;"
+                          id="longterm_activities_deny_show_scores_admin_form_loading">
+                      <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                      در حال انجام...
+                  </button>
+              </form>
                 {% endif %}
             </div>
         </div>
@@ -246,6 +280,16 @@
         function activities_show_scores_admin_form_click() {
             document.getElementById('activities_show_scores_admin_form').style.display = 'none';
             document.getElementById('activities_show_scores_admin_form_loading').style.display = 'block';
+        }
+
+        function longterm_activities_show_scores_admin_form_click() {
+            document.getElementById('longterm_activities_show_scores_admin_form').style.display = 'none';
+            document.getElementById('longterm_activities_show_scores_admin_form_loading').style.display = 'block';
+        }
+
+        function longterm_activities_deny_show_scores_admin_form_click() {
+            document.getElementById('longterm_activities_deny_show_scores_admin_form').style.display = 'none';
+            document.getElementById('longterm_activities_deny_show_scores_admin_form_loading').style.display = 'block';
         }
 
         function achivements_recalculate_admin_form_click() {

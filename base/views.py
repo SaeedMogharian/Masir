@@ -1244,6 +1244,38 @@ def home_page(request):
 
             return (redirect('home_page_link'))
 
+        if 'longterm_activities_show_scores_admin_form' in request.POST:
+            for x in Activity.objects.filter(state='3').filter(topic__manzel=None):
+                x.state = '4'
+                x.save()
+                g = x.group
+                g: Masir_Group
+
+                g.ach_lng(x)
+
+                main_score = 2 if x.topic.main else 1
+                text = 'احسنت به شما! به ازای انجام ماموریت تحول، نشان «تحول خواه» رو به دست آوردید و ' + str(round(120 * x.get_score()/5)) + ' واحد امتیاز حیات به گروه شما اضافه شد.'
+
+                Report.objects.create(
+                    group=x.group,
+                    text=text
+                )
+
+            return (redirect('home_page_link'))
+        
+
+        if 'longterm_activities_deny_show_scores_admin_form' in request.POST:
+            for x in Activity.objects.filter(state='5').filter(topic__manzel=None):
+                x.state = '6'
+                x.save()
+
+                Report.objects.create(
+                    group=x.group,
+                    text='متاسفانه ماموریت تحول شمابه دلیل «' + str(x.comment) + '» در داوری رد شد.'
+                )
+
+            return (redirect('home_page_link'))
+
     if user.accessibility != Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
         user_is_admin = False
         if user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
@@ -1565,7 +1597,7 @@ def longterm_judge_page(request):
             request,
             'longterm_judge_page_admin.html',
             {
-                'longterms': Activity.objects.filter(topic__manzel=None).order_by('-id'),
+                'longterms': Activity.objects.filter(topic__manzel=None).order_by('state','-id'),
             }
         )
     )

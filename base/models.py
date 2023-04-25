@@ -580,7 +580,7 @@ class Masir_Group(models.Model):
         for x in self.events.filter(show_public=True):
             f = f + (x.score * 5)
         x: Activity
-        for x in self.activities.filter(state='4').exclude(cheated=True):
+        for x in self.activities.filter(state='4').exclude(cheated=True).exclude(topic__manzel=None):
             f = f + (x.get_score() * x.template.max_food / 5)
         for x in self.charities.all():
             f = f - x.value
@@ -601,8 +601,8 @@ class Masir_Group(models.Model):
     def get_power(self):
         p = 100
         for x in self.users.all():
-            p = p + len(x.club_files.filter(show_public=True))
-        for x in self.activities.filter(state='4'):
+            p = p + len(x.club_files.filter(show_public=True, verified=True))
+        for x in self.activities.filter(state='4').exclude(topic__manzel=None):
             if x.get_score() > 1.5:
                 p = p + x.template.max_power
             else:
@@ -780,6 +780,11 @@ class Masir_Group(models.Model):
                 )
                 break
 
+    def ach_lng(self, x):
+        self.set_masir_group_and_achivement_rel(
+            Achivement.objects.get(code='Lng_0'),
+            (120 * x.get_score())/5
+        )
     # محاسبه مجدد
     def recalculate_achivements(self):
         self.achivements.all().delete()
@@ -809,6 +814,9 @@ class Masir_Group(models.Model):
 
         # دست رحمت
         self.ach_sdq()
+
+        #تحول
+        self.ach_lng()
 
     def get_achivements(self):
         # نشان کمال مطلق
