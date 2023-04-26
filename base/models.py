@@ -923,7 +923,7 @@ class Masir_Group_And_Exams_Rel(models.Model):
     date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
 
     def __str__(self):
-        return (str(self.event) + ' | ' + str(self.group))
+        return (str(self.exam) + ' | ' + str(self.group))
 
     class Meta:
         verbose_name = 'ارتباط'
