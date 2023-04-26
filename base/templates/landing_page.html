@@ -116,7 +116,8 @@
                 opacity: 1;
             }
         }
-        .vote-btn{
+
+        .vote-btn {
             margin: auto;
             display: block;
             font-weight: 700;
@@ -124,29 +125,42 @@
             border-radius: 4px;
             color: white;
         }
-        .crs-item{
+
+        .send-vote-btn {
+            background: #FFFFFF;
+            border: 1px solid #1A1D20;
+            border-radius: 8px;
+            display: block;
+            font-weight: 700;
+        }
+
+        .crs-item {
             width: 90%;
             height: 60vh;
             min-height: 20em;
         }
-        @media screen and (max-width: 1280px){
-            .crs-item{
+
+        @media screen and (max-width: 1280px) {
+            .crs-item {
                 height: 50vh;
             }
         }
-        @media screen and (max-width: 990px){
-            .crs-item{
+
+        @media screen and (max-width: 990px) {
+            .crs-item {
                 height: auto;
-                min-height: 15em;
+                min-height: 20em;
             }
         }
-        .vote-card{
+
+        .vote-card {
             background-color: #FFFFFF;
             border: 1px solid #B84B12;
             border-radius: 8px;
-            height: 5em;
-            width: 3em; 
-            margin: 2em; 
+            height: 6em;
+            width: 4em;
+            margin: 1em 2em 1em 0;
+            padding: 0.5em;
         }
     </style>
     <title>
@@ -182,7 +196,7 @@
         </div>
     </nav>
 
-    {%block modalblock%}
+    {% block modalblock %}
 
         <nav class="navbar fixed-bottom" style="background-color: #ffffffc0; padding-top: 0;">
             <div class="w-100 mb-2">
@@ -192,39 +206,39 @@
             </div>
             <div class="container-fluid justify-content-center">
                 <a class="masir-circle-button-1"
-                style="background-image: url('{% static 'images/connection_telegram.png' %}'); margin: 0 0.25vw;"
-                href="https://t.me/masir1402_ir" target="_blank"></a>
+                   style="background-image: url('{% static 'images/connection_telegram.png' %}'); margin: 0 0.25vw;"
+                   href="https://t.me/masir1402_ir" target="_blank"></a>
                 <a class="masir-circle-button-1"
-                style="background-image: url('{% static 'images/connection_shad.png' %}'); margin: 0 0.25vw;"
-                href="https://shad.ir/masir1402_ir" target="_blank"></a>
+                   style="background-image: url('{% static 'images/connection_shad.png' %}'); margin: 0 0.25vw;"
+                   href="https://shad.ir/masir1402_ir" target="_blank"></a>
                 <a class="masir-circle-button-1"
-                style="background-image: url('{% static 'images/connection_bale.png' %}'); margin: 0 0.25vw;"
-                href="https://ble.ir/masir1402_ir" target="_blank"></a>
+                   style="background-image: url('{% static 'images/connection_bale.png' %}'); margin: 0 0.25vw;"
+                   href="https://ble.ir/masir1402_ir" target="_blank"></a>
                 <a class="masir-circle-button-1"
-                style="background-image: url('{% static 'images/connection_aparat.png' %}'); margin: 0 0.25vw;"
-                href="https://www.aparat.com/masir1402" target="_blank"></a>
+                   style="background-image: url('{% static 'images/connection_aparat.png' %}'); margin: 0 0.25vw;"
+                   href="https://www.aparat.com/masir1402" target="_blank"></a>
             </div>
         </nav>
 
         <div class="modal fade" id="login_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="login_modal_Label" aria-hidden="true">
+             aria-labelledby="login_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                 <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
-                    role="button"></a>
+                       role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
                         <div class="row" style="--bs-gutter-x: max(5vw,5vh);">
                             <div class="col-12 col-md-6 mb-5 mb-md-0">
                                 <div class="position-relative px-5 masir-modal-header">
                                     <div class="position-absolute top-50 start-50 translate-middle d-flex"
-                                        style="height: max-content;">
+                                         style="height: max-content;">
                                         <div class="masir-circle-icon-3"
-                                            style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
+                                             style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
                                             <svg viewBox="0 0 24 24" fill="currentcolor">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M15.8189 3.66834C14.963 3.68902 13.8297 3.87549 12.178 4.15077L10.5068 4.4293C9.68331 4.56655 9.15729 4.65606 8.77263 4.77058C8.41473 4.87714 8.30096 4.97233 8.23698 5.04786C8.173 5.12338 8.0978 5.25125 8.05154 5.6218C8.00182 6.02006 8 6.55364 8 7.38849V9.13191C8 9.68419 7.55228 10.1319 7 10.1319C6.44772 10.1319 6 9.68419 6 9.13191V7.38849C6 7.36875 6 7.34907 6 7.32946C5.99995 6.5708 5.99991 5.91094 6.06695 5.37402C6.13917 4.79553 6.30096 4.23907 6.71094 3.75511C7.12092 3.27114 7.64321 3.02008 8.20196 2.85373C8.72055 2.69934 9.37144 2.5909 10.1198 2.46622C10.1391 2.46299 10.1585 2.45976 10.178 2.45652L11.9253 2.16529C13.4821 1.9058 14.7561 1.69343 15.7705 1.66892C16.8294 1.64334 17.7885 1.81415 18.5855 2.48928C19.3825 3.1644 19.7086 4.08237 19.8575 5.13107C20.0001 6.13576 20 7.42732 20 9.00556V14.9944C20 16.5726 20.0001 17.8642 19.8575 18.8689C19.7086 19.9176 19.3825 20.8356 18.5855 21.5107C17.7885 22.1858 16.8294 22.3566 15.7705 22.331C14.7561 22.3065 13.4821 22.0942 11.9253 21.8347L10.1198 21.5337C9.37144 21.4091 8.72054 21.3006 8.20196 21.1462C7.64321 20.9799 7.12092 20.7288 6.71094 20.2448C6.30096 19.7609 6.13917 19.2044 6.06695 18.6259C5.99991 18.089 5.99995 17.4292 6 16.6705L6 15.0659C6 14.5137 6.44772 14.0659 7 14.0659C7.55228 14.0659 8 14.5137 8 15.0659V16.6115C8 17.4463 8.00182 17.9799 8.05154 18.3781C8.0978 18.7487 8.173 18.8766 8.23698 18.9521C8.30096 19.0276 8.41473 19.1228 8.77263 19.2294C9.15729 19.3439 9.68331 19.4334 10.5068 19.5707L12.178 19.8492C13.8297 20.1245 14.963 20.3109 15.8189 20.3316C16.6467 20.3516 17.0288 20.2082 17.2927 19.9846C17.5567 19.7611 17.7609 19.4077 17.8773 18.5878C17.9976 17.7403 18 16.5917 18 14.9172V9.08274C18 7.40827 17.9976 6.25969 17.8773 5.41212C17.7609 4.59223 17.5567 4.23889 17.2927 4.01532C17.0288 3.79175 16.6467 3.64834 15.8189 3.66834Z"/>
+                                                      d="M15.8189 3.66834C14.963 3.68902 13.8297 3.87549 12.178 4.15077L10.5068 4.4293C9.68331 4.56655 9.15729 4.65606 8.77263 4.77058C8.41473 4.87714 8.30096 4.97233 8.23698 5.04786C8.173 5.12338 8.0978 5.25125 8.05154 5.6218C8.00182 6.02006 8 6.55364 8 7.38849V9.13191C8 9.68419 7.55228 10.1319 7 10.1319C6.44772 10.1319 6 9.68419 6 9.13191V7.38849C6 7.36875 6 7.34907 6 7.32946C5.99995 6.5708 5.99991 5.91094 6.06695 5.37402C6.13917 4.79553 6.30096 4.23907 6.71094 3.75511C7.12092 3.27114 7.64321 3.02008 8.20196 2.85373C8.72055 2.69934 9.37144 2.5909 10.1198 2.46622C10.1391 2.46299 10.1585 2.45976 10.178 2.45652L11.9253 2.16529C13.4821 1.9058 14.7561 1.69343 15.7705 1.66892C16.8294 1.64334 17.7885 1.81415 18.5855 2.48928C19.3825 3.1644 19.7086 4.08237 19.8575 5.13107C20.0001 6.13576 20 7.42732 20 9.00556V14.9944C20 16.5726 20.0001 17.8642 19.8575 18.8689C19.7086 19.9176 19.3825 20.8356 18.5855 21.5107C17.7885 22.1858 16.8294 22.3566 15.7705 22.331C14.7561 22.3065 13.4821 22.0942 11.9253 21.8347L10.1198 21.5337C9.37144 21.4091 8.72054 21.3006 8.20196 21.1462C7.64321 20.9799 7.12092 20.7288 6.71094 20.2448C6.30096 19.7609 6.13917 19.2044 6.06695 18.6259C5.99991 18.089 5.99995 17.4292 6 16.6705L6 15.0659C6 14.5137 6.44772 14.0659 7 14.0659C7.55228 14.0659 8 14.5137 8 15.0659V16.6115C8 17.4463 8.00182 17.9799 8.05154 18.3781C8.0978 18.7487 8.173 18.8766 8.23698 18.9521C8.30096 19.0276 8.41473 19.1228 8.77263 19.2294C9.15729 19.3439 9.68331 19.4334 10.5068 19.5707L12.178 19.8492C13.8297 20.1245 14.963 20.3109 15.8189 20.3316C16.6467 20.3516 17.0288 20.2082 17.2927 19.9846C17.5567 19.7611 17.7609 19.4077 17.8773 18.5878C17.9976 17.7403 18 16.5917 18 14.9172V9.08274C18 7.40827 17.9976 6.25969 17.8773 5.41212C17.7609 4.59223 17.5567 4.23889 17.2927 4.01532C17.0288 3.79175 16.6467 3.64834 15.8189 3.66834Z"/>
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M11.2929 8.29287C10.9024 8.68339 10.9024 9.31656 11.2929 9.70708L12.5858 11H4C3.44771 11 3 11.4477 3 12C3 12.5523 3.44771 13 4 13H12.5858L11.2929 14.2929C10.9024 14.6834 10.9024 15.3166 11.2929 15.7071C11.6834 16.0976 12.3166 16.0976 12.7071 15.7071L15.7071 12.7071C16.0976 12.3166 16.0976 11.6834 15.7071 11.2929L12.7071 8.29287C12.3166 7.90235 11.6834 7.90235 11.2929 8.29287Z"/>
+                                                      d="M11.2929 8.29287C10.9024 8.68339 10.9024 9.31656 11.2929 9.70708L12.5858 11H4C3.44771 11 3 11.4477 3 12C3 12.5523 3.44771 13 4 13H12.5858L11.2929 14.2929C10.9024 14.6834 10.9024 15.3166 11.2929 15.7071C11.6834 16.0976 12.3166 16.0976 12.7071 15.7071L15.7071 12.7071C16.0976 12.3166 16.0976 11.6834 15.7071 11.2929L12.7071 8.29287C12.3166 7.90235 11.6834 7.90235 11.2929 8.29287Z"/>
                                             </svg>
                                         </div>
                                     </div>
@@ -236,14 +250,14 @@
                                             شماره تلفن
                                         </div>
                                         <input name="login_phone" type="text"
-                                            class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
-                                            autocomplete="off" required dir="ltr">
+                                               class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
+                                               autocomplete="off" required dir="ltr">
 
                                         <div class="mb-1 mt-1" style="font-weight: 700;">
                                             رمز عبور
                                         </div>
                                         <input name="login_password" type="password"
-                                            class="form-control masir-form-control text-center" required dir="ltr">
+                                               class="form-control masir-form-control text-center" required dir="ltr">
 
                                         <div class="mt-3"></div>
                                         <button type="submit" name="login_form" class="btn masir-btn w-100"
@@ -252,7 +266,7 @@
                                         </button>
                                         <div class="mt-3"></div>
                                         <a href="{% url 'forgot_password_page_link' %}" class="btn masir-btn w-100"
-                                        style="background-color: #ff6486;">
+                                           style="background-color: #ff6486;">
                                             فراموشی رمز عبور
                                         </a>
                                     </div>
@@ -261,18 +275,22 @@
                             <div class="col-12 col-md-6">
                                 <div class="position-relative px-5 masir-modal-header">
                                     <div class="position-absolute top-50 start-50 translate-middle d-flex"
-                                        style="height: max-content;">
+                                         style="height: max-content;">
                                         <div class="masir-circle-icon-3"
-                                            style="background-color: #bef6f8; color: #3d8385; border: 2px #3d8385 solid;">
+                                             style="background-color: #bef6f8; color: #3d8385; border: 2px #3d8385 solid;">
                                             <svg viewBox="0 0 32 32" fill="none" stroke="currentcolor">
-                                                <circle style="stroke-width:2;stroke-miterlimit:10;" cx="14" cy="11" r="6"/>
+                                                <circle style="stroke-width:2;stroke-miterlimit:10;" cx="14" cy="11"
+                                                        r="6"/>
                                                 <path style="stroke-width:2;stroke-miterlimit:10;"
-                                                    d="M5,26c0-4.971,4.029-9,9-9  c1.864,0,3.596,0.567,5.032,1.537"/>
-                                                <circle style="stroke-width:2;stroke-miterlimit:10;" cx="24" cy="24" r="7"/>
-                                                <line style="stroke-width:2;stroke-miterlimit:10;" x1="24" y1="28" x2="24"
-                                                    y2="20"/>
-                                                <line style="stroke-width:2;stroke-miterlimit:10;" x1="20" y1="24" x2="28"
-                                                    y2="24"/>
+                                                      d="M5,26c0-4.971,4.029-9,9-9  c1.864,0,3.596,0.567,5.032,1.537"/>
+                                                <circle style="stroke-width:2;stroke-miterlimit:10;" cx="24" cy="24"
+                                                        r="7"/>
+                                                <line style="stroke-width:2;stroke-miterlimit:10;" x1="24" y1="28"
+                                                      x2="24"
+                                                      y2="20"/>
+                                                <line style="stroke-width:2;stroke-miterlimit:10;" x1="20" y1="24"
+                                                      x2="28"
+                                                      y2="24"/>
                                             </svg>
 
                                         </div>
@@ -285,20 +303,21 @@
                                             نام
                                         </div>
                                         <input name="register_firstname" type="text"
-                                            class="form-control masir-form-control text-center" autocomplete="off"
-                                            required>
+                                               class="form-control masir-form-control text-center" autocomplete="off"
+                                               required>
 
                                         <div class="mb-1 mt-1" style="font-weight: 700;">
                                             نام خانوادگی
                                         </div>
                                         <input name="register_lastname" type="text"
-                                            class="form-control masir-form-control text-center" autocomplete="off"
-                                            required>
+                                               class="form-control masir-form-control text-center" autocomplete="off"
+                                               required>
 
                                         <div class="mb-1 mt-1" style="font-weight: 700;">
                                             پایه تحصیلی
                                         </div>
-                                        <select name="register_level" class="form-select masir-form-control text-center">
+                                        <select name="register_level"
+                                                class="form-select masir-form-control text-center">
                                             <option value="7">هفتم</option>
                                             <option value="8">هشتم</option>
                                             <option value="9">نهم</option>
@@ -308,8 +327,8 @@
                                             شهر
                                         </div>
                                         <input name="register_city" type="text"
-                                            class="form-control masir-form-control text-center" autocomplete="off"
-                                            required list="cities">
+                                               class="form-control masir-form-control text-center" autocomplete="off"
+                                               required list="cities">
                                         <datalist id="cities">
                                             {% for x in cities %}
                                                 <option value="{{ x.name }}">
@@ -320,8 +339,8 @@
                                             نام مدرسه
                                         </div>
                                         <input name="register_school" type="text"
-                                            class="form-control masir-form-control text-center" autocomplete="off"
-                                            required list="schools">
+                                               class="form-control masir-form-control text-center" autocomplete="off"
+                                               required list="schools">
                                         {% comment %} <datalist id="schools">
                             {% for x in schools %}
                             <option value="{{ x.name }}">
@@ -332,8 +351,8 @@
                                             کد ملی
                                         </div>
                                         <input name="register_nationalcode" type="text"
-                                            class="form-control masir-form-control text-center" pattern="[0-9]{10}"
-                                            autocomplete="off" required dir="ltr">
+                                               class="form-control masir-form-control text-center" pattern="[0-9]{10}"
+                                               autocomplete="off" required dir="ltr">
                                         <div class="mb-1 mt-1">
                                             لطفا از صفحه کلید انگلیسی استفاده کنید.
                                         </div>
@@ -342,8 +361,8 @@
                                             شماره تماس
                                         </div>
                                         <input name="register_phone" type="text"
-                                            class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
-                                            autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
+                                               class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
+                                               autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
                                         <div class="mb-1 mt-1">
                                             لطفا از صفحه کلید انگلیسی استفاده کنید.
                                             <br>
@@ -354,7 +373,7 @@
                                             رمز عبور
                                         </div>
                                         <input name="register_password" type="password"
-                                            class="form-control masir-form-control text-center" required dir="ltr">
+                                               class="form-control masir-form-control text-center" required dir="ltr">
 
                                         <div class="mt-3"></div>
                                         <button type="submit" name="register_form" class="btn masir-btn w-100"
@@ -370,29 +389,30 @@
             </div>
         </div>
 
-        <div class="modal fade" id="group_register_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="group_register_modal_Label" aria-hidden="true">
+        <div class="modal fade" id="group_register_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1"
+             aria-labelledby="group_register_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                 <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
-                    role="button"></a>
+                       role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
                         <div class="position-relative px-5 masir-modal-header">
                             <div class="position-absolute top-50 start-50 translate-middle d-flex"
-                                style="height: max-content;">
+                                 style="height: max-content;">
                                 <div class="masir-circle-icon-3"
-                                    style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
+                                     style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
                                     <svg viewBox="0 0 24 24" fill="none">
                                         <path d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20"
-                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                         <path d="M13 14V14C13 11.2386 15.2386 9 18 9V9C20.7614 9 23 11.2386 23 14V14.5"
-                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                         <path d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z"
-                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"/>
+                                              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                              stroke-linejoin="round"/>
                                         <path d="M18 9C19.6569 9 21 7.65685 21 6C21 4.34315 19.6569 3 18 3C16.3431 3 15 4.34315 15 6C15 7.65685 16.3431 9 18 9Z"
-                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"/>
+                                              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                              stroke-linejoin="round"/>
                                     </svg>
                                 </div>
                             </div>
@@ -404,49 +424,49 @@
                                     نام گروه
                                 </div>
                                 <input name="group_register_title" type="text"
-                                    class="form-control masir-form-control text-center" autocomplete="off" required>
+                                       class="form-control masir-form-control text-center" autocomplete="off" required>
 
                                 <div class="mb-1 mt-5" style="font-weight: 700;">
                                     شماره تلفن نفر اول گروه
                                 </div>
                                 <input name="group_register_phone_1" type="text"
-                                    class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
-                                    autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
+                                       class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
+                                       autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
 
                                 <div class="mb-1 mt-1" style="font-weight: 700;">
                                     کد نفر اول گروه
                                 </div>
                                 <input name="group_register_code_1" type="text"
-                                    class="form-control masir-form-control text-center" autocomplete="off" required
-                                    dir="ltr">
+                                       class="form-control masir-form-control text-center" autocomplete="off" required
+                                       dir="ltr">
 
                                 <div class="mb-1 mt-1" style="font-weight: 700;">
                                     شماره تلفن نفر دوم گروه
                                 </div>
                                 <input name="group_register_phone_2" type="text"
-                                    class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
-                                    autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
+                                       class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
+                                       autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
 
                                 <div class="mb-1 mt-1" style="font-weight: 700;">
                                     کد نفر دوم گروه
                                 </div>
                                 <input name="group_register_code_2" type="text"
-                                    class="form-control masir-form-control text-center" autocomplete="off" required
-                                    dir="ltr">
+                                       class="form-control masir-form-control text-center" autocomplete="off" required
+                                       dir="ltr">
 
                                 <div class="mb-1 mt-1" style="font-weight: 700;">
                                     شماره تلفن نفر سوم گروه
                                 </div>
                                 <input name="group_register_phone_3" type="text"
-                                    class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
-                                    autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
+                                       class="form-control masir-form-control text-center" pattern="9[0-9]{9}"
+                                       autocomplete="off" required placeholder="9xxxxxxxxx" dir="ltr">
 
                                 <div class="mb-1 mt-1" style="font-weight: 700;">
                                     کد نفر سوم گروه
                                 </div>
                                 <input name="group_register_code_3" type="text"
-                                    class="form-control masir-form-control text-center" autocomplete="off" required
-                                    dir="ltr">
+                                       class="form-control masir-form-control text-center" autocomplete="off" required
+                                       dir="ltr">
 
                                 <div class="mt-5"></div>
                                 <button type="submit" name="group_register_form" class="btn masir-btn w-100"
@@ -461,17 +481,17 @@
         </div>
 
         <div class="modal fade" id="contact_us_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="contact_us_modal_Label" aria-hidden="true">
+             aria-labelledby="contact_us_modal_Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                 <div class="modal-content masir-modal py-3" style="border: 3px #3d6185 solid;">
                     <a class="masir-modal-close-icon masir-circle-button-2" data-bs-dismiss="modal" aria-label="Close"
-                    role="button"></a>
+                       role="button"></a>
                     <div class="modal-body scroll-without-scrollbar">
                         <div class="position-relative px-5 masir-modal-header">
                             <div class="position-absolute top-50 start-50 translate-middle d-flex"
-                                style="height: max-content;">
+                                 style="height: max-content;">
                                 <div class="masir-circle-icon-3"
-                                    style="background-color: #bedbf8; color: #3d6185; border: 2px #3d6185 solid;">
+                                     style="background-color: #bedbf8; color: #3d6185; border: 2px #3d6185 solid;">
                                     <svg viewBox="0 0 512 512" fill="currentcolor">
                                         <path d="M389.565,400.696h-66.783c-9.22,0-16.696,7.475-16.696,16.696s7.475,16.696,16.696,16.696h66.783 c9.22,0,16.696-7.475,16.696-16.696S398.785,400.696,389.565,400.696z"/>
                                         <path d="M472.645,474.965c-3.899-92.646-65.593-169.236-148.063-196.743c15.753-11.455,28.545-26.742,36.996-44.483h27.987 c27.618,0,50.087-22.469,50.087-50.087C439.653,82.386,357.267,0,256.001,0S72.349,82.386,72.349,183.652 c0,27.618,22.469,50.087,50.087,50.087h27.987c8.45,17.741,21.244,33.027,36.996,44.483 C105.79,305.448,43.292,381.461,39.357,474.965c-0.532,2.391-0.398,2.187-0.398,20.34c0,9.22,7.475,16.696,16.696,16.696H456.35 c9.22,0,16.696-7.475,16.696-16.696C473.043,476.888,473.165,477.306,472.645,474.965z M406.261,183.652 c0,9.206-7.49,16.696-16.696,16.696h-17.893c1.596-11.109,1.598-22.269,0-33.391h17.893 C398.772,166.957,406.261,174.446,406.261,183.652z M140.328,200.348h-17.893c-9.206,0-16.696-7.49-16.696-16.696 c0-9.206,7.49-16.696,16.696-16.696h17.893C138.732,178.064,138.73,189.225,140.328,200.348z M150.422,133.565 c-30.531,0-30.89-0.209-36.339,0.709C134.556,75.603,190.436,33.391,256,33.391s121.444,42.212,141.916,100.883 c-5.502-0.927-5.928-0.709-36.339-0.709c-18.79-39.45-59.05-66.783-105.578-66.783S169.212,94.116,150.422,133.565z M172.522,183.652c0-46.03,37.448-83.478,83.478-83.478c46.03,0,83.478,37.448,83.478,83.478c0,5.717-0.58,11.3-1.68,16.696H256 c-9.22,0-16.696,7.475-16.696,16.696c0,9.22,7.475,16.696,16.696,16.696h66.737C307.491,254.001,283.252,267.13,256,267.13 C209.97,267.13,172.522,229.682,172.522,183.652z M239.304,478.609H72.636c1.754-57.981,31.097-109.548,75.044-142.081 l91.625,91.625V478.609z M177.087,318.713c24.003-11.64,50.797-18.192,78.913-18.192c28.116,0,54.91,6.551,78.911,18.192 L256,397.625L177.087,318.713z M272.695,478.609v-50.456l91.625-91.625c43.946,32.533,73.289,84.102,75.044,142.081H272.695z"/>
@@ -519,17 +539,17 @@
                                     نام و نام خانوادگی
                                 </div>
                                 <input name="contact_us_name" type="text" class="form-control masir-form-control"
-                                    autocomplete="off" required>
+                                       autocomplete="off" required>
 
                                 <div class="mb-1 mt-3" style="font-weight: 700;">
                                     شماره تلفن
                                 </div>
                                 <input name="contact_us_phone" type="text" class="form-control masir-form-control"
-                                    pattern="9[0-9]{9}" autocomplete="off" required>
+                                       pattern="9[0-9]{9}" autocomplete="off" required>
 
                                 <div class="mt-2"></div>
                                 <textarea name="contact_us_message" class="form-control masir-form-control" rows="3"
-                                        required></textarea>
+                                          required></textarea>
                                 <div class="mb-3 mt-1">
                                     مسئولین مسیر در اولین فرصت پاسخ شما را خواهند داد.
                                 </div>
@@ -545,7 +565,7 @@
             </div>
         </div>
 
-    {%endblock%}
+    {% endblock %}
 
     {% block mainblock %}
         <div id="masir-map1-background" class="">
@@ -860,7 +880,7 @@
     {% endblock %}
 
 
-{%block scriptblock%}
+{% block scriptblock %}
     <!-- Bootstrap -->
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 

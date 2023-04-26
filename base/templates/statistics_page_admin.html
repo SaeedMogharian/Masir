@@ -291,7 +291,7 @@
                                 <ul>
                                     {% for u in x.users.all %}
                                         <li>
-                                            {{ u }} : {{ u.school }}
+                                            {{ u }} <br> {{u.user}} - {{ u.city }} - {{ u.school }}
                                         </li>
                                     {% endfor %}
                                 </ul>
