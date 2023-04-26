@@ -115,48 +115,6 @@ class School(models.Model):
         verbose_name_plural = 'مدارس'
 
 
-class Vote(models.Model):
-    phone = models.CharField(default='9xxxxxxxxx', max_length=10, verbose_name='شماره تلفن')
-    vote_image_1 = models.BooleanField(default=False, verbose_name='رای به تصویر اول')
-    vote_image_2 = models.BooleanField(default=False, verbose_name='رای به تصویر دوم')
-    vote_image_3 = models.BooleanField(default=False, verbose_name='رای به تصویر سوم')
-    vote_image_4 = models.BooleanField(default=False, verbose_name='رای به تصویر چهارم')
-    vote_image_5 = models.BooleanField(default=False, verbose_name='رای به تصویر پنجم')
-    vote_music_1 = models.BooleanField(default=False, verbose_name='رای به صوت اول')
-    vote_music_2 = models.BooleanField(default=False, verbose_name='رای به صوت دوم')
-    vote_music_3 = models.BooleanField(default=False, verbose_name='رای به صوت سوم')
-    vote_music_4 = models.BooleanField(default=False, verbose_name='رای به صوت چهارم')
-    vote_music_5 = models.BooleanField(default=False, verbose_name='رای به صوت پنجم')
-    vote_video_1 = models.BooleanField(default=False, verbose_name='رای به فیلم اول')
-    vote_video_2 = models.BooleanField(default=False, verbose_name='رای به فیلم دوم')
-    vote_video_3 = models.BooleanField(default=False, verbose_name='رای به فیلم سوم')
-    vote_video_4 = models.BooleanField(default=False, verbose_name='رای به فیلم چهارم')
-    vote_video_5 = models.BooleanField(default=False, verbose_name='رای به فیلم پنجم')
-    code = models.IntegerField(default=0, verbose_name='کد تایید')
-    is_valid = models.BooleanField(default=False, verbose_name='معتبر')
-    masood_valid = models.BooleanField(default=False, verbose_name='نامعتبر معتبر شده بخاطر مسعود!')
-
-    def get_group(self):
-        user = User.objects.filter(username=self.phone).first()
-        if user:
-            if user.user_detail.groups.all().first():
-                return (user.user_detail.groups.all().first())
-            return ('بدون گروه')
-        return (None)
-
-    def get_user(self):
-        return (User_Detail.objects.filter(user__username=self.phone).first())
-
-    def __str__(self):
-        if self.is_valid:
-            return ('>> ' + self.phone)
-        return (self.phone)
-
-    class Meta:
-        verbose_name = 'رای'
-        verbose_name_plural = 'آرای کاربران'
-
-
 class User_Detail(models.Model):
     user = models.OneToOneField(User, related_name='user_detail', on_delete=models.CASCADE, verbose_name='کاربر')
     accessibility = models.ForeignKey(Accessibility, null=True, related_name='users', on_delete=models.SET_NULL,
@@ -1029,3 +987,30 @@ class Top_Work(models.Model):
     class Meta:
         verbose_name = 'عنوان اثر'
         verbose_name_plural = 'آثار برتر'
+
+class Vote(models.Model):
+    phone = models.CharField(default='9xxxxxxxxx', max_length=10, verbose_name='شماره تلفن')
+    vote = models.ManyToManyField(Top_Work, related_name='vote', blank=True, verbose_name='رای ها')
+    code = models.IntegerField(default=0, verbose_name='کد تایید')
+    is_valid = models.BooleanField(default=False, verbose_name='تایید شده')
+    is_voted = models.BooleanField(default=False, verbose_name='رای داده')
+
+    def get_group(self):
+        user = User.objects.filter(username=self.phone).first()
+        if user:
+            if user.user_detail.groups.all().first():
+                return (user.user_detail.groups.all().first())
+            return ('بدون گروه')
+        return (None)
+
+    def get_user(self):
+        return (User_Detail.objects.filter(user__username=self.phone).first())
+
+    def __str__(self):
+        if self.is_valid:
+            return ('>> ' + self.phone)
+        return (self.phone)
+
+    class Meta:
+        verbose_name = 'رای'
+        verbose_name_plural = 'آرای کاربران'
