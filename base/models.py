@@ -1011,4 +1011,4 @@ class Vote(models.Model):
         return str(self.phone)
     class Meta:
         verbose_name = 'رای'
-        verbose_name_plural = 'آرای کاربران'
+        verbose_name_plural = 'آرای نظرسنجی مردمی'

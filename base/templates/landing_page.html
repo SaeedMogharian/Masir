@@ -156,6 +156,7 @@
         .vote-card {
             background-color: #FFFFFF;
             border: 1px solid #B84B12;
+            color: #B84B12;
             border-radius: 8px;
             height: 6em;
             width: 4em;
@@ -175,7 +176,7 @@
                  style="height: max-content;">
                 {% if user.user_detail %}
                     <a class="masir-circle-button-1 masir-jelly" title="خروج"
-                       style="background-image: url('{% static 'images/navbar_logout.png' %}'); margin: auto max(0.15vw, 0.15vh); min-width: 2em; min-height: 2em"
+                       style="background-image: url('{% static 'images/navbar_logout.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                        href="{% url 'logout_link' %}"></a>
                 {% endif %}
                 <a class="masir-circle-button-2 masir-jelly" title="ورود یا ثبت نام فردی"
@@ -423,15 +424,15 @@
                                      style="background-color: #c0f8be; color: #3d8543; border: 2px #3d8543 solid;">
                                     <svg viewBox="0 0 24 24" fill="none">
                                         <path d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20"
-                                              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                                         <path d="M13 14V14C13 11.2386 15.2386 9 18 9V9C20.7614 9 23 11.2386 23 14V14.5"
-                                              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                                         <path d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z"
                                               stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                              stroke-linejoin="round"/>
+                                              stroke-linejoin="round"></path>
                                         <path d="M18 9C19.6569 9 21 7.65685 21 6C21 4.34315 19.6569 3 18 3C16.3431 3 15 4.34315 15 6C15 7.65685 16.3431 9 18 9Z"
                                               stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                              stroke-linejoin="round"/>
+                                              stroke-linejoin="round"></path>
                                     </svg>
                                 </div>
                             </div>

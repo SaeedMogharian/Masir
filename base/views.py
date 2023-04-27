@@ -513,10 +513,10 @@ def people_judge_page(request):
                         request,
                         'people_judge_page.html',
                         {
-                            'MESSAGE': 'شماره ' + request.POST['phone_vote'] + ' قبلا رای داده است.',
-                            'phone': None,
-                            'voted': False,
-                            'verified': False,
+                            'MESSAGE': 'شماره ' + request.POST['phone_vote'] + ' قبلا در نظرسنجی شرکت کرده است.',
+                            'phone': str(request.POST['phone_vote']),
+                            'voted': True,
+                            'verified': True,
                             'topworks': [list(Top_Work.objects.filter(type='1')),
                                          list(Top_Work.objects.filter(type='2')),
                                          list(Top_Work.objects.filter(type='3'))]
@@ -686,6 +686,7 @@ def people_judge_page(request):
             Vote.objects.create(
                 phone=phone,
                 code=code,
+                is_valid=True,
             )
         if Vote.objects.filter(phone__contains=phone, is_voted=True):
             voted = True
