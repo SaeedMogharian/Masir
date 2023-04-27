@@ -200,8 +200,8 @@
                                   fill="black"></path>
                         </svg>
                     </div>
-                    <div class="row container-fluid d-flex" {% if voted %}
-                         style="pointer-events: none; opacity: 0.4;"{% endif %}>
+                    <div class="row container-fluid d-flex" style="display: block; margin: auto;{% if voted %}
+                         pointer-events: none; opacity: 0.4;{% endif %}">
                         {# کارد ها#}
                         {% for x in t %}
                             <div class="vote-card {{ x.get_type_id }}_card"
@@ -258,7 +258,7 @@
                         <div class="row container-fluid d-flex w-100 justify-content-center align-content-center"
                              style="display: block; margin: auto;">
                             <button type="submit" name="vote_button_{{ t.0.get_type_id }}"
-                                    class="btn send-vote-btn ms-1" style="width: max-content; min-width: 10em"
+                                    class="btn send-vote-btn ms-1" style="width: max-content; min-width: 8em"
                                     id="vote_button_{{ t.0.get_type_id }}"
                                     onclick="vote_button_{{ t.0.get_type_id }}_click()">
                                 ثبت رای بخش {{ t.0.get_type_display }}
@@ -266,10 +266,14 @@
                             <button type="submit" name="{{ t.0.get_type_id }}_judge_form"
                                     class="btn send-vote-btn ms-1"
                                     id="vote_button_{{ t.0.get_type_id }}_edit"
-                                    style="display: none; width: max-content; min-width: 10em"
+                                    style="display: none; width: max-content; min-width: 8em; font-size: small"
                                     onclick="vote_button_{{ t.0.get_type_id }}_edit_click()">
                                 ویرایش رای بخش {{ t.0.get_type_display }}
                             </button>
+                            <label style="text-align: center; color: red; display: none; font-size: small"
+                               class="mt-2" id="vote_{{ t.0.get_type_id }}_warning">
+                            توجه کنید که شما در بخش {{ t.0.get_type_display }} نظری ثبت نکرده‌اید.
+                        </label>
                         </div>
                     </div>
                 </div>
@@ -295,13 +299,13 @@
                 {% if verified and not voted %}
 
                     <label class="form-check-label" for="flexCheckDefault">
-                        <input class="form-check-input" type="checkbox" required>
-                        در همه بخش‌ها نظر خود را ثبت کرده‌ام و از آن مطمئن هستم.
+                        <input class="form-check-input ms-2" type="checkbox" required onchange="vote_valid_check()" id="vote_confirm">
+                        در همه بخش‌ها نظرم  را ثبت کرده و از انتخاب خود مطمئن هستم.
 
                     </label><br>
                 {% endif %}
                 <button type="submit" name="public_vote_form" class="col btn vote-btn w-100 ms-2 me-2"
-                        id="public_vote_form" onclick="vote_valid_check()">
+                        id="public_vote_form" >
                     {% if voted %}
                         شما نظر خود را ثبت کرده اید
                     {% else %}
@@ -364,6 +368,10 @@
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').style.backgroundColor = "#FFFFFF";
                 document.getElementById('vote_button_{{ t.0.get_type_id }}_edit').style.display = 'block';
 
+                if (document.getElementById('vote_confirm').checked){
+                    vote_valid_check()
+                }
+
 
             }
 
@@ -373,7 +381,7 @@
                     voteCards[i].style.pointerEvents = "auto";
                 }
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').disabled = false;
-                document.getElementById('vote_button_{{ t.0.get_type_id }}').innerHTML = 'ثبت رای';
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').innerHTML = 'ثبت رای بخش {{ t.0.get_type_display }}';
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').style.color = "black";
                 document.getElementById('vote_button_{{ t.0.get_type_id }}_edit').style.display = 'none';
 
@@ -414,5 +422,19 @@
                 }
             {% endfor %}
         {% endfor %}
+    </script>
+    {# vote verify #}
+    <script>
+        function vote_valid_check(e){
+            {% for t in topworks %}
+                if (document.getElementById('{{t.0.get_type_id}}_vote').value === 'None' && document.getElementById('vote_confirm').checked){
+                    document.getElementById('vote_{{ t.0.get_type_id }}_warning').style.display='block';
+                }else{
+                    document.getElementById('vote_{{ t.0.get_type_id }}_warning').style.display='none'
+                }
+            {% endfor %}
+
+
+        }
     </script>
 {% endblock %}
