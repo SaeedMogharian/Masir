@@ -20,6 +20,8 @@ CLUB_LEVELS = [
     {'day': 'سیزدهم', 'page': 'شش و نیم صفحه از قرآن کریم: سوره یونس، آیات 54 تا 109'},
     {'day': 'چهاردهم', 'page': 'هفت صفحه از قرآن کریم: سوره ابراهیم، از ابتدا تا انتها'},
     {'day': 'پانزدهم', 'page': 'هفت صفحه از قرآن کریم: سوره مائده، آیات 10 تا 45'},
+    {'day': 'شانزدهم', 'page': 'هفت صفحه از قرآن کریم: سوره مائده، آیات 10 تا 45'},
+    {'day': 'هفدهم', 'page': 'هفت صفحه از قرآن کریم: سوره مائده، آیات 10 تا 45'},
 ]
 
 ACTIVITY_TEMPLATE_TYPE_CHOICES = (
@@ -111,71 +113,6 @@ class School(models.Model):
     class Meta:
         verbose_name = 'مدرسه'
         verbose_name_plural = 'مدارس'
-
-
-class Vote(models.Model):
-    phone = models.CharField(default='9xxxxxxxxx', max_length=10, verbose_name='شماره تلفن')
-    vote_image_1 = models.BooleanField(default=False, verbose_name='رای به تصویر اول')
-    vote_image_2 = models.BooleanField(default=False, verbose_name='رای به تصویر دوم')
-    vote_image_3 = models.BooleanField(default=False, verbose_name='رای به تصویر سوم')
-    vote_image_4 = models.BooleanField(default=False, verbose_name='رای به تصویر چهارم')
-    vote_image_5 = models.BooleanField(default=False, verbose_name='رای به تصویر پنجم')
-    vote_music_1 = models.BooleanField(default=False, verbose_name='رای به صوت اول')
-    vote_music_2 = models.BooleanField(default=False, verbose_name='رای به صوت دوم')
-    vote_music_3 = models.BooleanField(default=False, verbose_name='رای به صوت سوم')
-    vote_music_4 = models.BooleanField(default=False, verbose_name='رای به صوت چهارم')
-    vote_music_5 = models.BooleanField(default=False, verbose_name='رای به صوت پنجم')
-    vote_video_1 = models.BooleanField(default=False, verbose_name='رای به فیلم اول')
-    vote_video_2 = models.BooleanField(default=False, verbose_name='رای به فیلم دوم')
-    vote_video_3 = models.BooleanField(default=False, verbose_name='رای به فیلم سوم')
-    vote_video_4 = models.BooleanField(default=False, verbose_name='رای به فیلم چهارم')
-    vote_video_5 = models.BooleanField(default=False, verbose_name='رای به فیلم پنجم')
-    code = models.IntegerField(default=0, verbose_name='کد تایید')
-    is_valid = models.BooleanField(default=False, verbose_name='معتبر')
-    masood_valid = models.BooleanField(default=False, verbose_name='نامعتبر معتبر شده بخاطر مسعود!')
-
-    def get_group(self):
-        user = User.objects.filter(username=self.phone).first()
-        if user:
-            if user.user_detail.groups.all().first():
-                return (user.user_detail.groups.all().first())
-            return ('بدون گروه')
-        return (None)
-
-    def get_user(self):
-        return (User_Detail.objects.filter(user__username=self.phone).first())
-
-    def __str__(self):
-        if self.is_valid:
-            return ('>> ' + self.phone)
-        return (self.phone)
-
-    class Meta:
-        verbose_name = 'رای'
-        verbose_name_plural = 'آرای کاربران'
-
-class Top_Work(models.Model):
-    number = models.IntegerField(default=1, verbose_name='شماره')
-
-    title = models.CharField(default='عنوان پیش‌فرض', max_length=100, verbose_name='عنوان')
-
-    link = models.URLField(null=True, blank=True, max_length=200, verbose_name='لینک اثر')
-   
-    type = models.CharField(default='1', max_length=1, choices=(
-    ('1', 'صوتی'),
-    ('2', 'ویدیویی'),
-    ('3', 'تصویری')
-), verbose_name='نوع اثر')
-
-
-    def __str__(self):
-        return str(self.type + '|' + self.title)
-
-    class Meta:
-        verbose_name = 'عنوان اثر'
-        verbose_name_plural = 'آثار برتر'
-
-
 
 
 class User_Detail(models.Model):
@@ -902,9 +839,8 @@ class Masir_Group_And_Achivement_Rel(models.Model):
     achivement = models.ForeignKey(Achivement, related_name='groups', on_delete=models.CASCADE, verbose_name='دستاورد')
     score = models.FloatField(default=0, verbose_name='امتیاز')
 
-
     def get_score(self):
-        return round(self.score,2)
+        return round(self.score, 2)
 
     def __str__(self):
         return (str(self.group) + ' | ' + str(self.achivement))
@@ -1005,7 +941,6 @@ class Activity(models.Model):
     score6 = models.IntegerField(default=0, verbose_name='معیار 6')
     score7 = models.IntegerField(default=0, verbose_name='معیار 7')
 
-
     date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
 
     cheated = models.BooleanField(default=False, verbose_name='رفتن به منزل بعد قبل از داوری')
@@ -1016,7 +951,8 @@ class Activity(models.Model):
                 "{:.2f}".format((self.score1 + self.score2 + self.score3 + self.score4 + self.score5) / 5)))
         else:
             return (float(
-                "{:.2f}".format((self.score1 + self.score2 + self.score3 + self.score4 + self.score5 + self.score6 + self.score7) / 7)))
+                "{:.2f}".format((
+                                        self.score1 + self.score2 + self.score3 + self.score4 + self.score5 + self.score6 + self.score7) / 7)))
 
     def __str__(self):
         return (str(self.topic) + ' | ' + str(self.template) + ' | ' + str(self.group))
@@ -1024,3 +960,55 @@ class Activity(models.Model):
     class Meta:
         verbose_name = 'فعالیت'
         verbose_name_plural = 'گروه ها - فعالیت‌ها'
+
+
+class Top_Work(models.Model):
+    number = models.IntegerField(default=1, verbose_name='شماره')
+
+    link = models.URLField(null=True, blank=True, max_length=200, verbose_name='لینک اثر')
+
+    type = models.CharField(default='1', max_length=1, choices=(
+        ('1', 'صوتی'),
+        ('2', 'ویدیویی'),
+        ('3', 'تصویری')
+    ), verbose_name='نوع اثر')
+
+    group = models.ForeignKey(Masir_Group, null=True, blank=True, related_name='topworks', on_delete=models.CASCADE,
+                              verbose_name='گروه')
+
+    def get_type_id(self):
+        if self.type == '1':
+            return 'audio'
+        if self.type == '2':
+            return 'video'
+        return 'picture'
+
+    def numberfromzero(self):
+        return self.number - 1
+
+    def get_type_name(self):
+        return self.get_type_display()[:-1]
+
+    def __str__(self):
+        return str(str(self.number) + '. ' + self.get_type_display())
+
+    class Meta:
+        verbose_name = 'عنوان اثر'
+        verbose_name_plural = 'آثار برتر'
+
+class Vote(models.Model):
+    phone = models.CharField(default='9xxxxxxxxx', max_length=10, verbose_name='شماره تلفن')
+    vote = models.ManyToManyField(Top_Work, related_name='vote', blank=True, verbose_name='رای ها')
+    code = models.IntegerField(default=0, verbose_name='کد تایید')
+    is_valid = models.BooleanField(default=False, verbose_name='تایید شده')
+    is_voted = models.BooleanField(default=False, verbose_name='رای داده')
+
+    def __str__(self):
+        if self.is_voted:
+            return 'رای داده . ' + str(self.phone)
+        if self.is_valid:
+            return 'تایید شده . ' + str(self.phone)
+        return str(self.phone)
+    class Meta:
+        verbose_name = 'رای'
+        verbose_name_plural = 'آرای کاربران'

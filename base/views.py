@@ -399,148 +399,256 @@ def landing_page(request):
 #   )
 
 def people_judge_page(request):
+    user = select_user(request.user)
+
     if request.method == 'POST':
-        if 'people_judge_form' in request.POST:
-            if Vote.objects.filter(phone=request.POST['people_judge_phone'], is_valid=True).first():
+        # if 'people_judge_form' in request.POST:
+        #
+        #     try:
+        #         if request.POST['people_judge_image_1'] == 'on':
+        #             v.vote_image_1 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_image_2'] == 'on':
+        #             v.vote_image_2 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_image_3'] == 'on':
+        #             v.vote_image_3 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_image_4'] == 'on':
+        #             v.vote_image_4 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_image_5'] == 'on':
+        #             v.vote_image_5 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_music_1'] == 'on':
+        #             v.vote_music_1 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_music_2'] == 'on':
+        #             v.vote_music_2 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_music_3'] == 'on':
+        #             v.vote_music_3 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_music_4'] == 'on':
+        #             v.vote_music_4 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_music_5'] == 'on':
+        #             v.vote_music_5 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_video_1'] == 'on':
+        #             v.vote_video_1 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_video_2'] == 'on':
+        #             v.vote_video_2 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_video_3'] == 'on':
+        #             v.vote_video_3 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_video_4'] == 'on':
+        #             v.vote_video_4 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #     try:
+        #         if request.POST['people_judge_video_5'] == 'on':
+        #             v.vote_video_5 = True
+        #             v.save()
+        #     except:
+        #         pass
+        #
+        #
+        #     return (
+        #         render(
+        #             request,
+        #             'verification_page.html',
+        #             {
+        #                 'phone': v.phone
+        #             }
+        #         )
+        #     )
+
+        if 'send_phone_vote_form' in request.POST:
+            if Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_voted=True).first():
                 return (
                     render(
                         request,
-                        'landing_page.html',
+                        'people_judge_page.html',
                         {
-                            'MESSAGE': 'شماره تلفن ' + request.POST['people_judge_phone'] + ' قبلا رای داده است.',
-                            'cities': City.objects.all().order_by('name'),
-                            'schools': School.objects.all().order_by('name'),
-                            'announcements': Announcement.objects.filter(is_public=True)
+                            'MESSAGE': 'شماره ' + request.POST['phone_vote'] + ' قبلا رای داده است.',
+                            'phone': None,
+                            'voted': False,
+                            'verified': False,
+                            'topworks': [list(Top_Work.objects.filter(type='1')),
+                                         list(Top_Work.objects.filter(type='2')),
+                                         list(Top_Work.objects.filter(type='3'))]
                         }
                     )
                 )
+            if Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_valid=True).first():
+                v = Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_valid=True).first()
+                if v.vote.all():
+                    for x in v.vote.all():
+                        v.vote.remove(x)
+                return (
+                    render(
+                        request,
+                        'people_judge_page.html',
+                        {
+                            'phone': v.phone,
+                            'verified': True,
+                            'voted': False,
+                            'topworks': [list(Top_Work.objects.filter(type='1')),
+                                         list(Top_Work.objects.filter(type='2')),
+                                         list(Top_Work.objects.filter(type='3'))]
+                        }
+                    )
+                )
+            if Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_valid=False).first():
+                Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_valid=False).delete()
 
-            v = Vote.objects.create(
-                phone=request.POST['people_judge_phone'],
-                code=randint(10000, 100000)
+            phone = str(request.POST['phone_vote']),
+            code = randint(10000, 100000)
+            Vote.objects.create(
+                phone=phone,
+                code=code,
             )
 
-            try:
-                if request.POST['people_judge_image_1'] == 'on':
-                    v.vote_image_1 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_image_2'] == 'on':
-                    v.vote_image_2 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_image_3'] == 'on':
-                    v.vote_image_3 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_image_4'] == 'on':
-                    v.vote_image_4 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_image_5'] == 'on':
-                    v.vote_image_5 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_music_1'] == 'on':
-                    v.vote_music_1 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_music_2'] == 'on':
-                    v.vote_music_2 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_music_3'] == 'on':
-                    v.vote_music_3 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_music_4'] == 'on':
-                    v.vote_music_4 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_music_5'] == 'on':
-                    v.vote_music_5 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_video_1'] == 'on':
-                    v.vote_video_1 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_video_2'] == 'on':
-                    v.vote_video_2 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_video_3'] == 'on':
-                    v.vote_video_3 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_video_4'] == 'on':
-                    v.vote_video_4 = True
-                    v.save()
-            except:
-                pass
-            try:
-                if request.POST['people_judge_video_5'] == 'on':
-                    v.vote_video_5 = True
-                    v.save()
-            except:
-                pass
-
-            SMS(UserApiKey, SecretKey, str(v.code), '0' + str(v.phone))
-
+            SMS(UserApiKey, SecretKey, code, '0' + request.POST['phone_vote'])
             return (
                 render(
                     request,
-                    'verification_page.html',
+                    'people_judge_page.html',
                     {
-                        'phone': v.phone
+                        'phone': str(phone),
+                        'verified': False,
+                        'voted': False,
+                        'topworks': [list(Top_Work.objects.filter(type='1')), list(Top_Work.objects.filter(type='2')),
+                                     list(Top_Work.objects.filter(type='3'))]
                     }
                 )
             )
+        if 'send_code_vote_form' in request.POST:
+            v = Vote.objects.filter(phone__contains=request.POST['phone_vote_code']).last()
 
-        if 'verification_form' in request.POST:
-            v = Vote.objects.filter(phone=request.POST['verification_phone']).last()
-            if not v:
+            if str(v.code) == request.POST['code_vote']:
+                v.is_valid = True
+                v.save()
+
                 return (
                     render(
                         request,
-                        'landing_page.html',
+                        'people_judge_page.html',
                         {
-                            'MESSAGE': 'در تایید رای شما مشکلی پیش آمده است. مجددا سعی کنید.',
-                            'cities': City.objects.all().order_by('name'),
-                            'schools': School.objects.all().order_by('name'),
-                            'announcements': Announcement.objects.filter(is_public=True)
+                            'verified': True,
+                            'voted': False,
+                            'phone': str(v.phone),
+                            'topworks': [list(Top_Work.objects.filter(type='1')),
+                                         list(Top_Work.objects.filter(type='2')),
+                                         list(Top_Work.objects.filter(type='3'))]
                         }
                     )
                 )
+            return (
+                render(
+                    request,
+                    'people_judge_page.html',
+                    {
+                        'MESSAGE': 'کد وارد شده صحیح نمی‌باشد',
+                        'verified': False,
+                        'voted': False,
+                        'phone': str(v.phone),
+                        'topworks': [list(Top_Work.objects.filter(type='1')), list(Top_Work.objects.filter(type='2')),
+                                     list(Top_Work.objects.filter(type='3'))]
+                    }
+                )
+            )
+        if 'public_vote_form' in request.POST:
+            v = Vote.objects.filter(phone__contains=request.POST['phone_vote_final']).last()
 
-            if str(v.code) == request.POST['verification_code']:
-                v.is_valid = True
+            if v.is_valid:
+                audio = request.POST['audio_vote']
+                video = request.POST['video_vote']
+                picture = request.POST['picture_vote']
+
+                if audio == video == picture == 'None':
+                    return (
+                        render(
+                            request,
+                            'people_judge_page.html',
+                            {
+                                'MESSAGE': 'شما در هیچ بخشی رای ثبت شده ندارید. لطفا دوباره تلاش کنید.',
+                                'verified': True,
+                                'voted': False,
+                                'phone': str(v.phone),
+                                'topworks': [list(Top_Work.objects.filter(type='1')),
+                                             list(Top_Work.objects.filter(type='2')),
+                                             list(Top_Work.objects.filter(type='3'))]
+                            }
+                        )
+                    )
+
+                i = 1
+                for x in str(audio):
+                    if x == '1':
+                        t = Top_Work.objects.get(number=int(i), type='1')
+                        v.vote.add(t)
+                    i += 1
+
+
+                i = 1
+                for x in str(video):
+                    if x == '1':
+                        t = Top_Work.objects.get(number=int(i), type='2')
+                        v.vote.add(t)
+                    i += 1
+
+                i = 1
+                for x in str(picture):
+                    if x == '1':
+                        t = Top_Work.objects.get(number=int(i), type='3')
+                        v.vote.add(t)
+                    i += 1
+
+                v.is_voted = True
                 v.save()
 
                 return (
@@ -548,10 +656,8 @@ def people_judge_page(request):
                         request,
                         'landing_page.html',
                         {
-                            'MESSAGE': 'رای شما با موفقیت ثبت شد.',
-                            'cities': City.objects.all().order_by('name'),
-                            'schools': School.objects.all().order_by('name'),
-                            'announcements': Announcement.objects.filter(is_public=True)
+                            'MESSAGE': 'نظر شما با موفقیت ثبت شد.',
+                            'announcements': Announcement.objects.filter(is_public=True),
                         }
                     )
                 )
@@ -559,21 +665,55 @@ def people_judge_page(request):
             return (
                 render(
                     request,
-                    'landing_page.html',
+                    'people_judge_page.html',
                     {
-                        'MESSAGE': 'کد وارد شده صحیح نیست.',
-                        'cities': City.objects.all().order_by('name'),
-                        'schools': School.objects.all().order_by('name'),
-                        'announcements': Announcement.objects.filter(is_public=True)
+                        'MESSAGE': 'مشکلی در ثبت نظر شما پیش آمده است. مجددا تلاش کنید.',
+                        'voted': False,
+                        'verified': False,
+                        'phone': str(v.phone),
+                        'topworks': [list(Top_Work.objects.filter(type='1')),
+                                     list(Top_Work.objects.filter(type='2')),
+                                     list(Top_Work.objects.filter(type='3'))]
                     }
                 )
             )
+
+    if user:
+        phone = user.user
+        code = user.code
+        voted = False
+        if not Vote.objects.filter(phone__contains=phone).first():
+            Vote.objects.create(
+                phone=phone,
+                code=code,
+            )
+        if Vote.objects.filter(phone__contains=phone, is_voted=True):
+            voted = True
+
+        return (
+            render(
+                request,
+                'people_judge_page.html',
+                {
+                    'voted': voted,
+                    'verified': True,
+                    'phone': phone,
+                    'topworks': [list(Top_Work.objects.filter(type='1')), list(Top_Work.objects.filter(type='2')),
+                                 list(Top_Work.objects.filter(type='3'))]
+                }
+            )
+        )
 
     return (
         render(
             request,
             'people_judge_page.html',
             {
+                'voted': False,
+                'verified': False,
+                'phone': None,
+                'topworks': [list(Top_Work.objects.filter(type='1')), list(Top_Work.objects.filter(type='2')),
+                             list(Top_Work.objects.filter(type='3'))]
             }
         )
     )
@@ -1254,7 +1394,8 @@ def home_page(request):
                 g.ach_lng(x)
 
                 main_score = 2 if x.topic.main else 1
-                text = 'احسنت به شما! به ازای انجام ماموریت تحول، نشان «تحول خواه» رو به دست آوردید و ' + str(round(120 * x.get_score()/5)) + ' واحد امتیاز حیات به گروه شما اضافه شد.'
+                text = 'احسنت به شما! به ازای انجام ماموریت تحول، نشان «تحول خواه» رو به دست آوردید و ' + str(
+                    round(120 * x.get_score() / 5)) + ' واحد امتیاز حیات به گروه شما اضافه شد.'
 
                 Report.objects.create(
                     group=x.group,
@@ -1262,7 +1403,6 @@ def home_page(request):
                 )
 
             return (redirect('home_page_link'))
-        
 
         if 'longterm_activities_deny_show_scores_admin_form' in request.POST:
             for x in Activity.objects.filter(state='5').filter(topic__manzel=None):
@@ -1522,7 +1662,8 @@ def judge_page(request):
             {
                 'activities': Activity.objects.filter(state='1').exclude(topic__manzel=None).order_by('-id'),
                 'user_is_admin': user_is_admin,
-                'activities_for_admin': Activity.objects.exclude(state='1').exclude(topic__manzel=None).order_by('state', '-id'),
+                'activities_for_admin': Activity.objects.exclude(state='1').exclude(topic__manzel=None).order_by(
+                    'state', '-id'),
             }
         )
     )
@@ -1597,7 +1738,7 @@ def longterm_judge_page(request):
             request,
             'longterm_judge_page_admin.html',
             {
-                'longterms': Activity.objects.filter(topic__manzel=None).order_by('state','-id'),
+                'longterms': Activity.objects.filter(topic__manzel=None).order_by('state', '-id'),
             }
         )
     )

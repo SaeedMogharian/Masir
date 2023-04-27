@@ -2,352 +2,335 @@
 {% load static %}
 
 {% block about_masir_block %}
-  {% url 'landing_page_link' %}
+    {% url 'landing_page_link' %}
 {% endblock %}
 
 
 {% block mainblock %}
-  <div class="container-fluid w-100 text-center " style="overflow: hidden; position: relative;
-  margin-top: 6vh;
-  height: 40vh;
-  width: 100vw;
-  background-image: url('{% static "images/landing_page_background_wc.jpg" %}');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  overflow-x: hidden;">
-    <div class="position-absolute top-50 start-50 translate-middle w-100 text-center py-5" style="font-weight: 700; background-color: #ffffffc0;">
-        <form action="{% url 'people_judge_page_link' %}" method="post" class="container col-lg-6 col-md-8 col-12" onsubmit="people_judge_form_click()">
-          {% csrf_token %}
-          <a href="#activities" class="btn masir-btn w-100" style="background-color: #64c1ff;">
-            مشاهده آثار برتر
-          </a>
-          
-          {%comment%}
-          <div class="row justify-content-center mt-3 mb-1 mx-0">
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_image_1" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                تصویر شماره 1
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_image_2" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                تصویر شماره 2
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_image_3" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                تصویر شماره 3
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_image_4" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                تصویر شماره 4
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_image_5" class="form-check-input image_checkbox" type="checkbox" onchange="images_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                تصویر شماره 5
-              </label>
-            </div>
-          </div>
-          <div class="row justify-content-center mb-1 mx-0">
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_music_1" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                صوت شماره 1
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_music_2" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                صوت شماره 2
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_music_3" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                صوت شماره 3
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_music_4" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                صوت شماره 4
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_music_5" class="form-check-input music_checkbox" type="checkbox" onchange="music_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                صوت شماره 5
-              </label>
-            </div>
-          </div>
-          <div class="row justify-content-center mb-1 mx-0 ">
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_video_1" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                فیلم شماره 1
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_video_2" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                فیلم شماره 2
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_video_3" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                فیلم شماره 3
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_video_4" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                فیلم شماره 4
-              </label>
-            </div>
-            <div class="col" style="min-width: max-content;">
-              <input disabled name="people_judge_video_5" class="form-check-input video_checkbox" type="checkbox" onchange="video_vote_check()" required>
-              <label class="form-check-label" for="flexCheckDefault">
-                فیلم شماره 5
-              </label>
-            </div>
-          </div>
-          {%endcomment%}
-          <div class="row">
-            <label style="text-align: right; display: block" class="mt-3">شماره همراه</label>
-            <input style="border: 1px solid #0A958E; border-radius: 5px;" name="people_judge_phone" type="text" class="col form-control text-center ms-2" pattern="9[0-9]{9}" placeholder="۹۱۲۳۴۵۶۷۸۹" autocomplete="off" required dir="ltr">
-            <button type="submit" name="people_judge_form" class="col btn vote-btn w-100 ms-2 me-2" id="people_judge_form">
-              دریافت کد تایید پیامکی
-            </button>
-            <button class="col btn vote-btn w-100 ms-2 me-2" style=" display: none;" id="people_judge_form_loading">
-              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-              در حال ارسال...
-            </button>
-            <label style="text-align: right; display: block; font-size: smaller" class="mt-0">لطفا ابتدا با هدف کنترل تعداد آرا دریافتی شماره همراه خود را وارد نمایید </label>
-          </div>
-        </form>
-        <form action="{% url 'people_judge_page_link' %}" method="post" class="container col-lg-6 col-md-8 col-12" onsubmit="people_judge_form_click()">
-          {% csrf_token %}
-          <div class="row">
-            <label style="text-align: right; display: block" class="mt-3">کد تایید</label>
-            <input style="border: 1px solid #0A958E; border-radius: 5px;" name="people_judge_phone" type="text" class="col form-control text-center ms-2" pattern="9[0-9]{9}" placeholder="۱۲۳۴۵" autocomplete="off" required dir="ltr">
-            <button type="submit" name="people_judge_form" class="col btn vote-btn w-100 ms-2 me-2" id="people_judge_form">
-              ارسال کد
-            </button>
-            <button class="col btn vote-btn w-100 ms-2 me-2" style=" display: none;" id="people_judge_form_loading">
-              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-              در حال بررسی...
-            </button>
-          </div>
-        </form>
-      </div>
-        
-  </div>
+    <div class="container-fluid w-100 text-center " style="overflow: hidden; position: relative;
+            margin-top: 6vh;
+            height: 40vh;
+            width: 100vw;
+            background-image: url('{% static "images/landing_page_background_wc.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow-x: hidden;">
+        <div class="position-absolute top-50 start-50 translate-middle w-100 text-center py-5"
+             style="font-weight: 700; background-color: #ffffffc0;">
+            <form action="{% url 'people_judge_page_link' %}" method="post" class="container col-lg-6 col-md-8 col-12"
+                  onsubmit="send_phone_vote_form_click()">
+                {% csrf_token %}
+                <div class="w-100 text-center masir-title-1 mt-0">
+                    نظرسنجی مردمی آثار برتر
+                </div>
 
- 
-  <div class="container-fluid w-100 text-center "  style="overflow: hidden">
-      <div class="row justify-content-center mb-5 pb-5">
-        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12" >
-          <p class="masir-title-1">آثار صوتی</p>
-          <div id="audiobest" class="carousel slide" data-bs-ride="true" style=''>
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="2" aria-label="Slide 3"></button>
-              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="3" aria-label="Slide 4"></button>
-              <button type="button" data-bs-target="#audiobest" data-bs-slide-to="4" aria-label="Slide 5"></button>
-            </div>
-            <div class="carousel-inner" style="">
-              <div class="carousel-item active">
-                <div>صوت شماره۱</div>
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/dZ57C/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-              <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/MsqWy/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-              <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/JdK85/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-              <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/Zh3MT/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-              <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/KiLUB/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#audiobest" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">قبلی</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#audiobest" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">بعدی</span>
-            </button>
-          </div>
-          <div class="mt-3 ms-lg-3 ms-4" style="display: block; text-align: right; font-weight: 700">رای خود را به کدام آثار تصویری می‌دهید؟
-            <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.75 0C0.785 0 0 0.785 0 1.75V6.75C0 7.715 0.785 8.5 1.75 8.5H3.5V8.25C3.5 6.7335 4.7335 5.5 6.25 5.5C7.18 5.5 8.002 5.96483 8.5 6.67383V1.75C8.5 0.785 7.715 0 6.75 0H1.75ZM11.25 0C10.2925 0 9.5 0.792523 9.5 1.75V6.75C9.5 7.70748 10.2925 8.5 11.25 8.5H16.25C17.2075 8.5 18 7.70748 18 6.75V1.75C18 0.792523 17.2075 0 16.25 0H11.25ZM11.25 1.5H16.25C16.3975 1.5 16.5 1.60248 16.5 1.75V6.75C16.5 6.89752 16.3975 7 16.25 7H11.25C11.1025 7 11 6.89752 11 6.75V1.75C11 1.60248 11.1025 1.5 11.25 1.5ZM6.24902 2C6.4409 2 6.6328 2.07323 6.7793 2.21973C7.0723 2.51223 7.0723 2.98777 6.7793 3.28027L4.2793 5.78027C4.1338 5.92677 3.942 6 3.75 6C3.558 6 3.36623 5.92677 3.21973 5.78027L1.71973 4.28027C1.42673 3.98777 1.42673 3.51223 1.71973 3.21973C2.01273 2.92673 2.48727 2.92673 2.78027 3.21973L3.74902 4.18945L5.71875 2.21973C5.86525 2.07323 6.05715 2 6.24902 2ZM6.25098 6.5C5.28598 6.5 4.5 7.285 4.5 8.25V12.9033C3 14.9753 3 15.627 3 15.877C3 16.915 3.72477 18.1844 5.15527 19.6494C5.69077 20.1984 6.42223 20.5 7.17773 20.5C7.33923 20.5 7.50156 20.486 7.66406 20.458L10.6484 19.9414C11.7064 19.7574 12.6065 19.0205 12.998 18.0195C13.4605 16.8365 13.7564 16.024 13.8779 15.6025C14.1139 14.7805 14.0057 13.9066 13.5732 13.1416C13.1082 12.3206 12.3112 11.7075 11.3867 11.46C11.3662 11.4545 9.99148 11.2081 8.00098 10.8076V8.25C8.00098 7.285 7.21598 6.5 6.25098 6.5Z" fill="black"/>
-              </svg>
-          </div>
-          <div class="container">
-            <div class="vote-card"></div>
-          </div>
-        </div>
 
-        {% comment %} <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12" >
-          <p class="masir-title-1">آثار برتر ویدیویی</p>
-          <div id="videobest" class="carousel slide" data-bs-ride="true" style=''>
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#videobest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#videobest" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#videobest" data-bs-slide-to="2" aria-label="Slide 3"></button>
-              <button type="button" data-bs-target="#videobest" data-bs-slide-to="3" aria-label="Slide 4"></button>
-              <button type="button" data-bs-target="#videobest" data-bs-slide-to="4" aria-label="Slide 5"></button>
-            </div>
-            <div class="carousel-inner" style="">
-              <div class="carousel-item active">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/fAYV7/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-              <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/Dhc7q/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-              <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/Mv094/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-              <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/WLZBK/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-              <div class="carousel-item">
-                <iframe src="https://www.aparat.com/video/video/embed/videohash/3Xui9/vt/frame"   allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" class="crs-item"></iframe>
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#videobest" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">قبلی</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#videobest" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">بعدی</span>
-            </button>
-          </div>
-        
+                <div class="row">
+                    <label style="text-align: right; display: block" class="mt-3">شماره همراه</label>
+                    <input style="border: 1px solid #0A958E; border-radius: 5px;" name="phone_vote" type="text"
+                           class="col form-control text-center ms-2" pattern="9[0-9]{9}" placeholder="9123456789"
+                           autocomplete="off" required dir="ltr" {% if phone %}value="{{ phone }}" disabled{% endif %}
+                           maxlength="10" minlength="10">
+                    {% if not verified %}
+                        <button type="submit" name="send_phone_vote_form" class="col btn vote-btn w-100 ms-2 me-2"
+                                id="send_phone_vote_form" {% if phone %}disabled{% endif %}>
+                            {% if phone %}
+                                کد ارسال شد
+                            {% else %}
+                                دریافت کد تایید پیامکی
+                            {% endif %}
+                        </button>
+                    {% else %}
+                        <button type="submit" class="col btn vote-btn w-100 ms-2 me-2"
+                                style="background-color: #FFFFFF;border: 1px solid #14FF00;border-radius: 4px; color: #14FF00; pointer-events: none">
+                            کد تایید شد
+                            <svg width="38" height="29" viewBox="0 0 38 29" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M34.5859 0.585938L12 23.1719L3.41406 14.5859L0.585938 17.4141L12 28.8281L37.4141 3.41406L34.5859 0.585938Z"
+                                      fill="#14FF00"></path>
+                            </svg>
+                        </button>
+                    {% endif %}
+                    <button class="col btn vote-btn w-100 ms-2 me-2" style=" display: none;"
+                            id="send_phone_vote_form_loading">
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        در حال ارسال...
+                    </button>
+                    {% if voted %}
+                        <label style="text-align: center; display: block; font-weight: 700"
+                               class="mt-2">
+                            رای شماره {{ phone }} ثبت شده است و مجاز به ثبت دوباره رای نمی‌باشد.
+                            <br>
+                            در صورت عضویت ابتدا باید از حساب کاربری خود خارج شده و سپس اقدام به ثبت نظر با شماره دیگر
+                            کنید.
+                        </label>
+                    {% elif verified %}
+                        <label style="text-align: center; display: block; font-weight: 700"
+                               class="mt-2">
+                            شماره {{ phone }} تایید شده است.
+                            می‌توانید آرای خود را ثبت کنید.
+                        </label>
+                    {% elif phone %}
+                        <label style="text-align: center; display: block; font-weight: 700"
+                               class="mt-2">
+                            کد دریافتی را وارد کنید
+                        </label>
+                    {% else %}
+                        <label style="text-align: right; display: block; font-size: smaller" class="mt-0">لطفا ابتدا با
+                            هدف
+                            کنترل تعداد آرا دریافتی شماره همراه خود را وارد نمایید.
+                            (از صفحه کلید انگلیسی استفاده کنید)
+                        </label>
+
+                    {% endif %}
+
+
+                </div>
+
+                {% if MESSAGE %}
+                    <div class="w-100 text-center mt-5 mb-0"
+                         style="font-weight: 700; color: red;">
+                        {{ MESSAGE|safe }}
+                    </div>
+                {% endif %}
+            </form>
+            {% if not verified %}
+                <form action="{% url 'people_judge_page_link' %}" method="post"
+                      class="container col-lg-6 col-md-8 col-12"
+                      onsubmit="send_code_vote_form_click()"
+                      {% if not phone %}style="pointer-events: none; opacity: 0.4" {% endif %}>
+                    {% csrf_token %}
+                    <div class="row">
+                        <label style="text-align: right; display: block" class="mt-3">کد تایید</label>
+                        <input name="phone_vote_code" id="phone_vote_code" type="text" style="display: none"
+                               class="form-control masir-form-control text-center"
+                               autocomplete="off" value="{{ phone }}">
+
+                        <input style="border: 1px solid #0A958E; border-radius: 5px;"
+                               name="code_vote" type="text"
+                               class="col form-control text-center ms-2" placeholder="12345"
+                               autocomplete="off" required dir="ltr" maxlength="5" minlength="5">
+
+                        <button type="submit" name="send_code_vote_form" class="col btn vote-btn w-100 ms-2 me-2"
+                                id="send_code_vote_form">
+                            تایید کد
+                        </button>
+                        <button class="col btn vote-btn w-100 ms-2 me-2" style=" display: none;"
+                                id="send_code_vote_form_loading">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            در حال بررسی...
+                        </button>
+                    </div>
+                </form>
+            {% endif %}
         </div>
-        
-        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12" >
-          <p class="masir-title-1">آثار برتر تصویری</p>
-          <div id="picturebest" class="carousel slide" data-bs-ride="true" style=''>
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#picturebest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#picturebest" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#picturebest" data-bs-slide-to="2" aria-label="Slide 3"></button>
-              <button type="button" data-bs-target="#picturebest" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            </div>
-            <div class="carousel-inner" style="">
-              <div class="carousel-item active">
-                <img src="https://s2.uupload.ir/files/1_plz5.jpg"   class="crs-item">
-              </div>
-              <div class="carousel-item">
-                <img src="https://s2.uupload.ir/files/4_778.jpg"   class="crs-item">
-              </div>
-              <div class="carousel-item">
-                <img src="https://s2.uupload.ir/files/3_ctxi.jpg"   class="crs-item">
-              </div>
-              <div class="carousel-item">
-                <img src="https://s2.uupload.ir/files/5_slvu.jpg"  class="crs-item">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#picturebest" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">قبلی</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#picturebest" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">بعدی</span>
-            </button>
-          </div>
-        
-        </div> {% endcomment %}
-        
-      </div>
+    </div>
+
+    <div class="container-fluid w-100 text-center" style="overflow: hidden">
+        <div class="row justify-content-center mb-5 pb-5">
+            {% for t in topworks %}
+                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 mb-5">
+                    <p class="masir-title-1">آثار {{ t.0.get_type_display }}</p>
+                    {% comment %} کروسل {% endcomment %}
+                    <div id="{{ t.0.get_type_id }}best" class="carousel slide" data-bs-ride="true"
+                         data-bs-interval="false">
+                        <div class="carousel-indicators">
+                            {% for x in t %}
+                                <button type="button" data-bs-target="#{{ x.get_type_id }}best"
+                                        data-bs-slide-to="{{ x.numberfromzero }}"
+                                        {% if x.numberfromzero == 0 %}class="active" aria-current="true" {% endif %}
+                                        aria-label="Slide {{ x.number }}"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            {% for x in t %}
+                                <div class="carousel-item {% if x.numberfromzero == 0 %} active {% endif %}">
+                                    <div>{{ x.get_type_name }} شماره {{ x.number }}</div>
+                                    {% if x.type == '3' %}
+                                        <img src="{{ x.link }}" class="crs-item" alt="">
+                                    {% else %}
+                                        <iframe src="{{ x.link }}" allowFullScreen="true" webkitallowfullscreen="true"
+                                                mozallowfullscreen="true" class="crs-item"></iframe>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#{{ t.0.get_type_id }}best"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">قبلی</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#{{ t.0.get_type_id }}best"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">بعدی</span>
+                        </button>
+                    </div>
+                    {% comment %} انتخاب {% endcomment %}
+                    <div class="mt-3 ms-lg-3 ms-4" style="display: block; text-align: right; font-weight: 700">رای خود
+                        را به کدام آثار {{ t.0.get_type_display }} می‌دهید؟
+                        <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.75 0C0.785 0 0 0.785 0 1.75V6.75C0 7.715 0.785 8.5 1.75 8.5H3.5V8.25C3.5 6.7335 4.7335 5.5 6.25 5.5C7.18 5.5 8.002 5.96483 8.5 6.67383V1.75C8.5 0.785 7.715 0 6.75 0H1.75ZM11.25 0C10.2925 0 9.5 0.792523 9.5 1.75V6.75C9.5 7.70748 10.2925 8.5 11.25 8.5H16.25C17.2075 8.5 18 7.70748 18 6.75V1.75C18 0.792523 17.2075 0 16.25 0H11.25ZM11.25 1.5H16.25C16.3975 1.5 16.5 1.60248 16.5 1.75V6.75C16.5 6.89752 16.3975 7 16.25 7H11.25C11.1025 7 11 6.89752 11 6.75V1.75C11 1.60248 11.1025 1.5 11.25 1.5ZM6.24902 2C6.4409 2 6.6328 2.07323 6.7793 2.21973C7.0723 2.51223 7.0723 2.98777 6.7793 3.28027L4.2793 5.78027C4.1338 5.92677 3.942 6 3.75 6C3.558 6 3.36623 5.92677 3.21973 5.78027L1.71973 4.28027C1.42673 3.98777 1.42673 3.51223 1.71973 3.21973C2.01273 2.92673 2.48727 2.92673 2.78027 3.21973L3.74902 4.18945L5.71875 2.21973C5.86525 2.07323 6.05715 2 6.24902 2ZM6.25098 6.5C5.28598 6.5 4.5 7.285 4.5 8.25V12.9033C3 14.9753 3 15.627 3 15.877C3 16.915 3.72477 18.1844 5.15527 19.6494C5.69077 20.1984 6.42223 20.5 7.17773 20.5C7.33923 20.5 7.50156 20.486 7.66406 20.458L10.6484 19.9414C11.7064 19.7574 12.6065 19.0205 12.998 18.0195C13.4605 16.8365 13.7564 16.024 13.8779 15.6025C14.1139 14.7805 14.0057 13.9066 13.5732 13.1416C13.1082 12.3206 12.3112 11.7075 11.3867 11.46C11.3662 11.4545 9.99148 11.2081 8.00098 10.8076V8.25C8.00098 7.285 7.21598 6.5 6.25098 6.5Z"
+                                  fill="black"></path>
+                        </svg>
+                    </div>
+                    <div class="row container-fluid d-flex" {% if voted %}
+                         style="pointer-events: none; opacity: 0.4;"{% endif %}>
+                        {# رای ها#}
+                        {% for x in t %}
+                            <div class="vote-card {{ x.get_type_id }}_card"
+                                 id="vote_card_{{ x.get_type_id }}_{{ x.number }}">
+                                {% if x.type == '3' %}
+                                    <svg width="36" height="28" viewBox="0 0 36 28" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 0C2.08714 0 0.5 1.58714 0.5 3.5V24.5C0.5 26.4129 2.08714 28 4 28H32C33.9129 28 35.5 26.4129 35.5 24.5V3.5C35.5 1.58714 33.9129 0 32 0H4ZM4 3.5H32V24.5H4V3.5ZM22.375 12.25L16.25 19.25L11.875 14.875L7.11035 21H28.9375L22.375 12.25Z"
+                                              fill="#B84B12"></path>
+                                    </svg>
+                                {% elif x.type == '2' %}
+                                    <svg width="36" height="32" viewBox="0 0 36 32" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 0.25C2.08714 0.25 0.5 1.83714 0.5 3.75V28.25C0.5 30.1629 2.08714 31.75 4 31.75H32C33.9129 31.75 35.5 30.1629 35.5 28.25V3.75C35.5 1.83714 33.9129 0.25 32 0.25H4ZM4 3.75H32V28.25H4V3.75ZM12.75 9V23L25 16L12.75 9Z"
+                                              fill="#B84B12"></path>
+                                    </svg>
+                                {% else %}
+                                    <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18.25 0.25L7.75 10.75H4.25C2.31625 10.75 0.75 12.3162 0.75 14.25V17.75C0.75 19.6838 2.31625 21.25 4.25 21.25H7.75L18.25 31.75V0.25ZM28.1484 6.10156L25.6738 8.57617C29.7897 12.692 29.7893 19.3099 25.6738 23.4238L28.1484 25.8984C33.602 20.4469 33.6016 11.5547 28.1484 6.10156ZM14.75 8.69922V23.3008L10.2246 18.7754L9.19922 17.75H7.75H4.25V14.25H7.75H9.19922L10.2246 13.2246L14.75 8.69922ZM23.1992 11.0508L20.7246 13.5254C22.1073 14.908 22.1073 17.092 20.7246 18.4746L23.1992 20.9526C25.9186 18.2333 25.9186 13.7701 23.1992 11.0508Z"
+                                              fill="#B84B12"></path>
+                                    </svg>
+
+                                {% endif %}
+                                <label class="form-check-label mt-1" for="flexCheckDefault" style="font-size: small;">
+                                    {{ x.get_type_name }} {{ x.number }}
+                                    <input name="vote_box_{{ x.get_type_id }}_{{ x.number }}"
+                                           id="vote_box_{{ x.get_type_id }}_{{ x.number }}"
+                                           class="form-check-input {{ x.get_type_id }}_box"
+                                           type="checkbox"
+                                           onchange="vote_box_{{ x.get_type_id }}_{{ x.number }}_click()">
+                                </label>
+                            </div>
+                        {% endfor %}
+
+                        {# دکمه سند#}
+                        <div class="row container-fluid d-flex w-100" style="display: block; margin: auto;">
+                            <button type="submit" name="vote_button_{{ t.0.get_type_id }}"
+                                    class="col-5 btn send-vote-btn ms-2 me-2"
+                                    id="vote_button_{{ t.0.get_type_id }}"
+                                    onclick="vote_button_{{ t.0.get_type_id }}_click()">
+                                ثبت رای
+                            </button>
+                            <button type="submit" name="{{ t.0.get_type_id }}_judge_form"
+                                    class="col-5 btn send-vote-btn ms-2 me-2"
+                                    id="vote_button_{{ t.0.get_type_id }}_edit" style="display: none"
+                                    onclick="vote_button_{{ t.0.get_type_id }}_edit_click()">
+                                ویرایش رای
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {# پایان #}
+            <form action="{% url 'people_judge_page_link' %}" method="post"
+                  class="container-fluid row col-lg-4 col-md-6 col-sm-10 col-12 mt-5 mb-5"
+                  onsubmit="public_vote_form_click()" {% if not verified or voted %}disabled
+                  style="pointer-events: none; opacity: 0.4;" {% endif %}>
+                {% csrf_token %}
+                {# مشخصات #}
+                <input name="phone_vote_final" id="phone_vote_final" type="text" style="display: none"
+                       class="form-control masir-form-control text-center"
+                       autocomplete="off" value="{{ phone }}">
+                {# نتیجه ها #}
+                {% for t in topworks %}
+                    <input name="{{ t.0.get_type_id }}_vote" id="{{ t.0.get_type_id }}_vote" type="text"
+                           style="display: none"
+                           class="form-control masir-form-control text-center vote_final"
+                           autocomplete="off" value="None">
+                {% endfor %}
+                {# دکمه ثبت نهایی #}
+                {% if verified and not voted %}
+
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" required>
+                        در همه بخش‌های مدنظرم رای خود را انتخاب و ثبت کرده ام و از آرای خود مطمئن هستم.
+
+                    </label><br>
+                {% endif %}
+                <button type="submit" name="public_vote_form" class="col btn vote-btn w-100 ms-2 me-2"
+                        id="public_vote_form" onclick="vote_valid_check()">
+                    {% if voted %}
+                        شما نظر خود را ثبت کرده اید
+                    {% else %}
+                        پایان نظرسنجی
+                    {% endif %}
+                </button>
+                <button class="col btn vote-btn w-100 ms-2 me-2" style=" display: none;"
+                        id="public_vote_form_loading">
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    در حال ثبت...
+                </button>
+            </form>
+        </div>
     </div>
 
 
-    
-{% endblock mainblock%}
+{% endblock mainblock %}
 
 {% block scriptblock %}
-  <script>
-    function people_judge_form_click(){
-      document.getElementById('people_judge_form').style.display = 'none';
-      document.getElementById('people_judge_form_loading').style.display = 'block';
-    }
+    {{ block.super }}
+    <script>
+        function send_phone_vote_form_click() {
+            document.getElementById('send_phone_vote_form').style.display = 'none';
+            document.getElementById('send_phone_vote_form_loading').style.display = 'block';
+        }
 
-    function images_vote_check() {
-      var checkBoxes = document.getElementsByClassName('image_checkbox');
-      var isChecked = false;
-      for (var i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked) {
-          isChecked = true;
+        function send_code_vote_form_click() {
+            document.getElementById('send_code_vote_form').style.display = 'none';
+            document.getElementById('send_code_vote_form_loading').style.display = 'block';
         }
-      }
-      if (isChecked) {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = false;
-        }
-      }
-      else {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = true;
-        }
-      }
-    }
 
-    function music_vote_check() {
-      var checkBoxes = document.getElementsByClassName('music_checkbox');
-      var isChecked = false;
-      for (var i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked) {
-          isChecked = true;
+        function public_vote_form_click() {
+            document.getElementById('public_vote_form').style.display = 'none';
+            document.getElementById('public_vote_form_loading').style.display = 'block';
         }
-      }
-      if (isChecked) {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = false;
-        }
-      }
-      else {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = true;
-        }
-      }
-    }
-    
-    function video_vote_check() {
-      var checkBoxes = document.getElementsByClassName('video_checkbox');
-      var isChecked = false;
-      for (var i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked) {
-          isChecked = true;
-        }
-      }
-      if (isChecked) {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = false;
-        }
-      }
-      else {
-        for (var i = 0; i < checkBoxes.length; i++){
-          checkBoxes[i].required = true;
-        }
-      }
-    }
-  </script>
+
+
+    </script>
+    <script>
+        {% for t in topworks %}
+            function vote_button_{{ t.0.get_type_id }}_click() {
+                var checkBoxes = document.getElementsByClassName('{{t.0.get_type_id}}_box');
+                var voteCards = document.getElementsByClassName('{{t.0.get_type_id}}_card');
+                var isChecked = '';
+                for (var i = 0; i < checkBoxes.length; i++) {
+                    voteCards[i].style.pointerEvents = "none";
+                    if (checkBoxes[i].checked) {
+                        isChecked += '1';
+                    } else {
+                        isChecked += '0';
+                    }
+                }
+                document.getElementById('{{t.0.get_type_id}}_vote').value = isChecked;
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').disabled = true;
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').innerHTML = 'رای شما ثبت شد'
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').style.color = "#14FF00"
+                document.getElementById('vote_button_{{ t.0.get_type_id }}_edit').style.display = 'block';
+
+
+            }
+
+            function vote_button_{{ t.0.get_type_id }}_edit_click() {
+                var voteCards = document.getElementsByClassName('{{t.0.get_type_id}}_card');
+                for (var i = 0; i < voteCards.length; i++) {
+                    voteCards[i].style.pointerEvents = "auto";
+                }
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').disabled = false;
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').innerHTML = 'ثبت رای'
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').style.color = "black"
+                document.getElementById('vote_button_{{ t.0.get_type_id }}_edit').style.display = 'none';
+
+            }
+        {% endfor %}
+    </script>
+
 {% endblock %}
