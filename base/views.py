@@ -400,7 +400,9 @@ def landing_page(request):
 
 def people_judge_page(request):
     user = select_user(request.user)
-
+    topworks = [list(Top_Work.objects.filter(type='1')),
+                list(Top_Work.objects.filter(type='2')),
+                list(Top_Work.objects.filter(type='3'))]
     if request.method == 'POST':
         # if 'people_judge_form' in request.POST:
         #
@@ -517,9 +519,7 @@ def people_judge_page(request):
                             'phone': str(request.POST['phone_vote']),
                             'voted': True,
                             'verified': True,
-                            'topworks': [list(Top_Work.objects.filter(type='1')),
-                                         list(Top_Work.objects.filter(type='2')),
-                                         list(Top_Work.objects.filter(type='3'))]
+                            'topworks': topworks
                         }
                     )
                 )
@@ -536,9 +536,7 @@ def people_judge_page(request):
                             'phone': v.phone,
                             'verified': True,
                             'voted': False,
-                            'topworks': [list(Top_Work.objects.filter(type='1')),
-                                         list(Top_Work.objects.filter(type='2')),
-                                         list(Top_Work.objects.filter(type='3'))]
+                            'topworks': topworks
                         }
                     )
                 )
@@ -561,8 +559,7 @@ def people_judge_page(request):
                         'phone': str(phone),
                         'verified': False,
                         'voted': False,
-                        'topworks': [list(Top_Work.objects.filter(type='1')), list(Top_Work.objects.filter(type='2')),
-                                     list(Top_Work.objects.filter(type='3'))]
+                        'topworks': topworks
                     }
                 )
             )
@@ -581,9 +578,7 @@ def people_judge_page(request):
                             'verified': True,
                             'voted': False,
                             'phone': str(v.phone),
-                            'topworks': [list(Top_Work.objects.filter(type='1')),
-                                         list(Top_Work.objects.filter(type='2')),
-                                         list(Top_Work.objects.filter(type='3'))]
+                            'topworks': topworks
                         }
                     )
                 )
@@ -596,8 +591,7 @@ def people_judge_page(request):
                         'verified': False,
                         'voted': False,
                         'phone': str(v.phone),
-                        'topworks': [list(Top_Work.objects.filter(type='1')), list(Top_Work.objects.filter(type='2')),
-                                     list(Top_Work.objects.filter(type='3'))]
+                        'topworks': topworks
                     }
                 )
             )
@@ -619,9 +613,7 @@ def people_judge_page(request):
                                 'verified': True,
                                 'voted': False,
                                 'phone': str(v.phone),
-                                'topworks': [list(Top_Work.objects.filter(type='1')),
-                                             list(Top_Work.objects.filter(type='2')),
-                                             list(Top_Work.objects.filter(type='3'))]
+                                'topworks': topworks
                             }
                         )
                     )
@@ -632,7 +624,6 @@ def people_judge_page(request):
                         t = Top_Work.objects.get(number=int(i), type='1')
                         v.vote.add(t)
                     i += 1
-
 
                 i = 1
                 for x in str(video):
@@ -671,9 +662,7 @@ def people_judge_page(request):
                         'voted': False,
                         'verified': False,
                         'phone': str(v.phone),
-                        'topworks': [list(Top_Work.objects.filter(type='1')),
-                                     list(Top_Work.objects.filter(type='2')),
-                                     list(Top_Work.objects.filter(type='3'))]
+                        'topworks': topworks
                     }
                 )
             )
@@ -699,8 +688,7 @@ def people_judge_page(request):
                     'voted': voted,
                     'verified': True,
                     'phone': phone,
-                    'topworks': [list(Top_Work.objects.filter(type='1')), list(Top_Work.objects.filter(type='2')),
-                                 list(Top_Work.objects.filter(type='3'))]
+                    'topworks': topworks
                 }
             )
         )
@@ -713,8 +701,7 @@ def people_judge_page(request):
                 'voted': False,
                 'verified': False,
                 'phone': None,
-                'topworks': [list(Top_Work.objects.filter(type='1')), list(Top_Work.objects.filter(type='2')),
-                             list(Top_Work.objects.filter(type='3'))]
+                'topworks': topworks
             }
         )
     )

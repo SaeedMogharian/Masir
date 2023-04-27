@@ -7,15 +7,7 @@
 
 
 {% block mainblock %}
-    <div class="container-fluid w-100 text-center " style="overflow: hidden; position: relative;
-            margin-top: 6vh;
-            height: 40vh;
-            width: 100vw;
-            background-image: url('{% static "images/landing_page_background_wc.jpg" %}');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            overflow-x: hidden;">
+    <div class="container-fluid w-100 text-center poll-heading">
         <div class="position-absolute top-50 start-50 translate-middle w-100 text-center py-5"
              style="font-weight: 700; background-color: #ffffffc0;">
             <form action="{% url 'people_judge_page_link' %}" method="post" class="container col-lg-6 col-md-8 col-12"
@@ -98,13 +90,13 @@
                             کد دریافتی را وارد کنید
                         </label>
                     {% else %}
-                        <label style="text-align: right; display: block; font-size: smaller" class="mt-0">لطفا ابتدا با
-                            هدف
-                            کنترل تعداد آراء دریافتی شماره همراه خود را وارد نمایید.
+                        <label style="text-align: right; display: block; font-size: smaller" class="mt-0">
+                            برای شرکت در نظرسنجی، شماره همراه خود را وارد کنید.
                             (از صفحه کلید انگلیسی استفاده کنید)
                             <br>
-                            در صورت داشتن حساب کاربری می‌توانید
-                            <a data-bs-toggle="modal" href="#login_modal" role="button" style="font-size: small">وارد شوید</a>
+                            در صورتی که حساب کاربری دارید می‌توانید
+                            <a data-bs-toggle="modal" href="#login_modal" role="button" style="font-size: small">وارد
+                                شوید</a>
                             .
                         </label>
 
@@ -153,14 +145,15 @@
     </div>
 
     <div class="container-fluid w-100 text-center" style="overflow: hidden">
-        <div class="row justify-content-center mb-5 pb-5">
+        <div class="row justify-content-center pb-5">
             {% for t in topworks %}
-                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 mb-5">
+                <div class="col-xl-4 col-lg-6 col-md-10 col-sm-12 col-12">
                     <p class="masir-title-1">آثار {{ t.0.get_type_display }}</p>
                     {% comment %} کروسل {% endcomment %}
                     <div id="{{ t.0.get_type_id }}best" class="carousel slide" data-bs-ride="true"
-                         data-bs-interval="false">
-                        <div class="carousel-indicators">
+                         data-bs-interval="5000">
+                        <div class="carousel-indicators"
+                             style="background-color: gray;  margin-left: 0; margin-right: 0;">
                             {% for x in t %}
                                 <button type="button" data-bs-target="#{{ x.get_type_id }}best"
                                         data-bs-slide-to="{{ x.numberfromzero }}"
@@ -171,13 +164,21 @@
                         <div class="carousel-inner">
                             {% for x in t %}
                                 <div class="carousel-item {% if x.numberfromzero == 0 %} active {% endif %}">
-                                    <div>{{ x.get_type_name }} شماره {{ x.number }}</div>
+
                                     {% if x.type == '3' %}
                                         <img src="{{ x.link }}" class="crs-item" alt="">
                                     {% else %}
                                         <iframe src="{{ x.link }}" allowFullScreen="true" webkitallowfullscreen="true"
                                                 mozallowfullscreen="true" class="crs-item"></iframe>
                                     {% endif %}
+                                    <div style="background-color: gray;" class="mt-1">{{ x.get_type_name }}
+                                        شماره {{ x.number }}
+                                        {% if x.group %}
+                                            <br>
+                                            از گروه
+                                            {{ x.group }}
+                                        {% endif %}
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>
@@ -200,12 +201,12 @@
                                   fill="black"></path>
                         </svg>
                     </div>
-                    <div class="row container-fluid d-flex" style="display: block; margin: auto;{% if voted %}
-                         pointer-events: none; opacity: 0.4;{% endif %}">
+                    <div class="row container-fluid d-flex align-content-center justify-content-center" style="display: block; margin: auto;{% if voted %}
+                        pointer-events: none; opacity: 0.4;{% endif %}">
                         {# کارد ها#}
                         {% for x in t %}
                             <div class="vote-card {{ x.get_type_id }}_card"
-                                 id="vote_card_{{ x.get_type_id }}_{{ x.number }}"
+                                 id="vote_card_{{ x.get_type_id }}_{{ x.number }}" {% if x.number == 1 %} style="margin-right: 0" {% endif %}
                                  onclick="vote_card_{{ x.get_type_id }}_{{ x.number }}_click(event)">
                                 {% if x.type == '3' %}
                                     <svg width="36" height="28" viewBox="0 0 36 28" fill="none"
@@ -248,17 +249,17 @@
                                     <input name="vote_box_{{ x.get_type_id }}_{{ x.number }}"
                                            id="vote_box_{{ x.get_type_id }}_{{ x.number }}"
                                            class="form-check-input {{ x.get_type_id }}_box"
-                                           type="checkbox"
-                                           onchange="vote_box_{{ x.get_type_id }}_{{ x.number }}_click()">
+                                           type="checkbox"">
                                 </label>
                             </div>
                         {% endfor %}
 
                         {# دکمه سند#}
-                        <div class="row container-fluid d-flex w-100 justify-content-center align-content-center"
-                             style="display: block; margin: auto;">
+
+                        <div class="container-fluid d-flex w-100 justify-content-center align-content-center"
+                             style="display: block; margin: auto;{% if not phone %} pointer-events: none; opacity: 0.4;{% endif %}"  >
                             <button type="submit" name="vote_button_{{ t.0.get_type_id }}"
-                                    class="btn send-vote-btn ms-1" style="width: max-content; min-width: 8em"
+                                    class="btn send-vote-btn ms-1" style="width: max-content;"
                                     id="vote_button_{{ t.0.get_type_id }}"
                                     onclick="vote_button_{{ t.0.get_type_id }}_click()">
                                 ثبت رای بخش {{ t.0.get_type_display }}
@@ -266,59 +267,64 @@
                             <button type="submit" name="{{ t.0.get_type_id }}_judge_form"
                                     class="btn send-vote-btn ms-1"
                                     id="vote_button_{{ t.0.get_type_id }}_edit"
-                                    style="display: none; width: max-content; min-width: 8em; font-size: small"
+                                    style="display: none; width: max-content; font-size: x-small"
                                     onclick="vote_button_{{ t.0.get_type_id }}_edit_click()">
                                 ویرایش رای بخش {{ t.0.get_type_display }}
                             </button>
-                            <label style="text-align: center; color: red; display: none; font-size: small"
-                               class="mt-2" id="vote_{{ t.0.get_type_id }}_warning">
-                            توجه کنید که شما در بخش {{ t.0.get_type_display }} نظری ثبت نکرده‌اید.
-                        </label>
+
                         </div>
+
                     </div>
                 </div>
             {% endfor %}
-            {# پایان #}
-            <form action="{% url 'people_judge_page_link' %}" method="post"
-                  class="container-fluid row col-lg-4 col-md-6 col-sm-10 col-12 mt-5 mb-5"
-                  onsubmit="public_vote_form_click()" {% if not verified or voted %}disabled
-                  style="pointer-events: none; opacity: 0.4;" {% endif %}>
-                {% csrf_token %}
-                {# مشخصات #}
-                <input name="phone_vote_final" id="phone_vote_final" type="text" style="display: none"
-                       class="form-control masir-form-control text-center"
-                       autocomplete="off" value="{{ phone }}">
-                {# نتیجه ها #}
-                {% for t in topworks %}
-                    <input name="{{ t.0.get_type_id }}_vote" id="{{ t.0.get_type_id }}_vote" type="text"
-                           style="display: none"
-                           class="form-control masir-form-control text-center vote_final"
-                           autocomplete="off" value="None">
-                {% endfor %}
-                {# دکمه ثبت نهایی #}
-                {% if verified and not voted %}
 
-                    <label class="form-check-label" for="flexCheckDefault">
-                        <input class="form-check-input ms-2" type="checkbox" required onchange="vote_valid_check()" id="vote_confirm">
-                        در همه بخش‌ها نظرم  را ثبت کرده و از انتخاب خود مطمئن هستم.
-
-                    </label><br>
-                {% endif %}
-                <button type="submit" name="public_vote_form" class="col btn vote-btn w-100 ms-2 me-2"
-                        id="public_vote_form" >
-                    {% if voted %}
-                        شما نظر خود را ثبت کرده اید
-                    {% else %}
-                        پایان نظرسنجی
-                    {% endif %}
-                </button>
-                <button class="col btn vote-btn w-100 ms-2 me-2" style=" display: none;"
-                        id="public_vote_form_loading">
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                    در حال ثبت...
-                </button>
-            </form>
         </div>
+        {# پایان #}
+        <form action="{% url 'people_judge_page_link' %}" method="post"
+              class="container-fluid row col-xl-6 col-lg-8 col-md-10 col-sm-12 col-12"
+              onsubmit="public_vote_form_click()"
+              style="display: block; margin: auto auto 5em auto;{% if not verified or voted %}
+                  pointer-events: none; opacity: 0.4; {% endif %}">
+            {% csrf_token %}
+            {# مشخصات #}
+            <input name="phone_vote_final" id="phone_vote_final" type="text" style="display: none"
+                   class="form-control masir-form-control text-center"
+                   autocomplete="off" value="{{ phone }}">
+            {# نتیجه ها #}
+            {% for t in topworks %}
+                <input name="{{ t.0.get_type_id }}_vote" id="{{ t.0.get_type_id }}_vote" type="text"
+                       style="display: none"
+                       class="form-control masir-form-control text-center vote_final"
+                       autocomplete="off" value="None">
+            {% endfor %}
+
+            <label style="text-align: center; color: #B84B12; display: none; font-size: small"
+                   class="mt-2" id="vote_warning">
+                هشدار
+            </label>
+            {# دکمه ثبت نهایی #}
+            {% if verified and not voted %}
+                <label class="form-check-label" for="flexCheckDefault">
+                    <input class="form-check-input ms-2" type="checkbox" required onchange="vote_valid_check()"
+                           id="vote_confirm">
+                    به همه آثار مورد نظرم رای داده و از انتخاب خود مطمئن هستم.
+
+                </label><br>
+            {% endif %}
+            <button type="submit" name="public_vote_form" class="col btn vote-btn w-100"
+                    id="public_vote_form">
+                {% if voted %}
+                    شما نظر خود را ثبت کرده اید
+                {% else %}
+                    پایان نظرسنجی
+                {% endif %}
+            </button>
+            <button class="col btn vote-btn w-100" style=" display: none;"
+                    id="public_vote_form_loading">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                در حال ثبت...
+            </button>
+        </form>
     </div>
 
 
@@ -364,13 +370,12 @@
                 document.getElementById('{{t.0.get_type_id}}_vote').value = isChecked;
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').disabled = true;
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').innerHTML = 'رای شما ثبت شد';
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').style.fontSize = 'small';
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').style.color = "green";
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').style.backgroundColor = "#FFFFFF";
                 document.getElementById('vote_button_{{ t.0.get_type_id }}_edit').style.display = 'block';
 
-                if (document.getElementById('vote_confirm').checked){
-                    vote_valid_check()
-                }
+                vote_valid_check()
 
 
             }
@@ -382,6 +387,7 @@
                 }
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').disabled = false;
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').innerHTML = 'ثبت رای بخش {{ t.0.get_type_display }}';
+                document.getElementById('vote_button_{{ t.0.get_type_id }}').style.fontSize = 'medium';
                 document.getElementById('vote_button_{{ t.0.get_type_id }}').style.color = "black";
                 document.getElementById('vote_button_{{ t.0.get_type_id }}_edit').style.display = 'none';
 
@@ -402,10 +408,14 @@
                     const actSVG = document.getElementById('{{ x.get_type_id }}_{{ x.number }}_svg_act')
                     actSVG.style.margin = 'auto'
 
-                    if (target.tagName === 'LABEL' || target.tagName === 'SVG' || target.tagName === 'PATH' || target === voteCard) {
-                        if (target !== checkBox) {
-                            checkBox.checked = !(checkBox.checked);
-                        }
+                    if ((target.tagName === 'LABEL' || target.tagName === actSVG || target.tagName === dactSVG || target.tagName === 'SVG' || target.tagName === 'PATH' || target === voteCard || target) && target !== checkBox) {
+                        checkBox.checked = !(checkBox.checked);
+                        const crsE = document.getElementById('{{ x.get_type_id }}best');
+                        const crsI = new bootstrap.Carousel(crsE, {
+                            setInterval: false
+                        });
+                        crsI.to({{ x.numberfromzero }});
+                        crsI.pause();
                     }
                     if (checkBox.checked) {
                         voteCard.style.backgroundColor = "#B84B12";
@@ -425,16 +435,26 @@
     </script>
     {# vote verify #}
     <script>
-        function vote_valid_check(e){
-            {% for t in topworks %}
-                if (document.getElementById('{{t.0.get_type_id}}_vote').value === 'None' && document.getElementById('vote_confirm').checked){
-                    document.getElementById('vote_{{ t.0.get_type_id }}_warning').style.display='block';
-                }else{
-                    document.getElementById('vote_{{ t.0.get_type_id }}_warning').style.display='none'
+        function vote_valid_check(e) {
+            if (document.getElementById('vote_confirm').checked) {
+                var warn = '';
+                {% for t in topworks %}
+                    if (document.getElementById('{{t.0.get_type_id}}_vote').value === 'None' || document.getElementById('{{t.0.get_type_id}}_vote').value === '{% for x in t %}0{% endfor %}') {
+                        if (warn !== '') {
+                            warn += ' و ';
+                        }
+                        warn += "{{t.0.get_type_display}}";
+                    }
+                {% endfor %}
+                if (warn !== '') {
+                    document.getElementById('vote_warning').innerHTML = 'توجه کنید که شما در بخش «' + warn + '» نظری ثبت نکرده‌اید.';
+                    document.getElementById('vote_warning').style.display = 'block';
+                } else {
+                    document.getElementById('vote_warning').style.display = 'none';
                 }
-            {% endfor %}
-
-
+            } else {
+                document.getElementById('vote_warning').style.display = 'none';
+            }
         }
     </script>
 {% endblock %}
