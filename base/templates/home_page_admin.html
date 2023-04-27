@@ -46,7 +46,7 @@
         }
 
 
-        td{
+        td {
             display: block;
         }
     </style>
@@ -108,6 +108,12 @@
                 </div>
                 <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5"
                      style="height: max-content;">
+                    <a class="masir-circle-button-2 masir-jelly" title="در مسیر چه گذشت؟"
+                   style="background-image: url('{% static 'images/navbar_map.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                   href="{% url 'on_masir_link' %}"></a>
+                    <a class="masir-circle-button-2 masir-jelly" title="نظرسنجی مردمی"
+                       style="background-image: url('{% static 'images/navbar_poll.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                       href="{% url 'people_judge_page_link' %}"></a>
                     <a class="masir-circle-button-2 masir-jelly" title="صفحه اصلی"
                        style="background-image: url('{% static 'images/navbar_mountain_home.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                        href="{% url 'home_page_link' %}"></a>

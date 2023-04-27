@@ -995,22 +995,12 @@ class Vote(models.Model):
     is_valid = models.BooleanField(default=False, verbose_name='تایید شده')
     is_voted = models.BooleanField(default=False, verbose_name='رای داده')
 
-    def get_group(self):
-        user = User.objects.filter(username=self.phone).first()
-        if user:
-            if user.user_detail.groups.all().first():
-                return (user.user_detail.groups.all().first())
-            return ('بدون گروه')
-        return (None)
-
-    def get_user(self):
-        return (User_Detail.objects.filter(user__username=self.phone).first())
-
     def __str__(self):
+        if self.is_voted:
+            return 'رای داده . ' + str(self.phone)
         if self.is_valid:
-            return ('>> ' + self.phone)
-        return (self.phone)
-
+            return 'تایید شده . ' + str(self.phone)
+        return str(self.phone)
     class Meta:
         verbose_name = 'رای'
         verbose_name_plural = 'آرای کاربران'
