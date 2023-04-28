@@ -49,6 +49,14 @@
         td {
             display: block;
         }
+
+        .sta-card{
+            display: block;
+            margin: 2em auto 0 auto;
+            padding: 0.5em 1.5em 1.5em 1.5em;
+            border-radius: 2rem;
+        }
+
     </style>
 
     <title>مسابقه مسیر</title>
@@ -87,6 +95,9 @@
                         <a class="masir-circle-button-2 masir-jelly" title="تابلو امتیازات"
                            style="background-image: url('{% static 'images/navbar_leaderboard.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                            href="{% url 'leaderboard_page_link' %}"></a>
+                        <a class="masir-circle-button-2 masir-jelly" title="آمار نظرسنجی"
+                           style="background-image: url('{% static 'images/navbar_poll_statistics.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                           href="{% url 'poll_page_link' %}"></a>
                     {% endif %}
 
                     {% comment %}

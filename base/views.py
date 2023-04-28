@@ -1868,7 +1868,7 @@ def poll_statistics_page(request):
     return (
         render(
             request,
-            'poll_statistics_page_admin.html',
+            'poll_page_admin.html',
             {
                 'votes_all': votes_all,
                 'topworks' : topworks

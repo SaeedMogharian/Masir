@@ -11,58 +11,68 @@
         <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100"
              style="max-height: 80vh; overflow: scroll;">
             <div class="w-75 mt-5 mx-auto">
-                <div class="mb-2 pb-2" style="background-color: #ffcbfb;">
-                    <div class="p-2 d-flex justify-content-between" style="background-color: #eeeeee;">
-                    <span>
-                    آمار آرای مردمی
+                <div class="mb-2 pb-2 sta-card" style="background-color: #ffcbfb;">
+                    <div class="p-2 d-flex justify-content-center" style="background-color: #eeeeee; padding: 2em; border-radius: 1rem">
+                    <span style=" font-weight:700; font-size: large">
+                    آمار نظرسنجی مردمی
                     </span>
 
                     </div>
 
                     <div class="row p-2" style="text-align: justify;">
-                        <div class="col-md-6">
+                        <div class="col-12 text-center mt-1">
                         <span style="font-weight: 700;">
                           تعداد پیامک‌های ارسال شده:
                         </span>
                             {{ votes_all.all }}
                             پیامک
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-12 text-center mt-1">
                         <span style="font-weight: 700;">
                           تعداد شماره‌های تایید شده:
                         </span>
                             {{ votes_all.valid }}
                             شماره
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-12 text-center mt-1">
                         <span style="font-weight: 700;">
                           تعداد رای‌های معتبر:
                         </span>
                             {{ votes_all.voted }}
                             رای
                         </div>
-
-                        {% for t in topworks %}
-                            <div class="w-100 mt-2" style="font-weight: 700;">
-                                آرای آثار {{ t.0.get_type_display }}:
-
-                                {% for x in t %}
-                                    <div class="mt-1 d-flex justify-content-between">
-                                        <span> {{ t.0.get_type_name }} شماره </span>
-                                        <span> {{ votes.image_1.0 }} رای </span>
-                                    </div>
-                                    <div class="progress" style="height: 2px;">
-                                        <div class="progress-bar bg-dark" role="progressbar"
-                                             aria-valuenow="{{ votes.image_1.1 }}" aria-valuemin="0" aria-valuemax="100"
-                                             style="width: {{ votes.image_1.1 }}%;"></div>
-                                    </div>
-                                {% endfor %}
-
-                            </div>
-                        {% endfor %}
                     </div>
 
                 </div>
+            <div class="col-12 d-lg-flex flex">
+                {% for t in topworks %}
+                        <div class="sta-card col-lg-4 col-12 mx-lg-1 mx-auto" style="background-color: #31d8ff;">
+                        <div class="w-100 mt-2 text-center" style="font-weight: 700;">
+                         آثار {{ t.0.get_type_display }}
+
+                        {% for x in t %}
+                            <div class="mt-1 d-flex justify-content-between">
+                                <div>
+                                    <span style="font-weight: 700">{{ x.get_type_name }} شماره {{ x.number }}</span><br>
+                                    <span> اثر گروه {{ x.group }}</span>
+                                </div>
+                                <span> {{ x.get_vote_count }} رای </span>
+
+                            </div>
+                            <div class="progress" style="height: 10px;">
+                                <div class="progress-bar bg-dark" role="progressbar"
+                                     aria-valuenow="{{ x.get_vote_count }}" aria-valuemin="0"
+                                     aria-valuemax="{{ x.max_vote_count }}"
+                                     style="width: {{ x.vote_bar }}%;"></div>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                    </div>
+
+                {% endfor %}
+            </div>
 
             </div>
         </div>

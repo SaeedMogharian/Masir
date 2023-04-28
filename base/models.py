@@ -990,7 +990,22 @@ class Top_Work(models.Model):
         return self.get_type_display()[:-1]
 
     def get_vote_count(self):
-        return len(self.vote)
+        c=0
+        for v in Vote.objects.filter(is_voted=True):
+            if self in v.selections.all():
+                c+=1
+        return c
+    def max_vote_count(self):
+        m=0
+        for x in Top_Work.objects.filter(type=self.type):
+            c=0
+            for v in Vote.objects.filter(is_voted=True):
+                if x in v.selections.all():
+                    c+=1
+            if c>m: m=c
+        return m
+    def vote_bar(self):
+        return self.get_vote_count()/self.max_vote_count()*100
 
     def __str__(self):
         return str(str(self.number) + '. ' + self.get_type_display())
