@@ -171,7 +171,7 @@
         .poll-heading{
             overflow: hidden;
             position: relative;
-            margin-top: 6vh;
+            margin-top: 10vh;
             height: 40vh;
             width: 100vw;
             background-image: url('{% static "images/landing_page_background_wc.jpg" %}');
@@ -179,9 +179,24 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 800px) {
             .poll-heading{
                 height: 50vh;
+            }
+        }
+        @media screen and (max-height: 800px) {
+            .poll-heading{
+                height: 60vh;
+            }
+        }
+        @media screen and (max-height: 600px) {
+            .poll-heading{
+                height: 100vh;
+            }
+        }
+        @media screen and (max-height: 400px) {
+            .poll-heading{
+                height: 110vh;
             }
         }
     </style>
@@ -196,13 +211,14 @@
             <div class="position-absolute top-50 top-nav translate-middle-y d-flex ms-lg-5 ms-md-2 ms-1"
                  style="height: max-content;">
                 {% if user.user_detail %}
-                    <a class="masir-circle-button-1 masir-jelly" title="خروج"
+                    <a class="masir-circle-button-1 masir-jelly" title="خروج از حساب کاربری"
                        style="background-image: url('{% static 'images/navbar_logout.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                        href="{% url 'logout_link' %}"></a>
+                {% else %}
+                    <a class="masir-circle-button-2 masir-jelly" title="ورود یا ثبت نام فردی"
+                       style="background-image: url('{% static 'images/navbar_login.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                       data-bs-toggle="modal" href="#login_modal" role="button"></a>
                 {% endif %}
-                <a class="masir-circle-button-2 masir-jelly" title="ورود یا ثبت نام فردی"
-                   style="background-image: url('{% static 'images/navbar_login.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                   data-bs-toggle="modal" href="#login_modal" role="button"></a>
                 <a class="disabled masir-circle-button-2 masir-jelly" title="ثبت نام گروهی"
                    style="background-image: url('{% static 'images/navbar_group_register.png' %}'); margin: auto max(0.15vw, 0.15vh); display: none;"
                    data-bs-toggle="modal" {#  role="button" href="#group_register_modal"#}></a>
@@ -296,14 +312,14 @@
                                                {% if user.user_detail %}value="{{ user }}" disabled{% endif %}>
 
                                         <div class="mt-3"></div>
-                                        <button type="submit" name="login_form" class="btn masir-btn w-100"
+                                        <button type="submit" name="login_form" class="btn masir-btn w-100 {% if user.user_detail %}disabled{% endif %}"
                                                 style="background-color: #69ff64;">
                                             ورود
                                         </button>
 
                                         <div class="mt-3"></div>
-                                        <a href="{% url 'forgot_password_page_link' %}" class="btn masir-btn w-100"
-                                           style="background-color: #ff6486;">
+                                        <a href=" {% if user.user_detail %} # {% else %}{% url 'forgot_password_page_link' %}{% endif %}" class="{% if user.user_detail %} disabled {% endif %} btn masir-btn w-100"
+                                           style="background-color: #ff6486;" >
                                             فراموشی رمز عبور
                                         </a>
 
@@ -638,7 +654,7 @@
                         <div class="accordion-body">
                             <iframe src="https://www.aparat.com/video/video/embed/videohash/lEFR2/vt/frame"
                                     allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
-                                    style="width: 100%; height: 40vh; margin: a"></iframe>
+                                    style="width: 100%; height: 40vh; margin: auto"></iframe>
                             <p class="masir-paragraph-1">
                                 همانقدر که آسمان شب در کویر آرامش بخش و زیبا است، تشنگی و نبود
                                 <b><b>"آب حیات"</b></b>

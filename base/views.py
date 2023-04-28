@@ -528,6 +528,7 @@ def people_judge_page(request):
                 if v.vote.all():
                     for x in v.vote.all():
                         v.vote.remove(x)
+                        v.save()
                 return (
                     render(
                         request,
@@ -543,12 +544,13 @@ def people_judge_page(request):
             if Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_valid=False).first():
                 Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_valid=False).delete()
 
-            phone = str(request.POST['phone_vote']),
+            phone = int(str(request.POST['phone_vote'])),
             code = randint(10000, 100000)
-            Vote.objects.create(
-                phone=phone,
+            v = Vote.objects.create(
+                phone=str(phone)[1:-2],
                 code=code,
             )
+            v.save()
 
             SMS(UserApiKey, SecretKey, code, '0' + request.POST['phone_vote'])
             return (
@@ -556,7 +558,7 @@ def people_judge_page(request):
                     request,
                     'people_judge_page.html',
                     {
-                        'phone': str(phone),
+                        'phone': str(v.phone),
                         'verified': False,
                         'voted': False,
                         'topworks': topworks
@@ -641,13 +643,15 @@ def people_judge_page(request):
 
                 v.is_voted = True
                 v.save()
-
+                link = "https://masir1402.ir/public_poll"
+                text = '<a href = ' + link + '>' + 'بازگشت به صفحه نظرسنجی' + '</a>'
                 return (
                     render(
                         request,
                         'landing_page.html',
                         {
-                            'MESSAGE': 'نظر شما با موفقیت ثبت شد.',
+                            'MESSAGE': 'نظر شما با موفقیت ثبت شد.'
+                                       + '<br>' + text,
                             'announcements': Announcement.objects.filter(is_public=True),
                         }
                     )
@@ -667,9 +671,9 @@ def people_judge_page(request):
                 )
             )
 
-    if user:
+    if (type(user) == User and user.is_active) or (type(user)==User_Detail):
         phone = user.user
-        code = user.code
+        code = user.code if type(user) == User_Detail else user.user_detail.code
         voted = False
         if not Vote.objects.filter(phone__contains=phone).first():
             Vote.objects.create(
@@ -677,7 +681,7 @@ def people_judge_page(request):
                 code=code,
                 is_valid=True,
             )
-        if Vote.objects.filter(phone__contains=phone, is_voted=True):
+        elif Vote.objects.filter(phone__contains=phone, is_voted=True):
             voted = True
 
         return (
