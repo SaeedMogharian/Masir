@@ -704,6 +704,7 @@ def home_page(request):
         )
 
     if request.method == 'POST':
+        '''
         # ثبت باشگاه
         if 'club_form' in request.POST:
             c = 0
@@ -909,7 +910,8 @@ def home_page(request):
                         x.save()
 
                 return (redirect('home_page_link'))
-
+        
+        '''
         # اکتشاف
         if 'discover_form' in request.POST:
             for x in user.groups.all().first().get_manzel().activity_topics.all():
@@ -1071,7 +1073,7 @@ def home_page(request):
                 text='شما با موفقیت منزل بانگ رحیل را پشت سر گذاشتید'
             )
             return redirect('home_page_link')
-
+        '''
         # ثبت فعالیت
         for x in Activity_Topic.objects.all():
             if 'activity_' + str(x.id) + '_form' in request.POST:
@@ -1143,6 +1145,7 @@ def home_page(request):
                         text='ماموریت بلند مدت شما با موفقیت ثبت شد'
                     )
                 return (redirect('home_page_link'))
+        '''
 
         if 'university_show_scores_admin_form' in request.POST:
             for x in Masir_Group_And_Exams_Rel.objects.filter(show_public=False):
