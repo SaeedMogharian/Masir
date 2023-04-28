@@ -38,6 +38,7 @@ urlpatterns = [
 
     path('home/statistics/', statistics_page, name='statistics_page_link'),
     path('home/leaderboard/', leaderboard_page, name='leaderboard_page_link'),
+    path('home/poll_statistics/', poll_statistics_page, name='poll_statistics_page_link'),
 
     path('home/club/', club_page, name='club_page_link'),
     path('home/club/<int:id>/', club_detail_page, name='club_detail_page_link'),

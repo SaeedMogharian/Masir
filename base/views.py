@@ -671,7 +671,7 @@ def people_judge_page(request):
                 )
             )
 
-    if (type(user) == User and user.is_active) or (type(user)==User_Detail):
+    if (type(user) == User and user.is_active) or (type(user) == User_Detail):
         phone = user.user
         code = user.code if type(user) == User_Detail else user.user_detail.code
         voted = False
@@ -1799,9 +1799,7 @@ def statistics_page(request):
     user = select_user(request.user)
     if not user:
         return (redirect('landing_page_link'))
-    if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-        return (redirect('home_page_link'))
-    if not user.accessibility.statistics_page:
+    if not user.user.is_staff:
         return (redirect('home_page_link'))
 
     groups_all = [len(Masir_Group.objects.all()), 0, 0, 0]
@@ -1833,47 +1831,47 @@ def statistics_page(request):
                                                                                                       'topic__manzel__number').annotate(
         count=Count('id', distinct=True)).order_by('-count')
 
-    '''
-    votes = {
-        'all': len(Vote.objects.all()),
-        'all_valid': len(Vote.objects.filter(is_valid=True)),
-        'image_1': [len(Vote.objects.filter(is_valid=True, vote_image_1=True)), 50],
-        'image_2': [len(Vote.objects.filter(is_valid=True, vote_image_2=True)), 40],
-        'image_3': [len(Vote.objects.filter(is_valid=True, vote_image_3=True)), 10],
-        'image_4': [len(Vote.objects.filter(is_valid=True, vote_image_4=True)), 90],
-        'image_5': [len(Vote.objects.filter(is_valid=True, vote_image_5=True)), 30],
-        'music_1': [len(Vote.objects.filter(is_valid=True, vote_music_1=True)), 50],
-        'music_2': [len(Vote.objects.filter(is_valid=True, vote_music_2=True)), 50],
-        'music_3': [len(Vote.objects.filter(is_valid=True, vote_music_3=True)), 50],
-        'music_4': [len(Vote.objects.filter(is_valid=True, vote_music_4=True)), 50],
-        'music_5': [len(Vote.objects.filter(is_valid=True, vote_music_5=True)), 50],
-        'video_1': [len(Vote.objects.filter(is_valid=True, vote_video_1=True)), 50],
-        'video_2': [len(Vote.objects.filter(is_valid=True, vote_video_2=True)), 50],
-        'video_3': [len(Vote.objects.filter(is_valid=True, vote_video_3=True)), 50],
-        'video_4': [len(Vote.objects.filter(is_valid=True, vote_video_4=True)), 50],
-        'video_5': [len(Vote.objects.filter(is_valid=True, vote_video_5=True)), 50]
-    }
-    for x in votes:
-        try:
-            votes[x][1] = (votes[x][0] / votes['all_valid']) * 100
-        except:
-            pass
-    '''
     return (
         render(
             request,
             'statistics_page_admin.html',
             {
-                # 'votes': votes,
                 'groups_all': groups_all,
                 'charities_all': charities_all,
                 'exams_all': exams_all,
                 'club_files_all': club_files_all,
-                # 'activitiy_templates_all': activitiy_templates_all,
                 'groups': Masir_Group.objects.all().order_by('supergroup'),
                 'activity_topic_all': activity_topic_all,
                 'discover_all': discover_all,
                 'events_all': events_all,
+            }
+        )
+    )
+
+
+def poll_statistics_page(request):
+    user = select_user(request.user)
+    if not user:
+        return redirect('landing_page_link')
+    if not user.user.is_staff:
+        return redirect('home_page_link')
+
+    votes_all = {
+        'all': len(Vote.objects.all()),
+        'valid': len(Vote.objects.filter(is_valid=True)),
+        'voted': len(Vote.objects.filter(is_voted=True)),
+    }
+    topworks = [list(Top_Work.objects.filter(type='1')),
+                list(Top_Work.objects.filter(type='2')),
+                list(Top_Work.objects.filter(type='3'))]
+
+    return (
+        render(
+            request,
+            'poll_statistics_page_admin.html',
+            {
+                'votes_all': votes_all,
+                'topworks' : topworks
             }
         )
     )

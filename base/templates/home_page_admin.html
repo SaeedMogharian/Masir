@@ -80,16 +80,15 @@
                            style="background-image: url('{% static 'images/navbar_contact_us.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                            href="{% url 'contact_admin_page_link' %}"></a>
                     {% endif %}
-                    {% if user.user_detail.accessibility.statistics_page %}
+                    {% if user.is_staff %}
                         <a class="masir-circle-button-2 masir-jelly" title="آمار"
                            style="background-image: url('{% static 'images/navbar_statistics.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                            href="{% url 'statistics_page_link' %}"></a>
-                    {% endif %}
-                    {% if user.user_detail.accessibility.statistics_page %}
                         <a class="masir-circle-button-2 masir-jelly" title="تابلو امتیازات"
                            style="background-image: url('{% static 'images/navbar_leaderboard.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                            href="{% url 'leaderboard_page_link' %}"></a>
                     {% endif %}
+
                     {% comment %}
                         {% if user.user_detail.accessibility.announcements_page %}
                         <a class="masir-circle-button-2 masir-jelly" title="اعلانات" style="background-image: url('{% static 'images/navbar_announcements.png' %}'); margin: auto max(0.15vw, 0.15vh);" href="{% url 'announcements_page_link' %}"></a>
@@ -108,9 +107,6 @@
                 </div>
                 <div class="position-absolute top-50 end-0 translate-middle-y d-flex me-1 me-lg-5"
                      style="height: max-content;">
-                    <a class="masir-circle-button-2 masir-jelly" title="در مسیر چه گذشت؟"
-                   style="background-image: url('{% static 'images/navbar_map.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                   href="{% url 'on_masir_link' %}"></a>
                     <a class="masir-circle-button-2 masir-jelly" title="نظرسنجی مردمی"
                        style="background-image: url('{% static 'images/navbar_poll.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                        href="{% url 'people_judge_page_link' %}"></a>
@@ -133,7 +129,7 @@
                     <img class="mt-5" style="margin: auto; display: block; width: 40vw; min-width: 20em"
                          src="{% static 'images/origin-with-detail.png' %}">
                 </div>
-                {% if user_is_admin %}
+                {% if user.is_staff %}
 
                     <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto"
                           onsubmit="event_show_scores_admin_form_click()">

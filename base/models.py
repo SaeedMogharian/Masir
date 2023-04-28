@@ -989,6 +989,9 @@ class Top_Work(models.Model):
     def get_type_name(self):
         return self.get_type_display()[:-1]
 
+    def get_vote_count(self):
+        return len(self.vote)
+
     def __str__(self):
         return str(str(self.number) + '. ' + self.get_type_display())
 
@@ -998,7 +1001,7 @@ class Top_Work(models.Model):
 
 class Vote(models.Model):
     phone = models.CharField(default='9xxxxxxxxx', max_length=10, verbose_name='شماره تلفن')
-    vote = models.ManyToManyField(Top_Work, related_name='vote', blank=True, verbose_name='رای ها')
+    selections = models.ManyToManyField(Top_Work, related_name='vote', blank=True, verbose_name='رای ها')
     code = models.IntegerField(default=0, verbose_name='کد تایید')
     is_valid = models.BooleanField(default=False, verbose_name='تایید شده')
     is_voted = models.BooleanField(default=False, verbose_name='رای داده')
