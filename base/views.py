@@ -404,110 +404,6 @@ def people_judge_page(request):
                 list(Top_Work.objects.filter(type='2')),
                 list(Top_Work.objects.filter(type='3'))]
     if request.method == 'POST':
-        # if 'people_judge_form' in request.POST:
-        #
-        #     try:
-        #         if request.POST['people_judge_image_1'] == 'on':
-        #             v.vote_image_1 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_image_2'] == 'on':
-        #             v.vote_image_2 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_image_3'] == 'on':
-        #             v.vote_image_3 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_image_4'] == 'on':
-        #             v.vote_image_4 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_image_5'] == 'on':
-        #             v.vote_image_5 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_music_1'] == 'on':
-        #             v.vote_music_1 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_music_2'] == 'on':
-        #             v.vote_music_2 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_music_3'] == 'on':
-        #             v.vote_music_3 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_music_4'] == 'on':
-        #             v.vote_music_4 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_music_5'] == 'on':
-        #             v.vote_music_5 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_video_1'] == 'on':
-        #             v.vote_video_1 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_video_2'] == 'on':
-        #             v.vote_video_2 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_video_3'] == 'on':
-        #             v.vote_video_3 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_video_4'] == 'on':
-        #             v.vote_video_4 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #     try:
-        #         if request.POST['people_judge_video_5'] == 'on':
-        #             v.vote_video_5 = True
-        #             v.save()
-        #     except:
-        #         pass
-        #
-        #
-        #     return (
-        #         render(
-        #             request,
-        #             'verification_page.html',
-        #             {
-        #                 'phone': v.phone
-        #             }
-        #         )
-        #     )
-
         if 'send_phone_vote_form' in request.POST:
             if Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_voted=True).first():
                 return (
@@ -525,9 +421,9 @@ def people_judge_page(request):
                 )
             if Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_valid=True).first():
                 v = Vote.objects.filter(phone__contains=request.POST['phone_vote'], is_valid=True).first()
-                if v.vote.all():
-                    for x in v.vote.all():
-                        v.vote.remove(x)
+                if v.selections.all():
+                    for x in v.selections.all():
+                        v.selections.remove(x)
                         v.save()
                 return (
                     render(
@@ -624,21 +520,21 @@ def people_judge_page(request):
                 for x in str(audio):
                     if x == '1':
                         t = Top_Work.objects.get(number=int(i), type='1')
-                        v.vote.add(t)
+                        v.selections.add(t)
                     i += 1
 
                 i = 1
                 for x in str(video):
                     if x == '1':
                         t = Top_Work.objects.get(number=int(i), type='2')
-                        v.vote.add(t)
+                        v.selections.add(t)
                     i += 1
 
                 i = 1
                 for x in str(picture):
                     if x == '1':
                         t = Top_Work.objects.get(number=int(i), type='3')
-                        v.vote.add(t)
+                        v.se.add(t)
                     i += 1
 
                 v.is_voted = True

@@ -644,15 +644,30 @@
                 </div>
             {% else %}
                 <div class="position-absolute top-50 start-50 translate-middle mx-auto mt-xl-5 text-center col-xl-3 col-lg-5 col-md-7 col-sm-9 col-10"
-                     style="font-weight: 700; background-color: #ffffffc0; border-radius: 2rem; border: 3px solid black; padding: 3em 2em">
-                <div class="position-relative top-50 start-50 translate-middle d-flex justify-content-center mx-auto mt-xl-3" style="height: max-content;">
-                    <a class="masir-circle-button-3 masir-jelly" title="نظرسنجی مردمی آثار برتر"
-                       style="background-image: url('{% static 'images/navbar_poll.png' %}'); margin: auto max(0.15vw, 0.15vh);"
-                       href="{% url 'people_judge_page_link' %}"></a>
-                </div>
+                     style="font-weight: 700; background-color: #ffffffc0; border-radius: 2rem; border: 3px solid black; padding: 2.5em 2em 1em 2em">
+                    <div class="position-relative top-50 start-50 translate-middle d-flex justify-content-center mx-auto mt-xl-3"
+                         style="height: max-content;">
+                        <a class="masir-circle-button-3 masir-jelly" title="نظرسنجی مردمی آثار برتر"
+                           style="background-image: url('{% static 'images/navbar_poll.png' %}'); margin: auto max(0.15vw, 0.15vh);"
+                           href="{% url 'people_judge_page_link' %}"></a>
+                    </div>
                     در نظرسنجی مردمی آثار برتر چهارمین مسابقه رمضانی مسیر شرکت کنید. <br>
                     از ۹ تا ۱۶ اردیبهشت ماه ۱۴۰۲
+                    <br>
+                <div class="btn btn-primary mt-2" onclick="share()" id="share-btn"
+                     title="برای اشتراک گذاری صفحه نظرسنجی مردمی کنید">
+                    <svg width="16" height="16" fill="currentColor"
+                         class="bi bi-share" viewBox="0 0 16 16" id="share-svg" style="display: inline-block">
+                        <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"></path>
+                    </svg>
+                    <svg width="16" height="16" fill="currentColor"
+                         class="bi bi-check2" viewBox="0 0 16 16" id="check-svg" style="display: none">
+                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+                    </svg>
+
                 </div>
+                </div>
+
 
             {% endif %}
 
@@ -1007,6 +1022,31 @@
         }
 
         window.onload = typeWriter;
+    </script>
+
+
+    {# share #}
+    <script>
+        const btn = document.getElementById('share-btn');
+        btn.addEventListener('click', async () => {
+            try {
+                await navigator.share(
+                    {
+                        title: 'مسابقه مسیر',
+                        url: '{% url "people_judge_page_link" %}',
+                    }
+                );
+            } catch (error) {
+                navigator.clipboard.writeText('{% url "people_judge_page_link" %}');
+                document.getElementById('share-svg').style.display = 'none'
+                document.getElementById('check-svg').style.display = 'inline-block'
+                btn.classList.remove('btn-primary')
+                btn.classList.add('btn-success')
+                btn.title = 'انجام شد!'
+            }
+        });
+
+
     </script>
 
 {% endblock %}
