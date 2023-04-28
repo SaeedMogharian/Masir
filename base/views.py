@@ -91,24 +91,6 @@ def SMS(UserApiKey, SecretKey, Code, MobileNumber):
 
 def landing_page(request):
     if request.method == 'POST':
-        if 'message_form' in request.POST:
-            Message.objects.create(
-                name=request.POST['contact_us_name'],
-                phone=request.POST['contact_us_phone'],
-                message=request.POST['contact_us_message']
-            )
-            return (
-                render(
-                    request,
-                    'landing_page.html',
-                    {
-                        'MESSAGE': 'پیام شما با موفقیت ثبت شد.',
-                        'cities': City.objects.all().order_by('name'),
-                        'schools': School.objects.all().order_by('name'),
-                        'announcements': Announcement.objects.filter(is_public=True)
-                    }
-                )
-            )
         if 'login_form' in request.POST:
             user = authenticate(
                 username=request.POST['login_phone'],
@@ -373,6 +355,7 @@ def landing_page(request):
             'landing_page.html',
             {
                 'MESSAGE': None,
+                'poll': True,
                 'cities': City.objects.all().order_by('name'),
                 'schools': School.objects.all().order_by('name'),
                 'announcements': Announcement.objects.filter(is_public=True)
@@ -534,7 +517,7 @@ def people_judge_page(request):
                 for x in str(picture):
                     if x == '1':
                         t = Top_Work.objects.get(number=int(i), type='3')
-                        v.se.add(t)
+                        v.selections.add(t)
                     i += 1
 
                 v.is_voted = True
