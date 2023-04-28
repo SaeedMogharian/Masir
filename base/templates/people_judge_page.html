@@ -15,6 +15,18 @@
                 {% csrf_token %}
                 <div class="w-100 text-center masir-title-1 mt-lg-0 mt-2">
                     نظرسنجی مردمی آثار برتر
+                    <div class="btn btn-primary d-inline" onclick="share()" id="share-btn" style="border-radius: 3rem"
+                         title="برای اشتراک گذاری یا کپی کردن لینک کلیک کنید">
+                        <svg width="16" height="16" fill="currentColor"
+                             class="bi bi-share" viewBox="0 0 16 16" id="share-svg" style="display: inline-block">
+                            <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"></path>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-check2" viewBox="0 0 16 16" id="check-svg" style="display: none">
+                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+                        </svg>
+
+                    </div>
                 </div>
 
 
@@ -201,12 +213,14 @@
                                   fill="black"></path>
                         </svg>
                     </div>
-                    <div class="row container-fluid d-flex align-content-center justify-content-center" style="display: block; margin: auto;{% if voted %}
-                        pointer-events: none; opacity: 0.4;{% endif %}">
+                    <div class="row container-fluid d-flex align-content-center justify-content-center"
+                         style="display: block; margin: auto;{% if voted %}
+                             pointer-events: none; opacity: 0.4;{% endif %}">
                         {# کارد ها#}
                         {% for x in t %}
                             <div class="vote-card {{ x.get_type_id }}_card"
-                                 id="vote_card_{{ x.get_type_id }}_{{ x.number }}" {% if x.number == 1 %} style="margin-right: 0" {% endif %}
+                                 id="vote_card_{{ x.get_type_id }}_{{ x.number }}" {% if x.number == 1 %}
+                                 style="margin-right: 0" {% endif %}
                                  onclick="vote_card_{{ x.get_type_id }}_{{ x.number }}_click(event)">
                                 {% if x.type == '3' %}
                                     <svg width="36" height="28" viewBox="0 0 36 28" fill="none"
@@ -249,7 +263,7 @@
                                     <input name="vote_box_{{ x.get_type_id }}_{{ x.number }}"
                                            id="vote_box_{{ x.get_type_id }}_{{ x.number }}"
                                            class="form-check-input {{ x.get_type_id }}_box"
-                                           type="checkbox"">
+                                           type="checkbox">
                                 </label>
                             </div>
                         {% endfor %}
@@ -257,7 +271,7 @@
                         {# دکمه سند#}
 
                         <div class="container-fluid d-flex w-100 justify-content-center align-content-center"
-                             style="display: block; margin: auto;{% if not phone %} pointer-events: none; opacity: 0.4;{% endif %}"  >
+                             style="display: block; margin: auto;{% if not phone %} pointer-events: none; opacity: 0.4;{% endif %}">
                             <button type="submit" name="vote_button_{{ t.0.get_type_id }}"
                                     class="btn send-vote-btn ms-1" style="width: max-content;"
                                     id="vote_button_{{ t.0.get_type_id }}"
@@ -439,22 +453,49 @@
             if (document.getElementById('vote_confirm').checked) {
                 var warn = '';
                 {% for t in topworks %}
-                    if (document.getElementById('{{t.0.get_type_id}}_vote').value === 'None' || document.getElementById('{{t.0.get_type_id}}_vote').value === '{% for x in t %}0{% endfor %}') {
-                        if (warn !== '') {
-                            warn += ' و ';
-                        }
-                        warn += "{{t.0.get_type_display}}";
+                    if (document.getElementById('{{t.0.get_type_id}}_vote').value === 'None' ||
+                        document.getElementById('{{t.0.get_type_id}}_vote').value === '{% for x in t %}0{% endfor %}') {
+                    if (warn !== '') {
+                        warn += ' و ';
+                    }
+                    warn += "{{t.0.get_type_display}}";
                     }
                 {% endfor %}
-                if (warn !== '') {
-                    document.getElementById('vote_warning').innerHTML = 'توجه کنید که شما در بخش «' + warn + '» نظری ثبت نکرده‌اید.';
-                    document.getElementById('vote_warning').style.display = 'block';
-                } else {
-                    document.getElementById('vote_warning').style.display = 'none';
-                }
+            if (warn !== '') {
+                document.getElementById('vote_warning').innerHTML = 'توجه کنید که شما در بخش «' + warn + '» نظری ثبت نکرده‌اید.';
+                document.getElementById('vote_warning').style.display = 'block';
             } else {
                 document.getElementById('vote_warning').style.display = 'none';
             }
         }
+
+        else
+        {
+            document.getElementById('vote_warning').style.display = 'none';
+        }
+        }
+    </script>
+    {# share #}
+    <script>
+        const btn = document.getElementById('share-btn');
+        btn.addEventListener('click', async () => {
+            try {
+                await navigator.share(
+                    {
+                        title: document.title,
+                        url: window.location.href,
+                    }
+                );
+            } catch (error) {
+                navigator.clipboard.writeText(window.location.href);
+                document.getElementById('share-svg').style.display = 'none'
+                document.getElementById('check-svg').style.display = 'inline-block'
+                btn.classList.remove('btn-primary')
+                btn.classList.add('btn-success')
+                btn.title = 'کپی شد!'
+            }
+        });
+
+
     </script>
 {% endblock %}
