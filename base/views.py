@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
@@ -29,17 +31,17 @@ def delete_masir_group_and_achivement_rel(group, achivements):
 def select_user(username):
     user = User.objects.filter(username=username).first()
     if not user:
-        return (None)
-    return (user.user_detail)
+        return None
+    return user.user_detail
 
 
 def get_message_public(name, phone, message):
-    return (None)
+    return None
 
 
 def get_city(name):
     if City.objects.filter(name=name).first():
-        return (City.objects.filter(name=name).first())
+        return City.objects.filter(name=name).first()
     return (
         City.objects.create(
             name=name
@@ -49,7 +51,7 @@ def get_city(name):
 
 def get_school(name):
     if School.objects.filter(name=name).first():
-        return (School.objects.filter(name=name).first())
+        return School.objects.filter(name=name).first()
     return (
         School.objects.create(
             name=name
@@ -70,11 +72,11 @@ def SMS(UserApiKey, SecretKey, Code, MobileNumber):
 
     x = response.text
     a = 0
-    while (x[a] != ':'):
+    while x[a] != ':':
         a = a + 1
     a = a + 2
     b = a
-    while (x[b] != '"'):
+    while x[b] != '"':
         b = b + 1
 
     url = "https://RestfulSms.com/api/VerificationCode"
@@ -100,7 +102,7 @@ def landing_page(request):
                 login(request, user)
                 if user.user_detail.groups.all().first() or user.user_detail.accessibility != Accessibility.objects.get(
                         title='دسترسی دانش‌آموزی'):
-                    return (redirect('home_page_link'))
+                    return redirect('home_page_link')
                 return (
                     render(
                         request,
@@ -137,6 +139,7 @@ def landing_page(request):
                     }
                 )
             )
+        '''
         if 'register_form' in request.POST:
             user = User.objects.filter(username=request.POST['register_phone']).first()
             if user:
@@ -319,11 +322,12 @@ def landing_page(request):
                     }
                 )
             )
+        '''
 
     user = select_user(request.user)
     if user:
         if user.groups.all().first() or user.accessibility != Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-            return (redirect('home_page_link'))
+            return redirect('home_page_link')
         return (
             render(
                 request,
@@ -446,6 +450,7 @@ def people_judge_page(request):
             )
         if 'send_code_vote_form' in request.POST:
             v = Vote.objects.filter(phone__contains=request.POST['phone_vote_code']).last()
+            v.date = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ آخرین تغییر')
 
             if str(v.code) == request.POST['code_vote']:
                 v.is_valid = True
@@ -478,6 +483,7 @@ def people_judge_page(request):
             )
         if 'public_vote_form' in request.POST:
             v = Vote.objects.filter(phone__contains=request.POST['phone_vote_final']).last()
+            v.date = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ آخرین تغییر')
 
             if v.is_valid:
                 audio = request.POST['audio_vote']
@@ -676,7 +682,7 @@ def home_page(request):
     user = select_user(request.user)
 
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if not user.groups.all().first() and user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
         return (
             render(
@@ -1165,7 +1171,7 @@ def home_page(request):
                         x.score) + ' پاسخ درست ثبت کرد.'
                 )
 
-            return (redirect('home_page_link'))
+            return redirect('home_page_link')
 
         if 'event_show_scores_admin_form' in request.POST:
             for x in Masir_Group_And_Event_Rel.objects.filter(show_public=False):
@@ -1208,7 +1214,7 @@ def home_page(request):
                     text='فایل ارسال شده از طرف ' + str(x.user) + ' با عنوان «' + str(x.title) + '» به دلیل «' + str(
                         x.comment) + '» در بررسی رد شد.'
                 )
-            return (redirect('home_page_link'))
+            return redirect('home_page_link')
 
         if 'activities_show_scores_admin_form' in request.POST:
             for x in Activity.objects.filter(state='3').exclude(topic__manzel=None):
@@ -1222,7 +1228,7 @@ def home_page(request):
 
                 # پرچم
                 # بی نقص
-                g.ach_flg_nqs
+                g.ach_flg_nqs()
 
                 code = ACTIVITIES[x.topic.co_title] + '0' + str(int(x.template.type)) + '0' + str(
                     round(x.get_score()))
@@ -1250,13 +1256,13 @@ def home_page(request):
                     text='متاسفانه ماموریت ' + str(x.topic) + ' به دلیل «' + str(x.comment) + '» در داوری رد شد.'
                 )
 
-            return (redirect('home_page_link'))
+            return redirect('home_page_link')
 
         if 'achivements_recalculate_admin_form' in request.POST:
             for x in Masir_Group.objects.all():
                 x.recalculate_achivements()
 
-            return (redirect('home_page_link'))
+            return redirect('home_page_link')
 
         if 'longterm_activities_show_scores_admin_form' in request.POST:
             for x in Activity.objects.filter(state='3').filter(topic__manzel=None):
@@ -1276,7 +1282,7 @@ def home_page(request):
                     text=text
                 )
 
-            return (redirect('home_page_link'))
+            return redirect('home_page_link')
 
         if 'longterm_activities_deny_show_scores_admin_form' in request.POST:
             for x in Activity.objects.filter(state='5').filter(topic__manzel=None):
@@ -1288,7 +1294,7 @@ def home_page(request):
                     text='متاسفانه ماموریت تحول شمابه دلیل «' + str(x.comment) + '» در داوری رد شد.'
                 )
 
-            return (redirect('home_page_link'))
+            return redirect('home_page_link')
 
     if user.accessibility != Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
         user_is_admin = False
@@ -1325,11 +1331,11 @@ def home_page(request):
 def leaderboard_page(request):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-        return (redirect('home_page_link'))
+        return redirect('home_page_link')
     if not user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
-        return (redirect('home_page_link'))
+        return redirect('home_page_link')
     user_is_admin = True
 
     SGT = [{'title': str(x), 'light': x.get_light(), 'power': x.get_power(), 'food': x.get_food(),
@@ -1350,11 +1356,11 @@ def leaderboard_page(request):
 def contact_admin_page(request):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
 
     if user.accessibility != Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
         if not user.accessibility.contact_admin_page:
-            return (redirect('home_page_link'))
+            return redirect('home_page_link')
         return (
             render(
                 request,
@@ -1400,7 +1406,7 @@ def contact_admin_page(request):
                 message=request.POST['contact_us_message']
             )
 
-            return (redirect('contact_admin_page_link'))
+            return redirect('contact_admin_page_link')
 
     return (
         render(
@@ -1417,15 +1423,15 @@ def contact_admin_page(request):
 def contact_admin_detail_page(request, id):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if not user.accessibility.contact_admin_page_edit:
-        return (redirect('contact_admin_page_link'))
+        return redirect('contact_admin_page_link')
 
     the_message = Message.objects.filter(id=id).first()
     if not the_message:
-        return (redirect('contact_admin_page_link'))
+        return redirect('contact_admin_page_link')
 
     if request.method == 'POST':
         if 'message_admin_form' in request.POST:
@@ -1433,7 +1439,7 @@ def contact_admin_detail_page(request, id):
             the_message.support = user
             the_message.save()
 
-            return (redirect('contact_admin_page_link'))
+            return redirect('contact_admin_page_link')
 
     return (
         render(
@@ -1450,11 +1456,11 @@ def contact_admin_detail_page(request, id):
 def club_page(request):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-        return (redirect('home_page_link'))
+        return redirect('home_page_link')
     if not user.accessibility.club_page:
-        return (redirect('home_page_link'))
+        return redirect('home_page_link')
 
     return (
         render(
@@ -1470,15 +1476,15 @@ def club_page(request):
 def club_detail_page(request, id):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if not user.accessibility.club_page_edit:
-        return (redirect('club_page_link'))
+        return redirect('club_page_link')
 
     the_file = Club_File.objects.filter(id=id).first()
     if not the_file:
-        return (redirect('club_page_link'))
+        return redirect('club_page_link')
 
     if request.method == 'POST':
         the_file.show_public = False
@@ -1502,7 +1508,7 @@ def club_detail_page(request, id):
             u.club_level = the_file.level
             u.save()
 
-        return (redirect('club_page_link'))
+        return redirect('club_page_link')
 
     return (
         render(
@@ -1519,11 +1525,11 @@ def club_detail_page(request, id):
 def judge_page(request):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-        return (redirect('home_page_link'))
+        return redirect('home_page_link')
     if not user.accessibility.judge_page:
-        return (redirect('home_page_link'))
+        return redirect('home_page_link')
 
     user_is_admin = False
     if user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
@@ -1546,15 +1552,15 @@ def judge_page(request):
 def judge_detail_page(request, id):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if not user.accessibility.judge_page_edit:
-        return (redirect('judge_page_link'))
+        return redirect('judge_page_link')
 
     the_file = Activity.objects.filter(id=id).first()
     if not the_file:
-        return (redirect('judge_page_link'))
+        return redirect('judge_page_link')
 
     the_file.state = '2'
     the_file.referee = user
@@ -1586,7 +1592,7 @@ def judge_detail_page(request, id):
             the_file.referee = None
             the_file.save()
 
-        return (redirect('judge_page_link'))
+        return redirect('judge_page_link')
 
     return (
         render(
@@ -1603,9 +1609,9 @@ def judge_detail_page(request, id):
 def longterm_judge_page(request):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if not user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
-        return (redirect('home_page_link'))
+        return redirect('home_page_link')
 
     return (
         render(
@@ -1621,15 +1627,15 @@ def longterm_judge_page(request):
 def longterm_judge_detail_page(request, id):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if not user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
-        return (redirect('longterm_judge_page_link'))
+        return redirect('longterm_judge_page_link')
 
     the_file = Activity.objects.filter(id=id).first()
     if not the_file:
-        return (redirect('longterm_judge_page_link'))
+        return redirect('longterm_judge_page_link')
 
     the_file.state = '2'
     the_file.referee = user
@@ -1663,7 +1669,7 @@ def longterm_judge_detail_page(request, id):
             the_file.referee = None
             the_file.save()
 
-        return (redirect('longterm_judge_page_link'))
+        return redirect('longterm_judge_page_link')
 
     return (
         render(
@@ -1680,9 +1686,9 @@ def longterm_judge_detail_page(request, id):
 def statistics_page(request):
     user = select_user(request.user)
     if not user:
-        return (redirect('landing_page_link'))
+        return redirect('landing_page_link')
     if not user.user.is_staff:
-        return (redirect('home_page_link'))
+        return redirect('home_page_link')
 
     groups_all = [len(Masir_Group.objects.all()), 0, 0, 0]
     discover_all = [0, 0]
@@ -1753,7 +1759,7 @@ def poll_statistics_page(request):
             'poll_page_admin.html',
             {
                 'votes_all': votes_all,
-                'topworks' : topworks
+                'topworks': topworks
             }
         )
     )
