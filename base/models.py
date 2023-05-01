@@ -762,7 +762,7 @@ class Masir_Group(models.Model):
         self.ach_sdq()
 
         # تحول
-        self.ach_lng(self.activities.filter(topic__manzel=None).first())
+        self.ach_lng(self.activities.filter(topic__manzel=None, state='4').first())
 
         # فراخوان
         self.ach_env()
