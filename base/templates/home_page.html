@@ -875,6 +875,9 @@
                                                     {% elif 'Sdq' in x.achivement.code %}
                                                         به ازای دادن صدقه
                                                         {{ user.user_detail.groups.all.first.get_charity_light }}
+                                                    {% elif 'Env' in x.achivement.code %}
+                                                        به ازای پاسخ صحیح به تو را می‌خوانند 
+                                                        {{ user.user_detail.groups.all.first.get_event_light }}
                                                     {% else %}
                                                          به ازای نشان 
                                                         {{ x.achivement.title }}

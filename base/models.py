@@ -718,15 +718,24 @@ class Masir_Group(models.Model):
                 break
 
     def ach_lng(self, x):
-        self.set_masir_group_and_achivement_rel(
-            Achivement.objects.get(code='Lng_0'),
-            (120 * x.get_score())/5
-        )
+        if x:
+            self.set_masir_group_and_achivement_rel(
+                Achivement.objects.get(code='Lng_0'),
+                (120 * x.get_score()) / 5
+            )
+
+    def ach_env(self):
+        if self.events.filter(score=1):
+            self.set_masir_group_and_achivement_rel(
+                Achivement.objects.get(code='Env_0'),
+                0
+            )
+
     # محاسبه مجدد
     def recalculate_achivements(self):
         self.achivements.all().delete()
         # دستاورد ماموریت ها
-        for x in self.activities.filter(state='4'):
+        for x in self.activities.filter(state='4').exclude(topic__manzel=None):
             self.ach_mission(x)
         # نشان ذره بین
         self.ach_mng()
@@ -752,8 +761,11 @@ class Masir_Group(models.Model):
         # دست رحمت
         self.ach_sdq()
 
-        #تحول
-        self.ach_lng()
+        # تحول
+        self.ach_lng(self.activities.filter(topic__manzel=None).first())
+
+        # فراخوان
+        self.ach_env()
 
     def get_achivements(self):
         # نشان کمال مطلق
@@ -761,21 +773,7 @@ class Masir_Group(models.Model):
 
         return (self.achivements.all().order_by('achivement__id'))
 
-    def get_light(self):
-        l = 14
-        for x in self.get_achivements():
-            l = l + x.score
-        for x in self.exams.filter(show_public=True):
-            l = l + x.score / 2
-        for x in self.events.filter(show_public=True):
-            l = l + x.score * 10
-        for x in self.users.all():
-            l = l + len(x.club_files.filter(show_public=True, verified=True)) / 2
-        for x in self.charities.all():
-            l = l + x.value
-
-        return int(l * 100) / 100
-
+    # حیات نشان‌های بی حیات!!
     def get_exam_light(self):
         l = 0
         for x in self.exams.filter(show_public=True):
@@ -794,6 +792,29 @@ class Masir_Group(models.Model):
             l = l + x.value
         return int(l * 100) / 100
 
+    def get_event_light(self):
+        l = 0
+        for x in self.events.filter(show_public=True):
+            l = l + x.score * 10
+        return int(l * 100) / 100
+
+    # حیات
+    def get_light(self):
+        l = 14
+        for x in self.get_achivements():
+            l = l + x.score
+        for x in self.exams.filter(show_public=True):
+            l = l + x.score / 2
+        for x in self.events.filter(show_public=True):
+            l = l + x.score * 10
+        for x in self.users.all():
+            l = l + len(x.club_files.filter(show_public=True, verified=True)) / 2
+        for x in self.charities.all():
+            l = l + x.value
+
+        return int(l * 100) / 100
+
+    # سطح
     def get_xp(self):
         return ([
             int(((self.get_light() % 70) / 70) * 100),
@@ -990,22 +1011,24 @@ class Top_Work(models.Model):
         return self.get_type_display()[:-1]
 
     def get_vote_count(self):
-        c=0
+        c = 0
         for v in Vote.objects.filter(is_voted=True):
             if self in v.selections.all():
-                c+=1
+                c += 1
         return c
+
     def max_vote_count(self):
-        m=0
+        m = 0
         for x in Top_Work.objects.filter(type=self.type):
-            c=0
+            c = 0
             for v in Vote.objects.filter(is_voted=True):
                 if x in v.selections.all():
-                    c+=1
-            if c>m: m=c
+                    c += 1
+            if c > m: m = c
         return m
+
     def vote_bar(self):
-        return self.get_vote_count()/self.max_vote_count()*100
+        return self.get_vote_count() / self.max_vote_count() * 100
 
     def __str__(self):
         return str(str(self.number) + '. ' + self.get_type_display())
@@ -1013,6 +1036,7 @@ class Top_Work(models.Model):
     class Meta:
         verbose_name = 'عنوان اثر'
         verbose_name_plural = 'آثار برتر'
+
 
 class Vote(models.Model):
     phone = models.CharField(default='9xxxxxxxxx', max_length=10, verbose_name='شماره تلفن')
@@ -1027,6 +1051,7 @@ class Vote(models.Model):
         if self.is_valid:
             return 'تایید شده . ' + str(self.phone)
         return str(self.phone)
+
     class Meta:
         verbose_name = 'رای'
         verbose_name_plural = 'آرای نظرسنجی مردمی'

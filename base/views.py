@@ -1181,6 +1181,8 @@ def home_page(request):
                 if x.score == 1:
                     a = 'درست'
 
+                x.group.ach_env()
+
                 Report.objects.create(
                     group=x.group,
                     text='نتایج فراخوان ' + str(x.event.title) + ' منتشر شد و پاسخ گروه شما در این فراخوان ' + str(
@@ -1273,7 +1275,6 @@ def home_page(request):
 
                 g.ach_lng(x)
 
-                main_score = 2 if x.topic.main else 1
                 text = 'احسنت به شما! به ازای انجام ماموریت تحول، نشان «تحول خواه» رو به دست آوردید و ' + str(
                     round(120 * x.get_score() / 5)) + ' واحد امتیاز حیات به گروه شما اضافه شد.'
 
