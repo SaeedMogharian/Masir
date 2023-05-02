@@ -359,7 +359,6 @@ def landing_page(request):
             'landing_page.html',
             {
                 'MESSAGE': None,
-                'poll': True,
                 'cities': City.objects.all().order_by('name'),
                 'schools': School.objects.all().order_by('name'),
                 'announcements': Announcement.objects.filter(is_public=True)

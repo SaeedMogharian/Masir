@@ -229,11 +229,9 @@
                    data-bs-toggle="modal" {#  role="button" href="#group_register_modal"#}></a>
             </div>
             <div class="position-absolute top-50 start-50 translate-middle d-flex" style="height: max-content;">
-                {% if poll %}
                 <a class="masir-circle-button-1 masir-jelly" title="نظرسنجی مردمی"
                    style="background-image: url('{% static 'images/navbar_poll.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                    href="{% url 'people_judge_page_link' %}"></a>
-            {% endif %}
                 <a class="masir-circle-button-3 masir-jelly" title="درباره مسیر ۱۴۰۲"
                    style="background-image: url('{% static 'images/navbar_mountain.png' %}'); margin: auto max(0.15vw, 0.15vh);"
                    href="{% block about_masir_block %} #about_masir1402 {% endblock %}"></a>
@@ -659,7 +657,7 @@
                 </div>
                     {% endif %}
                 </div>
-            {% elif poll %}
+            {% else%}
                 <div class="position-absolute top-50 start-50 translate-middle mx-auto mt-xl-5 text-center col-xl-3 col-lg-5 col-md-7 col-sm-9 col-10"
                      style="font-weight: 700; background-color: #ffffffc0; border-radius: 2rem; border: 3px solid black; padding: 2.5em 2em 1em 2em">
                     <div class="position-relative top-50 start-50 translate-middle d-flex justify-content-center mx-auto mt-xl-3"
@@ -669,7 +667,7 @@
                            href="{% url 'people_judge_page_link' %}"></a>
                     </div>
                     در نظرسنجی مردمی آثار برتر چهارمین مسابقه رمضانی مسیر شرکت کنید. <br>
-                    از ۹ تا ۱۶ اردیبهشت ماه ۱۴۰۲
+                    از ۱۲ تا ۱۵ اردیبهشت ماه ۱۴۰۲
                     <br>
                     <div class="btn btn-primary mt-2" onclick="share()" id="share-btn"
                      title="نظرسنجی آثار برتر مسیر را به اشتراک بگذارید">

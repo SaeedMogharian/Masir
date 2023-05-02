@@ -154,7 +154,7 @@
                     <div id="{{ t.0.get_type_id }}best" class="carousel slide" data-bs-ride="true"
                          data-bs-interval="false">
                         <div class="carousel-indicators"
-                             style="background-color: gray;  margin-left: 0; margin-right: 0;">
+                             style="background-color: gray;  margin-left: 0; margin-right: 0; margin-bottom: 4.5em;">
                             {% for x in t %}
                                 <button type="button" data-bs-target="#{{ x.get_type_id }}best"
                                         data-bs-slide-to="{{ x.numberfromzero }}"
@@ -172,12 +172,29 @@
                                         <iframe src="{{ x.link }}" allowFullScreen="true" webkitallowfullscreen="true"
                                                 mozallowfullscreen="true" class="crs-item"></iframe>
                                     {% endif %}
-                                    <div style="background-color: gray;" class="mt-1 pb-1">{{ x.get_type_name }}
+                                    <div style="background-color: gray;" class="mt-1 pb-1">
+                                        {{ x.get_type_name }}
+                                        <u>
                                         شماره {{ x.number }}
+                                        </u>
                                         {% if x.group %}
                                             <br>
-                                            از گروه
-                                            {{ x.group }}
+                                            اثر گروه
+                                            «
+                                            <b style='font-weight: 700'>
+                                            {{ x.group.title }}
+                                            </b>
+                                            | {{x.group.supergroup}}
+                                            »
+                                        {% endif %}
+                                        {% if x.topic %}
+                                            <br>
+                                            ماموریت 
+                                            «
+                                            <b style='font-weight: 700'>
+                                            {{ x.topic }}
+                                            </b>
+                                            »
                                         {% endif %}
                                     </div>
                                 </div>

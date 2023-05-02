@@ -996,6 +996,7 @@ class Top_Work(models.Model):
 
     group = models.ForeignKey(Masir_Group, null=True, blank=True, related_name='topworks', on_delete=models.CASCADE,
                               verbose_name='گروه')
+    topic = models.ForeignKey(Activity_Topic, null=True, blank=True, related_name='topworks', on_delete=models.CASCADE,verbose_name='عنوان ماموریت')
 
     def get_type_id(self):
         if self.type == '1':
