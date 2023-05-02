@@ -22,21 +22,25 @@
                     <div class="row p-2" style="text-align: justify;">
                         <div class="col-12 text-center mt-1">
                         <span style="font-weight: 700;">
-                          تعداد شماره‌های وارد شده:
+                          کاربرهایی که به صفحه وارد شده اند:
                         </span>
-                            {{ votes_all.all }}
-                            پیامک
+                            {{ votes_all.user_enter }}
+                            کاربر
                         </div>
                         <div class="col-12 text-center mt-1">
                         <span style="font-weight: 700;">
-                          تعداد شماره‌های تایید شده:
+                          شماره‌های وارد شده (غیر کاربر):
                         </span>
-                            {{ votes_all.valid }}
+                            {{ votes_all.not_user_enter }}
                             شماره
+                            (
+                            {{ votes_all.not_user_valid }}
+                            با موفقیت تایید شده
+                            )
                         </div>
                         <div class="col-12 text-center mt-1">
                         <span style="font-weight: 700;">
-                          تعداد رای‌های معتبر:
+                          مجموع آرای ثبت شده نهایی:
                         </span>
                             {{ votes_all.voted }}
                             رای
@@ -44,7 +48,7 @@
                     </div>
 
                 </div>
-            <div class="col-12 d-lg-flex flex">
+                <div class="col-12 d-lg-flex flex">
                 {% for t in topworks %}
                         <div class="sta-card col-lg-4 col-12 mx-lg-1 mx-auto" style="background-color: #31d8ff;">
                         <div class="w-100 mt-2 text-center" style="font-weight: 700;">
@@ -73,8 +77,45 @@
 
                 {% endfor %}
             </div>
+                <div class="mb-2 pb-2 sta-card" style="background-color: #ffcbfb;">
 
+                    <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2"
+                          onsubmit="expired_vote_delete_form_click()">
+                        <div class="col-12 text-center mt-1">
+                            <span style="font-weight: 700;">
+                                شماره‌هایی که تایید شده‌اند ولی رای نداده‌اند:
+                            </span>
+                                {{ delete_needed }}
+                                رای
+                        </div>
+                        <div class="col-12 text-center mt-1" style="color: red">
+                            فقط هر ۲۴ ساعت یکبار انجام شود
+                        </div>
+                        {% csrf_token %}
+                        <button type="submit" name="expired_vote_delete_form"
+                                id="expired_vote_delete_form" class="btn masir-btn btn-warning">
+                            برگرداندن آرای منقضی شده
+                        </button>
+                        <button class="btn masir-btn btn-warning"
+                                style="display: none;"
+                                id="expired_vote_delete_form_loading">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            در حال انجام...
+                        </button>
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scriptblock %}
+    {{ block.super }}
+    <script>
+        function expired_vote_delete_form_click() {
+            document.getElementById('expired_vote_delete_form').style.display = 'none';
+            document.getElementById('expired_vote_delete_form_loading').style.display = 'block';
+        }
+    </script>
 {% endblock %}

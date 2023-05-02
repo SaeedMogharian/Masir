@@ -13,6 +13,12 @@ UserApiKey = "75e39256d38148ec86e785d5"
 SecretKey = "ERT345rfv@ERT345rfv"
 
 
+def conv_persian_number(text):
+    p = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"]
+    e = [str(i) for i in range(10)]
+    for i in range(10):
+        text.replace    
+
 def set_masir_group_and_achivement_rel(group, achivement, score):
     if not group.achivements.filter(group=group, achivement=achivement).first():
         Masir_Group_And_Achivement_Rel.objects.create(
@@ -1744,14 +1750,31 @@ def poll_statistics_page(request):
     if not user.user.is_staff:
         return redirect('home_page_link')
 
+    if request.method == 'POST':
+        if 'expired_vote_delete' in request.POST:
+            for x in Vote.objects.filter(is_valid=True, is_voted=False):
+                if not User.objects.filter(username__contains=x.phone).first():
+                    x.is_valid = False
+                    x.save()
+
+    u = 0
+    d = 0
+    for x in Vote.objects.all():
+        if User.objects.filter(username__contains=x.phone).first():
+            u += 1
+        elif x.is_valid and not x.is_voted:
+            d += 1
+
     votes_all = {
-        'all': len(Vote.objects.all()),
-        'valid': len(Vote.objects.filter(is_valid=True)),
+        'user_enter': u,
+        'not_user_enter': len(Vote.objects.all()) - u,
+        'not_user_valid': len(Vote.objects.filter(is_valid=True)) - u,
         'voted': len(Vote.objects.filter(is_voted=True)),
     }
     topworks = [list(Top_Work.objects.filter(type='1')),
                 list(Top_Work.objects.filter(type='2')),
                 list(Top_Work.objects.filter(type='3'))]
+
 
     return (
         render(
@@ -1759,6 +1782,7 @@ def poll_statistics_page(request):
             'poll_page_admin.html',
             {
                 'votes_all': votes_all,
+                'delete_needed': d,
                 'topworks': topworks
             }
         )
