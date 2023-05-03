@@ -996,7 +996,8 @@ class Top_Work(models.Model):
 
     group = models.ForeignKey(Masir_Group, null=True, blank=True, related_name='topworks', on_delete=models.CASCADE,
                               verbose_name='گروه')
-    topic = models.ForeignKey(Activity_Topic, null=True, blank=True, related_name='topworks', on_delete=models.CASCADE,verbose_name='عنوان ماموریت')
+    topic = models.ForeignKey(Activity_Topic, null=True, blank=True, related_name='topworks', on_delete=models.CASCADE,
+                              verbose_name='عنوان ماموریت')
 
     def get_type_id(self):
         if self.type == '1':
@@ -1012,20 +1013,13 @@ class Top_Work(models.Model):
         return self.get_type_display()[:-1]
 
     def get_vote_count(self):
-        c = 0
-        for v in Vote.objects.filter(is_voted=True):
-            if self in v.selections.all():
-                c += 1
-        return c
+        return len(Vote.objects.filter(is_voted=True, selections__link=self.link))
 
     def max_vote_count(self):
         m = 0
         for x in Top_Work.objects.filter(type=self.type):
-            c = 0
-            for v in Vote.objects.filter(is_voted=True):
-                if x in v.selections.all():
-                    c += 1
-            if c > m: m = c
+            c = len(Vote.objects.filter(is_voted=True, selections__link=x.link))
+            m = max(m, c)
         return m
 
     def vote_bar(self):

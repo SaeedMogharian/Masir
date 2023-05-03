@@ -26,6 +26,10 @@
                         </span>
                             {{ votes_all.user_enter }}
                             کاربر
+                            (
+                            {{ votes_all.user_voted }}
+                            رای داده
+                            )
                         </div>
                         <div class="col-12 text-center mt-1">
                         <span style="font-weight: 700;">
@@ -36,6 +40,10 @@
                             (
                             {{ votes_all.not_user_valid }}
                             با موفقیت تایید شده
+                            )
+                            (
+                            {{ votes_all.not_user_voted }}
+                            رای داده
                             )
                         </div>
                         <div class="col-12 text-center mt-1">
@@ -79,7 +87,7 @@
             </div>
                 <div class="mb-2 pb-2 sta-card" style="background-color: #ffcbfb;">
 
-                    <form action="{% url 'home_page_link' %}" method="post" class="w-75 mx-auto mt-2"
+                    <form action="{% url 'poll_page_link' %}" method="post" class="w-75 mx-auto mt-2"
                           onsubmit="expired_vote_delete_form_click()">
                         <div class="col-12 text-center mt-1">
                             <span style="font-weight: 700;">

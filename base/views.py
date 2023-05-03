@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
@@ -1756,19 +1754,16 @@ def poll_statistics_page(request):
                 if not User.objects.filter(username__contains=x.phone).first():
                     x.is_valid = False
                     x.save()
+            return(redirect('poll_page_link'))
 
-    u = 0
-    d = 0
-    for x in Vote.objects.all():
-        if User.objects.filter(username__contains=x.phone).first():
-            u += 1
-        elif x.is_valid and not x.is_voted:
-            d += 1
+    u = len(Vote.objects.filter(phone__in=User.objects.values_list('username')))
 
     votes_all = {
         'user_enter': u,
+        'user_voted': len(Vote.objects.filter(phone__in=User.objects.values_list('username'), is_voted=True)),
         'not_user_enter': len(Vote.objects.all()) - u,
         'not_user_valid': len(Vote.objects.filter(is_valid=True)) - u,
+        'not_user_voted': len(Vote.objects.exclude(phone__in=User.objects.values_list('username')).filter(is_voted=True)),
         'voted': len(Vote.objects.filter(is_voted=True)),
     }
     topworks = [list(Top_Work.objects.filter(type='1')),
@@ -1782,7 +1777,7 @@ def poll_statistics_page(request):
             'poll_page_admin.html',
             {
                 'votes_all': votes_all,
-                'delete_needed': d,
+                'delete_needed': len(Vote.objects.exclude(phone__in=User.objects.values_list('username')).filter(is_valid=True, is_voted=False)),
                 'topworks': topworks
             }
         )
