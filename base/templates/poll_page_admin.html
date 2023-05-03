@@ -27,6 +27,10 @@
                             {{ votes_all.user_enter }}
                             کاربر
                             (
+                            {{ votes_all.user_not_admin }}
+                            مسابقه دهنده
+                            )
+                            (
                             {{ votes_all.user_voted }}
                             رای داده
                             )
@@ -89,6 +93,7 @@
 
                     <form action="{% url 'poll_page_link' %}" method="post" class="w-75 mx-auto mt-2"
                           onsubmit="expired_vote_delete_form_click()">
+                        {% csrf_token %}
                         <div class="col-12 text-center mt-1">
                             <span style="font-weight: 700;">
                                 شماره‌هایی که تایید شده‌اند ولی رای نداده‌اند:
@@ -99,7 +104,6 @@
                         <div class="col-12 text-center mt-1" style="color: red">
                             فقط هر ۲۴ ساعت یکبار انجام شود
                         </div>
-                        {% csrf_token %}
                         <button type="submit" name="expired_vote_delete_form"
                                 id="expired_vote_delete_form" class="btn masir-btn btn-warning">
                             برگرداندن آرای منقضی شده

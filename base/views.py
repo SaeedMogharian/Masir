@@ -1749,20 +1749,19 @@ def poll_statistics_page(request):
         return redirect('home_page_link')
 
     if request.method == 'POST':
-        if 'expired_vote_delete' in request.POST:
-            for x in Vote.objects.filter(is_valid=True, is_voted=False):
-                if not User.objects.filter(username__contains=x.phone).first():
-                    x.is_valid = False
-                    x.save()
-            return(redirect('poll_page_link'))
+        if 'expired_vote_delete_form' in request.POST:
+            for x in Vote.objects.exclude(phone__in=User.objects.values_list('username')).filter(is_valid=True, is_voted=False):
+                x.is_valid = False
+                x.save()
+            return redirect('poll_page_link')
 
-    u = len(Vote.objects.filter(phone__in=User.objects.values_list('username')))
 
     votes_all = {
-        'user_enter': u,
+        'user_enter': len(Vote.objects.filter(phone__in=User.objects.values_list('username'))),
+        'user_not_admin': len(Vote.objects.filter(phone__in=User.objects.filter(user_detail__accessibility=Accessibility.objects.get(title='دسترسی دانش‌آموزی')).values_list('username'))),
         'user_voted': len(Vote.objects.filter(phone__in=User.objects.values_list('username'), is_voted=True)),
-        'not_user_enter': len(Vote.objects.all()) - u,
-        'not_user_valid': len(Vote.objects.filter(is_valid=True)) - u,
+        'not_user_enter': len(Vote.objects.exclude(phone__in=User.objects.values_list('username'))),
+        'not_user_valid': len(Vote.objects.exclude(phone__in=User.objects.values_list('username')).filter(is_valid=True)),
         'not_user_voted': len(Vote.objects.exclude(phone__in=User.objects.values_list('username')).filter(is_voted=True)),
         'voted': len(Vote.objects.filter(is_voted=True)),
     }
