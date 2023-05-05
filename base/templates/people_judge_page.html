@@ -18,21 +18,21 @@
                     نظرسنجی مردمی آثار برتر
                 </div>
 
-
-                <div class="row">
+                <div class="row" style="pointer-events: none;">
                     <label style="text-align: right; display: block" class="mt-3">شماره همراه</label>
-                    <input style="border: 1px solid #0A958E; border-radius: 5px;" name="phone_vote" type="text"
+                    <input style="border: 1px solid #0A958E; border-radius: 5px; pointer-events: none; opacity: 0.4" name="phone_vote" type="text"
                            class="col form-control text-center ms-2" pattern="9[0-9]{9}" placeholder="9123456789"
-                           autocomplete="off" required dir="ltr" {% if phone %}value="{{ phone }}" disabled{% endif %}
-                           maxlength="10" minlength="10">
+                           autocomplete="off" required dir="ltr"
+                           maxlength="10" minlength="10" >
                     {% if not verified %}
                         <button type="submit" name="send_phone_vote_form" class="col btn vote-btn w-100 ms-2 me-2"
-                                id="send_phone_vote_form" {% if phone %}disabled{% endif %}>
-                            {% if phone %}
-                                کد ارسال شد
-                            {% else %}
-                                دریافت کد تایید پیامکی
-                            {% endif %}
+                                id="send_phone_vote_form" disabled>
+{#                            {% if phone %}#}
+{#                                کد ارسال شد#}
+{#                            {% else %}#}
+{#                                دریافت کد تایید پیامکی#}
+{#                            {% endif %}#}
+                        فرصت شرکت در نظرسنجی به اتمام رسیده است
                         </button>
                     {% elif not voted %}
                         <button type="submit" class="col btn vote-btn w-100 ms-2 me-2"
@@ -60,6 +60,7 @@
                         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                         در حال ارسال...
                     </button>
+                    {% comment %}
                     {% if voted %}
                         {% if user.user_detail %}
                             <label style="text-align: center; display: block; font-weight: 700"
@@ -102,6 +103,7 @@
                         </label>
 
                     {% endif %}
+                    {% endcomment %}
 
 
                 </div>
@@ -113,6 +115,7 @@
                     </div>
                 {% endif %}
             </form>
+            {% comment %}
             {% if not verified and not voted %}
                 <form action="{% url 'people_judge_page_link' %}" method="post"
                       class="container col-lg-6 col-md-8 col-12"
@@ -142,6 +145,7 @@
                     </div>
                 </form>
             {% endif %}
+            {% endcomment %}
         </div>
     </div>
 
@@ -220,8 +224,7 @@
                         </svg>
                     </div>
                     <div class="row container-fluid d-flex align-content-center justify-content-center"
-                         style="display: block; margin: auto;{% if voted %}
-                             pointer-events: none; opacity: 0.4;{% endif %}">
+                         style="display: block; margin: auto;pointer-events: none; opacity: 0.4;">
                         {# کارد ها#}
                         {% for x in t %}
                             <div class="vote-card {{ x.get_type_id }}_card"
@@ -303,8 +306,8 @@
         <form action="{% url 'people_judge_page_link' %}" method="post"
               class="container-fluid row col-xl-6 col-lg-8 col-md-10 col-sm-12 col-12"
               onsubmit="public_vote_form_click()"
-              style="display: block; margin: auto auto 5em auto;{% if not verified or voted %}
-                  pointer-events: none; opacity: 0.4; {% endif %}">
+              style="display: block; margin: auto auto 5em auto;
+                  pointer-events: none; opacity: 0.4;">
             {% csrf_token %}
             {# مشخصات #}
             <input name="phone_vote_final" id="phone_vote_final" type="text" style="display: none"
@@ -333,11 +336,12 @@
             {% endif %}
             <button type="submit" name="public_vote_form" class="col btn vote-btn w-100"
                     id="public_vote_form">
-                {% if voted %}
-                    شما نظر خود را ثبت کرده اید
-                {% else %}
-                    پایان نظرسنجی
-                {% endif %}
+{#                {% if voted %}#}
+{#                    شما نظر خود را ثبت کرده اید#}
+{#                {% else %}#}
+{#                    پایان نظرسنجی#}
+{#                {% endif %}#}
+                    فرصت شرکت در نظرسنجی به اتمام رسیده است
             </button>
             <button class="col btn vote-btn w-100" style=" display: none;"
                     id="public_vote_form_loading">
