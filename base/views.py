@@ -10,15 +10,8 @@ import json
 UserApiKey = "75e39256d38148ec86e785d5"
 SecretKey = "ERT345rfv@ERT345rfv"
 
-
-def conv_persian_number(text):
-    p = ["&\#1776;", "&\#1777;", "&\#1778;", "&\#1779;", "&\#1780;", "&\#1781;", "&\#1782;", "&\#1783;", "&\#1784;", "&\#1785;"]
-    e = [str(i) for i in range(10)]
-    for i in range(10):
-        text.replace    
-
 def set_masir_group_and_achivement_rel(group, achivement, score):
-    if not group.achivements.filter(group=group, achivement=achivement).first():
+    if not group.achivement_s.filter(group=group, achivement=achivement).first():
         Masir_Group_And_Achivement_Rel.objects.create(
             group=group,
             achivement=achivement,
@@ -1336,22 +1329,15 @@ def leaderboard_page(request):
     user = select_user(request.user)
     if not user:
         return redirect('landing_page_link')
-    if user.accessibility == Accessibility.objects.get(title='دسترسی دانش‌آموزی'):
+    if not user.user.is_staff:
         return redirect('home_page_link')
-    if not user.accessibility == Accessibility.objects.get(title='دسترسی کامل'):
-        return redirect('home_page_link')
-    user_is_admin = True
 
-    SGT = [{'title': str(x), 'light': x.get_light(), 'power': x.get_power(), 'food': x.get_food(),
-            'manzel': int(x.manzel - 1), 'users': x.users.all(), 'supergroup': x.supergroup} for x in
-           Masir_Group.objects.all()]
     return (
         render(
             request,
             'leaderboard_page_admin.html',
             {
-                'user_is_admin': user_is_admin,
-                'groups': SGT
+                'groups': Masir_Group.objects.all(),
             }
         )
     )

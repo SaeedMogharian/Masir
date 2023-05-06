@@ -11,35 +11,36 @@
         <div id="masir-map3-background"></div>
         <div class="position-absolute top-50 start-50 translate-middle scroll-without-scrollbar w-100"
              style="max-height: 80vh; overflow: scroll;">
-            {% if user_is_admin %}
-                <table id="group_list" class="list-group list-group-flush container mb-3 mt-5">
+            <table id="group_list" class="list-group list-group-flush container mb-3 mt-5">
                     <thead>
                     <tr class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
-                        <th class="fw-bold col-7">مشخصات گروه</th>
+                        <th class="fw-bold col-1">آیدی</th>
+
+                        <th class="fw-bold col-6">مشخصات گروه</th>
 
                         <th class="row col-lg-5 col-md-5 col-sm-4 col-4">
 
                             <span class="btn btn-primary col-lg-2 col-md-4 col-sm-6 col-6" role="button"
-                                  onclick="sortTable(1)">
+                                  onclick="sortTable(2)">
                                 حیات
                             </span>
 
                             <span class="btn btn-success col-lg-2 col-md-4 col-sm-6 col-6" role="button"
-                                  onclick="sortTable(2)">
+                                  onclick="sortTable(3)">
                                 آذوقه
                             </span>
 
                             <span class="btn btn-warning col-lg-2 col-md-4 col-sm-6 col-6" role="button"
-                                  onclick="sortTable(3)">
+                                  onclick="sortTable(4)">
                                 توان
                             </span>
 
                             <span class="btn btn-secondary col-lg-2 col-md-4 col-sm-6 col-6" role="button"
-                                  onclick="sortTable(4)">منزل
+                                  onclick="sortTable(5)">منزل
                             </span>
 
                             <span class="btn btn-info col-lg-2 col-md-4 col-sm-6 col-6 " role="button"
-                                  onclick="sortTable(5)">
+                                  onclick="sortTable(6)">
                                 ابرگروه
                             </span>
                         </th>
@@ -49,17 +50,20 @@
                     <tbody>
                     {% for g in groups %}
                         <tr class="list-group-item d-flex justify-content-between align-items-start bg-transparent">
-                            <td class="col-7">
+                            <td class="col-1">
+                                {{ g.id }}
+                            </td>
+                            <td class="col-6">
                                 <span class="fw-bold">{{ g.title }}</span><br>
-                                <span> {% for u in g.users %} {% if u != g.users.all|first %} - {% endif %}
-                                    {{ u }} {% endfor %}<span>
+                                <span> {% for u in g.users.all %} {% if u != g.users.all|first %} - {% endif %}
+                                    {{ u }} {% endfor %}</span>
                             </td>
                             <td class="badge bg-primary masir-btn col-lg-1 col-md-1 col-sm-1 col-1" class="life"
-                                style="margin-left: 0"> {{ g.light }} </td>
+                                style="margin-left: 0"> {{ g.get_light }} </td>
                             <td class="badge bg-success masir-btn col-lg-1 col-md-1 col-sm-1 col-1"
-                                style="margin-left: 0">{{ g.food }}</td>
+                                style="margin-left: 0">{{ g.get_food }}</td>
                             <td class="badge bg-warning masir-btn col-lg-1 col-md-1 col-sm-1 col-1"
-                                style="margin-left: 0">{{ g.power }}</td>
+                                style="margin-left: 0">{{ g.get_power }}</td>
                             <td class="badge bg-secondary masir-btn col-lg-1 col-md-1 col-sm-1 col-1"
                                 style="margin-left: 0">{{ g.manzel }}</td>
                             <td class="badge bg-info masir-btn col-lg-1 col-md-1 col-sm-1 col-1"
@@ -68,7 +72,6 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            {% endif %}
         </div>
     </div>
 {% endblock %}
@@ -78,7 +81,7 @@
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
     <script>
-        var sortOrders = [-1, -1, -1, -1, -1, -1];
+        var sortOrders = [-1, -1, -1, -1, -1, -1, -1];
 
         function sortTable(columnIndex) {
             var table, rows, switching, i, x, y, shouldSwitch;
