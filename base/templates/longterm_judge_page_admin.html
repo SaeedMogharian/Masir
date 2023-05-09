@@ -56,9 +56,9 @@
                     <div class="mb-1 mt-2" style="font-weight: 700;">
                         نمره نهایی
                     </div>
-                    <input name="judge_admin_score" type="number"
+                    <input name="judge_admin_score"
                            class="form-control masir-form-control text-center mb-3" autocomplete="off" required
-                           value="{% if the_file.score %} the_file.score {% else %} 3 {% endif %}" min="0" max="5">
+                           value="{% if the_file.score %} the_file.score {% else %} 3 {% endif %}" maxlength="4">
 
 
 

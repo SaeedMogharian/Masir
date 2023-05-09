@@ -1635,7 +1635,7 @@ def longterm_judge_detail_page(request, id):
         if 'judge_admin_form' in request.POST:
             the_file.referee = user
 
-            the_file.score_long = int(request.POST['judge_admin_score'])
+            the_file.score_long = float(request.POST['judge_admin_score'])
 
             the_file.state = '3'
             the_file.save()
