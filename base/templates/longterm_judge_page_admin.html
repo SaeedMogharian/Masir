@@ -52,52 +52,13 @@
                 </div>
                 <form action="" method="post" class="w-75 mx-auto" onsubmit="judge_admin_form_click()">
                     {% csrf_token %}
-                    <div class="mb-1 mt-2" style="font-weight: 700;">
-                        درک هدف و ضرورت ماموریت
-                    </div>
-                    <input name="judge_admin_score1" type="number" class="form-control masir-form-control text-center"
-                           autocomplete="off" required
-                           value="{% if the_file.score1 %} the_file.score1 {% else %} 3 {% endif %}" min="0" max="5">
 
                     <div class="mb-1 mt-2" style="font-weight: 700;">
-                        داشتن اثر مثبت حداقلی روی یک جمع
+                        نمره نهایی
                     </div>
-                    <input name="judge_admin_score2" type="number" class="form-control masir-form-control text-center"
-                           autocomplete="off" required
-                           value="{% if the_file.score2 %} the_file.score2 {% else %} 3 {% endif %}" min="0" max="5">
-
-                    <div class="mb-1 mt-2" style="font-weight: 700;">
-                        میزان استمرار فعالیت انجام شده
-                    </div>
-                    <input name="judge_admin_score3" type="number" class="form-control masir-form-control text-center"
-                           autocomplete="off" required
-                           value="{% if the_file.score3 %} the_file.score3 {% else %} 3 {% endif %}" min="0" max="5">
-
-                    <div class="mb-1 mt-2" style="font-weight: 700;">
-                        شرح روند برنامه ریزی
-                    </div>
-                    <input name="judge_admin_score4" type="number" class="form-control masir-form-control text-center"
-                           autocomplete="off" required
-                           value="{% if the_file.score4 %} the_file.score4 {% else %} 3 {% endif %}" min="0" max="5">
-
-                    <div class="mb-1 mt-2" style="font-weight: 700;">
-                        میزان درگیر شدن افراد با فعالیت
-                    </div>
-                    <input name="judge_admin_score5" type="number"
+                    <input name="judge_admin_score" type="number"
                            class="form-control masir-form-control text-center mb-3" autocomplete="off" required
-                           value="{% if the_file.score5 %} the_file.score5 {% else %} 3 {% endif %}" min="0" max="5">
-                    <div class="mb-1 mt-2" style="font-weight: 700;">
-                        میزان ملموس و قابل سنجش بودن فعالیت
-                    </div>
-                    <input name="judge_admin_score6" type="number"
-                           class="form-control masir-form-control text-center mb-3" autocomplete="off" required
-                           value="{% if the_file.score6 %} the_file.score6 {% else %} 3 {% endif %}" min="0" max="5">
-                    <div class="mb-1 mt-2" style="font-weight: 700;">
-                        ذکر  مشکلات و چالشهایی که با آن مواجه شده اند
-                    </div>
-                    <input name="judge_admin_score7" type="number"
-                           class="form-control masir-form-control text-center mb-3" autocomplete="off" required
-                           value="{% if the_file.score7 %} the_file.score7 {% else %} 3 {% endif %}" min="0" max="5">
+                           value="{% if the_file.score %} the_file.score {% else %} 3 {% endif %}" min="0" max="5">
 
 
 

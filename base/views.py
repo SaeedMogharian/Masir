@@ -1635,13 +1635,7 @@ def longterm_judge_detail_page(request, id):
         if 'judge_admin_form' in request.POST:
             the_file.referee = user
 
-            the_file.score1 = int(request.POST['judge_admin_score1'])
-            the_file.score2 = int(request.POST['judge_admin_score2'])
-            the_file.score3 = int(request.POST['judge_admin_score3'])
-            the_file.score4 = int(request.POST['judge_admin_score4'])
-            the_file.score5 = int(request.POST['judge_admin_score5'])
-            the_file.score6 = int(request.POST['judge_admin_score6'])
-            the_file.score7 = int(request.POST['judge_admin_score7'])
+            the_file.score_long = int(request.POST['judge_admin_score'])
 
             the_file.state = '3'
             the_file.save()

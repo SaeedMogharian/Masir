@@ -959,8 +959,7 @@ class Activity(models.Model):
     score3 = models.IntegerField(default=0, verbose_name='معیار 3')
     score4 = models.IntegerField(default=0, verbose_name='معیار 4')
     score5 = models.IntegerField(default=0, verbose_name='معیار 5')
-    score6 = models.IntegerField(default=0, verbose_name='معیار 6')
-    score7 = models.IntegerField(default=0, verbose_name='معیار 7')
+    score_long = models.FloatField(default=0, verbose_name='امتیاز تحول')
 
     date = jmodels.jDateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='تاریخ')
 
@@ -971,9 +970,7 @@ class Activity(models.Model):
             return (float(
                 "{:.2f}".format((self.score1 + self.score2 + self.score3 + self.score4 + self.score5) / 5)))
         else:
-            return (float(
-                "{:.2f}".format((
-                                        self.score1 + self.score2 + self.score3 + self.score4 + self.score5 + self.score6 + self.score7) / 7)))
+            return self.score_long
 
     def __str__(self):
         return (str(self.topic) + ' | ' + str(self.template) + ' | ' + str(self.group))
